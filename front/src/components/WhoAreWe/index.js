@@ -12,7 +12,7 @@ import './projects.scss';
 // == Composant
 const WhoAreWe = ({ props }) => {
   return (
-    <div className="WhoAreWe">
+    <div className="who-are-we">
     </div>
   );
 };
