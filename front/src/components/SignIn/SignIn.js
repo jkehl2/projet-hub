@@ -12,7 +12,7 @@ import './signIn.scss';
 // == Composant
 const App = ({ props }) => {
   return (
-    <div className="app">
+    <div className="SignIn">
     </div>
   );
 };
