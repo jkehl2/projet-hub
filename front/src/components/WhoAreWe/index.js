@@ -7,12 +7,12 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './app.scss';
+import './projects.scss';
 
 // == Composant
-const App = ({ props }) => {
+const WhoAreWe = ({ props }) => {
   return (
-    <div className="app">
+    <div className="WhoAreWe">
     </div>
   );
 };
@@ -22,4 +22,4 @@ App.propTypes = {
 };
 
 // == Export
-export default
+export default WhoAreWe;
