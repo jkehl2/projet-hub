@@ -1,9 +1,12 @@
 // == Import npm
 import React from 'react';
+<<<<<<< HEAD
 import PropTypes from 'prop-types';
 import {
   Container, Card, Image, Form, Input, Icon,
 } from 'semantic-ui-react';
+=======
+>>>>>>> 457bf2169e1484a6902e57e635474b446031bd5f
 
 // == IMPORTS COMPOSANTS
 
@@ -43,10 +46,6 @@ const Home = ({ props }) => (
     </Container>
   </div>
 );
-
-Home.propTypes = {
-  props: PropTypes.object.isRequired,
-};
 
 // == Export
 export default Home;

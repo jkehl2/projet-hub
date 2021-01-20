@@ -1,6 +1,5 @@
 // == Import npm
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 
@@ -10,13 +9,9 @@ import PropTypes from 'prop-types';
 import './search.scss';
 
 // == Composant
-const Search = ({ props }) => (
+const Search = () => (
   <div className="search" />
 );
-
-Search.propTypes = {
-  props: PropTypes.object.isRequired,
-};
 
 // == Export
 export default Search;

@@ -10,9 +10,12 @@ import PropTypes from 'prop-types';
 import './WhoAreWe.scss';
 
 // == Composant
-const WhoAreWe = ({ props }) => (
-  <div className="who-are-we" />
-);
+const WhoAreWe = ({ props }) => {
+  return (
+    <div className="who-are-we">
+    </div>
+  );
+};
 
 WhoAreWe.propTypes = {
   props: PropTypes.object.isRequired,

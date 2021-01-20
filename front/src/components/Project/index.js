@@ -1,6 +1,5 @@
 // == Import npm
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 
@@ -10,13 +9,9 @@ import PropTypes from 'prop-types';
 import './project.scss';
 
 // == Composant
-const Project = ({ props }) => (
+const Project = () => (
   <div className="project" />
 );
-
-Project.propTypes = {
-  props: PropTypes.object.isRequired,
-};
 
 // == Export
 export default Project;

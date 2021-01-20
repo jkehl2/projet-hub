@@ -1,6 +1,5 @@
 // == Import npm
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 
@@ -10,13 +9,10 @@ import PropTypes from 'prop-types';
 import './map.scss';
 
 // == Composant
-const Map = ({ props }) => (
+const Map = () => (
   <div className="map" />
 );
 
-Map.propTypes = {
-  props: PropTypes.object.isRequired,
-};
 
 // == Export
 export default Map;
