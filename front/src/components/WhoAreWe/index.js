@@ -7,17 +7,14 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './projects.scss';
+import './WhoAreWe.scss';
 
 // == Composant
-const WhoAreWe = ({ props }) => {
-  return (
-    <div className="WhoAreWe">
-    </div>
-  );
-};
+const WhoAreWe = ({ props }) => (
+  <div className="who-are-we" />
+);
 
-App.propTypes = {
+WhoAreWe.propTypes = {
   props: PropTypes.object.isRequired,
 };
 

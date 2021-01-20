@@ -10,12 +10,11 @@ import PropTypes from 'prop-types';
 import './app.scss';
 
 // == Composant
-const App = ({ props }) => (
+const App = ({}) => (
   <div className="app" />
 );
 
 App.propTypes = {
-  props: PropTypes.object.isRequired,
 };
 
 // == Export
