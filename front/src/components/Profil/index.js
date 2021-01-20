@@ -32,11 +32,11 @@ const Profil = () => (
     {/* email */}
     {/* bouton modifer */}
     <Button.Group vertical>
-      <Button className="profil__button" color="blue">Modifier mes informations personnelles</Button>
+      <Button color="blue">Modifier mes informations personnelles</Button>
       {/* bouton mes projets */}
-      <Button className="profil__button" color="grey">Mes projets</Button>
+      <Button color="grey">Mes projets</Button>
       {/* bouton mes favoris */}
-      <Button className="profil__button" color="grey">Mes favoris</Button>
+      <Button color="grey">Mes favoris</Button>
       {/* bouton mes supprimer le compte */}
       <Button negative>Supprimer le profil</Button>
     </Button.Group>

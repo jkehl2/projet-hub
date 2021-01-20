@@ -1,7 +1,8 @@
 @use 'src/styles/vars';
 
 .profil {
-  &__button{
-    margin: 0.5rem;
-  }
+}
+
+.button {
+  margin: 0.5rem !important;
 }
