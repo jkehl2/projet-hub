@@ -13,7 +13,7 @@ import {
 import './home.scss';
 
 // == Composant
-const Home = ({ props }) => (
+const Home = () => (
   <div className="home">
     <Container>
       {/** Page top with pictures */}

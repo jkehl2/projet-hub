@@ -2,7 +2,7 @@
 import React from 'react';
 
 // == IMPORTS COMPOSANTS
-import { Form, Header, Input } from 'semantic-ui-react';
+import { Form, Header, Input, Button } from 'semantic-ui-react';
 
 // == IMPORTS CONTAINERS
 
@@ -35,6 +35,11 @@ const SignUp = () => (
 
     {/* bouton annuler */}
     {/* bouton valider */}
+    <Button.Group>
+        <Button positive>Valider</Button>
+        <Button.Or />
+        <Button negative>Annuler</Button>
+      </Button.Group>
   </div>
 );
 
