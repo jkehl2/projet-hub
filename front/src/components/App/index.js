@@ -14,40 +14,41 @@ import './app.scss';
 const App = ({}) => (
   <div className="app">
     <Route exact path="/">
+      {/* Sprint 1 */}
       <Home />
     </Route>
-    <Route exact path="projets">
-
+    <Route exact path="/projets">
+      {/* Sprint 1 */}
     </Route>
-    <Route exact path="/projets/:slug">
-
+    <Route exact path="/projet/:slug">
+      {/* Sprint 1 */}
     </Route>
     <Route exact path="/utilisateur/confirm">
-
+      {/* Sprint 1 */}
     </Route>
     <Route exact path="/utilisateur/profil">
-
+      {/* Sprint 1 */}
     </Route>
     <Route exact path="/utilisateur/connexion">
-
+      {/* Sprint 1 */}
     </Route>
     <Route exact path="/utilisateur/enregistrement">
-
+      {/* Sprint 1 */}
     </Route>
     <Route exact path="/mentionsLegales">
-
+      {/* Sprint 2 */}
     </Route>
     <Route exact path="/equipe">
-
+      {/* Sprint 2 */}
     </Route>
     <Route exact path="/projet/create">
-
+      {/* Sprint 2 */}
     </Route>
     <Route exact path="/utilisateur/favoris">
-
+      {/* Sprint 2 */}
     </Route>
     <Route exact path="/utilisateur/projets">
-
+      {/* Sprint 2 */}
     </Route>
   </div>
 );
