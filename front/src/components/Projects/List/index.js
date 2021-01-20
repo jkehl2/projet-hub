@@ -7,16 +7,16 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './app.scss';
+import './list.scss';
 
 // == Composant
-const App = ({ props }) => (
-  <div className="app" />
+const List = ({ props }) => (
+  <div className="list" />
 );
 
-App.propTypes = {
+List.propTypes = {
   props: PropTypes.object.isRequired,
 };
 
 // == Export
-export default App;
+export default List;
