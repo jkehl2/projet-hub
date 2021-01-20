@@ -7,16 +7,16 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './app.scss';
+import './search.scss';
 
 // == Composant
-const App = ({ props }) => (
+const Search = ({ props }) => (
   <div className="app" />
 );
 
-App.propTypes = {
+Search.propTypes = {
   props: PropTypes.object.isRequired,
 };
 
 // == Export
-export default App;
+export default Search;

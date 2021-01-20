@@ -7,16 +7,16 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './app.scss';
+import './map.scss';
 
 // == Composant
-const App = ({ props }) => (
+const Map = ({ props }) => (
   <div className="app" />
 );
 
-App.propTypes = {
+Map.propTypes = {
   props: PropTypes.object.isRequired,
 };
 
 // == Export
-export default App;
+export default Map;
