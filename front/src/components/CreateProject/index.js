@@ -7,16 +7,16 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './profile.scss';
+import './createProject.scss';
 
 // == Composant
-const Profile = ({ props }) => (
-  <div className="profile" />
+const CreateProject = ({ props }) => (
+  <div className="create-project" />
 );
 
-Profile.propTypes = {
+CreateProject.propTypes = {
   props: PropTypes.object.isRequired,
 };
 
 // == Export
-export default Profile;
+export default CreateProject;
