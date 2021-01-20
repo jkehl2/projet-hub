@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import Home from 'src/components/Home';
+import Confirmation from 'src/components/Confirmation';
 // == IMPORTS CONTAINERS
 
 // == STYLES
@@ -25,6 +26,7 @@ const App = ({}) => (
     </Route>
     <Route exact path="/utilisateur/confirm">
       {/* Sprint 1 */}
+      <Confirmation />
     </Route>
     <Route exact path="/utilisateur/profil">
       {/* Sprint 1 */}
