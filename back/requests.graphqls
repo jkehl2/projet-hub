@@ -1,0 +1,424 @@
+
+#-------------------USERS------------------------------
+
+#OK Return all user data related to one given user id
+
+query GetUserByID($id: ID!) {
+  user(id: $id){
+    id
+    name
+    email
+    avatar
+    activated
+  }
+}
+
+
+# create new user & return created user
+
+mutation CreateNewUser($name: String!, $email: String!, $avatar: String) {
+  insertUser(name: $name, email: $email, avatar: $avatar) {
+    id
+    name
+    email
+    avatar
+    activated
+  }
+}
+
+
+# update user with specified ID & return updated user
+
+mutation updateUser($id: ID!, $name: String!, $email: String!, $avatar: String) {
+  updateUser(name: $name, email: $email, avatar: $avatar) {
+    id
+    name
+    email
+    avatar
+    activated
+  }
+}
+
+
+# delete user with specified ID & return message
+
+mutation deleteUser($id: ID!) {
+  deleteUser(id: $id) {
+    msg
+  }
+}
+
+
+#--------------------------PROJECTS---------------------------------------
+
+#OK Return all projects without filtering
+
+{projects
+  {
+    id
+    title
+    description
+    created_at
+    expiration_date
+    location
+    lat
+    long
+    scope
+    west
+    east
+    north
+    south
+    image
+    archived
+    author{
+      name
+      email
+    }
+  }
+}
+
+# Return all favorite projects related to specified user id (as follower)
+
+query GetFavoritesByUserID ($id: ID!){
+  user(id: $id){
+    favourite_projects{
+      id
+      title
+      description
+      created_at
+      expiration_date
+      location
+      lat
+      long
+      scope
+      west
+      east
+      north
+      south
+      image
+      archived
+      author{
+        name
+        email
+      }
+    }
+  }
+}
+
+
+#OK Return all created projects related to specified user id (as author)
+
+query GetProjectsByAuthorID ($id: ID!){
+  user(id: $id){
+    projects{
+      id
+      title
+      description
+      created_at
+      expiration_date
+      location
+      lat
+      long
+      scope
+      west
+      east
+      north
+      south
+      image
+      archived
+      author{
+        name
+        email
+      }
+    }
+  }
+}
+
+
+# Return all projects related to specified geo coordinates (latitude  & longitude)
+
+query GetProjectsByGeo ($lat: Float!, $long: Float!){
+  projects(lat: $lat, long: $long){
+    id
+    title
+    description
+    created_at
+    expiration_date
+    location
+    lat
+    long
+    west
+    east
+    north
+    south
+    scope
+    image
+    archived
+    author{
+      name
+      email
+    }
+  }
+}
+
+
+# Return all project's datas according to specified project ID
+
+query GetProjectDetailsByID ($id: ID!){
+  project(id: $id){
+    id
+    title
+    description
+    created_at
+    expiration_date
+    location
+    lat
+    long
+    scope
+    west
+    east
+    north
+    south
+    image
+    file
+    archived
+    author{
+      name
+      email
+    }
+    needs{
+      title
+      description
+    }
+    comments{
+      description
+      author{
+        name
+      }
+    }
+  }
+}
+
+
+# Create new Project & return created project
+
+mutation createProject (
+  $title: String!,
+  $description: String!,
+  $expiration_date:String!,
+  $location: String!,
+  $scope: Float!,
+  $lat: Float!,
+  $long: Float!,
+  $image: String,
+  $file: String
+  $author: ID!,
+){
+  insertProject(
+    title: $title,
+    description: $description,
+    expiration_date: $expiration_date,
+    location: $location,
+    scope: $scope,
+    lat: $lat,
+    long: $long,
+    image: $image,
+    file: $file,
+    author: $author
+  ){
+    id
+    title
+    description
+    expiration_date
+    location
+    lat
+    long
+    scope
+    west
+    east
+    north
+    south
+    image
+    file
+    archived
+    author{
+      name
+      email
+    }
+  }
+}
+
+
+# Update Project with specified Id & return updated projected
+
+mutation updateProject (
+  $id: ID!,
+  $title: String!,
+  $description: String!,
+  $expiration_date:String!,
+  $location: String!,
+  $scope: Float!,
+  $lat: Float!,
+  $long: Float!,
+  $image: String,
+  $file: String,
+  $author: ID!,
+){
+  updateProject(
+    id: $id,
+    title: $title,
+    description: $description,
+    expiration_date: $expiration_date,
+    location: $location,
+    scope: $scope,
+    lat: $lat,
+    long: $long,
+    image: $image,
+    file: $file
+    author: $author
+  ){
+    id
+    title
+    description
+    expiration_date
+    location
+    lat
+    long
+    scope
+    west
+    east
+    north
+    south
+    image
+    file
+    archived
+    author{
+      name
+      email
+    }
+  }
+}
+
+
+# delete project with specified ID & return message
+
+mutation deleteProject($id: ID!) {
+  deleteProject(id: $id) {
+    msg
+  }
+}
+
+
+# archive project with specified ID & return archived project
+
+mutation archiveProject($id: ID!) {
+  archiveProject(id: $id) {
+    id
+    title
+    description
+    expiration_date
+    location
+    lat
+    long
+    scope
+    west
+    east
+    north
+    south
+    image
+    file
+    archived
+    author{
+      name
+      email
+    }
+    comments{
+      description
+      author{
+        name
+      }
+    }
+  }
+}
+
+
+#---------------------------NEEDS-----------------------------------------
+
+# Create new need on specified project id & return created need
+
+mutation createNeed($title: String!, $description: String!, $project_id: ID!) {
+  insertNeed(title: $title, description: $description, project_id: $project_id) {
+    id
+    title
+    description
+    project_id
+    completed
+  }
+}
+
+
+# Update new need with specified id & return updated need
+
+mutation updateNeed($title: String!, $description: String!, $id: ID!) {
+  updateNeed(id: $id, title: $title, description: $description) {
+    id
+    title
+    description
+    project_id
+    completed
+  }
+}
+
+
+# Complete need with specified id & return updated need
+
+mutation completeNeed($id: ID!) {
+  completeNeed(id: $id) {
+    id
+    title
+    description
+    project_id
+    completed
+  }
+}
+
+
+# Complete need with specified id & return updated need
+
+mutation deleteNeed($id: ID!) {
+  deleteNeed(id: $id) {
+    id
+    title
+    description
+    project_id
+    completed
+  }
+}
+
+#----------------------COMMENTS---------------------------------------
+
+# Create new comment & return message
+
+mutation createComment($description: String!, $project_id: ID!, $author: ID!) {
+  insertComment(description: $description, project_id: $project_id, author: $author) {
+    msg
+  }
+}
+
+
+# Update comment with specified ID & return message
+
+mutation updateComment($id: ID!, $description: String!) {
+  updateComment(id: $id, description: $description) {
+    msg
+  }
+}
+
+
+# Delete comment with specified ID & return message
+
+mutation deleteComment($id: ID!, $description: String!) {
+  deleteComment(id: $id, description: $description) {
+    msg
+  }
+}
