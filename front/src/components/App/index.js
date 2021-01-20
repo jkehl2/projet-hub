@@ -5,12 +5,12 @@ import { Route } from 'react-router-dom';
 // == IMPORTS COMPOSANTS
 import Home from 'src/components/Home';
 import Profile from 'src/components/Profile';
-import Projects from 'src/components/Projects';
 import Project from 'src/components/Project';
 import SignUp from 'src/components/SignUp';
+import Projects from 'src/components/Projects';
+import Confirmation from 'src/components/Confirmation';
 // == IMPORTS CONTAINERS
 
-// == STYLES
 import './app.scss';
 
 
@@ -31,6 +31,7 @@ const App = () => (
     </Route>
     <Route exact path="/utilisateur/confirm">
       {/* Sprint 1 */}
+      <Confirmation />
     </Route>
     <Route exact path="/utilisateur/profil">
       {/* Sprint 1 */}
