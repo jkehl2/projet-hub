@@ -7,12 +7,12 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './signIn.scss';
+import './SignUp.scss';
 
 // == Composant
 const App = ({ props }) => {
   return (
-    <div className="SignIn">
+    <div className="SignUp">
     </div>
   );
 };
@@ -22,4 +22,4 @@ App.propTypes = {
 };
 
 // == Export
-export default SignIn;
+export default SignUp;
