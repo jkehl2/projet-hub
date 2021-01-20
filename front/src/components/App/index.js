@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 
 // == IMPORTS COMPOSANTS
 import Home from 'src/components/Home';
-import Profile from 'src/components/Profile';
+import Profil from 'src/components/Profil';
 import Project from 'src/components/Project';
 import SignUp from 'src/components/SignUp';
 import Projects from 'src/components/Projects';
@@ -12,7 +12,6 @@ import Confirmation from 'src/components/Confirmation';
 // == IMPORTS CONTAINERS
 
 import './app.scss';
-
 
 // == Composant
 const App = () => (
@@ -35,7 +34,7 @@ const App = () => (
     </Route>
     <Route exact path="/utilisateur/profil">
       {/* Sprint 1 */}
-      <Profile />
+      <Profil />
     </Route>
     <Route exact path="/utilisateur/connexion">
       {/* Sprint 1 */}
