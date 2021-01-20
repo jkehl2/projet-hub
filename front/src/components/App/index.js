@@ -16,10 +16,10 @@ const App = ({}) => (
     <Route exact path="/">
       <Home />
     </Route>
-    <Route exact path="projets">
+    <Route exact path="/projets">
 
     </Route>
-    <Route exact path="/projets/:slug">
+    <Route exact path="/projet/:slug">
 
     </Route>
     <Route exact path="/utilisateur/confirm">
