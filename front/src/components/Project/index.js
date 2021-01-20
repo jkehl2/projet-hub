@@ -7,19 +7,16 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './signIn.scss';
+import './project.scss';
 
 // == Composant
-const App = ({ props }) => {
-  return (
-    <div className="SignIn">
-    </div>
-  );
-};
+const Project = ({ props }) => (
+  <div className="project" />
+);
 
-App.propTypes = {
+Project.propTypes = {
   props: PropTypes.object.isRequired,
 };
 
 // == Export
-export default SignIn;
+export default Project;
