@@ -12,7 +12,7 @@ import './search.scss';
 
 // == Composant
 const Search = () => (
-  <container className="search" />
+  <Container className="search" />
     {/* titre */}
     <Header as="h1">Effectuer une recherche</Header>
       {/* localité search bar*/}
@@ -48,7 +48,7 @@ const Search = () => (
                                 {/* bouton valider */}
                                 
                                   <Button positive>Valider</Button>
-  </container>
+  </Container>
 );
 
 // == Export

@@ -11,7 +11,7 @@ import './SignUp.scss';
 
 // == Composant
 const SignUp = () => (
-  <container className="sign-up">
+  <Container className="sign-up">
     {/* titre */}
     <Header as="h1">Création du compte</Header>
     <Form>
@@ -40,7 +40,7 @@ const SignUp = () => (
         <Button.Or />
         <Button negative>Annuler</Button>
       </Button.Group>
-  </container>
+  </Container>
 );
 
 // == Export
