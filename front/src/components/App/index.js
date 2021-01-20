@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import Home from 'src/components/Home';
+import Profile from 'src/components/Profile';
+import Projects from 'src/components/Projects';
+import Project from 'src/components/Project';
 // == IMPORTS CONTAINERS
 
 // == STYLES
@@ -19,15 +22,18 @@ const App = ({}) => (
     </Route>
     <Route exact path="/projets">
       {/* Sprint 1 */}
+      <Projects />
     </Route>
     <Route exact path="/projet/:slug">
       {/* Sprint 1 */}
+      <Project />
     </Route>
     <Route exact path="/utilisateur/confirm">
       {/* Sprint 1 */}
     </Route>
     <Route exact path="/utilisateur/profil">
       {/* Sprint 1 */}
+      <Profile />
     </Route>
     <Route exact path="/utilisateur/connexion">
       {/* Sprint 1 */}
