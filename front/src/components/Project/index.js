@@ -18,8 +18,30 @@ const Project = ({
   isAuthor, isEditMode, isArchived, isFavorite,
 }) => (
   <Container className="project">
-    {isEditMode ? <ProjectEdit /> 
-    : <ProjectView isAuthor={isAuthor} isArchived={isArchived} isFavorite={isFavorite} />}
+    {isEditMode
+      ? (
+        <ProjectEdit
+          project={
+        {
+          title: 'Hello world project',
+          expireDate: '1986-10-10',
+          description: "I'm in place",
+          needs: [{
+            id: '1',
+            title: 'A Beautiful mind',
+            description: 'Everithing it need to be.',
+            isCompleted: true,
+          }, {
+            id: '2',
+            title: 'A freak zone',
+            description: 'Everithing it need to be.',
+            isCompleted: true,
+          }],
+        }
+      }
+        />
+      )
+      : <ProjectView isAuthor={isAuthor} isArchived={isArchived} isFavorite={isFavorite} />}
   </Container>
 );
 // == PROP TYPES
