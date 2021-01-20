@@ -7,7 +7,7 @@ class PostDataSource extends DataSource {
         super();
     }
 
-    // Dans la DataSource on doit obligatoirement implémenter une méthode
+    // Dans la DataSource onn doit obligatoirement implémenter une méthode
     // initialize qui sera appelé par notre serveur apollo pour faire de
     // "l'injection de dépendance"
     initialize(config) {
@@ -28,7 +28,7 @@ class PostDataSource extends DataSource {
 
         if (result.rowCount === 0) {
             return undefined;
-        }
+        }n
 
         return result.rows[0];
     }

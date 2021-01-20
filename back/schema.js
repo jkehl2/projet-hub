@@ -155,6 +155,7 @@ type Query {
     author(id: ID!): Author
 
     project(id: ID!): Project
+    projectsByGeo(lat: Float!, long: Float!): [Project]
     projects: [Project]
 
     user(id: ID!): User

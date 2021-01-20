@@ -1,5 +1,7 @@
 const { DataSource } = require('apollo-datasource');
 const DataLoader = require('dataloader');
+const cache = require('./cache');
+
 
 class UserDataSource extends DataSource {
 
@@ -24,9 +26,12 @@ class UserDataSource extends DataSource {
     }
 
     async findUserById(userId) {
-        await this.userLoader.clear(userId)
-        console.log(`-- Adding ${userId} to category dataloader`);
-        return await this.userLoader.load(userId);
+        const cacheKey = "user"+ userId.toString();
+        return cache.wrapper(cacheKey,async () => {
+            await this.userLoader.clear(userId)
+            console.log(`-- Adding ${userId} to category dataloader`);
+            return await this.userLoader.load(userId);
+        });
     }
 
     // Le constructeur de dataLoader reçoit une fonction
@@ -53,6 +58,8 @@ class UserDataSource extends DataSource {
 
         return data;
     });
+
+
 }
 
 module.exports = UserDataSource;

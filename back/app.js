@@ -6,9 +6,13 @@ const schema = require('./schema');
 const resolver = require('./resolver');
 const client = require('./dataSource/client');
 const dataSources = require('./dataSource');
+const cache = require('./dataSource/cache');
+
 
 
 const app = express();
+
+cache.flush();
 
 // On va venir "créer" notre serveur GraphQL (comme on créérais un router ou l'app express)
 const graphQLServer = new ApolloServer({

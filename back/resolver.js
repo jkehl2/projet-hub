@@ -30,6 +30,10 @@ module.exports = {
             return await context.dataSources.project.findProjectById(args.id);
         },
 
+        async projectsByGeo(_, args, context) {
+            return await context.dataSources.project.findProjectsByGeo(args.lat,args.long);
+        },
+
         async user(_, args, context) {
             return await context.dataSources.user.findUserById(args.id);
         },

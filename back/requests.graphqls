@@ -162,7 +162,7 @@ query GetProjectsByGeo ($lat: Float!, $long: Float!){
 }
 
 
-# Return all project's datas according to specified project ID
+#OK Return all project's datas according to specified project ID
 
 query GetProjectDetailsByID ($id: ID!){
   project(id: $id){
