@@ -18,7 +18,7 @@ import './needs.scss';
 
 // == Composant
 const Project = () => {
-  const [state, setState] = useState({ activeIndex: 0 });
+  const [state, setState] = useState({ activeIndex: -1 });
 
   const handleClick = (e, itemProps) => {
     const { index } = itemProps;
@@ -28,6 +28,7 @@ const Project = () => {
 
   return (
     <>
+      <Progress value="1" total="2" progress="ratio" size="medium" indicating>Couverture des besoins</Progress>
       <Accordion styled exclusive={false} fluid>
         <Accordion.Title
           active={state.activeIndex === 0}
@@ -36,16 +37,15 @@ const Project = () => {
           as="h2"
         >
           <Icon name="dropdown" />
-          Besoins
-          <Progress percent="0.10" indicating />
+          Liste des besoins
         </Accordion.Title>
         <Accordion.Content active={state.activeIndex === 0}>
           <Grid columns={2} divided>
             <Grid.Row>
-              <Grid.Column width={1} verticalAlign="middle">
+              <Grid.Column width={2} verticalAlign="middle" textAlign="center">
                 <Checkbox readOnly />
               </Grid.Column>
-              <Grid.Column width={15}>
+              <Grid.Column width={14}>
                 <Header as="h3">Titre de besoin</Header>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Quisquam praesentium non enim eligendi sapiente atque.
@@ -55,10 +55,10 @@ const Project = () => {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column width={1} verticalAlign="middle">
+              <Grid.Column width={2} verticalAlign="middle" textAlign="center">
                 <Checkbox readOnly checked />
               </Grid.Column>
-              <Grid.Column width={15}>
+              <Grid.Column width={14}>
                 <Header as="h3">Titre de besoin</Header>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Quisquam praesentium non enim eligendi sapiente atque.

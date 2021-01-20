@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Icon, Image, Item, Label,
+  Icon, Image, Item, Label, Segment,
 } from 'semantic-ui-react';
 
 // == IMPORTS CONTAINERS
@@ -13,15 +13,15 @@ import {
 import './description.scss';
 
 // == Composant
-const Description = ({ isFavorite }) => (
-
+const Description = ({ isFavorite, isArchived, isAuthor }) => (
   <Item.Group>
     <Item>
       <Item.Image size="medium" src="https://react.semantic-ui.com/images/wireframe/image.png" />
       <Item.Content>
         <Item.Header as="h1">
           <span>Un super projet</span>
-          {isFavorite ? <Icon name="star" /> : <Icon name="star outline" />}
+          {!isAuthor && (isFavorite ? <Icon name="star" /> : <Icon name="star outline" />)}
+          {isArchived && <Label as="span" tag color="brown" attached="top right">Archivée</Label>}
         </Item.Header>
         <Item.Meta>
           <Image avatar spaced="right" src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
@@ -46,11 +46,12 @@ const Description = ({ isFavorite }) => (
       </Item.Content>
     </Item>
   </Item.Group>
-
 );
 // == PROP TYPES
 Description.propTypes = {
   isFavorite: PropTypes.bool.isRequired,
+  isArchived: PropTypes.bool.isRequired,
+  isAuthor: PropTypes.bool.isRequired,
 };
 
 // == Export

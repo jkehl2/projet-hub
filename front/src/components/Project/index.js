@@ -4,31 +4,29 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Container, Header,
+  Container,
 } from 'semantic-ui-react';
-import Description from './Description';
-import Needs from './Needs';
-import Comments from './Comments';
+import ProjectView from './ProjectView';
+import ProjectEdit from './ProjectEdit';
 // == IMPORTS CONTAINERS
 
 // == STYLES
 import './project.scss';
 
 // == Composant
-const Project = ({ isFavorite }) => (
+const Project = ({
+  isAuthor, isEditMode, isArchived, isFavorite,
+}) => (
   <Container className="project">
-    {/* Titre page */}
-    <Header as="h1">Les détails du projet</Header>
-    {/* Description du projet */}
-    <Description isFavorite={false} />
-    {/* Liste des besoins du projet */}
-    <Needs />
-    {/* Liste des commentaires du projet */}
-    <Comments />
+    {isEditMode ? <ProjectEdit /> 
+    : <ProjectView isAuthor={isAuthor} isArchived={isArchived} isFavorite={isFavorite} />}
   </Container>
 );
 // == PROP TYPES
 Project.propTypes = {
+  isAuthor: PropTypes.bool.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
+  isArchived: PropTypes.bool.isRequired,
   isFavorite: PropTypes.bool.isRequired,
 };
 

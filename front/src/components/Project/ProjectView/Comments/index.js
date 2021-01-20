@@ -1,8 +1,11 @@
 // == Import npm
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
-import { Button, Comment, Form, Header } from 'semantic-ui-react';
+import {
+  Button, Comment, Form, Header,
+} from 'semantic-ui-react';
 
 // == IMPORTS CONTAINERS
 
@@ -10,12 +13,9 @@ import { Button, Comment, Form, Header } from 'semantic-ui-react';
 import './comments.scss';
 
 // == Composant
-const Comments = () => (
+const Comments = ({ isArchived }) => (
   <Comment.Group>
-    <Header as="h1" dividing>
-      Comments
-    </Header>
-
+    <Header as="h1" dividing>Commentaires</Header>
     <Comment>
       <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/matt.jpg" />
       <Comment.Content>
@@ -36,13 +36,19 @@ const Comments = () => (
         <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
       </Comment.Content>
     </Comment>
-
+    {!isArchived && (
     <Form reply>
       <Form.TextArea />
       <Button content="Add Reply" labelPosition="left" icon="edit" primary />
     </Form>
+    )}
   </Comment.Group>
 );
+
+// == PROP TYPES
+Comments.propTypes = {
+  isArchived: PropTypes.bool.isRequired,
+};
 
 // == Export
 export default Comments;

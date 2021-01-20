@@ -26,7 +26,7 @@ const App = () => (
     </Route>
     <Route exact path="/projet/:slug">
       {/* Sprint 1 */}
-      <Project />
+      <Project isAuthor={false} isArchived={false} isFavorite={false} isEditMode={false} />
     </Route>
     <Route exact path="/utilisateur/confirm">
       {/* Sprint 1 */}
