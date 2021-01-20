@@ -11,7 +11,7 @@ import './list.scss';
 
 // == Composant
 const List = ({ props }) => (
-  <div className="app" />
+  <div className="list" />
 );
 
 List.propTypes = {

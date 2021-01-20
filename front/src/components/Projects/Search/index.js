@@ -11,7 +11,7 @@ import './search.scss';
 
 // == Composant
 const Search = ({ props }) => (
-  <div className="app" />
+  <div className="search" />
 );
 
 Search.propTypes = {

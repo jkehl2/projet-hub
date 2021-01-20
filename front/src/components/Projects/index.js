@@ -11,7 +11,7 @@ import './projects.scss';
 
 // == Composant
 const Projects = ({ props }) => (
-  <div className="app" />
+  <div className="projects" />
 );
 
 Projects.propTypes = {

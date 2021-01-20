@@ -11,7 +11,7 @@ import './map.scss';
 
 // == Composant
 const Map = ({ props }) => (
-  <div className="app" />
+  <div className="map" />
 );
 
 Map.propTypes = {
