@@ -1,44 +1,36 @@
 // == Import npm
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
-import { Container, Header, Item } from 'semantic-ui-react';
-
+import {
+  Container, Header,
+} from 'semantic-ui-react';
+import Description from './Description';
+import Needs from './Needs';
+import Comments from './Comments';
 // == IMPORTS CONTAINERS
 
 // == STYLES
 import './project.scss';
 
 // == Composant
-const Project = () => (
+const Project = ({ isFavorite }) => (
   <Container className="project">
     {/* Titre page */}
     <Header as="h1">Détails du projet</Header>
-
-    {/* Image projet titre et description */}
-    <Item.Group>
-      <Item>
-        <Item.Image size="small" src="https://react.semantic-ui.com/images/wireframe/image.png" />
-        <Item.Content>
-          <Item.Header as="h1">Un super projet</Item.Header>
-          <Item.Meta>
-            <Label as="a" image href="mailto:george.orwell@localhub.fr">
-              <img src="https://react.semantic-ui.com/images/avatar/small/joe.jpg" />
-              George ORWEL
-              <Label.Detail>george.orwell@localhub.fr</Label.Detail>
-            </Label>
-          </Item.Meta>
-          <Item.Description>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam praesentium non enim eligendi sapiente atque. Sit impedit modi voluptates sequi ex iste, amet, reiciendis ab vero corrupti est porro laboriosam?</p>
-          </Item.Description>
-          <Item.Extra>
-            
-          </Item.Extra>
-        </Item.Content>
-      </Item>
-    </Item.Group>
+    {/* Description du projet */}
+    <Description isFavorite />
+    {/* Liste des besoins du projet */}
+    <Needs />
+    {/* Liste des commentaires du projet */}
+    <Comments />
   </Container>
 );
+// == PROP TYPES
+Project.propTypes = {
+  isFavorite: PropTypes.bool.isRequired,
+};
 
 // == Export
 export default Project;
