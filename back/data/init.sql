@@ -16,7 +16,7 @@ CREATE TABLE users (
 
 INSERT INTO users (name, email, password) VALUES
 ('Michel','michel@michel', 'password1'),
-('Micheline','micheline@micheline', 'password2');
+('Micheline la braqueuse','micheline@micheline', 'password2');
 
 
 CREATE TABLE projects (
@@ -42,7 +42,7 @@ CREATE TABLE projects (
 
 INSERT INTO projects (expiration_date, title, description, location, lat, long, scope, west, east, north, south, author) VALUES
 ('2001-09-28 01:00:00','projet test', 'ceci est un projet', 'Paris', 1.00000, 1.00000, 1.00000, 0.999, 1.001, 0.999, 1.001,1),
-('2030-01-02 12:00:00','autre projet', 'ceci est un autre projet', 'Paris', 1.00000, 1.00000, 1.00000, 0.999, 1.001, 0.999, 1.001, 2);
+('2030-01-02 12:00:00','hold-up', 'braquer la banque du coin', 'Nantes', 1.00000, 1.00000, 1.00000, 0.999, 1.001, 0.999, 1.001, 2);
 
 CREATE TABLE needs (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -56,7 +56,9 @@ CREATE TABLE needs (
 
 
 INSERT INTO needs (title, description, project_id) VALUES
-('besoin test', 'ceci est un besoin', 1);
+('besoin test', 'ceci est un besoin', 1),
+('un chauffeur', 'necessite un chauffeur avec véhicule vers 12h00', 2),
+('armes automatiques', '2 armes automatiques avec munitions', 2);
 
 CREATE TABLE comments (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -68,7 +70,9 @@ CREATE TABLE comments (
 );
 
 INSERT INTO comments (content, project_id, author) VALUES
-('ceci est un commentaire', 1, 1);
+('ceci est un commentaire', 1, 1),
+('ca a lair bien, je peux venir avec ma ptite soeur?', 2, 1),
+('oui par contre le repas nest pas assuré', 2, 2);
 
 
 COMMIT;
