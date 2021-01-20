@@ -18,9 +18,9 @@ import './project.scss';
 const Project = ({ isFavorite }) => (
   <Container className="project">
     {/* Titre page */}
-    <Header as="h1">Détails du projet</Header>
+    <Header as="h1">Les détails du projet</Header>
     {/* Description du projet */}
-    <Description isFavorite />
+    <Description isFavorite={false} />
     {/* Liste des besoins du projet */}
     <Needs />
     {/* Liste des commentaires du projet */}
