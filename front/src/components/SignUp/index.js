@@ -14,8 +14,10 @@ const SignUp = ({ props }) => (
   <div className="sign-up" />
 );
 
-Profile.propTypes = {
-  props: PropTypes.object.isRequired,
+SignUp.propTypes = {
+  inputValue: PropTypes.string.isRequired,
+  onChangeInput: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 // == Export

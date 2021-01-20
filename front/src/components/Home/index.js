@@ -1,6 +1,5 @@
 // == Import npm
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 
@@ -10,13 +9,9 @@ import PropTypes from 'prop-types';
 import './home.scss';
 
 // == Composant
-const Home = ({ props }) => (
+const Home = () => (
   <div className="home" />
 );
-
-Home.propTypes = {
-  props: PropTypes.object.isRequired,
-};
 
 // == Export
 export default Home;

@@ -6,12 +6,12 @@ import React from 'react';
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './projects.scss';
+import './project.scss';
 
 // == Composant
-const Projects = () => (
-  <div className="projects" />
+const Project = () => (
+  <div className="project" />
 );
 
 // == Export
-export default Projects;
+export default Project;
