@@ -16,7 +16,7 @@ CREATE TABLE users (
 
 INSERT INTO users (name, email, password) VALUES
 ('Michel','michel@michel', 'password1'),
-('Micheline la braqueuse','micheline@micheline', 'password2');
+('Bruce Reynolds','bruce@reynolds', 'password2');
 
 
 CREATE TABLE projects (
