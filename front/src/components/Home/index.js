@@ -7,16 +7,16 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './WhoAreWe.scss';
+import './home.scss';
 
 // == Composant
-const WhoAreWe = ({ props }) => (
-  <div className="who-are-we" />
+const Home = ({ props }) => (
+  <div className="home" />
 );
 
-WhoAreWe.propTypes = {
+Home.propTypes = {
   props: PropTypes.object.isRequired,
 };
 
 // == Export
-export default WhoAreWe;
+export default Home;
