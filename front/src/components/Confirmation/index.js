@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Container, Card, Input, Button, Form,
+  Container, Card, Input, Button, Form, Header,
 } from 'semantic-ui-react';
 
 // == IMPORTS COMPOSANTS
@@ -14,23 +14,21 @@ import './confirmation.scss';
 
 // == Composant
 const Confirmation = ({ password }) => (
-  <div className="confirmation">
-    <Container>
-      <h1>Veuillez confirmer votre demande</h1>
-      <Card>
-        Veuillez saisir à nouveau votre mot de passe utilisateur pour confirmer votre demande
-      </Card>
-      Mot de passe :
-      <Form>
-        <Input password={password} />
-      </Form>
-      <Button.Group>
-        <Button positive>Valider</Button>
-        <Button.Or />
-        <Button>Annuler</Button>
-      </Button.Group>
-    </Container>
-  </div>
+  <Container className="confirmation">
+    <Header as="h1">Veuillez confirmer votre demande</Header>
+    <Card>
+      Veuillez saisir à nouveau votre mot de passe utilisateur pour confirmer votre demande
+    </Card>
+    Mot de passe :
+    <Form.Field>
+      <Input type="password" label="password" password={password} />
+    </Form.Field>
+    <Button.Group>
+      <Button positive>Valider</Button>
+      <Button.Or />
+      <Button>Annuler</Button>
+    </Button.Group>
+  </Container>
 );
 
 Confirmation.propTypes = {

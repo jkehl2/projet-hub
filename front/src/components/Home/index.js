@@ -1,12 +1,9 @@
 // == Import npm
 import React from 'react';
-<<<<<<< HEAD
 import PropTypes from 'prop-types';
 import {
-  Container, Card, Image, Form, Input, Icon,
+  Container, Card, Image, Form, Input, Icon, Button, Progress, Slider,
 } from 'semantic-ui-react';
-=======
->>>>>>> 457bf2169e1484a6902e57e635474b446031bd5f
 
 // == IMPORTS COMPOSANTS
 
@@ -39,10 +36,14 @@ const Home = ({ props }) => (
         </Card.Description>
       </Card>
       {/** Search Bar */}
-      <Form>
-        <Input placeholder="Search" />
+      <Form.Field>
+        <Input type="text" placeholder="Search" />
         <Icon name="search" />
-      </Form>
+      </Form.Field>
+      {/** Perimeter slider */}
+
+      <Slider value={value} color="red" settings={settings} />
+
     </Container>
   </div>
 );
