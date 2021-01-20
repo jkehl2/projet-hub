@@ -1,6 +1,5 @@
 // == Import npm
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 
@@ -10,13 +9,9 @@ import PropTypes from 'prop-types';
 import './list.scss';
 
 // == Composant
-const List = ({ props }) => (
+const List = () => (
   <div className="list" />
 );
-
-List.propTypes = {
-  props: PropTypes.object.isRequired,
-};
 
 // == Export
 export default List;

@@ -1,20 +1,21 @@
 // == Import npm
 import React from 'react';
 import { Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import Home from 'src/components/Home';
 import Profile from 'src/components/Profile';
 import Projects from 'src/components/Projects';
 import Project from 'src/components/Project';
+import SignUp from 'src/components/SignUp';
 // == IMPORTS CONTAINERS
 
 // == STYLES
 import './app.scss';
 
+
 // == Composant
-const App = ({}) => (
+const App = () => (
   <div className="app">
     <Route exact path="/">
       {/* Sprint 1 */}
@@ -40,6 +41,7 @@ const App = ({}) => (
     </Route>
     <Route exact path="/utilisateur/enregistrement">
       {/* Sprint 1 */}
+      <SignUp />
     </Route>
     <Route exact path="/mentionsLegales">
       {/* Sprint 2 */}
@@ -58,9 +60,6 @@ const App = ({}) => (
     </Route>
   </div>
 );
-
-App.propTypes = {
-};
 
 // == Export
 export default App;

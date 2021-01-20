@@ -1,35 +1,39 @@
 // == Import npm
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
-import { Button } from 'semantic-ui-react';
+import {
+  Button, Container, Header, Item, List,
+} from 'semantic-ui-react';
 // == IMPORTS CONTAINERS
 
 // == STYLES
 import './profile.scss';
 
 // == Composant Profil mode consultation
-const Profile = ({ }) => (
-  <div className="profile">
+const Profile = () => (
+  <Container className="profile">
+    {/* Titre */}
+    <Header as="h1">Profil utlisateur</Header>
+    <Item>
+      <Item.Image size="tiny" src="https://react.semantic-ui.com/images/wireframe/image.png" />
+    </Item>
     {/* avatar */}
 
     {/* pseudo */}
     {/* email */}
     {/* bouton modifer */}
-    <Button primary color="blue">Modifier mes informations personnelles</Button>
-    {/* bouton mes projets */}
-    <Button secondary color="grey">Mes projets</Button>
-    {/* bouton mes favoris */}
-    <Button secondary color="grey">Mes favoris</Button>
-    {/* bouton mes supprimer le compte */}
-    <Button secondary color="red">Supprimer le profil</Button>
-  </div>
+    <List verticalAlign="middle">
+      <List.Item><Button color="blue">Modifier mes informations personnelles</Button></List.Item>
+      {/* bouton mes projets */}
+      <List.Item><Button color="grey">Mes projets</Button></List.Item>
+      {/* bouton mes favoris */}
+      <List.Item><Button color="grey">Mes favoris</Button></List.Item>
+      {/* bouton mes supprimer le compte */}
+      <List.Item><Button color="red">Supprimer le profil</Button></List.Item>
+    </List>
+  </Container>
 );
-
-Profile.propTypes = {
-  props: PropTypes.object.isRequired,
-};
 
 // == Export
 export default Profile;
