@@ -18,7 +18,7 @@ import {
 import './projectEdit.scss';
 
 // == Composant
-const ProjectView = ({ project }) => (
+const ProjectEdit = ({ project }) => (
   <Segment basic>
     <Form>
       <Form.Input placeholder="Titre du projet" label="Titre" required value={project.title} />
@@ -56,7 +56,7 @@ const ProjectView = ({ project }) => (
   </Segment>
 );
 // == PROP TYPES
-ProjectView.propTypes = {
+ProjectEdit.propTypes = {
   project: PropTypes.shape({
     title: PropTypes.string.isRequired,
     expireDate: PropTypes.string.isRequired,
@@ -71,4 +71,4 @@ ProjectView.propTypes = {
 };
 
 // == Export
-export default ProjectView;
+export default ProjectEdit;
