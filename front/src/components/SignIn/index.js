@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Container, Header, Form, Input, Button,
+  Container, Header, Form, Button, Segment,
 } from 'semantic-ui-react';
 // == IMPORTS CONTAINERS
 
@@ -22,23 +22,36 @@ const SignIn = (
 ) => (
   <Container className="Signin">
     {/** titre de la page */}
-    <Header as="h1">Connection</Header>
+    <Header as="h1">Connexion</Header>
     {/** formulaire d'identification */}
     <Form>
       {/** email */}
-      <Form.Field>
-        <Input type="text" name="email" placeholder="monemail@domain.foo" value={email} />
-      </Form.Field>
+      <Form.Input
+        type="text"
+        label="Email"
+        placeholder="monemail@domain.foo"
+        value={email}
+      />
       {/** mot de passe */}
-      <Form.Field>
-        <Input type="password" name="password" placeholder="mot de passe" value={password} />
-      </Form.Field>
+      <Form.Input
+        type="password"
+        label="Mot de passe"
+        placeholder="mot de passe"
+        value={password}
+      />
+      {/** bouton connexion */}
+      <Segment basic textAlign="right">
+        <Button.Group>
+          <Form.Button type="button" onClick={handleLogin}>
+            Connexion
+          </Form.Button>
+          {/** bouton inscription */}
+          <Form.Button type="button" onClick={handleSignIn}>
+            Inscription
+          </Form.Button>
+        </Button.Group>
+      </Segment>
     </Form>
-    {/** bouton connection */}
-    <Button class="medium ui button" type="submit" onClick={handleLogin}>connection</Button>
-    <div className="ui divider" />
-    {/** bouton inscription */}
-    <Button class="medium ui button" type="submit" onClick={handleSignIn}>inscription</Button>
   </Container>
 );
 
