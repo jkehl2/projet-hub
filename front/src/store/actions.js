@@ -5,6 +5,7 @@ export const USER_DELETE = 'USER_DELETE';
 export const CREATE_PROJECT = 'CREATE_PROJECT';
 export const EDIT_PROJECT = 'EDIT_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
+export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 
 // action creator
 
@@ -24,4 +25,10 @@ export const editProject = (project) => ({
 export const deleteProject = (project) => ({
   type: CREATE_PROJECT,
   payload: project,
+});
+
+// get a project by id
+export const getProject = (id) => ({
+  type: GET_PROJECT_BY_ID,
+  payload: id,
 });

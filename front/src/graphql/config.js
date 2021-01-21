@@ -46,3 +46,35 @@ export const queryUserDelete = {
     }
   }`,
 };
+
+export const queryProjectById = {
+  query: `query GetProjectDetailsByID ($id: ID!){
+  project(id: $id){
+    id
+    title
+    description
+    created_at
+    expiration_date
+    location
+    lat
+    long
+    scope
+    west
+    east
+    north
+    south
+    image
+    file
+    archived
+    author{
+      name
+      email
+    }
+    needs{
+        id
+      title
+      description
+    }
+  }
+}`,
+};
