@@ -21,6 +21,7 @@ const Projects = ({
 }) => (
   <Container className="projects">
     <List isAuthor={isAuthor} isArchived={isArchived} isFavorite={isFavorite} />
+    <List />
     <Map />
     <Search />
   </Container>
