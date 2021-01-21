@@ -4,6 +4,7 @@
  * Middleware de gestion des recherches de projet
  */
 
+import { push } from 'connected-react-router';
 // == IMPORT ACTIONS SUR RECHERCHE DE PROJETS
 import { SEARCH_PROJECT_EXECUTE } from 'src/store/actions/search';
 
@@ -15,6 +16,8 @@ const search = (store) => (next) => (action) => {
       console.log('Nouvelle recherche', searchProject);
       //TODO Récupéré les coordonnées GPS depuis la localité
       //TODO Formater un objet contenant les attributs de la requête GRaphQL
+
+      store.dispatch(push('/projets'));
       return;
     }
     default:
