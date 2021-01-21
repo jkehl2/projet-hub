@@ -48,7 +48,8 @@ const SearchProjects = ({
               />
               <Form.Input width={2} label="(km)" value={`${utils.perimeters[perimeter].value} km`} disabled />
             </Form.Group>
-            <Form.Checkbox
+            <Form.Radio
+              toggle
               label="Inclure les projets archivés ?"
               checked={archived}
               onChange={(_) => {
