@@ -9,6 +9,7 @@ import Project from 'src/components/Project';
 import SignUp from 'src/components/SignUp';
 import Projects from 'src/components/Projects';
 import Confirmation from 'src/components/Confirmation';
+import SignIn from 'src/components/SignIn';
 // == IMPORTS CONTAINERS
 
 import './app.scss';
@@ -38,6 +39,7 @@ const App = () => (
     </Route>
     <Route exact path="/utilisateur/connexion">
       {/* Sprint 1 */}
+      <SignIn />
     </Route>
     <Route exact path="/utilisateur/enregistrement">
       {/* Sprint 1 */}
