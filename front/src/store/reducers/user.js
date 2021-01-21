@@ -1,8 +1,12 @@
 /**
- * @module Reducer de gestion du store utlisateur
+ * @module user-Reducer
+ * Gestion du store utlisateur
  */
 export const initialState = {
   logged: false,
+  id: '',
+  name: '',
+  email: '',
 };
 
 const reducer = (oldState = initialState, action = {}) => {

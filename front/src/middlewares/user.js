@@ -1,3 +1,8 @@
+/**
+ * @module user-middleware
+ * Middleware de gestion des connecteurs à la BD Utilisteurs
+ */
+
 /* eslint-disable no-case-declarations */
 import axios from 'axios';
 import configGraphQl, {

@@ -1,3 +1,7 @@
+/**
+ * @module config-graphql
+ * Configuration et requête d'accès à DB utilisateurs et projets
+ */
 export default {
   method: 'post',
   url: 'http://localhost:3000/graphql/',
