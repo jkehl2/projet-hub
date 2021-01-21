@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Form, Icon, Button, Segment, Grid,
+  Form, Icon, Button, Segment, Grid, Checkbox,
 } from 'semantic-ui-react';
 
 // == IMPORTS CONTAINERS
@@ -29,6 +29,9 @@ const SearchProjects = ({ searchParams }) => {
                 <Form.Input width={4} type="range" label="Périmètre" min={0} max={4} step={1} value={perimeter} />
                 <Form.Input width={2} label="(km)" value={`${utils.perimeters[perimeter].value} km`} disabled />
               </Form.Group>
+              <Segment basic textAlign="left">
+                Inclure les projets archivés : <Checkbox toggle />
+              </Segment>
             </Segment>
           </Grid.Row>
           <Grid.Row>

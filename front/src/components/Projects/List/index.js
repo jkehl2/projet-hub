@@ -42,7 +42,12 @@ const List = ({ projects }) => (
                 <Label.Detail>{`${project.expireDate}`}</Label.Detail>
               </Label>
             </Segment>
-            <Segment basic>plop</Segment>
+            <Segment basic textAlign="right">
+              <Label>
+                Adresse
+                <Label.Detail>{`${project.adress}`}</Label.Detail>
+              </Label>
+            </Segment>
           </Item.Extra>
         </Item.Content>
       </Item>
@@ -61,6 +66,7 @@ List.propTypes = {
       expireDate: PropTypes.string.isRequired,
       createDate: PropTypes.string.isRequired,
       isAuthor: PropTypes.bool.isRequired,
+      adress: PropTypes.string.isRequired,
       isFavorite: PropTypes.bool.isRequired,
       isArchived: PropTypes.bool.isRequired,
     }),
