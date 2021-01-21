@@ -1,18 +1,28 @@
+import { createBrowserHistory } from 'history';
+
+import createRootReducer from 'src/store/reducers';
+
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import emptyMiddleware from 'src/middlewares/empty';
-// rootReducer = résultat de combineReducers
-import rootReducer from 'src/store/reducers';
+import userMiddleware from 'src/middlewares/user';
+import projectMiddleware from 'src/middlewares/project';
+import { routerMiddleware } from 'connected-react-router';
 
-// on crée le store
-const store = createStore(
-  rootReducer,
-  composeWithDevTools( // devtools
-    // branchement de middleware
-    applyMiddleware(emptyMiddleware),
-  ),
-);
+export const history = createBrowserHistory();
 
-// on l'exporte par défaut
-export default store;
+// on crée le store et on l'export as default
+export default function configureStore(preloadedState) {
+  const store = createStore(
+    createRootReducer(history), // root reducer with router state
+    preloadedState,
+    composeWithDevTools(
+      applyMiddleware(
+        routerMiddleware(history), // for dispatching history actions
+        userMiddleware,
+        projectMiddleware,
+      ),
+    ),
+  );
+  return store;
+}

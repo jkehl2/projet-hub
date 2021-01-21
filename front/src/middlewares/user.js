@@ -119,7 +119,7 @@ const user = (store) => (next) => (action) => {
         });
       return; }
     default:
-      next();
+      next(action);
       break;
   }
 };

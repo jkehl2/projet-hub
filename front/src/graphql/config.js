@@ -111,3 +111,9 @@ export const queryGetProjectsByGeo = {
     }
   }`,
 };
+export const queryCreateProject = {
+  query: '',
+};
+export const queryEditProject = {
+  query: '',
+};
