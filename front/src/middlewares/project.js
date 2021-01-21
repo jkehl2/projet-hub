@@ -93,7 +93,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         });
       return;
     }
-      //GET BY ID
+      //GET BY ID == OK
     case GET_PROJECT_BY_ID: {
       const { id } = action.payload;
       const data = JSON.stringify({
@@ -122,7 +122,7 @@ const projectMiddleware = (store) => (next) => (action) => {
     default:
       next();
       break;
-  }
+  }  
 };
 
 export default projectMiddleware;

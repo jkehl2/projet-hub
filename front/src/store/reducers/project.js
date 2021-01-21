@@ -10,7 +10,7 @@ import {
 
 // ==  INITIAL STATE : a project object containing an array
 export const initialState = {
-  project: [{
+  projects: [{
     title: '',
     description: '',
     expiration_date: '',
