@@ -2,11 +2,12 @@
 import axios from 'axios';
 
 // actions from store
-import {} from 'src/store/actions';
+import { CREATE_PROJECT } from 'src/store/actions';
 
 const projectMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
-    case UPLOAD_PROJECT
+    case CREATE_PROJECT:
+      break;
   }
   next();
 };
