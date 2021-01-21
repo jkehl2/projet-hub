@@ -1,18 +1,25 @@
 require('dotenv').config();
 const express = require('express');
-
 const { ApolloServer } = require('apollo-server-express');
 const schema = require('./schema');
 const resolver = require('./resolver');
 const client = require('./dataSource/client');
 const dataSources = require('./dataSource');
 const cache = require('./dataSource/cache');
-
-
+const session = require('express-session');
 
 const app = express();
 
 cache.flushAll();
+
+app.use(session({
+    //mot de passe servant à crypter les infos
+    secret: 'my super secret passphrase',
+    //va sauvegarder une nouvelle session même si elle n'est pas modifiée
+    saveUninitialized: true,
+    //resauvegarde une session à chaque requête même sans modif (pas de date d'expiration)
+    resave: true
+}));
 
 // On va venir "créer" notre serveur GraphQL (comme on créérais un router ou l'app express)
 const graphQLServer = new ApolloServer({

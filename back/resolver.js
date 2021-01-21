@@ -38,6 +38,10 @@ module.exports = {
             return await context.dataSources.user.findUserById(args.id);
         },
 
+        async login(_, args, context) {
+            return await context.dataSources.user.login(args);
+        },
+
         async need(_, args, context) {
             return await context.dataSources.need.findNeedById(args.id);
         },
@@ -46,9 +50,7 @@ module.exports = {
             return await context.dataSources.comment.findCommentById(args.id);
         },
 
-        async deleteUser(_, args, context) {
-            return await context.dataSources.user.deleteUser(args.id);
-        },
+
     },
 
     Mutation: {
@@ -64,11 +66,21 @@ module.exports = {
             return await context.dataSources.user.insertUser(args);
         },
 
-        async editUser(_, args, context) {
-            return await context.dataSources.user.editUser(args);
+        async editUserInfos(_, args, context) {
+            return await context.dataSources.user.editUserInfos(args);
         },
 
+        async editUserAvatar(_, args, context) {
+            return await context.dataSources.user.editUserAvatar(args);
+        },
 
+        async editUserPassword(_, args, context) {
+            return await context.dataSources.user.editUserPassword(args);
+        },
+
+        async deleteUser(_, args, context) {
+            return await context.dataSources.user.deleteUser(args.id);
+        },
     },
 
     Category: {

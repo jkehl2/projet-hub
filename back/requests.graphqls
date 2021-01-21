@@ -12,41 +12,95 @@ query GetUserByID($id: ID!) {
     activated
   }
 }
+#query variables
+{
+	"id": 1
+}
+#------------------------------------------------
 
+#OK create new user & return created user
 
-# create new user & return created user
+mutation createUser($name: String!, $email: String!,$password: String! ) {
+  insertUser(name: $name, email: $email,password: $password) {
+    id
+    name
+    email
+  }
+}
+#query variables
+{
+	"name": "user test",
+	"email": "email@",
+	"password": "password"
+}
+#------------------------------------------------
 
-mutation CreateNewUser($name: String!, $email: String!, $avatar: String) {
-  insertUser(name: $name, email: $email, avatar: $avatar) {
+#OK update user name & password
+
+mutation editUser($id: ID!, $name: String!, $email: String!) {
+  editUserInfos(id: $id, name: $name, email: $email) {
     id
     name
     email
     avatar
-    activated
   }
+} 
+#query variables
+{
+	"id": 7,
+	"name": "user test updated",
+	"email": "email"
 }
+#------------------------------------------------
 
+#OK update user password
 
-# update user with specified ID & return updated user
-
-mutation updateUser($id: ID!, $name: String!, $email: String!, $avatar: String) {
-  updateUser(name: $name, email: $email, avatar: $avatar) {
+mutation editUserPassword($id: ID!, $password: String!) {
+  editUserPassword(id: $id, password: $password) {
     id
     name
     email
     avatar
-    activated
   }
+} 
+#query variables
+{
+	"id": 7,
+	"password": "password"
 }
+#------------------------------------------------
 
+#OK update user avatar
 
-# delete user with specified ID & return message
+mutation editUserAvatar($id: ID!, $avatar: String!) {
+  editUserAvatar(id: $id, avatar: $avatar) {
+    id
+    name
+    email
+    avatar
+  }
+} 
+#query variables
+{
+	"id": 7,
+	"avatar": "avatar-link2"
+}
+#------------------------------------------------
+
+#OK Delete User
 
 mutation deleteUser($id: ID!) {
-  deleteUser(id: $id) {
-    msg
-  }
+  deleteUser(id: $id){
+      msg
+  }   
 }
+#query variables
+{
+	"id": 6
+}
+#-------------------------------------------------
+
+
 
 
 #--------------------------PROJECTS---------------------------------------

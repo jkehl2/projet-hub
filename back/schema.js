@@ -164,6 +164,7 @@ type Query {
 
     user(id: ID!): User
     users: [User]
+    login(email: String!, password: String!): User
 
     comment(id: ID!): Comment
     comments: [Comment]
@@ -171,7 +172,6 @@ type Query {
     need(id: ID!): Need
     needs: [Need]
 
-    deleteUser(id: ID!): Payload
 
 }
 
@@ -203,14 +203,23 @@ type Mutation {
         password: String!
     ): User
 
-    editUser(
+    editUserInfos(
         id: ID!,
-        name: String,
-        email: String,
-        password: String
-        avatar:String
+        name: String!,
+        email: String!,
     ): User
 
+    editUserAvatar(
+        id: ID!,
+        avatar: String!
+    ): User
+
+    editUserPassword(
+        id: ID!,
+        password: String!
+    ): User
+
+    deleteUser(id: ID!): Payload
 
 }
 `;
