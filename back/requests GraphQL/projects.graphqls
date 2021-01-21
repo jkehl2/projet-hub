@@ -1,135 +1,134 @@
 
-#-------------------USERS------------------------------
+#--------------------------PROJECTS---------------------------------------
 
-#OK Return all user data related to one given user id
+#OK Return all projects with all datas without filtering
+{projects{
+      id
+      title
+      description
+      created_at
+      expiration_date
+      location
+      lat
+      long
+      image
+      archived
+      author{
+        name
+        email
+      }
+      needs{
+        title
+        description
+      }
+      comments{
+        content
+      }
+}
+}
+# No query variables required
+ 
+#-------------------------------------------------
 
-query GetUserByID($id: ID!) {
-  user(id: $id){
-    id
-    name
-    email
-    avatar
-    activated
+#OK Return one project with all datas according one specified Id
+
+query GetProjectByID($id: ID!) {
+  project(id: $id) {
+      id
+      title
+      description
+      created_at
+      expiration_date
+      location
+      lat
+      long
+      image
+      archived
+      author{
+        name
+        email
+      }
+      needs{
+        title
+        description
+      }
+      comments{
+        content
+      }
   }
 }
 #query variables
 {
 	"id": 1
 }
-#------------------------------------------------
+#-------------------------------------------------
 
-#OK create new user & return created user
+#OK Return projects related to Author Id
 
-mutation createUser($name: String!, $email: String!,$password: String! ) {
-  insertUser(name: $name, email: $email,password: $password) {
-    id
-    name
-    email
+query GetProjectsByAuthorID ($id: ID!){
+  user(id: $id){
+    projects{
+      id
+      title
+      description
+      created_at
+      expiration_date
+      location
+      lat
+      long
+
+      image
+      archived
+      author{
+        name
+        email
+      }
+    }
   }
 }
 #query variables
 {
-	"name": "user test",
-	"email": "email@",
-	"password": "password"
-}
-#------------------------------------------------
-
-#OK update user name & password
-
-mutation editUser($id: ID!, $name: String!, $email: String!) {
-  editUserInfos(id: $id, name: $name, email: $email) {
-    id
-    name
-    email
-    avatar
-  }
-} 
-#query variables
-{
-	"id": 7,
-	"name": "user test updated",
-	"email": "email"
-}
-#------------------------------------------------
-
-#OK update user password
-
-mutation editUserPassword($id: ID!, $password: String!) {
-  editUserPassword(id: $id, password: $password) {
-    id
-    name
-    email
-    avatar
-  }
-} 
-#query variables
-{
-	"id": 7,
-	"password": "password"
-}
-#------------------------------------------------
-
-#OK update user avatar
-
-mutation editUserAvatar($id: ID!, $avatar: String!) {
-  editUserAvatar(id: $id, avatar: $avatar) {
-    id
-    name
-    email
-    avatar
-  }
-} 
-#query variables
-{
-	"id": 7,
-	"avatar": "avatar-link2"
-}
-#------------------------------------------------
-
-#OK Delete User
-
-mutation deleteUser($id: ID!) {
-  deleteUser(id: $id){
-      msg
-  }   
-}
-#query variables
-{
-	"id": 6
+	"id": 1
 }
 #-------------------------------------------------
 
+#OK Return projects related to geo position and scope (in meters)
 
-
-
-#--------------------------PROJECTS---------------------------------------
-
-#OK Return all projects without filtering
-
-{projects
-  {
-    id
+qquery GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!) {
+  projectsByGeo(lat: $lat, long: $long, scope: $scope) {
     title
     description
-    created_at
-    expiration_date
     location
     lat
     long
-    scope
-    west
-    east
-    north
-    south
-    image
-    archived
     author{
       name
       email
     }
   }
 }
+#query variables
+{
+	"lat": 2.010, # latitude
+	"long": 1.999, # longitude
+	"scope": 10000 # Distance max in meter
+}
+#-------------------------------------------------
+
+
+
+
+
+#-------------------------------------------------
+#-------------------------------------------------
+#-------------------------------------------------
+
+
+             # NOT OK
+
+
+
+
 
 # Return all favorite projects related to specified user id (as follower)
 
@@ -154,100 +153,6 @@ query GetFavoritesByUserID ($id: ID!){
       author{
         name
         email
-      }
-    }
-  }
-}
-
-
-#OK Return all created projects related to specified user id (as author)
-
-query GetProjectsByAuthorID ($id: ID!){
-  user(id: $id){
-    projects{
-      id
-      title
-      description
-      created_at
-      expiration_date
-      location
-      lat
-      long
-      scope
-      west
-      east
-      north
-      south
-      image
-      archived
-      author{
-        name
-        email
-      }
-    }
-  }
-}
-
-
-# Return all projects related to specified geo coordinates (latitude  & longitude)
-
-query GetProjectsByGeo ($lat: Float!, $long: Float!){
-  projects(lat: $lat, long: $long){
-    id
-    title
-    description
-    created_at
-    expiration_date
-    location
-    lat
-    long
-    west
-    east
-    north
-    south
-    scope
-    image
-    archived
-    author{
-      name
-      email
-    }
-  }
-}
-
-
-#OK Return all project's datas according to specified project ID
-
-query GetProjectDetailsByID ($id: ID!){
-  project(id: $id){
-    id
-    title
-    description
-    created_at
-    expiration_date
-    location
-    lat
-    long
-    scope
-    west
-    east
-    north
-    south
-    image
-    file
-    archived
-    author{
-      name
-      email
-    }
-    needs{
-      title
-      description
-    }
-    comments{
-      description
-      author{
-        name
       }
     }
   }
