@@ -37,7 +37,7 @@ const List = ({
 
           {/* bouton archives */}
 
-          {isArchived && <Label as="span" tag color="brown" attached="top right">Archivée</Label>}
+          { isArchived && <Label as="span" tag color="brown" attached="top right">Archivée</Label> }
 
           {/* étoile favoris */}
 

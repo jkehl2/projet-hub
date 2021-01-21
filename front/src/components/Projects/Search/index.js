@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Container, Button, Form, Grid, Item, FormField, Input,
+  Container, Button, Form, Grid, Item, FormField, Input, Icon, Segment,
 } from 'semantic-ui-react';
 // == IMPORTS CONTAINERS
 
@@ -13,7 +13,7 @@ import './search.scss';
 
 // == Composant
 const Search = ({
-  distance, visible, active, handleVisibility, handleChange, handleClick,
+  active, handleClick,
 }) => (
   <Container className="search">
     <Item.Group>
@@ -25,24 +25,28 @@ const Search = ({
           <Input action={{ icon: 'search' }} placeholder="Search..." />
         </FormField>
         {/* range */}
-        <Grid columns={2}>
-          <Grid.Column as={Form}>
-            <Form.Input
-              label={`Range: ${distance}km`}
-              min={1}
-              max={10}
-              name="distance"
-              onChange={handleChange}
-              step={1}
-              type="range"
-              value={distance}
-            />
-            <Form.Button
-              content={visible ? 'Unmount' : 'Mount'}
-              onClick={handleVisibility}
-            />
-          </Grid.Column>
-        </Grid>
+        <Form>
+          <Grid>
+            <Grid.Column width={16}>
+              <Grid.Row>
+                <Segment>
+                  <Form.Group>
+                    <Form.Input label="Localité" placeholder="adresse, code postale, ville" width={10} />
+                    <Form.Input width={4} type="range" label="Périmètre" min={0} max={5} step={1} />
+                    <Form.Input width={2} label="(km)" value="15km" disabled />
+                  </Form.Group>
+                </Segment>
+              </Grid.Row>
+              <Grid.Row>
+                <Segment basic textAlign="center">
+                  <Button basic circular icon size="massive">
+                    <Icon name="search" color="orange" size="large" />
+                  </Button>
+                </Segment>
+              </Grid.Row>
+            </Grid.Column>
+          </Grid>
+        </Form>
         {/* button Include archives */}
         <div>
           Inclure les projets archivés:
@@ -59,12 +63,8 @@ const Search = ({
 
 // == PROP TYPES
 Search.propTypes = {
-  distance: PropTypes.number.isRequired,
-  visible: PropTypes.bool.isRequired,
   active: PropTypes.bool.isRequired,
-  handleChange: PropTypes.bool.isRequired,
   handleClick: PropTypes.bool.isRequired,
-  handleVisibility: PropTypes.bool.isRequired,
 };
 
 // == Export
