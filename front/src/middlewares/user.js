@@ -1,12 +1,22 @@
+/**
+ * @module user-middleware
+ * Middleware de gestion des connecteurs à la BD Utilisteurs
+ */
+
 /* eslint-disable no-case-declarations */
 import axios from 'axios';
+
+// == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTEUR AXIOS
 import configGraphQl, {
   queryUserCreate, queryUserById, queryUserEdit, queryUserDelete,
 } from 'src/graphql/config';
+
+// == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
   USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE,
 } from 'src/store/actions';
 
+// MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const user = (store) => (next) => (action) => {
   switch (action.type) {
     case USER_CREATE: {

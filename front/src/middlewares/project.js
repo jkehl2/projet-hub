@@ -5,7 +5,7 @@ import axios from 'axios';
 import { CREATE_PROJECT, EDIT_PROJECT, DELETE_PROJECT, GET_PROJECT_BY_ID } from 'src/store/actions';
 
 // graphql queries
-import configGraphQl, {/**here put graphql requests */queryProjectbyId } from 'src/graphql/config';
+import configGraphQl, {/**here put graphql requests */queryProjectbyId, queryDeleteProject } from 'src/graphql/config';
 
 // mw
 const projectMiddleware = (store) => (next) => (action) => {
@@ -45,7 +45,7 @@ const projectMiddleware = (store) => (next) => (action) => {
     case EDIT_PROJECT:{
       const {id, title, description, expiration_date, location, lat, long, author} = action.payload;
       const data = JSON.stringify({
-        .../**requete graphql pour projectcreate */,
+        .../**requete graphql pour projectedit */,
         variables: { id, title, description, expiration_date, location, lat, long, author },
       });
 
@@ -69,6 +69,28 @@ const projectMiddleware = (store) => (next) => (action) => {
     }
     //DELETING
     case DELETE_PROJECT: {
+      const { id } = action.payload;
+      const data = JSON.stringify({
+        ...queryDeleteProject,
+        variables: { id },
+      });
+
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+
+      console.log('loader on');
+      axios(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          console.log('loader off');
+        });
       return;
     }
       //GET BY ID

@@ -1,3 +1,9 @@
+/**
+ * @module config-graphql
+ * Configuration et requête d'accès à DB utilisateurs et projets
+ */
+
+// == CONFIGURATION CONNECTEUR AXIOS - END POINT + ENTÊTE
 export default {
   method: 'post',
   url: 'http://localhost:3000/graphql/',
@@ -6,6 +12,7 @@ export default {
   },
 };
 
+// == QUERY - Créer le profil utlisateur
 export const queryUserCreate = {
   query: `mutation CreateNewUser($name: String!, $email: String!, $password: String!) {
     insertUser(name: $name, email: $email, password: $password) {
@@ -17,6 +24,7 @@ export const queryUserCreate = {
   }`,
 };
 
+// == QUERY - Obtenir le détail d'un profil utlisateur par id
 export const queryUserById = {
   query: `query GetUserByID($id: ID!) {
     user(id: $id){
@@ -29,6 +37,7 @@ export const queryUserById = {
   }`,
 };
 
+// == QUERY - Modifier le profil utlisateur
 export const queryUserEdit = {
   query: `mutation editUser($id: ID!, $name: String, $email: String) {
     editUser(id: $id, name: $name, email: $email) {
@@ -39,6 +48,7 @@ export const queryUserEdit = {
   }`,
 };
 
+// == QUERY - Supprimer le profil utlisateur
 export const queryUserDelete = {
   query: `mutation deleteUser($id: ID!) {
     deleteUser(id: $id){
@@ -47,6 +57,7 @@ export const queryUserDelete = {
   }`,
 };
 
+// == QUERY - Get project by ID
 export const queryProjectById = {
   query: `query GetProjectDetailsByID ($id: ID!){
   project(id: $id){
@@ -77,4 +88,12 @@ export const queryProjectById = {
     }
   }
 }`,
+};
+
+export const queryDeleteProject = {
+  query: `mutation deleteProject($id: ID!) {
+    deleteProject(id: $id) {
+      msg
+    }
+  }`,
 };
