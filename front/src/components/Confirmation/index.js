@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Container, Card, Input, Button, Form, Header,
+  Container, Card, Segment, Button, Form, Header,
 } from 'semantic-ui-react';
 
 // == IMPORTS COMPOSANTS
@@ -19,15 +19,21 @@ const Confirmation = ({ password }) => (
     <Card>
       Veuillez saisir à nouveau votre mot de passe utilisateur pour confirmer votre demande
     </Card>
-    Mot de passe :
-    <Form.Field>
-      <Input type="password" label="password" password={password} />
-    </Form.Field>
-    <Button.Group floated="right">
-      <Button positive>Valider</Button>
-      <Button.Or />
-      <Button>Annuler</Button>
-    </Button.Group>
+    <Form>
+      <Form.Input
+        type="password"
+        label="Mot de passe"
+        value={password}
+        placeholder="mot de passe"
+      />
+      <Segment basic textAlign="right">
+        <Button.Group>
+          <Button positive>Valider</Button>
+          <Button.Or />
+          <Button>Annuler</Button>
+        </Button.Group>
+      </Segment>
+    </Form>
   </Container>
 );
 
