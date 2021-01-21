@@ -26,8 +26,8 @@ const ProjectMenu = () => {
     <Segment basic>
       <Menu compact icon="labeled" secondary floated="right">
         <Menu.Item
-          name="video play"
-          active={state.activeItem === 'video play'}
+          name="Editer"
+          active={state.activeItem === 'edit'}
           onClick={handleItemClick}
         >
           <Icon name="edit" />
@@ -35,8 +35,8 @@ const ProjectMenu = () => {
         </Menu.Item>
 
         <Menu.Item
-          name="video camera"
-          active={state.activeItem === 'video camera'}
+          name="Archiver"
+          active={state.activeItem === 'archive'}
           onClick={handleItemClick}
         >
           <Icon name="archive" />
@@ -44,11 +44,11 @@ const ProjectMenu = () => {
         </Menu.Item>
 
         <Menu.Item
-          name="gamepad"
-          active={state.activeItem === 'gamepad'}
+          name="Supprimer"
+          active={state.activeItem === 'delete'}
           onClick={handleItemClick}
         >
-          <Icon name="trash" />
+          <Icon name="trash" color="red" />
           Supprimer
         </Menu.Item>
       </Menu>

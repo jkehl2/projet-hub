@@ -23,7 +23,7 @@ const Confirmation = ({ password }) => (
     <Form.Field>
       <Input type="password" label="password" password={password} />
     </Form.Field>
-    <Button.Group>
+    <Button.Group floated="right">
       <Button positive>Valider</Button>
       <Button.Or />
       <Button>Annuler</Button>
