@@ -14,7 +14,7 @@ import configGraphQl, {
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
   USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE,
-} from 'src/store/actions';
+} from 'src/store/actions/user';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const user = (store) => (next) => (action) => {

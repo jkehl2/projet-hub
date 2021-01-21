@@ -17,21 +17,20 @@ const Profil = () => (
     <Header as="h1">Profil utlisateur</Header>
     <Item.Group>
       <Item>
+        {/* avatar */}
         <Item.Image size="small" src="https://react.semantic-ui.com/images/wireframe/image.png" />
         <Item.Content>
+          {/* pseudo */}
           <Item.Header as="h2">George Orwell</Item.Header>
           <Item.Meta>
+            {/* email */}
             <a href="mailto:george.orwell@localhub.fr">george.orwell@localhub.fr</a>
           </Item.Meta>
         </Item.Content>
       </Item>
     </Item.Group>
-    {/* avatar */}
-
-    {/* pseudo */}
-    {/* email */}
-    {/* bouton modifer */}
     <Button.Group vertical>
+      {/* bouton modifer */}
       <Button color="blue">Modifier mes informations personnelles</Button>
       {/* bouton mes projets */}
       <Button color="grey">Mes projets</Button>

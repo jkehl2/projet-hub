@@ -7,8 +7,8 @@ import {
   Container,
 } from 'semantic-ui-react';
 import List from 'src/components/Projects/List';
-import Map from 'src/components/Projects/Map';
-import SearchProjects from 'src/components/SearchProjects';
+// import Map from 'src/components/Projects/Map';
+import SearchProjects from 'src/containers/SearchProjects';
 
 // == IMPORTS CONTAINERS
 
