@@ -37,7 +37,7 @@ const SearchProjects = ({ searchParams }) => {
           <Grid.Row>
             <Segment basic textAlign="center">
               <Button basic circular icon size="massive">
-                <Icon name="search" color="orange" size="large" />
+                <Icon name="search" color="orange" size="large" 
               </Button>
             </Segment>
           </Grid.Row>
