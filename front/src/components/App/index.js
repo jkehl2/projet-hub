@@ -2,6 +2,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
+// == IMPORTS CONTAINERS
+import SignIn from 'src/containers/SignIn';
+
 // == IMPORTS COMPOSANTS
 import Home from 'src/components/Home';
 import Profil from 'src/components/Profil';
@@ -9,9 +12,8 @@ import Project from 'src/components/Project';
 import SignUp from 'src/components/SignUp';
 import Projects from 'src/components/Projects';
 import Confirmation from 'src/components/Confirmation';
-import SignIn from 'src/components/SignIn';
-// == IMPORTS CONTAINERS
 
+// == IMPORT STYLES
 import './app.scss';
 
 // == Composant

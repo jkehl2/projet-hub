@@ -13,12 +13,18 @@ import configGraphQl, {
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
-  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE,
+  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN, cleanSignIn,
 } from 'src/store/actions/user';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
-const user = (store) => (next) => (action) => {
+const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
+    case USER_SIGNIN: {
+      const { user } = store.getState();
+      console.log('User signIn ask', user);
+      next(cleanSignIn());
+      return;
+    }
     case USER_CREATE: {
       const { name, email, password } = action.payload;
       const data = JSON.stringify({
@@ -124,4 +130,4 @@ const user = (store) => (next) => (action) => {
   }
 };
 
-export default user;
+export default userMiddleware;
