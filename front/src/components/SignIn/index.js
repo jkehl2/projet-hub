@@ -1,11 +1,11 @@
 // == Import npm
 import React from 'react';
 import PropTypes from 'prop-types';
+
+// == IMPORTS COMPOSANTS
 import {
   Container, Header, Form, Input, Button,
 } from 'semantic-ui-react';
-// == IMPORTS COMPOSANTS
-
 // == IMPORTS CONTAINERS
 
 // == STYLES
@@ -20,9 +20,9 @@ const SignIn = (
     handleSignIn,
   },
 ) => (
-  <Container className="SignIn">
+  <Container className="Signin">
     {/** titre de la page */}
-    <Header as="h1">Login</Header>
+    <Header as="h1">Connection</Header>
     {/** formulaire d'identification */}
     <Form>
       {/** email */}
@@ -31,7 +31,7 @@ const SignIn = (
       </Form.Field>
       {/** mot de passe */}
       <Form.Field>
-        <Input type="text" name="password" placeholder="mot de passe" value={password} />
+        <Input type="password" name="password" placeholder="mot de passe" value={password} />
       </Form.Field>
     </Form>
     {/** bouton connection */}
