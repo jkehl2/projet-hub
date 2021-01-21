@@ -23,7 +23,6 @@ const App = () => (
     </Route>
     <Route exact path="/projets">
       {/* Sprint 1 */}
-      <List/><Search/>
       <Projects />
     </Route>
     <Route exact path="/projet/:slug">
