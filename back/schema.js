@@ -75,16 +75,6 @@ type Project {
 
     long: Float!
 
-    scope: Float!
-
-    west: Float!
-
-    east: Float!
-
-    north: Float!
-
-    south: Float!
-
     image: String
 
     file: String
@@ -159,7 +149,7 @@ type Query {
     author(id: ID!): Author
 
     project(id: ID!): Project
-    projectsByGeo(lat: Float!, long: Float!): [Project]
+    projectsByGeo(lat: Float!, long: Float!, scope: Float!): [Project]
     projects: [Project]
 
     user(id: ID!): User

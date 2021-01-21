@@ -29,20 +29,15 @@ CREATE TABLE projects (
     location TEXT NOT NULL,
     lat FLOAT NOT NULL,
     long FLOAT NOT NULL,
-    scope FLOAT NOT NULL,
-    west FLOAT NOT NULL,
-    east FLOAT NOT NULL,
-    north FLOAT NOT NULL,
-    south FLOAT NOT NULL,
     image TEXT NULL,
     file TEXT NULL,
     archived BOOLEAN DEFAULT FALSE,
     author INT REFERENCES users(id)
 );
 
-INSERT INTO projects (expiration_date, title, description, location, lat, long, scope, west, east, north, south, author) VALUES
-('2001-09-28 01:00:00','projet test', 'ceci est un projet', 'Paris', 1.00000, 1.00000, 1.00000, 0.999, 1.001, 0.999, 1.001,1),
-('2030-01-02 12:00:00','hold-up', 'braquer la banque du coin', 'Nantes', 2.00000, 2.00000, 1.00000, 1.999, 2.001, 1.999, 2.001, 2);
+INSERT INTO projects (expiration_date, title, description, location, lat, long, author) VALUES
+('2001-09-28 01:00:00','projet test', 'ceci est un projet', 'Paris', 1.00000, 1.00000,1),
+('2030-01-02 12:00:00','hold-up', 'braquer la banque du coin', 'Nantes', 2.00000, 2.00000, 2);
 
 CREATE TABLE needs (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

@@ -1,7 +1,7 @@
 const { DataSource } = require('apollo-datasource');
 const DataLoader = require('dataloader');
 const cache = require('./cache');
-
+const geolib = require('geolib');
 
 class ProjectDataSource extends DataSource {
 
@@ -35,50 +35,25 @@ class ProjectDataSource extends DataSource {
         return result.rows[0];
     }
 
-    async findProjectsByGeo(lat, long) {
-        // await this.projectsByGeoLoader.clear(lat, long);
-        // console.log(`-- Adding ${lat, long} to project by geo dataloader`);
-        // return await this.projectsByGeoLoader.load(lat, long);
-        
-        const cacheKey = lat.toString() + long.toString();
-        // const cached = await cache.read(cacheKey);
-        // result = JSON.parse(cached);
-        // if (result == undefined){
-        //     result = await this.client.query(`SELECT * FROM projects 
-        //     WHERE west < $1
-        //     AND east > $1
-        //     AND north < $2 
-        //     AND south > $2
-        //     `, [lat, long]);
-
-        //     if (result.rowCount === 0) {
-        //         return undefined;
-        //     }
-            
-        //     await cache.store(cacheKey, JSON.stringify(result));
-
-        //     console.log(`caching ${cacheKey}`);
-
-
-        // } else {
-        //     console.log("cache found");
-        // }
-
-        // return result.rows;
+    async findProjectsByGeo(lat, long, scope) {
+        const cacheKey = `projectByGeo:${lat.toString()}|${long.toString()}|${scope}`;
         const results = await cache.wrapper(cacheKey,async () => {
+            const [geoMin, geoMax] = geolib.getBoundsOfDistance(
+                {latitude: lat, longitude: long},
+                scope
+            )
             const result = await this.client.query(`SELECT * FROM projects 
-            WHERE west < $1
-            AND east > $1
-            AND north < $2 
-            AND south > $2
-            `, [lat, long]);
-
-            if (result.rowCount === 0) {
-                return undefined;
-            }
-            
+            WHERE lat > $1
+            AND long > $2
+            AND lat < $3 
+            AND long < $4
+            `, [
+                geoMin.latitude,
+                geoMin.longitude, 
+                geoMax.latitude, 
+                geoMax.longitude
+            ]);
             return result
-
         })
         return results.rows;
     }

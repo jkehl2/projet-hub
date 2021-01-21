@@ -31,7 +31,7 @@ module.exports = {
         },
 
         async projectsByGeo(_, args, context) {
-            return await context.dataSources.project.findProjectsByGeo(args.lat,args.long);
+            return await context.dataSources.project.findProjectsByGeo(args.lat,args.long, args.scope);
         },
 
         async user(_, args, context) {
