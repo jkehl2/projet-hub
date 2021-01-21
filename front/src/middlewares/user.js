@@ -1,11 +1,15 @@
 /* eslint-disable no-case-declarations */
 import axios from 'axios';
-import configGraphQl, { queryUserCreate } from 'src/graphql/config';
-import { USER_CREATE, USER_EDIT, USER_DELETE } from 'src/store/actions';
+import configGraphQl, {
+  queryUserCreate, queryUserById, queryUserEdit, queryUserDelete,
+} from 'src/graphql/config';
+import {
+  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE,
+} from 'src/store/actions';
 
 const user = (store) => (next) => (action) => {
   switch (action.type) {
-    case USER_CREATE:
+    case USER_CREATE: {
       const { name, email, password } = action.payload;
       const data = JSON.stringify({
         ...queryUserCreate,
@@ -29,18 +33,85 @@ const user = (store) => (next) => (action) => {
           console.log('loader off');
         });
 
-      break;
-    case USER_EDIT:
+      return;
+    }
+    case USER_BY_ID: {
+      const { id } = action.payload;
+      const data = JSON.stringify({
+        ...queryUserById,
+        variables: { id },
+      });
 
-      break;
-    case USER_DELETE:
+      const config = {
+        ...configGraphQl,
+        data,
+      };
 
-      break;
+      console.log('loader on');
+      axios(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          console.log('loader off');
+        });
+      return;
+    }
+    case USER_EDIT: {
+      const { id, name, email } = action.payload;
+      const data = JSON.stringify({
+        ...queryUserEdit,
+        variables: { id, name, email },
+      });
+
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+
+      console.log('loader on');
+      axios(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          console.log('loader off');
+        });
+      return; }
+    case USER_DELETE: {
+      const { id } = action.payload;
+      const data = JSON.stringify({
+        ...queryUserDelete,
+        variables: { id },
+      });
+
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+
+      console.log('loader on');
+      axios(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          console.log('loader off');
+        });
+      return; }
     default:
+      next();
       break;
   }
-
-  next();
 };
 
 export default user;
