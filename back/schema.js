@@ -139,6 +139,10 @@ type Comment {
     project: Project
 }
 
+type Payload {
+    msg: String!
+}
+
 # On finit notre schéma par un type spécial
 # Le type Query
 # Il s'agirat des "points d'entrées" pour demander des données
@@ -166,6 +170,9 @@ type Query {
 
     need(id: ID!): Need
     needs: [Need]
+
+    deleteUser(id: ID!): Payload
+
 }
 
 # Les mutations sont les requêtes d'écriture (Création, modification, suppression) de GraphQL
@@ -189,6 +196,20 @@ type Mutation {
         category_id: ID!,
         author_id: ID
     ): Post
+
+    insertUser(
+        name: String!,
+        email: String!,
+        password: String!
+    ): User
+
+    editUser(
+        id: ID!,
+        name: String,
+        email: String,
+        password: String
+        avatar:String
+    ): User
 
 
 }

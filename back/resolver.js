@@ -45,6 +45,10 @@ module.exports = {
         async comment(_, args, context) {
             return await context.dataSources.comment.findCommentById(args.id);
         },
+
+        async deleteUser(_, args, context) {
+            return await context.dataSources.user.deleteUser(args.id);
+        },
     },
 
     Mutation: {
@@ -54,7 +58,17 @@ module.exports = {
 
         async editPost(_, args, context) {
             return await context.dataSources.post.editPost(args);
-        }
+        },
+
+        async insertUser(_, args, context) {
+            return await context.dataSources.user.insertUser(args);
+        },
+
+        async editUser(_, args, context) {
+            return await context.dataSources.user.editUser(args);
+        },
+
+
     },
 
     Category: {

@@ -12,7 +12,7 @@ const cache = require('./dataSource/cache');
 
 const app = express();
 
-cache.flush();
+cache.flushAll();
 
 // On va venir "créer" notre serveur GraphQL (comme on créérais un router ou l'app express)
 const graphQLServer = new ApolloServer({

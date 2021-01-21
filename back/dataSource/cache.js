@@ -44,7 +44,7 @@ module.exports = {
         });
     },
 
-    flush() {
+    flushAll() {
         return new Promise((resolve, reject) => {
             client.flushall((error, result) => {
                 if (error) {
@@ -52,7 +52,7 @@ module.exports = {
                     reject(error);
                     return;
                 }
-                console.log("redis flushed");
+                console.log("Redis flushed");
                 resolve(result == 1);
             });
         });
@@ -63,8 +63,10 @@ module.exports = {
         const valueAlreadyInCache = await this.has(key);
         if (!valueAlreadyInCache){
             result = await callback();
-            await this.store(key, JSON.stringify(result));
-            console.log(`caching ${key}`);
+            if(result){
+                console.log(`caching ${key}`);
+                await this.store(key, JSON.stringify(result));
+            }
             return result;
         }else {
             let result = JSON.parse(cached);
