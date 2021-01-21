@@ -23,7 +23,40 @@ const App = () => (
     </Route>
     <Route exact path="/projets">
       {/* Sprint 1 */}
-      <Projects />
+      <Projects projects={
+        [{
+          id: '1',
+          title: 'Mon super Projet 1',
+          author: 'Lucifer Morning Star',
+          authorEmail: 'lucifer@morning.str',
+          expireDate: '2100/10/12',
+          createDate: '0000/01/01',
+          isAuthor: true,
+          isFavorite: false,
+          isArchived: false,
+        },{
+          id: '2',
+          title: 'Un super Projet 2',
+          author: 'Lucide Morning Star',
+          authorEmail: 'lucifer@morning.str',
+          expireDate: '2100/10/12',
+          createDate: '0000/01/01',
+          isAuthor: false,
+          isFavorite: true,
+          isArchived: true,
+        },{
+          id: '3',
+          title: 'Mon super Projet 3',
+          author: 'White Morning Star',
+          authorEmail: 'lucifer@morning.str',
+          expireDate: '2100/10/12',
+          createDate: '0000/01/01',
+          isAuthor: false,
+          isFavorite: false,
+          isArchived: false,
+        }]
+      }
+      />
     </Route>
     <Route exact path="/projet/:slug">
       {/* Sprint 1 */}

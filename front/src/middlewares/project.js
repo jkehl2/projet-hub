@@ -123,7 +123,6 @@ const projectMiddleware = (store) => (next) => (action) => {
       next();
       break;
   }
-  next();
 };
 
 export default projectMiddleware;
