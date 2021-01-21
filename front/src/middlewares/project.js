@@ -5,7 +5,7 @@ import axios from 'axios';
 // actions from store
 import {
   CREATE_PROJECT, EDIT_PROJECT, DELETE_PROJECT, GET_PROJECT_BY_ID,
-} from 'src/store/actions';
+} from 'src/store/actions/project';
 
 // graphql queries
 import configGraphQl, {

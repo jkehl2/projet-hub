@@ -6,7 +6,7 @@
 // == IMPORT ACTIONS SUR STORE UTILISATEUR
 import {
   USER_STORE_UPDATE, USER_STORE_CLEAN,
-} from 'src/store/actions';
+} from 'src/store/actions/user';
 
 // ==  INITIALE USER STATE
 export const initialState = {
