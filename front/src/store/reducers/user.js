@@ -14,6 +14,7 @@ export const initialState = {
   id: '',
   name: '',
   email: '',
+  avatar: '',
   signInEmail: '',
   signInPassword: '',
 };
