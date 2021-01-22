@@ -35,41 +35,15 @@ router.post('/login',async (req, res) => {
         
         if (user.password !== password)
             throw "wrong password or email";
+        req.session.user = user;
+        console.log(req.session.user)
         res.json(user);
 
-        sess = req.session;
-        sess.user = user;
+        
         
     } catch(error) {
         res.json({"error": error})
     }
-    // }
-    // if (email) {
-    //     // Generate an access token
-        
-        
-    //     if (result.rowCount > 0){
-    //         console.log("user found");
-    //         const user = result.rows[0]
-    //         console.log(user);
-    //         res.json(user);
-    //     } else {
-    //         res.json({"error": "wrong password or email"});;
-            
-    //     }
-
-    //     //req.session.user = { username, password };
-    //     sess = req.session;
-    //     sess.user = user;
-    //     // sess.password = "password"
-        
-    //     res.json(user);
-
-
-
-    // } else {
-    //     res.json({"error": "email was not provided"});;
-    // }
 });
 
 router.post("/logout", (req, res) => {

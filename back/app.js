@@ -67,12 +67,12 @@ const graphQLServer = new ApolloServer({
     context: ({ req,res }) => {
         // Cette méthode contexte renvoi un objet qui sera passé au DataSource
         // via leur méthode initialze (pour faire l'injection de dépendances)
-        if (req.session.username) {
-            const user = req.session.username;
+        if (req.session.user) {
+            const user = req.session.user;
             console.log(`user ${user} logged in`)
             return {
                 sqlClient: client,
-                user: req.session.username
+                user: user
             };
         } else {
             console.log(`no logged user`)
