@@ -94,7 +94,7 @@ query GetProjectsByAuthorID ($id: ID!){
 
 #OK Return projects related to geo position and scope (in meters)
 
-qquery GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!) {
+query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!) {
   projectsByGeo(lat: $lat, long: $long, scope: $scope) {
     title
     description
