@@ -23,7 +23,12 @@ module.exports = {
         },
 
         async projects(_, __, context) {
-            return await context.dataSources.project.findAllProjects();
+            console.log("context")
+            console.log(context.user)
+            if (!context.user) 
+                return null;
+            else
+                return await context.dataSources.project.findAllProjects();
         },
 
         async project(_, args, context) {
