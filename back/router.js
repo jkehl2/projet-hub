@@ -24,19 +24,25 @@ router.post('/login',async (req, res) => {
         if (!email)
             throw "email/password was not provided";
 
-        const result = await client.query(
-            'SELECT * FROM users WHERE email LIKE $1',
-            [email]);
+        const result = await client.query(`
+            SELECT 
+                id,
+                created_at,
+                name,
+                email,
+                avatar 
+            FROM users 
+            WHERE
+                email = $1
+            AND 
+                password = crypt($2, password)
+                `,
+            [email, password]);
 
         if (result.rowCount < 1)
             throw "wrong password or email";
         console.log("user found");
-        const user = result.rows[0]
-        
-        if (user.password !== password) {
-            console.log("password incorrect")
-            throw "wrong password or email";
-        }
+        const user = result.rows[0];
             
         req.session.user = user;
         res.json(user);

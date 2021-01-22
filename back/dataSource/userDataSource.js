@@ -31,7 +31,7 @@ class UserDataSource extends DataSource {
         const savedUser = await this.client.query(
             `INSERT INTO users
                 (name, email, password)
-             VALUES ($1, $2, $3) RETURNING *`,
+             VALUES ($1, $2, crypt($3,gen_salt('md5'))) RETURNING *`,
             [user.name, user.email, user.password]
              );
         return savedUser.rows[0];
@@ -70,7 +70,7 @@ class UserDataSource extends DataSource {
         const savedUser = await this.client.query(`
             UPDATE users
             SET 
-                password = $1
+                password = crypt($1,gen_salt('md5'))
             WHERE
                 id = $2
             RETURNING *

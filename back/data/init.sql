@@ -15,8 +15,8 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (name, email, password) VALUES
-('Michel','michel@michel', 'password1'),
-('Bruce Reynolds','bruce@reynolds', 'password2');
+('Michel','michel@michel', crypt('password1', gen_salt('md5'))),
+('Bruce Reynolds','bruce@reynolds', crypt('password2', gen_salt('md5')));
 
 
 CREATE TABLE projects (
