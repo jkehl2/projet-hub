@@ -93,26 +93,20 @@ class UserDataSource extends DataSource {
         return {msg: deletion};
     };
 
-    async login(user) {
-        const loggingUser = await this.client.query(
+    async findUserByEmail(email) {
+        const user = await this.client.query(
             'SELECT * FROM users WHERE email LIKE $1',
-            [user.email]);
+            [email]);
 
-        if (loggingUser.rowCount > 0){
+        if (user.rowCount > 0){
             console.log("user found");
-            if (user.password === loggingUser.rows[0].password){
-                req.session.user = loggingUser;
-                console.log("logging successfull")
-            } else {
-                console.log("wrong password");
-            }
 
         } else {
             console.log("user not found");
-
+            
         }
+        return user.rows[0];                
 
-        return loggingUser.rows[0];
     };
 
     userLoader = new DataLoader(async (ids) => {
