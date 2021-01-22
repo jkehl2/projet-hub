@@ -14,50 +14,92 @@ import './CardProjects.scss';
 
 // == Composant
 const CardProjects = ({ projects }) => (
-  
-  <Grid.Row>
+
+  // debut de la grille pour la mise en place - Beginning of Grid
+  <Grid>
     <Item.Group divided>
       { projects.map((project) => (
         <Item key={project.id}>
-          <Grid columns={3}>
-            <Item.Image size="small" src="https://react.semantic-ui.com/images/wireframe/image.png" />
-          </Grid>
-          <Item.Content>
+          {/* grille sur trois colonnes - grid on three columns * */}
+          <Grid.Column VerticalAlign="center" width={3}>
+            {/* emplacement de l'image du projet - location of project image* */}
+            <Item.Image spaced size="small" src="https://react.semantic-ui.com/images/wireframe/image.png" />
+          </Grid.Column>
+          {/* grille sur sept colonnes - grid on seven columns * */}
+          <Grid.Column VerticalAlign="center" width={7}>
+            {/* entête et titre du projet - header and project title * */}
             <Item.Header as="h1">
               <span>{`${project.title}`}</span>
               {!project.isAuthor && (project.isFavorite ? <Icon name="star" /> : <Icon name="star outline" />)}
-              {project.isArchived && <Label as="span" tag color="brown">Archivée</Label>}
+              {/* project.isArchived && <Label as="span" tag color="brown">Archivée</Label> **/}
             </Item.Header>
             <Item.Meta>
+              {/* avatar du createur du projet - creator project avatar * */}
               <Image avatar spaced="right" src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
+              {/* Nom de l'auteur et email - author's name and email * */}
               <Label as="a" href="mailto:george.orwell@localhub.fr">
                 <span>{`${project.author}`}</span>
                 <Label.Detail>{`${project.authorEmail}`}</Label.Detail>
               </Label>
+              <Segment basic textAlign="left">
+                <Label color="green">
+                  Date création
+                  <Label.Detail>
+                    {`${project.createDate}`}
+                  </Label.Detail>
+                </Label>
+                <Label color="red">
+                  Date expiration
+                  <Label.Detail>
+                    {`${project.expireDate}`}
+                  </Label.Detail>
+                </Label>
+              </Segment>
             </Item.Meta>
+          </Grid.Column>
+          
+          {/* grille sur trois colonnes - grid on three columns * */}
+          <Grid.Column VerticalAlign="bottom" width={3}>
             <Item.Extra>
-              <Segment basic>
+              {/* etiquette archivé/non archivé du projet -archived/not archived project's tag * */}
+              {/*<Segment basic textAlign="right">**/}
+
+                {/*project.isArchived && <Label as="span" tag color="brown">Archivée</Label>**/}
+
+              {/*</Segment>**/}
+              {/* création et d'expiration du projet -creation date and end of project * */}
+              {/* <Segment basic textAlign="right">
                 <Label>
                   Date création
-                  <Label.Detail>{`${project.createDate}`}</Label.Detail>
-                    </Label>
-                    <Label>
-                      Date expiration
-                      <Label.Detail>{`${project.expireDate}`}</Label.Detail>
-                    </Label>
-                  </Segment>
+                  <Label.Detail>
+                    {`${project.createDate}`}
+                  </Label.Detail>
+                </Label>
+                <Label>
+                  Date expiration
+                  <Label.Detail>
+                    {`${project.expireDate}`}
+                  </Label.Detail>
+                </Label>
+              </Segment> */}
+              {/* adresse de l'auteur du projet - author's adress * */}
               <Segment basic textAlign="right">
-                    <Label>
-                      Adresse
-                      <Label.Detail>{`${project.adress}`}</Label.Detail>
-                    </Label>
-                  </Segment>
+                <Label>
+                  Adresse
+                  <Label.Detail>{`${project.adress}`}</Label.Detail>
+                </Label>
+              </Segment>
             </Item.Extra>
-          </Item.Content>
+          </Grid.Column>
+          {/* etiquette archivé/non archivé du projet -archived/not archived project's tag * */}
+          <Grid.Column VerticalAlign="center" width={3}>
+          { project.isArchived && <Label as="span" tag color="brown">Archivée</Label> }
+          </Grid.Column>
         </Item>
-        ))}
+      ))}
     </Item.Group>
-  </Grid.Row>
+  </Grid>
+  // Fin de la grille - End of Grid
 );
 
 // == PROP TYPES
