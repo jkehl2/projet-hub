@@ -35,8 +35,8 @@ class ProjectDataSource extends DataSource {
         return result.rows[0];
     }
 
-    async findProjectsByGeo(lat, long, scope) {
-        const cacheKey = `projectByGeo:${lat.toString()}|${long.toString()}|${scope}`;
+    async findProjectsByGeo(lat, long, scope, archived) {
+        const cacheKey = `projectByGeo:${lat.toString()}|${long.toString()}|${scope}|${archived}`;
         const results = await cache.wrapper(cacheKey,async () => {
             const [geoMin, geoMax] = geolib.getBoundsOfDistance(
                 {latitude: lat, longitude: long},
@@ -47,11 +47,13 @@ class ProjectDataSource extends DataSource {
             AND long > $2
             AND lat < $3 
             AND long < $4
+            AND archived = $5
             `, [
                 geoMin.latitude,
                 geoMin.longitude, 
                 geoMax.latitude, 
-                geoMax.longitude
+                geoMax.longitude,
+                archived
             ]);
             return result
         })

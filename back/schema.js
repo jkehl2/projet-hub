@@ -149,7 +149,7 @@ type Query {
     author(id: ID!): Author
 
     project(id: ID!): Project
-    projectsByGeo(lat: Float!, long: Float!, scope: Float!): [Project]
+    projectsByGeo(lat: Float!, long: Float!, scope: Float!, archived: Boolean): [Project]
     projects: [Project]
 
     user(id: ID!): User

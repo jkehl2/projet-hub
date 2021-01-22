@@ -75,7 +75,7 @@ const graphQLServer = new ApolloServer({
                 user: user
             };
         } else {
-            console.log(`unknown making queries`)
+            console.log(`unidendified user making queries`)
             return {
                 sqlClient: client,
             };
