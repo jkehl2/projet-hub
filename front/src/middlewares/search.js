@@ -23,6 +23,9 @@ const search = (store) => (next) => (action) => {
       apiKey : "...",
       ssl : true,
       location : "...",
+      filterOptions : {
+        type : ["PositionOfInterest"]    // type de localisant
+    },
       onSuccess : function (result) {
       ...
       }
