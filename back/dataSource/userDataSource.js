@@ -37,32 +37,82 @@ class UserDataSource extends DataSource {
         return savedUser.rows[0];
     };
 
-    async editUser(user) {
+    async editUserInfos(user) {
         const savedUser = await this.client.query(`
             UPDATE users
             SET 
                 name = $1,
-                email = $2,
-                password = $3,
-                avatar = $4
+                email = $2
             WHERE
-                id = $5
+                id = $3
             RETURNING *
              `,
-            [user.name, user.email, user.password, user.avatar, user.id]
+            [user.name, user.email, user.id]
+             );
+        return savedUser.rows[0];
+    };
+
+    async editUserAvatar(user) {
+        const savedUser = await this.client.query(`
+            UPDATE users
+            SET 
+                avatar = $1
+            WHERE
+                id = $2
+            RETURNING *
+             `,
+            [user.avatar, user.id]
+             );
+        return savedUser.rows[0];
+    };
+
+    async editUserPassword(user) {
+        const savedUser = await this.client.query(`
+            UPDATE users
+            SET 
+                password = $1
+            WHERE
+                id = $2
+            RETURNING *
+             `,
+            [user.password, user.id]
              );
         return savedUser.rows[0];
     };
 
     async deleteUser(id) {
-        const savedUser = await this.client.query(`
+        const deletion = await this.client.query(`
             DELETE FROM users
             WHERE
                 id = $1
+            RETURNING 'Deletion completed'
              `,
             [id]
              );
-        return {msg: "deletion completed"};
+        console.log(deletion);
+        return {msg: deletion};
+    };
+
+    async login(user) {
+        const loggingUser = await this.client.query(
+            'SELECT * FROM users WHERE email LIKE $1',
+            [user.email]);
+
+        if (loggingUser.rowCount > 0){
+            console.log("user found");
+            if (user.password === loggingUser.rows[0].password){
+                req.session.user = loggingUser;
+                console.log("logging successfull")
+            } else {
+                console.log("wrong password");
+            }
+
+        } else {
+            console.log("user not found");
+
+        }
+
+        return loggingUser.rows[0];
     };
 
     userLoader = new DataLoader(async (ids) => {

@@ -23,7 +23,12 @@ module.exports = {
         },
 
         async projects(_, __, context) {
-            return await context.dataSources.project.findAllProjects();
+            console.log("context")
+            console.log(context.user)
+            if (!context.user) 
+                return null;
+            else
+                return await context.dataSources.project.findAllProjects();
         },
 
         async project(_, args, context) {
@@ -31,11 +36,15 @@ module.exports = {
         },
 
         async projectsByGeo(_, args, context) {
-            return await context.dataSources.project.findProjectsByGeo(args.lat,args.long);
+            return await context.dataSources.project.findProjectsByGeo(args.lat,args.long, args.scope);
         },
 
         async user(_, args, context) {
             return await context.dataSources.user.findUserById(args.id);
+        },
+
+        async login(_, args, context) {
+            return await context.dataSources.user.login(args);
         },
 
         async need(_, args, context) {
@@ -46,9 +55,7 @@ module.exports = {
             return await context.dataSources.comment.findCommentById(args.id);
         },
 
-        async deleteUser(_, args, context) {
-            return await context.dataSources.user.deleteUser(args.id);
-        },
+
     },
 
     Mutation: {
@@ -64,11 +71,21 @@ module.exports = {
             return await context.dataSources.user.insertUser(args);
         },
 
-        async editUser(_, args, context) {
-            return await context.dataSources.user.editUser(args);
+        async editUserInfos(_, args, context) {
+            return await context.dataSources.user.editUserInfos(args);
         },
 
+        async editUserAvatar(_, args, context) {
+            return await context.dataSources.user.editUserAvatar(args);
+        },
 
+        async editUserPassword(_, args, context) {
+            return await context.dataSources.user.editUserPassword(args);
+        },
+
+        async deleteUser(_, args, context) {
+            return await context.dataSources.user.deleteUser(args.id);
+        },
     },
 
     Category: {
