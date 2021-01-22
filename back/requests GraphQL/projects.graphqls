@@ -94,8 +94,8 @@ query GetProjectsByAuthorID ($id: ID!){
 
 #OK Return projects related to geo position and scope (in meters)
 
-query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!) {
-  projectsByGeo(lat: $lat, long: $long, scope: $scope) {
+query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!, $archived: Boolean!) {
+  projectsByGeo(lat: $lat, long: $long, scope: $scope, archived: $archived) {
     title
     description
     location
@@ -106,12 +106,14 @@ query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!) {
       email
     }
   }
+  
 }
 #query variables
 {
-	"lat": 2.010, # latitude
-	"long": 1.999, # longitude
-	"scope": 10000 # Distance max in meter
+	"lat": 2,
+	"long": 1.9,
+	"scope": 20000,
+  "archived": false
 }
 #-------------------------------------------------
 
