@@ -21,7 +21,27 @@ const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case USER_SIGNIN: {
       const { user } = store.getState();
-      console.log('User signIn ask', user);
+      const data = JSON.stringify({ email: user.signInEmail, password: user.password });
+      const config = {
+        method: 'post',
+        url: 'http://localhost:3000/login',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data,
+      };
+      console.log('loader on');
+      axios(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          console.log('loader off');
+        });
+
       next(cleanSignIn());
       return;
     }
