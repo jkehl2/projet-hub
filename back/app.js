@@ -13,8 +13,17 @@ const { user } = require('./dataSource');
 const connectRedis = require('connect-redis');
 const app = express();
 const redis = require('redis');
+const cors = require('cors');
 
 cache.flushAll();
+
+
+app.use(cors({
+    origin: '*',
+    methods: 'GET,POST,PATCH,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type'
+}));
+
 
 app.use(bodyparser.json());
 const RedisStore = connectRedis(session);
