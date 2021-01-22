@@ -31,7 +31,6 @@ const CardProjects = ({ projects }) => (
             <Item.Header as="h1">
               <span>{`${project.title}`}</span>
               {!project.isAuthor && (project.isFavorite ? <Icon name="star" /> : <Icon name="star outline" />)}
-              {/* project.isArchived && <Label as="span" tag color="brown">Archivée</Label> **/}
             </Item.Header>
             <Item.Meta>
               {/* avatar du createur du projet - creator project avatar * */}
@@ -57,31 +56,9 @@ const CardProjects = ({ projects }) => (
               </Segment>
             </Item.Meta>
           </Grid.Column>
-          
           {/* grille sur trois colonnes - grid on three columns * */}
           <Grid.Column VerticalAlign="bottom" width={3}>
             <Item.Extra>
-              {/* etiquette archivé/non archivé du projet -archived/not archived project's tag * */}
-              {/*<Segment basic textAlign="right">**/}
-
-                {/*project.isArchived && <Label as="span" tag color="brown">Archivée</Label>**/}
-
-              {/*</Segment>**/}
-              {/* création et d'expiration du projet -creation date and end of project * */}
-              {/* <Segment basic textAlign="right">
-                <Label>
-                  Date création
-                  <Label.Detail>
-                    {`${project.createDate}`}
-                  </Label.Detail>
-                </Label>
-                <Label>
-                  Date expiration
-                  <Label.Detail>
-                    {`${project.expireDate}`}
-                  </Label.Detail>
-                </Label>
-              </Segment> */}
               {/* adresse de l'auteur du projet - author's adress * */}
               <Segment basic textAlign="right">
                 <Label>
@@ -93,7 +70,7 @@ const CardProjects = ({ projects }) => (
           </Grid.Column>
           {/* etiquette archivé/non archivé du projet -archived/not archived project's tag * */}
           <Grid.Column VerticalAlign="center" width={3}>
-          { project.isArchived && <Label as="span" tag color="brown">Archivée</Label> }
+            { project.isArchived && <Label as="span" tag color="brown">Archivée</Label> }
           </Grid.Column>
         </Item>
       ))}
