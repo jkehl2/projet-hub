@@ -69,13 +69,13 @@ const graphQLServer = new ApolloServer({
         // via leur méthode initialze (pour faire l'injection de dépendances)
         if (req.session.user) {
             const user = req.session.user;
-            console.log(`user ${user} logged in`)
+            console.log(`user ${user.email} making queries`)
             return {
                 sqlClient: client,
                 user: user
             };
         } else {
-            console.log(`no logged user`)
+            console.log(`unknown making queries`)
             return {
                 sqlClient: client,
             };

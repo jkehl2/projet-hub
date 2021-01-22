@@ -23,8 +23,6 @@ module.exports = {
         },
 
         async projects(_, __, context) {
-            console.log("context")
-            console.log(context.user)
             if (!context.user) 
                 return null;
             else
