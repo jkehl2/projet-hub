@@ -1,25 +1,31 @@
+/* eslint-disable no-unused-vars */
 // call to API
 import axios from 'axios';
 
 // actions from store
-import { CREATE_PROJECT, EDIT_PROJECT, DELETE_PROJECT, GET_PROJECT_BY_ID } from 'src/store/actions';
+import {
+  CREATE_PROJECT, EDIT_PROJECT, DELETE_PROJECT, GET_PROJECT_BY_ID,
+} from 'src/store/actions/project';
 
 // graphql queries
-import configGraphQl, {/**here put graphql requests */queryProjectbyId, queryDeleteProject } from 'src/graphql/config';
+import configGraphQl, {
+  queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject,
+} from 'src/graphql/config';
 
 // mw
 const projectMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
-
     // CREATION
     case CREATE_PROJECT: {
       const {
-        title, description, expiration_date, location, lat, long, author,
+        title, description, expirationDate, location, lat, long, author,
       } = action.payload;
 
       const data = JSON.stringify({
-        .../**requete graphql pour projectcreate */,
-        variables: {  title, description, expiration_date, location, lat, long, author },
+        ...queryCreateProject,
+        variables: {
+          title, description, expirationDate, location, lat, long, author,
+        },
       });
 
       const config = {
@@ -41,12 +47,16 @@ const projectMiddleware = (store) => (next) => (action) => {
 
       return;
     }
-    //EDITING
-    case EDIT_PROJECT:{
-      const {id, title, description, expiration_date, location, lat, long, author} = action.payload;
+    // EDITING
+    case EDIT_PROJECT: {
+      const {
+        id, title, description, expirationDate, location, lat, long, author,
+      } = action.payload;
       const data = JSON.stringify({
-        .../**requete graphql pour projectedit */,
-        variables: { id, title, description, expiration_date, location, lat, long, author },
+        ...queryEditProject,
+        variables: {
+          id, title, description, expirationDate, location, lat, long, author,
+        },
       });
 
       const config = {
@@ -67,7 +77,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         });
       return;
     }
-    //DELETING
+    // DELETING
     case DELETE_PROJECT: {
       const { id } = action.payload;
       const data = JSON.stringify({
@@ -93,11 +103,11 @@ const projectMiddleware = (store) => (next) => (action) => {
         });
       return;
     }
-      //GET BY ID
+    // GET BY ID == OK
     case GET_PROJECT_BY_ID: {
       const { id } = action.payload;
       const data = JSON.stringify({
-        ...queryProjectbyId,
+        ...queryProjectById,
         variables: { id },
       });
 
@@ -120,10 +130,9 @@ const projectMiddleware = (store) => (next) => (action) => {
       return;
     }
     default:
-      next();
+      next(action);
       break;
   }
-  next();
 };
 
 export default projectMiddleware;

@@ -16,21 +16,25 @@ const SignIn = (
   {
     email,
     password,
-    handleLogin,
-    handleSignIn,
+    setSignInValue,
+    handleSubmit,
+    redirectSignUp,
   },
 ) => (
   <Container className="Signin">
     {/** titre de la page */}
     <Header as="h1">Connexion</Header>
     {/** formulaire d'identification */}
-    <Form>
+    <Form onSubmit={handleSubmit()}>
       {/** email */}
       <Form.Input
         type="text"
         label="Email"
         placeholder="monemail@domain.foo"
         value={email}
+        onChange={(event) => {
+          setSignInValue({ signInEmail: event.target.value });
+        }}
       />
       {/** mot de passe */}
       <Form.Input
@@ -38,15 +42,18 @@ const SignIn = (
         label="Mot de passe"
         placeholder="mot de passe"
         value={password}
+        onChange={(event) => {
+          setSignInValue({ signInPassword: event.target.value });
+        }}
       />
       {/** bouton connexion */}
       <Segment basic textAlign="right">
         <Button.Group>
-          <Form.Button type="button" onClick={handleLogin}>
+          <Form.Button type="button" onClick={handleSubmit()}>
             Connexion
           </Form.Button>
           {/** bouton inscription */}
-          <Form.Button type="button" onClick={handleSignIn}>
+          <Form.Button type="button" onClick={redirectSignUp()}>
             Inscription
           </Form.Button>
         </Button.Group>
@@ -58,8 +65,9 @@ const SignIn = (
 SignIn.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  handleLogin: PropTypes.func.isRequired,
-  handleSignIn: PropTypes.func.isRequired,
+  setSignInValue: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  redirectSignUp: PropTypes.func.isRequired,
 };
 
 // == Export

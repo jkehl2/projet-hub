@@ -1,15 +1,14 @@
 // == Import npm
 import React from 'react';
-import PropTypes from 'prop-types';
-
+// == IMPORTS CONTAINERS
+import SearchProjects from 'src/containers/SearchProjects';
 // == IMPORTS COMPOSANTS
 import {
   Container,
 } from 'semantic-ui-react';
 import HeaderHome from './HeaderHome';
 import DescriptionHome from './DescriptionHome';
-import SearchHome from './SearchHome';
-// == IMPORTS CONTAINERS
+
 
 // == STYLES
 import './home.scss';
@@ -24,7 +23,7 @@ const Home = () => (
     <DescriptionHome />
 
     {/** Search Bar */}
-    <SearchHome />
+    <SearchProjects />
   </Container>
 );
 

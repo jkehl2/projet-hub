@@ -1,5 +1,5 @@
 const empty = (store) => (next) => (action) => {
-  next();
+  next(action);
 };
 
 export default empty;

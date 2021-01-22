@@ -6,11 +6,11 @@
 // == IMPORT ACTIONS SUR STORE
 import {
   PROJECT_STORE_UPDATE, PROJECT_STORE_CLEAN,
-} from 'src/store/actions';
+} from 'src/store/actions/project';
 
 // ==  INITIAL STATE : a project object containing an array
 export const initialState = {
-  project: [{
+  projects: [{
     title: '',
     description: '',
     expiration_date: '',

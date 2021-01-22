@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Container, Item, Icon, Label,
+  Item, Icon, Label, Image, Segment,
 } from 'semantic-ui-react';
 
 // == IMPORTS CONTAINERS
@@ -13,54 +13,64 @@ import {
 import './list.scss';
 
 // == Composant
-const List = ({
-  isArchived, isAuthor, isFavorite, Timestamp,
-}) => (
-  <Container className="list">
-    <Item.Group>
-      <Item>
-        {/* image */}
-        <Item.Image src="/images/wireframe/image.png" size="tiny" verticalAlign="top" />
-
-        <Item.Header as="h3">
-          <span>Titre du projet</span>
-
-          {/* Nom de l'auteur */}
-
-          <Item.Author>
-            <p>Lucifer Morningstar</p>
-          </Item.Author>
-
-          {/* date et heure de la création du projet */}
-
-          <Timestamp date={Date} />
-
-          {/* bouton archives */}
-
-          { isArchived && <Label as="span" tag color="brown" attached="top right">Archivée</Label> }
-
-          {/* étoile favoris */}
-
-          {!isAuthor && (isFavorite ? <Icon name="star" /> : <Icon name="star outline" />)}
-
-        </Item.Header>
-        <Item.Adress>
-
-          {/* address */}
-          <p>666 hell street, Nowhere</p>
-
-        </Item.Adress>
+const List = ({ projects }) => (
+  <Item.Group divided>
+    { projects.map((project) => (
+      <Item key={project.id}>
+        <Item.Image size="small" src="https://react.semantic-ui.com/images/wireframe/image.png" />
+        <Item.Content>
+          <Item.Header as="h1">
+            <span>{`${project.title}`}</span>
+            {!project.isAuthor && (project.isFavorite ? <Icon name="star" /> : <Icon name="star outline" />)}
+            {project.isArchived && <Label as="span" tag color="brown">Archivée</Label>}
+          </Item.Header>
+          <Item.Meta>
+            <Image avatar spaced="right" src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
+            <Label as="a" href="mailto:george.orwell@localhub.fr">
+              <span>{`${project.author}`}</span>
+              <Label.Detail>{`${project.authorEmail}`}</Label.Detail>
+            </Label>
+          </Item.Meta>
+          <Item.Extra>
+            <Segment basic>
+              <Label>
+                Date création
+                <Label.Detail>{`${project.createDate}`}</Label.Detail>
+              </Label>
+              <Label>
+                Date expiration
+                <Label.Detail>{`${project.expireDate}`}</Label.Detail>
+              </Label>
+            </Segment>
+            <Segment basic textAlign="right">
+              <Label>
+                Adresse
+                <Label.Detail>{`${project.adress}`}</Label.Detail>
+              </Label>
+            </Segment>
+          </Item.Extra>
+        </Item.Content>
       </Item>
-    </Item.Group>
-  </Container>
+    ))}
+  </Item.Group>
 );
 
 // == PROP TYPES
 List.propTypes = {
-  isFavorite: PropTypes.bool.isRequired,
-  isArchived: PropTypes.bool.isRequired,
-  isAuthor: PropTypes.bool.isRequired,
-  Timestamp: PropTypes.string.isRequired,
+  projects: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      authorEmail: PropTypes.string.isRequired,
+      expireDate: PropTypes.string.isRequired,
+      createDate: PropTypes.string.isRequired,
+      isAuthor: PropTypes.bool.isRequired,
+      adress: PropTypes.string.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
+      isArchived: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
 };
 // == Export
 export default List;

@@ -2,6 +2,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
+// == IMPORTS CONTAINERS
+import SignIn from 'src/containers/SignIn';
+
 // == IMPORTS COMPOSANTS
 import Home from 'src/components/Home';
 import Profil from 'src/components/Profil';
@@ -9,9 +12,8 @@ import Project from 'src/components/Project';
 import SignUp from 'src/components/SignUp';
 import Projects from 'src/components/Projects';
 import Confirmation from 'src/components/Confirmation';
-import SignIn from 'src/components/SignIn';
-// == IMPORTS CONTAINERS
 
+// == IMPORT STYLES
 import './app.scss';
 
 // == Composant
@@ -23,7 +25,43 @@ const App = () => (
     </Route>
     <Route exact path="/projets">
       {/* Sprint 1 */}
-      <Projects />
+      <Projects projects={
+        [{
+          id: '1',
+          title: 'Mon barbecue Infernal',
+          author: 'Lucifer Morning Star',
+          authorEmail: 'lucifer@morning.str',
+          expireDate: '2100/10/12',
+          createDate: '0000/01/01',
+          adress: '666, Hell Street, Nowhere Land',
+          isAuthor: true,
+          isFavorite: false,
+          isArchived: false,
+        }, {
+          id: '2',
+          title: 'Rester au chaud',
+          author: 'Lucide Morning Star',
+          authorEmail: 'lucifer@morning.str',
+          expireDate: '2100/10/12',
+          createDate: '0000/01/01',
+          adress: '666, Hell Street, Nowhere Land',
+          isAuthor: false,
+          isFavorite: true,
+          isArchived: true,
+        }, {
+          id: '3',
+          title: 'Ma machine à glaçons',
+          author: 'White Morning Star',
+          authorEmail: 'lucifer@morning.str',
+          expireDate: '2100/10/12',
+          createDate: '0000/01/01',
+          adress: '666, Hell Street, Nowhere Land',
+          isAuthor: false,
+          isFavorite: false,
+          isArchived: false,
+        }]
+      }
+      />
     </Route>
     <Route exact path="/projet/:slug">
       {/* Sprint 1 */}

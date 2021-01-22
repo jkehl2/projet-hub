@@ -7,8 +7,8 @@ import {
   Container,
 } from 'semantic-ui-react';
 import List from 'src/components/Projects/List';
-import Map from 'src/components/Projects/Map';
-import Search from 'src/components/Projects/Search';
+// import Map from 'src/components/Projects/Map';
+import SearchProjects from 'src/containers/SearchProjects';
 
 // == IMPORTS CONTAINERS
 
@@ -16,20 +16,21 @@ import Search from 'src/components/Projects/Search';
 import './projects.scss';
 
 // == Composant
-const Projects = ({
-  isArchived, isAuthor, isFavorite,
-}) => (
+const Projects = ({ projects }) => (
   <Container className="projects">
-    <List isAuthor={isAuthor} isArchived={isArchived} isFavorite={isFavorite} />
-    <Map />
-    <Search />
+    {/** Search Bar */}
+    <SearchProjects searchParams={{
+      localite: 'Ma localité',
+      perimeter: 1,
+    }}
+    />
+    {/* <Map projects={projects} /> */}
+    <List projects={projects} />
   </Container>
 );
 // == PROP TYPES
 Projects.propTypes = {
-  isAuthor: PropTypes.bool.isRequired,
-  isArchived: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
+  projects: PropTypes.array.isRequired,
 };
 // == Export
 export default Projects;
