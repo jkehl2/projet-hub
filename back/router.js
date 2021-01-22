@@ -33,14 +33,13 @@ router.post('/login',async (req, res) => {
         console.log("user found");
         const user = result.rows[0]
         
-        if (user.password !== password)
+        if (user.password !== password) {
+            console.log("password incorrect")
             throw "wrong password or email";
+        }
+            
         req.session.user = user;
-        console.log(req.session.user)
         res.json(user);
-
-        
-        
     } catch(error) {
         res.json({"error": error})
     }
@@ -51,7 +50,7 @@ router.post("/logout", (req, res) => {
         if (err) {
             return console.log(err);
         }
-        res.send(`user ${sess.username} logged out`);
+        res.json({"info": `user logged out`})
 
     });
 });
