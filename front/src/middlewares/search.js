@@ -14,8 +14,20 @@ const search = (store) => (next) => (action) => {
     case SEARCH_PROJECT_EXECUTE: {
       const { searchProject } = store.getState();
       console.log('Nouvelle recherche', searchProject);
-      //TODO Récupéré les coordonnées GPS depuis la localité
-      //TODO Formater un objet contenant les attributs de la requête GRaphQL
+      // TODO Récupéré les coordonnées GPS depuis la localité
+      // installer package npm geoportal-access-lib
+      // import = Gp
+      // installer dépendances xmldom + request
+
+      /** Gp.Services.geocode({
+      apiKey : "...",
+      ssl : true,
+      location : "...",
+      onSuccess : function (result) {
+      ...
+      }
+      }); */
+      // TODO Formater un objet contenant les attributs de la requête GRaphQL
 
       store.dispatch(push('/projets'));
       return;
