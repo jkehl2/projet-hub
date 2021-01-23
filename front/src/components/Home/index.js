@@ -1,5 +1,7 @@
 // == Import npm
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 // == IMPORTS CONTAINERS
 import SearchProjects from 'src/containers/SearchProjects';
 // == IMPORTS COMPOSANTS
@@ -9,12 +11,13 @@ import {
 import HeaderHome from './HeaderHome';
 import DescriptionHome from './DescriptionHome';
 
-
 // == STYLES
 import './home.scss';
 
 // == Composant
-const Home = () => (
+const Home = ({cleanAppParams}) => {
+  useEffect(()=>()=>{cleanAppParams();},[]);
+  return (
   <Container className="home">
     {/** Page top with pictures */}
     <HeaderHome />
@@ -25,7 +28,11 @@ const Home = () => (
     {/** Search Bar */}
     <SearchProjects />
   </Container>
-);
+)};
+
+Home.propTypes = {
+  cleanAppParams: PropTypes.func.isRequired,
+};
 
 // == Export
 export default Home;

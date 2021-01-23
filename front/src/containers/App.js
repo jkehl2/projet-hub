@@ -10,6 +10,7 @@ const mapStateToProps = (state) => ({
   error: state.app.error.error,
   isMessage: state.app.message.isMessage,
   message: state.app.message.message,
+  logged: state.user.logged,
 });
 
 const mapDispatchToProps = (dispatch) => ({

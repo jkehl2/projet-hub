@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 import SignIn from 'src/containers/SignIn';
 import Menu from 'src/containers/Menu';
+import Home from 'src/containers/Home';
 
 // == IMPORTS COMPOSANTS
 import {
   Container,
   Message,
 } from 'semantic-ui-react';
-import Home from 'src/components/Home';
 import Profil from 'src/components/Profil';
 import Project from 'src/components/Project';
 import SignUp from 'src/components/SignUp';
@@ -24,7 +24,7 @@ import './app.scss';
 
 // == Composant
 const App = ({
-  isError, error, isMessage, message, setMessage,
+  isError, error, isMessage, message, logged, setMessage,
 }) => (
   <Container className="app">
     {/* Menu de l'application */}
@@ -44,10 +44,11 @@ const App = ({
       </Message>
     )}
     <Switch>
+      {/* Sprint 1 - Page d'accueil */}
       <Route exact path="/">
-        {/* Sprint 1 */}
         <Home />
       </Route>
+      {/* Sprint 1 - Page de rechercher */}
       <Route exact path="/projets">
         {/* Sprint 1 */}
         <Projects projects={
@@ -88,41 +89,44 @@ const App = ({
       }
         />
       </Route>
+      {/* Sprint 1 - Page d'étail d'un projet */}
       <Route exact path="/projet/:slug">
-        {/* Sprint 1 */}
+
         <Project isAuthor={false} isArchived={false} isFavorite={false} isEditMode={false} />
       </Route>
-      <Route exact path="/utilisateur/confirm">
-        {/* Sprint 1 */}
-        <Confirmation />
-      </Route>
-      <Route exact path="/utilisateur/profil">
-        {/* Sprint 1 */}
-        <Profil />
-      </Route>
+      {/* Sprint 1 - Page de connexion utlisateur */}
       <Route exact path="/utilisateur/connexion">
-        {/* Sprint 1 */}
+
         <SignIn />
       </Route>
-      <Route exact path="/utilisateur/enregistrement">
-        {/* Sprint 1 */}
-        <SignUp />
-      </Route>
-      <Route exact path="/mentionsLegales">
-        {/* Sprint 2 */}
-      </Route>
-      <Route exact path="/equipe">
-        {/* Sprint 2 */}
-      </Route>
-      <Route exact path="/projet/create">
-        {/* Sprint 2 */}
-      </Route>
-      <Route exact path="/utilisateur/favoris">
-        {/* Sprint 2 */}
-      </Route>
-      <Route exact path="/utilisateur/projets">
-        {/* Sprint 2 */}
-      </Route>
+      {/* Routes ateignable uniquement si utilisateur logged */}
+      {logged && (
+      <>
+        {/* Sprint 1 - Page de confirmation par mot de passe */}
+        <Route exact path="/utilisateur/confirm">
+          <Confirmation />
+        </Route>
+        {/* Sprint 1 - Page de profil */}
+        <Route exact path="/utilisateur/profil">
+          <Profil />
+        </Route>
+        {/* Sprint 1 - Page d'enregistrement utlisateur' */}
+        <Route exact path="/utilisateur/enregistrement">
+          <SignUp />
+        </Route>
+        {/* Sprint 2 - Page Création de projet' */}
+        <Route exact path="/projet/create" />
+        {/* Sprint 2 - Page mes favoris' */}
+        <Route exact path="/utilisateur/favoris" />
+        {/* Sprint 2 - Page mes projets' */}
+        <Route exact path="/utilisateur/projets"> </Route>
+      </>
+      )}
+      {/* Sprint 2 - Mentions légales */}
+      <Route exact path="/mentionsLegales"> </Route>
+      {/* Sprint 2 - Présentation équipe */}
+      <Route exact path="/equipe"> </Route>
+      {/* MESSAGE POUR 404 ET REDIRECT VERS Accueil */}
       <Route
         path="*"
         exact
@@ -140,6 +144,7 @@ App.propTypes = {
   error: PropTypes.string.isRequired,
   isMessage: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
+  logged: PropTypes.bool.isRequired,
   setMessage: PropTypes.func.isRequired,
 };
 
