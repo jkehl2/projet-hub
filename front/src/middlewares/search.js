@@ -11,26 +11,25 @@ import axios from 'axios';
 import { push } from 'connected-react-router';
 
 // == Import search project action creator
-import { SEARCH_PROJECT_EXECUTE, geoSuccess, searchProjectDone } from 'src/store/actions/search';
+import {
+  SEARCH_PROJECT_EXECUTE, SEARCH_PROJECT_DONE, geoSuccess, searchProjectDone,
+} from 'src/store/actions/search';
 
 // == Import GraphQL query template + configuration
 import configGraphQl, { queryGetProjectsByGeo } from 'src/graphql/config';
 
-// == Import Geoportal
-
 // == import utils to allow perimeter conversion
 import perimetersValue from 'src/utils/perimeters.json';
-import { SEARCH_PROJECT_DONE } from '../store/actions/search';
 
 // MIDDLEWARE SEARCH - Middleware to handle search for a project
 
 const search = (store) => (next) => (action) => {
   switch (action.type) {
     case SEARCH_PROJECT_EXECUTE: {
-      // gathering values that WONT change
+      // gathering values needed for geocoding
       const {
         searchProject: {
-          localite, perimeter,
+          localite,
         },
       } = store.getState();
 
@@ -52,10 +51,10 @@ const search = (store) => (next) => (action) => {
     }
 
     case SEARCH_PROJECT_DONE: {
-      // gathering updated coordinates from the store
+      // gathering updated coordinates from the store to send to localhub API
       const {
         searchProject: {
-          localite, perimeter, lat, long, archived,
+          perimeter, lat, long, archived,
         },
       } = store.getState();
       // get perimeter value in m
@@ -71,6 +70,7 @@ const search = (store) => (next) => (action) => {
           lat, long, scope, archived,
         },
       });
+
       // building request for back-end
       const config = {
         ...configGraphQl,
