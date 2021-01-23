@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // == IMPORTS CONTAINERS
@@ -24,7 +24,7 @@ import './app.scss';
 
 // == Composant
 const App = ({
-  isError, error, isMessage, message,
+  isError, error, isMessage, message, setMessage,
 }) => (
   <Container className="app">
     {/* Menu de l'application */}
@@ -43,13 +43,14 @@ const App = ({
         <p>{`${message}`}</p>
       </Message>
     )}
-    <Route exact path="/">
-      {/* Sprint 1 */}
-      <Home />
-    </Route>
-    <Route exact path="/projets">
-      {/* Sprint 1 */}
-      <Projects projects={
+    <Switch>
+      <Route exact path="/">
+        {/* Sprint 1 */}
+        <Home />
+      </Route>
+      <Route exact path="/projets">
+        {/* Sprint 1 */}
+        <Projects projects={
         [{
           id: '1',
           title: 'Mon barbecue Infernal',
@@ -85,43 +86,52 @@ const App = ({
           isArchived: false,
         }]
       }
+        />
+      </Route>
+      <Route exact path="/projet/:slug">
+        {/* Sprint 1 */}
+        <Project isAuthor={false} isArchived={false} isFavorite={false} isEditMode={false} />
+      </Route>
+      <Route exact path="/utilisateur/confirm">
+        {/* Sprint 1 */}
+        <Confirmation />
+      </Route>
+      <Route exact path="/utilisateur/profil">
+        {/* Sprint 1 */}
+        <Profil />
+      </Route>
+      <Route exact path="/utilisateur/connexion">
+        {/* Sprint 1 */}
+        <SignIn />
+      </Route>
+      <Route exact path="/utilisateur/enregistrement">
+        {/* Sprint 1 */}
+        <SignUp />
+      </Route>
+      <Route exact path="/mentionsLegales">
+        {/* Sprint 2 */}
+      </Route>
+      <Route exact path="/equipe">
+        {/* Sprint 2 */}
+      </Route>
+      <Route exact path="/projet/create">
+        {/* Sprint 2 */}
+      </Route>
+      <Route exact path="/utilisateur/favoris">
+        {/* Sprint 2 */}
+      </Route>
+      <Route exact path="/utilisateur/projets">
+        {/* Sprint 2 */}
+      </Route>
+      <Route
+        path="*"
+        exact
+        render={() => {
+          setMessage('404 - NOT FOUND - URL invalide');
+          return (<Redirect to="/" />);
+        }}
       />
-    </Route>
-    <Route exact path="/projet/:slug">
-      {/* Sprint 1 */}
-      <Project isAuthor={false} isArchived={false} isFavorite={false} isEditMode={false} />
-    </Route>
-    <Route exact path="/utilisateur/confirm">
-      {/* Sprint 1 */}
-      <Confirmation />
-    </Route>
-    <Route exact path="/utilisateur/profil">
-      {/* Sprint 1 */}
-      <Profil />
-    </Route>
-    <Route exact path="/utilisateur/connexion">
-      {/* Sprint 1 */}
-      <SignIn />
-    </Route>
-    <Route exact path="/utilisateur/enregistrement">
-      {/* Sprint 1 */}
-      <SignUp />
-    </Route>
-    <Route exact path="/mentionsLegales">
-      {/* Sprint 2 */}
-    </Route>
-    <Route exact path="/equipe">
-      {/* Sprint 2 */}
-    </Route>
-    <Route exact path="/projet/create">
-      {/* Sprint 2 */}
-    </Route>
-    <Route exact path="/utilisateur/favoris">
-      {/* Sprint 2 */}
-    </Route>
-    <Route exact path="/utilisateur/projets">
-      {/* Sprint 2 */}
-    </Route>
+    </Switch>
   </Container>
 );
 
@@ -130,6 +140,7 @@ App.propTypes = {
   error: PropTypes.string.isRequired,
   isMessage: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
+  setMessage: PropTypes.func.isRequired,
 };
 
 // == Export

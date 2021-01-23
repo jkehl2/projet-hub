@@ -34,7 +34,12 @@ const Menu = ({ logged, userName }) => (
       <MenuUi.Header as="h1" className="ui item compact menu__header">Local-Hub</MenuUi.Header>
     </MenuUi.Menu>
     <MenuUi.Menu position="right" size="large">
-      <Dropdown item trigger={DropDownTrigger({ logged, userName })} icon={null} simple position="right">
+      <Dropdown
+        item
+        trigger={DropDownTrigger({ logged, userName })}
+        icon={null}
+        position="right"
+      >
         <Dropdown.Menu>
           <Dropdown.Item>Rechercher</Dropdown.Item>
           {logged && (
