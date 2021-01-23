@@ -15,20 +15,24 @@ import DescriptionHome from './DescriptionHome';
 import './home.scss';
 
 // == Composant
-const Home = ({cleanAppParams}) => {
-  useEffect(()=>()=>{cleanAppParams();},[]);
+const Home = ({ cleanAppParams }) => {
+  // On clean les message et error affiché lorsque l'on quitte le composant home.
+  useEffect(() => () => {
+    cleanAppParams();
+  }, []);
   return (
-  <Container className="home">
-    {/** Page top with pictures */}
-    <HeaderHome />
+    <Container className="home">
+      {/** Page top with pictures */}
+      <HeaderHome />
 
-    {/** Page header with Local Hub presentation */}
-    <DescriptionHome />
+      {/** Page header with Local Hub presentation */}
+      <DescriptionHome />
 
-    {/** Search Bar */}
-    <SearchProjects />
-  </Container>
-)};
+      {/** Search Bar */}
+      <SearchProjects />
+    </Container>
+  );
+};
 
 Home.propTypes = {
   cleanAppParams: PropTypes.func.isRequired,

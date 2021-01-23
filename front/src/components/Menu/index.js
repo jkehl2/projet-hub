@@ -28,7 +28,7 @@ DropDownTrigger.propTypes = {
   userName: PropTypes.string.isRequired,
 };
 
-const Menu = ({ logged, userName }) => (
+const Menu = ({ logged, userName, handleDisconnect }) => (
   <MenuUi attached="top" borderless compact inverted>
     <MenuUi.Menu position="left">
       <MenuUi.Item><Link to="/"><Icon name="hubspot" size="huge" /></Link></MenuUi.Item>
@@ -49,7 +49,11 @@ const Menu = ({ logged, userName }) => (
             {/* <Dropdown.Item as="a" href="/utilisateur/projets">Mes projets</Dropdown.Item>
             <Dropdown.Item as="a" href="/utilisateur/favoris">Mes favoris</Dropdown.Item> */}
             <Dropdown.Divider />
-            <Link className="item" role="option" to="/">Déconnexion</Link>
+            <Dropdown.Item onClick={() => {
+              handleDisconnect();
+            }}
+            >Déconnexion
+            </Dropdown.Item>
           </>
           )}
           {!logged && (
@@ -67,6 +71,7 @@ const Menu = ({ logged, userName }) => (
 Menu.propTypes = {
   logged: PropTypes.bool.isRequired,
   userName: PropTypes.string.isRequired,
+  handleDisconnect: PropTypes.func.isRequired,
 };
 
 export default Menu;
