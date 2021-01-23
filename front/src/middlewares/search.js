@@ -11,7 +11,7 @@ import axios from 'axios';
 import { push } from 'connected-react-router';
 
 // == Import search project action creator
-import { SEARCH_PROJECT_EXECUTE, geoSuccess } from 'src/store/actions/search';
+import { SEARCH_PROJECT_EXECUTE, geoSuccess, searchProjectDone } from 'src/store/actions/search';
 
 // == Import GraphQL query template + configuration
 import configGraphQl, { queryGetProjectsByGeo } from 'src/graphql/config';
@@ -20,6 +20,7 @@ import configGraphQl, { queryGetProjectsByGeo } from 'src/graphql/config';
 
 // == import utils to allow perimeter conversion
 import perimetersValue from 'src/utils/perimeters.json';
+import { SEARCH_PROJECT_DONE } from '../store/actions/search';
 
 // MIDDLEWARE SEARCH - Middleware to handle search for a project
 
@@ -29,13 +30,9 @@ const search = (store) => (next) => (action) => {
       // gathering values that WONT change
       const {
         searchProject: {
-          localite, perimeter, archived,
+          localite, perimeter,
         },
       } = store.getState();
-
-      // get perimeter value in m
-      console.log(perimeter);
-      const scope = parseInt(perimetersValue.perimeters[perimeter].apiValue, 10);
 
       console.log('Nouvelle recherche', localite);
       // Get GPS coordinates by location
@@ -48,14 +45,23 @@ const search = (store) => (next) => (action) => {
 
       axios.get('http://api.positionstack.com/v1/forward', { params })
         .then((response) => store.dispatch(geoSuccess(response.data.data[0].longitude, response.data.data[0].latitude)))
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => store.dispatch(searchProjectDone()));
 
+      break;
+    }
+
+    case SEARCH_PROJECT_DONE: {
       // gathering updated coordinates from the store
       const {
         searchProject: {
-          lat, long,
+          localite, perimeter, lat, long, archived,
         },
       } = store.getState();
+      // get perimeter value in m
+
+      const scope = parseInt(perimetersValue.perimeters[perimeter].apiValue, 10);
+
       console.log(lat, long);
 
       // Object witholding the values for graphQL query

@@ -4,7 +4,7 @@
  */
 
 // == IMPORT ACTIONS SUR STORE SEARCH PROJECTS
-import { SEARCH_PROJECT_UPDATE, SEARCH_PROJECT_COORDINATES } from 'src/store/actions/search';
+import { SEARCH_PROJECT_UPDATE, SEARCH_PROJECT_COORDINATES, SEARCH_PROJECT_DONE } from 'src/store/actions/search';
 
 // ==  INITIALE SEARCH PROJECTS STATE
 export const initialState = {
@@ -29,6 +29,11 @@ const reducer = (oldState = initialState, action = {}) => {
         lat: action.lat,
         long: action.long,
       };
+    case SEARCH_PROJECT_DONE: {
+      return {
+        ...oldState,
+      };
+    }
     default:
       return { ...oldState };
   }
