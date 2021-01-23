@@ -9,6 +9,7 @@ import {
 
 // == IMPORT STYLES
 import './menu.scss';
+import { Link } from 'react-router-dom';
 
 const DropDownTrigger = ({ logged, userName }) => (
   <>
@@ -30,7 +31,7 @@ DropDownTrigger.propTypes = {
 const Menu = ({ logged, userName }) => (
   <MenuUi attached="top" borderless compact inverted>
     <MenuUi.Menu position="left">
-      <MenuUi.Item><Icon name="hubspot" size="huge" /></MenuUi.Item>
+      <MenuUi.Item><Link to="/"><Icon name="hubspot" size="huge" /></Link></MenuUi.Item>
       <MenuUi.Header as="h1" className="ui item compact menu__header">Local-Hub</MenuUi.Header>
     </MenuUi.Menu>
     <MenuUi.Menu position="right" size="large">
@@ -41,20 +42,20 @@ const Menu = ({ logged, userName }) => (
         position="right"
       >
         <Dropdown.Menu>
-          <Dropdown.Item>Rechercher</Dropdown.Item>
+          <Link className="item" role="option" to="/projets">Rechercher</Link>
           {logged && (
           <> <Dropdown.Divider />
-            <Dropdown.Item>Profil</Dropdown.Item>
-            <Dropdown.Item>Mes projets</Dropdown.Item>
-            <Dropdown.Item>Mes favoris</Dropdown.Item>
+            <Link className="item" role="option" to="/utilisateur/profil">Profil</Link>
+            {/* <Dropdown.Item as="a" href="/utilisateur/projets">Mes projets</Dropdown.Item>
+            <Dropdown.Item as="a" href="/utilisateur/favoris">Mes favoris</Dropdown.Item> */}
             <Dropdown.Divider />
-            <Dropdown.Item>Déconnexion</Dropdown.Item>
+            <Link className="item" role="option" to="/">Déconnexion</Link>
           </>
           )}
           {!logged && (
           <> <Dropdown.Divider />
-            <Dropdown.Item>Connexion</Dropdown.Item>
-            <Dropdown.Item>S'enregistrer</Dropdown.Item>
+            <Link className="item" role="option" to="/utilisateur/connexion">Connexion</Link>
+            <Link className="item" role="option" to="/utilisateur/enregistrement">S'enregistrer</Link>
           </>
           )}
         </Dropdown.Menu>

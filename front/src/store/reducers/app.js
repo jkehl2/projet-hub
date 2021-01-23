@@ -90,7 +90,7 @@ const reducer = (oldState = initialState, action = {}) => {
           ...signInInitialState,
         },
       };
-      case APP_ERROR_UPDATE:
+    case APP_ERROR_UPDATE:
       return {
         ...oldState,
         error: {
@@ -105,7 +105,7 @@ const reducer = (oldState = initialState, action = {}) => {
           ...errorInitialState,
         },
       };
-      case APP_MSG_UPDATE:
+    case APP_MSG_UPDATE:
       return {
         ...oldState,
         message: {
