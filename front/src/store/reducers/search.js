@@ -11,7 +11,8 @@ export const initialState = {
   localite: '',
   perimeter: 0,
   archived: false,
-  coordinates: [],
+  lat: 0,
+  long: 0,
 };
 
 // == USER REDUCER - Gestion du store SEARCH PROJECTS
@@ -25,7 +26,8 @@ const reducer = (oldState = initialState, action = {}) => {
     case SEARCH_PROJECT_COORDINATES:
       return {
         ...oldState,
-        ...action.payload,
+        lat: action.lat,
+        long: action.long,
       };
     default:
       return { ...oldState };

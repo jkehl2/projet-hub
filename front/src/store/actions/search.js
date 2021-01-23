@@ -26,7 +26,9 @@ export const execSearch = () => ({
 });
 
 // == Call to geocoding api successful, dispatch of data
-export const geoSuccess = (data) => ({
+
+export const geoSuccess = (long, lat) => ({
   type: SEARCH_PROJECT_COORDINATES,
-  payload: data,
+  long,
+  lat,
 });

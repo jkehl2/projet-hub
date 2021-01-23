@@ -26,31 +26,19 @@ import perimetersValue from 'src/utils/perimeters.json';
 const search = (store) => (next) => (action) => {
   switch (action.type) {
     case SEARCH_PROJECT_EXECUTE: {
+      // gathering values that WONT change
       const {
-        localite, perimeter, coordinates, archived,
+        searchProject: {
+          localite, perimeter, archived,
+        },
       } = store.getState();
 
       // get perimeter value in m
-      // TO DO
-      // get the value from component in m, put it in store
-      const scope = perimetersValue.perimeters[perimeter].apiValue;
+      console.log(perimeter);
+      const scope = parseInt(perimetersValue.perimeters[perimeter].apiValue, 10);
 
       console.log('Nouvelle recherche', localite);
       // Get GPS coordinates by location
-
-      /** check out geoportal doc here https://www.npmjs.com/package/geoportal-access-lib */
-
-      /* Gp.Services.geocode({
-          apiKey: '...', // replace API key here
-          ssl: true,
-          location: localite, // the location as submitted by the user
-          filterOptions: { // options for type of location as in street adress/city/position of interest (ie Tour Eiffel)/etc.
-            type: ['StreetAdress'],
-          },
-          onSuccess(result) {
-            // here the coordinates found
-            const { x, y } = result.locations.position; // will contain {"x":49.050991,"y":3.968083}
- */
 
       // Positionstack API call for geocoding
       const params = {
@@ -58,14 +46,24 @@ const search = (store) => (next) => (action) => {
         query: localite,
       };
 
-      axios.get('https://api.positionstack.com/v1/forward', { params })
-        .then((response) => store.dispatch(geoSuccess(response.data)))
+      axios.get('http://api.positionstack.com/v1/forward', { params })
+        .then((response) => store.dispatch(geoSuccess(response.data.data[0].longitude, response.data.data[0].latitude)))
         .catch((error) => console.log(error));
+
+      // gathering updated coordinates from the store
+      const {
+        searchProject: {
+          lat, long,
+        },
+      } = store.getState();
+      console.log(lat, long);
 
       // Object witholding the values for graphQL query
       const data = JSON.stringify({
         ...queryGetProjectsByGeo,
-        variables: { coordinates, scope, archived },
+        variables: {
+          lat, long, scope, archived,
+        },
       });
       // building request for back-end
       const config = {

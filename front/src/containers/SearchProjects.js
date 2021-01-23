@@ -8,6 +8,7 @@ const mapStateToProps = (state) => ({
   localite: state.searchProject.localite,
   perimeter: state.searchProject.perimeter,
   archived: state.searchProject.archived,
+  coordinates: state.searchProject.coordinates,
 });
 
 const mapDispatchToProps = (dispatch) => ({

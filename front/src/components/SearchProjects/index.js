@@ -19,7 +19,10 @@ import './searchProjects.scss';
 const SearchProjects = ({
   localite, perimeter, archived, setSearch, handleSubmit,
 }) => (
-  <Form className="search-project" onSubmit={handleSubmit()}>
+  <Form
+    className="search-project"
+    onSubmit={handleSubmit()}
+  >
     <Grid>
       <Grid.Column width={16}>
         <Grid.Row>
@@ -60,7 +63,7 @@ const SearchProjects = ({
         </Grid.Row>
         <Grid.Row>
           <Segment basic textAlign="center">
-            <Button basic circular icon size="massive">
+            <Button basic circular icon size="massive" onClick={handleSubmit}>
               <Icon name="search" color="orange" size="large" />
             </Button>
           </Segment>
