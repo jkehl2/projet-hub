@@ -1,3 +1,3 @@
-[submodule "localhub-back"]
-	path = localhub-back
+[submodule "back"]
+	path = back
 	url = git@github.com:Julien-Dosiere/localhub-back.git
