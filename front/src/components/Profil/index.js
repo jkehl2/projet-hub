@@ -1,5 +1,6 @@
 // == Import npm
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -11,20 +12,20 @@ import {
 import './profil.scss';
 
 // == Composant Profil mode consultation
-const Profil = () => (
+const Profil = ({ name, email, avatar }) => (
   <Container className="profil">
     {/* Titre */}
     <Header as="h1">Profil utlisateur</Header>
     <Item.Group>
       <Item>
         {/* avatar */}
-        <Item.Image size="small" src="https://react.semantic-ui.com/images/wireframe/image.png" />
+        <Item.Image size="small" src={`${avatar}`} />
         <Item.Content>
           {/* pseudo */}
-          <Item.Header as="h2">George Orwell</Item.Header>
+          <Item.Header as="h2">{`${name}`}</Item.Header>
           <Item.Meta>
             {/* email */}
-            <a href="mailto:george.orwell@localhub.fr">george.orwell@localhub.fr</a>
+            <a href={`mailto:${email}`}>{`${email}`}</a>
           </Item.Meta>
         </Item.Content>
       </Item>
@@ -41,6 +42,12 @@ const Profil = () => (
     </Button.Group>
   </Container>
 );
+
+Profil.propTypes = {
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
+};
 
 // == Export
 export default Profil;

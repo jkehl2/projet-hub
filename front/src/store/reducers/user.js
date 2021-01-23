@@ -14,7 +14,7 @@ export const initialState = {
   id: '',
   name: '',
   email: '',
-  avatar: '',
+  avatar: 'https://react.semantic-ui.com/images/avatar/large/matt.jpg',
 };
 
 // == USER REDUCER - Gestion du store utlisateur

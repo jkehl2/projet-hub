@@ -7,17 +7,19 @@ import PropTypes from 'prop-types';
 import SignIn from 'src/containers/SignIn';
 import Menu from 'src/containers/Menu';
 import Home from 'src/containers/Home';
+import Profil from 'src/containers/Profil';
 
 // == IMPORTS COMPOSANTS
 import {
   Container,
   Message,
 } from 'semantic-ui-react';
-import Profil from 'src/components/Profil';
 import Project from 'src/components/Project';
 import SignUp from 'src/components/SignUp';
 import Projects from 'src/components/Projects';
 import Confirmation from 'src/components/Confirmation';
+import CreateProject from 'src/components/CreateProject';
+import ProtectedRoute from './ProtectedRoute';
 
 // == IMPORT STYLES
 import './app.scss';
@@ -99,33 +101,26 @@ const App = ({
 
         <SignIn />
       </Route>
-      {/* Routes ateignable uniquement si utilisateur logged */}
-      {logged && (
-      <>
-        {/* Sprint 1 - Page de confirmation par mot de passe */}
-        <Route exact path="/utilisateur/confirm">
-          <Confirmation />
-        </Route>
-        {/* Sprint 1 - Page de profil */}
-        <Route exact path="/utilisateur/profil">
-          <Profil />
-        </Route>
-        {/* Sprint 1 - Page d'enregistrement utlisateur' */}
-        <Route exact path="/utilisateur/enregistrement">
-          <SignUp />
-        </Route>
-        {/* Sprint 2 - Page Création de projet' */}
-        <Route exact path="/projet/create" />
-        {/* Sprint 2 - Page mes favoris' */}
-        <Route exact path="/utilisateur/favoris" />
-        {/* Sprint 2 - Page mes projets' */}
-        <Route exact path="/utilisateur/projets"> </Route>
-      </>
-      )}
+
       {/* Sprint 2 - Mentions légales */}
       <Route exact path="/mentionsLegales"> </Route>
       {/* Sprint 2 - Présentation équipe */}
       <Route exact path="/equipe"> </Route>
+
+      {/* Routes ateignable uniquement si utilisateur logged */}
+      {/* Sprint 1 - Page de confirmation par mot de passe */}
+      <ProtectedRoute exact path="/utilisateur/confirm" isAllowed={logged} component={() => (<Confirmation />)} />
+      {/* Sprint 1 - Page de profil */}
+      <ProtectedRoute exact path="/utilisateur/profil" isAllowed={logged} component={() => (<Profil />)} />
+      {/* Sprint 1 - Page d'enregistrement utlisateur' */}
+      <ProtectedRoute exact path="/utilisateur/enregistrement" isAllowed={logged} component={() => (<SignUp />)} />
+      {/* Sprint 2 - Page Création de projet' */}
+      <ProtectedRoute exact path="/projet/create" isAllowed={logged} component={() => (<CreateProject />)} />
+      {/* Sprint 2 - Page mes favoris' */}
+      <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={() => (<Projects />)} />
+      {/* Sprint 2 - Page mes projets' */}
+      <ProtectedRoute exact path="/utilisateur/projets" isAllowed={logged} component={() => (<Projects />)} />
+
       {/* MESSAGE POUR 404 ET REDIRECT VERS Accueil */}
       <Route
         path="*"

@@ -50,6 +50,10 @@ const userMiddleware = (store) => (next) => (action) => {
               ...response.data,
               logged: true,
             };
+            // Si null dans avatar alors on ne garde pas ce paramètre pour la maj du store
+            if (userdata.avatar === null) {
+              delete userdata.avatar;
+            }
             store.dispatch(updateUserStore(userdata));
             // On redirecte vers la page d'accueil
             store.dispatch(push('/'));
