@@ -1,11 +1,16 @@
 // == Import npm
 import React from 'react';
 import { Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // == IMPORTS CONTAINERS
 import SignIn from 'src/containers/SignIn';
 
 // == IMPORTS COMPOSANTS
+import {
+  Container,
+  Message,
+} from 'semantic-ui-react';
 import Home from 'src/components/Home';
 import Profil from 'src/components/Profil';
 import Project from 'src/components/Project';
@@ -17,8 +22,24 @@ import Confirmation from 'src/components/Confirmation';
 import './app.scss';
 
 // == Composant
-const App = () => (
-  <div className="app">
+const App = ({
+  isError, error, isMessage, message,
+}) => (
+  <Container className="app">
+    {/* Affiche message d'erreur si il y en a */}
+    {isError && (
+      <Message negative>
+        <Message.Header>Une erreur c'est produite</Message.Header>
+        <p>{`${error}`}</p>
+      </Message>
+    )}
+    {/* Affiche message d'information si il y en a */}
+    {isMessage && (
+      <Message>
+        <Message.Header>Notification</Message.Header>
+        <p>{`${message}`}</p>
+      </Message>
+    )}
     <Route exact path="/">
       {/* Sprint 1 */}
       <Home />
@@ -98,8 +119,15 @@ const App = () => (
     <Route exact path="/utilisateur/projets">
       {/* Sprint 2 */}
     </Route>
-  </div>
+  </Container>
 );
+
+App.propTypes = {
+  isError: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  isMessage: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
+};
 
 // == Export
 export default App;

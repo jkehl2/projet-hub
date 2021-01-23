@@ -14,20 +14,20 @@ import configGraphQl, {
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
-  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN, cleanSignIn, updateUserStore,
+  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN, updateUserStore,
 } from 'src/store/actions/user';
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
-  appLoadingOn, appLoadingOff, appError, appMsg, appCleanMsgError,
+  appLoadingOn, appLoadingOff, appErrorUpdate, appMsgUpdate, appClean,
 } from 'src/store/actions/app';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case USER_SIGNIN: {
-      const { user } = store.getState();
-      const data = JSON.stringify({ email: user.signInEmail, password: user.signInPassword });
+      const { app } = store.getState();
+      const data = JSON.stringify({ email: app.signIn.email, password: app.signIn.password });
       const config = {
         method: 'post',
         url: 'http://localhost:3000/login',
@@ -42,7 +42,7 @@ const userMiddleware = (store) => (next) => (action) => {
           // En cas de retour négatif à la demande de signin
           // On affiche le message server à l'utlisateur
           if (response.data.error) {
-            store.dispatch(appMsg(response.data.error));
+            store.dispatch(appErrorUpdate(response.data.error));
           }
           else {
             // Sinon on récupère les infos utlisateur
@@ -53,18 +53,18 @@ const userMiddleware = (store) => (next) => (action) => {
             store.dispatch(updateUserStore(userdata));
             // On redirecte vers la page d'accueil
             store.dispatch(push('/'));
+            const { user } = store.getState();
+            store.dispatch(appMsgUpdate(`Bienvenue ${user.name}.`));
           }
         })
         .catch((error) => {
-          console.error(error);
-          store.dispatch(appError(error.message));
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
-      store.dispatch(cleanSignIn());
+      store.dispatch(appClean());
       store.dispatch(appLoadingOn());
-      store.dispatch(appCleanMsgError());
       return;
     }
     case USER_CREATE: {

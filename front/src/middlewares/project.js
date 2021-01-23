@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-// call to API
+// == IMPORT NPM
 import axios from 'axios';
+import { push } from 'connected-react-router';
 
 // actions from store
 import {
-  CREATE_PROJECT, EDIT_PROJECT, DELETE_PROJECT, GET_PROJECT_BY_ID,
+  PROJECT_SEARCH, PROJECT_CREATE, PROJECT_EDIT, PROJECT_DELETE, GET_PROJECT_BY_ID,
 } from 'src/store/actions/project';
 
 // graphql queries
@@ -15,8 +16,29 @@ import configGraphQl, {
 // mw
 const projectMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
+    case PROJECT_SEARCH: {
+      const { app } = store.getState();
+      console.log('Nouvelle recherche', app.search);
+      // TODO Récupéré les coordonnées GPS depuis la localité
+      // installer package npm geoportal-access-lib
+      // import = Gp
+      // installer dépendances xmldom + request
+
+      /** Gp.Services.geocode({
+      apiKey : "...",
+      ssl : true,
+      location : "...",
+      onSuccess : function (result) {
+      ...
+      }
+      }); */
+      // TODO Formater un objet contenant les attributs de la requête GRaphQL
+
+      store.dispatch(push('/projets'));
+      return;
+    }
     // CREATION
-    case CREATE_PROJECT: {
+    case PROJECT_CREATE: {
       const {
         title, description, expirationDate, location, lat, long, author,
       } = action.payload;
@@ -48,7 +70,7 @@ const projectMiddleware = (store) => (next) => (action) => {
       return;
     }
     // EDITING
-    case EDIT_PROJECT: {
+    case PROJECT_EDIT: {
       const {
         id, title, description, expirationDate, location, lat, long, author,
       } = action.payload;
@@ -78,7 +100,7 @@ const projectMiddleware = (store) => (next) => (action) => {
       return;
     }
     // DELETING
-    case DELETE_PROJECT: {
+    case PROJECT_DELETE: {
       const { id } = action.payload;
       const data = JSON.stringify({
         ...queryDeleteProject,
