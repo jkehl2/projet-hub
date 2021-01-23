@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS CONTAINERS
 import SignIn from 'src/containers/SignIn';
+import Menu from 'src/containers/Menu';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -26,6 +27,8 @@ const App = ({
   isError, error, isMessage, message,
 }) => (
   <Container className="app">
+    {/* Menu de l'application */}
+    <Menu />
     {/* Affiche message d'erreur si il y en a */}
     {isError && (
       <Message negative>

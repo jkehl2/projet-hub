@@ -1,0 +1,7 @@
+@use 'src/styles/vars';
+
+.menu {
+&__header{
+  padding-left: 0 !important;
+}
+}

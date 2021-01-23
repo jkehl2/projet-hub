@@ -1,30 +1,66 @@
-import React, {useState} from 'react'
-import * as FaIcons from "react-icons/fa";
-import * as AiIcons from "react-icons/ai";
-import { NavLink } from 'react-router-dom';
+// == IMPORT NPM
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function menu() {
-  const [sidebar, setSidebar] = useState(false)
+// == IMPORT COMPOSANTS
+import {
+  Dropdown, Grid, Icon, Label, Menu as MenuUi,
+} from 'semantic-ui-react';
 
-  const showSidebar =() => setSidebar(!sidebar)
-  return (
-    <>
-      <div className="menu">
-        <Link to="#" className='menu-bars' />
-          <FaIcons.FaBars onClick={showSidebar} />
-        </Link>
-      </div>
-      <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-        <ul className='nav-menu-items'>
-          <li className="navbar-toogle">
-            <Link to="#" className='menu-bars'>
-              <AiIcons.AiOutlineClose />
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    </>
-  )
-}
+// == IMPORT STYLES
+import './menu.scss';
 
-export default menu
+const DropDownTrigger = ({ logged, userName }) => (
+  <>
+    {logged && (
+      <Grid padded="horizontally">
+        <Grid.Row only="computer" stretched>
+          <Label color="black"><Icon name="circle" color="green" size="small" />{`${userName}`}</Label>
+        </Grid.Row>
+      </Grid>
+    )}
+    <Icon name="bars" size="large" />
+  </>
+);
+DropDownTrigger.propTypes = {
+  logged: PropTypes.bool.isRequired,
+  userName: PropTypes.string.isRequired,
+};
+
+const Menu = ({ logged, userName }) => (
+  <MenuUi attached="top" borderless compact inverted>
+    <MenuUi.Menu position="left">
+      <MenuUi.Item><Icon name="hubspot" size="huge" /></MenuUi.Item>
+      <MenuUi.Header as="h1" className="ui item compact menu__header">Local-Hub</MenuUi.Header>
+    </MenuUi.Menu>
+    <MenuUi.Menu position="right" size="large">
+      <Dropdown item trigger={DropDownTrigger({ logged, userName })} icon={null} simple position="right">
+        <Dropdown.Menu>
+          <Dropdown.Item>Rechercher</Dropdown.Item>
+          {logged && (
+          <> <Dropdown.Divider />
+            <Dropdown.Item>Profil</Dropdown.Item>
+            <Dropdown.Item>Mes projets</Dropdown.Item>
+            <Dropdown.Item>Mes favoris</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item>Déconnexion</Dropdown.Item>
+          </>
+          )}
+          {!logged && (
+          <> <Dropdown.Divider />
+            <Dropdown.Item>Connexion</Dropdown.Item>
+            <Dropdown.Item>S'enregistrer</Dropdown.Item>
+          </>
+          )}
+        </Dropdown.Menu>
+      </Dropdown>
+    </MenuUi.Menu>
+  </MenuUi>
+);
+
+Menu.propTypes = {
+  logged: PropTypes.bool.isRequired,
+  userName: PropTypes.string.isRequired,
+};
+
+export default Menu;
