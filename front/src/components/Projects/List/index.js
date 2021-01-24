@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import PropTypes from 'prop-types';
-import CardProjects from './CardProjects';
+import ProjectCard from './ProjectCard';
 
 // == IMPORTS COMPOSANTS
 
@@ -12,7 +12,7 @@ import './list.scss';
 
 // == Composant
 const List = ({ projects }) => (
-  <CardProjects projects={projects} />
+  <>{projects.map((project) => (<ProjectCard key={project.id} project={project} />))}</>
 );
 
 // == PROP TYPES
