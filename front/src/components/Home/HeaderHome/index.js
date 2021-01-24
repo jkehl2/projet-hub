@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Card, Image, Segment,
+  Card, Icon,
 } from 'semantic-ui-react';
 
 // == IMPORTS CONTAINERS
@@ -18,7 +18,8 @@ const HeaderHome = () => (
     <Card color="teal">
       <Card.Content
         style={{
-          backgroundColor: '#AFEEEE',
+          background: 'rgb(2,0,36)',
+          background: 'radial-gradient(circle, rgba(2,0,36,1) 9%, rgba(109,160,177,1) 49%, rgba(0,212,255,1) 76%)',
         }}
       >
         <Card.Header
@@ -34,13 +35,17 @@ const HeaderHome = () => (
           }}
         >1.
         </Card.Header>
-        <Card.Header as="h2" textAlign="center" style={{ color: '#00CED1' }}>Poster</Card.Header>
+        <Card.Header as="h2" textAlign="center" style={{ color: '#00CED1' }}>
+          <Icon name="write" />
+          Poster
+        </Card.Header>
       </Card.Content>
     </Card>
     <Card color="teal">
       <Card.Content
         style={{
-          backgroundColor: '#AFEEEE',
+          background: 'rgb(2,0,36)',
+          background: 'radial-gradient(circle, rgba(2,0,36,1) 9%, rgba(109,160,177,1) 49%, rgba(0,212,255,1) 76%)',
         }}
       >
         <Card.Header
@@ -56,13 +61,17 @@ const HeaderHome = () => (
           }}
         >2.
         </Card.Header>
-        <Card.Header as="h2" textAlign="center" style={{ color: '#00CED1' }}> Echanger</Card.Header>
+        <Card.Header as="h2" textAlign="center" style={{ color: '#00CED1' }}>
+          <Icon name="comments" />
+          Echanger
+        </Card.Header>
       </Card.Content>
     </Card>
     <Card color="teal">
       <Card.Content
         style={{
-          backgroundColor: '#AFEEEE',
+          background: 'rgb(2,0,36)',
+          background: 'radial-gradient(circle, rgba(2,0,36,1) 9%, rgba(109,160,177,1) 49%, rgba(0,212,255,1) 76%)',
         }}
       >
         <Card.Header
@@ -78,7 +87,10 @@ const HeaderHome = () => (
           }}
         >3.
         </Card.Header>
-        <Card.Header as="h2" textAlign="center" style={{ color: '#00CED1' }}> Collaborer</Card.Header>
+        <Card.Header as="h2" textAlign="center" style={{ color: '#00CED1' }}>
+          <Icon name="handshake" />
+          Collaborer
+        </Card.Header>
       </Card.Content>
     </Card>
   </Card.Group>
