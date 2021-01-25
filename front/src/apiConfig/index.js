@@ -3,10 +3,22 @@
  * Configuration et requête d'accès à DB utilisateurs et projets
  */
 
-// == CONFIGURATION CONNECTEUR AXIOS - END POINT + ENTÊTE
+// == URL SERVER BACK
+import CONFIG from './config.json';
+
+// == CONFIGURATION CONNECTEUR AXIOS GRAPHQL - END POINT + ENTÊTE
 export default {
   method: 'post',
-  url: 'https://localhub-api.herokuapp.com/graphql',
+  url: `${CONFIG.URL_BACK}/graphql`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
+// == CONFIGURATION CONNECTEUR AXIOS SIGNIN - END POINT + ENTÊTE
+export const signInConfig = {
+  method: 'post',
+  url: `${CONFIG.URL_BACK}/login`,
   headers: {
     'Content-Type': 'application/json',
   },

@@ -48,6 +48,7 @@ export const searchInitialState = {
 // ==  INITIALE STATE des paramètres applicatifs techniques
 export const initialState = {
   loading: false,
+  isEditMode: false,
   error: { ...errorInitialState },
   message: { ...messageInitialState },
   signIn: { ...signInInitialState },

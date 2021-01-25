@@ -15,7 +15,7 @@ import {
 // graphql queries
 import configGraphQl, {
   queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject, queryGetProjectsByGeo,
-} from 'src/graphql/config';
+} from 'src/apiConfig/';
 
 // == import utils to allow perimeter conversion
 import perimetersValue from 'src/utils/perimeters.json';
