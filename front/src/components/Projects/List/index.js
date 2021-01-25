@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProjectCard from './ProjectCard';
+import ProjectCard from './projects/ProjectCard';
 
 // == IMPORTS COMPOSANTS
 
