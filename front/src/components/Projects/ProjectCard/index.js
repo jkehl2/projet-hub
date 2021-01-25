@@ -14,13 +14,13 @@ const ProjectCard = ({ logged, project }) => (
     { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
     <Grid divided stretched stackable padded="vertically">
       <Grid.Row only="mobile">
-        <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} /></Link>
+        <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded /></Link>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column computer={3} only="computer">
-          <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} /></Link>
+        <Grid.Column computer={4} only="computer">
+          <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded /></Link>
         </Grid.Column>
-        <Grid.Column computer={13} mobile={16}>
+        <Grid.Column computer={12} mobile={16}>
           <Header as="h3">
             {(!project.isAuthor && logged) && (project.isFavorite ? <Icon name="star" color="yellow" /> : <Icon name="star outline" color="yellow" />)}
             <Header.Content>{`${project.title} `}</Header.Content>
