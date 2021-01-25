@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import SearchProjects from 'src/components/SearchProjects';
-
 import { appSearchUpdate } from 'src/store/actions/app';
 import { searchProject } from 'src/store/actions/project';
 

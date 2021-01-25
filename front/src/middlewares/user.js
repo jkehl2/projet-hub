@@ -9,8 +9,8 @@ import { push } from 'connected-react-router';
 
 // == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTEUR AXIOS
 import configGraphQl, {
-  queryUserCreate, queryUserById, queryUserEdit, queryUserDelete,
-} from 'src/graphql/config';
+  queryUserCreate, queryUserById, queryUserEdit, queryUserDelete, signInConfig,
+} from 'src/apiConfig/';
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
@@ -29,11 +29,7 @@ const userMiddleware = (store) => (next) => (action) => {
       const { app } = store.getState();
       const data = JSON.stringify({ email: app.signIn.email, password: app.signIn.password });
       const config = {
-        method: 'post',
-        url: 'http://localhost:3000/login',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        ...signInConfig,
         data,
       };
 

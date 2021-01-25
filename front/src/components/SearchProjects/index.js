@@ -19,7 +19,10 @@ import './searchProjects.scss';
 const SearchProjects = ({
   localite, perimeter, archived, setSearch, handleSubmit,
 }) => (
-  <Form className="search-project" onSubmit={handleSubmit()}>
+  <Form
+    className="search-project"
+    onSubmit={handleSubmit()}
+  >
     <Grid>
       <Grid.Column width={16}>
         <Grid.Row>

@@ -5,37 +5,99 @@ import { push } from 'connected-react-router';
 
 // actions from store
 import {
-  PROJECT_SEARCH, PROJECT_CREATE, PROJECT_EDIT, PROJECT_DELETE, GET_PROJECT_BY_ID,
+  PROJECT_SEARCH,
+  PROJECT_CREATE,
+  PROJECT_EDIT,
+  PROJECT_DELETE,
+  GET_PROJECT_BY_ID,
+  GET_PROJECT_BY_GEO,
+  getProjectByGeo,
+  cleanProjectStore,
 } from 'src/store/actions/project';
 
+import {
+  appSearchUpdate,
+  appLoadingOn,
+  appLoadingOff,
+  appMsgUpdate,
+  appErrorUpdate,
+  appMsgClean,
+  appErrorClean,
+} from 'src/store/actions/app';
 // graphql queries
 import configGraphQl, {
-  queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject,
-} from 'src/graphql/config';
+  queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject, queryGetProjectsByGeo,
+} from 'src/apiConfig/';
+
+// == import utils to allow perimeter conversion
+import perimetersValue from 'src/utils/perimeters.json';
 
 // mw
 const projectMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case PROJECT_SEARCH: {
-      const { app } = store.getState();
-      console.log('Nouvelle recherche', app.search);
-      // TODO Récupéré les coordonnées GPS depuis la localité
-      // installer package npm geoportal-access-lib
-      // import = Gp
-      // installer dépendances xmldom + request
+      // gathering values needed for geocoding
+      const {
+        app: {
+          search: {
+            localite,
+            perimeter,
+            archived,
+          },
+        },
+      } = store.getState();
+      const params = {
+        access_key: 'dc7156f13f34218aa5540fe1ef67fb52',
+        query: localite,
+      };
+      axios.get('http://api.positionstack.com/v1/forward', { params })
+        .then((response) => {
+          const geolocArr = response.data.data;
+          if (geolocArr.length > 0) {
+            const searchValue = {
+              long: geolocArr[0].longitude,
+              lat: geolocArr[0].latitude,
+              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10), 
+              archived,
+            };
+            store.dispatch(getProjectByGeo(searchValue));
+          }
+          else {
+            store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
+          }
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appErrorClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(cleanProjectStore());
+      store.dispatch(appLoadingOn());
+      break;
+    }
 
-      /** Gp.Services.geocode({
-      apiKey : "...",
-      ssl : true,
-      location : "...",
-      onSuccess : function (result) {
-      ...
-      }
-      }); */
-      // TODO Formater un objet contenant les attributs de la requête GRaphQL
-
-      store.dispatch(push('/projets'));
-      return;
+    case GET_PROJECT_BY_GEO: {
+      const data = JSON.stringify({
+        ...queryGetProjectsByGeo,
+        variables: action.payload,
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      axios(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          store.dispatch(push('/projets'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      break;
     }
     // CREATION
     case PROJECT_CREATE: {
