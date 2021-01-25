@@ -53,43 +53,7 @@ const App = ({
       {/* Sprint 1 - Page de rechercher */}
       <Route exact path="/projets">
         {/* Sprint 1 */}
-        <Projects projects={
-        [{
-          id: '1',
-          title: 'Mon barbecue Infernal',
-          author: 'Lucifer Morning Star',
-          authorEmail: 'lucifer@morning.str',
-          expireDate: '2100/10/12',
-          createDate: '0000/01/01',
-          adress: '666, Hell Street, Nowhere Land',
-          isAuthor: true,
-          isFavorite: false,
-          isArchived: false,
-        }, {
-          id: '2',
-          title: 'Rester au chaud',
-          author: 'Lucide Morning Star',
-          authorEmail: 'lucifer@morning.str',
-          expireDate: '2100/10/12',
-          createDate: '0000/01/01',
-          adress: '666, Hell Street, Nowhere Land',
-          isAuthor: false,
-          isFavorite: true,
-          isArchived: true,
-        }, {
-          id: '3',
-          title: 'Ma machine à glaçons',
-          author: 'White Morning Star',
-          authorEmail: 'lucifer@morning.str',
-          expireDate: '2100/10/12',
-          createDate: '0000/01/01',
-          adress: '666, Hell Street, Nowhere Land',
-          isAuthor: false,
-          isFavorite: false,
-          isArchived: false,
-        }]
-      }
-        />
+        <Projects />
       </Route>
       {/* Sprint 1 - Page d'étail d'un projet */}
       <Route exact path="/projet/:slug">
