@@ -82,12 +82,14 @@ const reducer = (oldState = initialState, action = {}) => {
     case APP_SEARCH_PROJECT_COORDINATES:
       return {
         ...oldState,
-        lat: action.lat,
-        long: action.long,
+        search: {
+          lat: action.lat,
+          long: action.long,
+        },
       };
     case APP_SEARCH_PROJECT_DONE: {
       return {
-        ...oldState,
+        ...oldState.search,
       };
     }
     case APP_SIGNIN_UPDATE:

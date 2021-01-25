@@ -10,7 +10,7 @@ import List from 'src/components/Projects/List';
 import SearchProjects from 'src/containers/SearchProjects';
 
 // == IMPORTS CONTAINERS
-import SearchProjects from 'src/containers/List';
+/* import SearchProjects from 'src/containers/List'; */
 
 // == STYLES
 import './projects.scss';

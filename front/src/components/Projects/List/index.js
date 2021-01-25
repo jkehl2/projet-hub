@@ -1,9 +1,9 @@
 // == Import npm
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProjectCard from './projects/ProjectCard';
 
 // == IMPORTS COMPOSANTS
+import ProjectCard from 'src/components/Projects/ProjectCard';
 
 // == IMPORTS CONTAINERS
 
