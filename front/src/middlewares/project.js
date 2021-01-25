@@ -91,6 +91,22 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       axios(config)
         .then((response) => {
+          // isFavorite: PropTypes.bool.isRequired,
+          // isArchived: PropTypes.bool.isRequired,
+          // isAuthor: PropTypes.bool.isRequired,
+          // title: PropTypes.string.isRequired,
+          // location: PropTypes.string.isRequired,
+          // expiration_date: PropTypes.string.isRequired,
+          // creation_date: PropTypes.string.isRequired,
+          // image: PropTypes.string.isRequired,
+          // author: PropTypes.shape({
+          //   name: PropTypes.string.isRequired,
+          //   email: PropTypes.string.isRequired,
+          //   avatar: PropTypes.string.isRequired,
+          // }).isRequired,
+
+          
+
           console.log(JSON.stringify(response.data));
           // store.dispatch(push('/projets'));
         })
@@ -206,6 +222,28 @@ const projectMiddleware = (store) => (next) => (action) => {
       console.log('loader on');
       axios(config)
         .then((response) => {
+
+          // isFavorite: PropTypes.bool.isRequired,
+          // isArchived: PropTypes.bool.isRequired,
+          // isAuthor: PropTypes.bool.isRequired,
+          // title: PropTypes.string.isRequired,
+          // location: PropTypes.string.isRequired,
+          // expiration_date: PropTypes.string.isRequired,
+          // creation_date: PropTypes.string.isRequired,
+          // image: PropTypes.string.isRequired,
+          // author: PropTypes.shape({
+          //   name: PropTypes.string.isRequired,
+          //   email: PropTypes.string.isRequired,
+          //   avatar: PropTypes.string.isRequired,
+          // }).isRequired,
+          
+          // needs: PropTypes.arrayOf(PropTypes.shape({
+          //   id: PropTypes.string.isRequired,
+          //   title: PropTypes.string.isRequired,
+          //   description: PropTypes.string.isRequired,
+          //   checked: PropTypes.bool.isRequired,
+          // }).isRequired).isRequired,
+
           console.log(JSON.stringify(response.data));
         })
         .catch((error) => {
