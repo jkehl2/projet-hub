@@ -31,6 +31,7 @@ import configGraphQl, {
 
 // == import utils to allow perimeter conversion
 import perimetersValue from 'src/utils/perimeters.json';
+import { useReducer } from 'react';
 
 // mw
 const projectMiddleware = (store) => (next) => (action) => {
@@ -92,22 +93,25 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       axios(config)
         .then((response) => {
-          // isFavorite: PropTypes.bool.isRequired,
-          // isArchived: PropTypes.bool.isRequired,
-          // isAuthor: PropTypes.bool.isRequired,
-          // title: PropTypes.string.isRequired,
-          // location: PropTypes.string.isRequired,
-          // expiration_date: PropTypes.string.isRequired,
-          // creation_date: PropTypes.string.isRequired,
-          // image: PropTypes.string.isRequired,
-          // author: PropTypes.shape({
-          //   name: PropTypes.string.isRequired,
-          //   email: PropTypes.string.isRequired,
-          //   avatar: PropTypes.string.isRequired,
-          // }).isRequired,
-
-          console.log(JSON.stringify(response.data));
-          // store.dispatch(push('/projets'));
+          const { user } = store.getState();
+          const projet = response.data.projectsByGeo.map((project) => ({
+            isFavorite: false,
+            isArchived: project.archived,
+            isAuthor: user.id === project.author.id,
+            title: project.title,
+            location: project.location,
+            expiration_date: project.expiration_date,
+            creation_date: project.created_at,
+            image: project.image,
+            author: {
+              id: project.author.id,
+              name: project.author.name,
+              email: project.author.name,
+              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+            },
+          }));
+          store.dispatch(updateProjectStore({ projet }));
+          store.dispatch(push('/projets'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -221,6 +225,36 @@ const projectMiddleware = (store) => (next) => (action) => {
       console.log('loader on');
       axios(config)
         .then((response) => {
+          const { user } = store.getState();
+
+          const projects = response.data.data.projectsById.map((project) => ({
+            id: project.id,
+            isFavorite: false,
+            isArchived: project.archived,
+            isAuthor: user.id === project.author.id,
+            title: project.title,
+            location: project.location,
+            expiration_date: project.expiration_date,
+            creation_date: project.created_at,
+            image: project.image,
+            author: {
+              id: project.author.id,
+              name: project.author.name,
+              email: project.author.name,
+              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+            },
+            needs: [
+              {
+                id: project.needs.id,
+                title: project.needs.title,
+                description: project.needs.description,
+                checked: project.needs.completed,
+              },
+            ],
+          }));
+
+          store.dispatch(updateProjectStore({ projects }));
+          store.dispatch(push('/projets'));
           // isFavorite: PropTypes.bool.isRequired,
           // isArchived: PropTypes.bool.isRequired,
           // isAuthor: PropTypes.bool.isRequired,
