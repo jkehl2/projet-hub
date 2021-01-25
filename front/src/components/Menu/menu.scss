@@ -1,7 +1,10 @@
 @use 'src/styles/vars';
 
 .menu {
-&__header{
-  padding-left: 0 !important;
-}
+    flex-grow: 0 !important;
+    flex-shrink: 0!important;
+    flex-basis: content;
+    &__header{
+      padding-left: 0 !important;
+    }
 }

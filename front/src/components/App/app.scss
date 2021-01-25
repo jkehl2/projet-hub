@@ -1,5 +1,9 @@
 @use 'src/styles/vars';
 
 .app {
-
+  flex-grow: 1 !important;
+  width: 100%;
+  padding-bottom: 1rem !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
 }

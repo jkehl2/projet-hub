@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {
   Grid, Header, Segment, Image, Label, Icon, Divider,
 } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 // == Composant
 const ProjectCard = ({ logged, project }) => (
@@ -13,11 +14,11 @@ const ProjectCard = ({ logged, project }) => (
     { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
     <Grid divided stretched stackable padded="vertically">
       <Grid.Row only="mobile">
-        <Image src={`${project.image}`} />
+        <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} /></Link>
       </Grid.Row>
       <Grid.Row>
         <Grid.Column computer={3} only="computer">
-          <Image src={`${project.image}`} />
+          <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} /></Link>
         </Grid.Column>
         <Grid.Column computer={13} mobile={16}>
           <Header as="h3">
@@ -42,6 +43,7 @@ const ProjectCard = ({ logged, project }) => (
 ProjectCard.propTypes = {
   logged: PropTypes.bool.isRequired,
   project: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     isFavorite: PropTypes.bool.isRequired,
     isArchived: PropTypes.bool.isRequired,
     isAuthor: PropTypes.bool.isRequired,

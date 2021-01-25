@@ -3,6 +3,20 @@
 
 body {
   font-family: sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  margin:0;
+  padding: 0;
+}
+
+#root{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 /* 

@@ -11,6 +11,7 @@ const mapStateToProps = (state) => ({
   isMessage: state.app.message.isMessage,
   message: state.app.message.message,
   logged: state.user.logged,
+  loading: state.app.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

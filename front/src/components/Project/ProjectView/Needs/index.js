@@ -18,7 +18,9 @@ import './needs.scss';
 
 // == Composant
 const Needs = ({ needs }) => {
-  const checkCount = needs.map((need) => (need.checked ? 1 : 0)).reduce(Math.sum);
+  const checkArr = needs.map((need) => (need.completed ? 1 : 0));
+  const checkCount = checkArr.reduce((a, b) => a + b, 0);
+
   const [state, setState] = useState({ activeIndex: -1 });
 
   const handleClick = (e, itemProps) => {
@@ -45,7 +47,7 @@ const Needs = ({ needs }) => {
             {needs.map((need) => (
               <Grid.Row key={need.id}>
                 <Grid.Column width={2} verticalAlign="middle" textAlign="center">
-                  <Checkbox readOnly checked={need.checked} />
+                  <Checkbox readOnly checked={need.completed} />
                 </Grid.Column>
                 <Grid.Column width={14}>
                   <Header as="h3">{`${need.title}`}</Header>
@@ -65,7 +67,7 @@ Needs.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    checked: PropTypes.bool.isRequired,
+    completed: PropTypes.bool.isRequired,
   }).isRequired).isRequired,
 };
 
