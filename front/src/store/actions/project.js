@@ -9,6 +9,7 @@ export const PROJECT_CREATE = 'PROJECT_CREATE';
 export const PROJECT_EDIT = 'PROJECT_EDIT';
 export const PROJECT_DELETE = 'PROJECT_DELETE';
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
+export const GET_PROJECT_BY_GEO = 'GET_PROJECT_BY_ID';
 
 // == [CLE-VALEURS] - ACTIONS sur le store projets(Reducer user)
 // en cas de connexion d'un user ses projets apparaissent
@@ -56,7 +57,12 @@ export const deleteProject = (project) => ({
 });
 
 // get a project by id
-export const getProject = (id) => ({
+export const getProjectById = (id) => ({
   type: GET_PROJECT_BY_ID,
   payload: id,
+});
+
+export const getProjectByGeo = (payload) => ({
+  type: GET_PROJECT_BY_GEO,
+  payload,
 });

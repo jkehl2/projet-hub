@@ -10,9 +10,6 @@ export const APP_CLEAN = 'APP_CLEAN';
 
 // == ACTIONS GESTION FORMULAIRE DE RECHERCHE
 export const APP_SEARCH_UPDATE = 'APP_SEARCH_UPDATE';
-export const APP_SEARCH_EXEC = 'APP_SEARCH_EXEC';
-export const APP_SEARCH_PROJECT_DONE = 'APP_SEARCH_PROJECT_DONE';
-export const APP_SEARCH_PROJECT_COORDINATES = 'APP_SEARCH_PROJECT_COORDINATES';
 
 // == ACTIONS GESTION FORMULAIRE DE CONNEXION
 export const APP_SIGNIN_UPDATE = 'APP_SIGNIN_UPDATE';
@@ -41,22 +38,6 @@ export const appClean = () => ({
 export const appSearchUpdate = (payload) => ({
   type: APP_SEARCH_UPDATE,
   payload,
-});
-
-export const appSearchExec = () => ({
-  type: APP_SEARCH_EXEC,
-});
-
-export const searchProjectDone = () => ({
-  type: APP_SEARCH_PROJECT_DONE,
-});
-
-// == Call to geocoding api successful, dispatch of data
-
-export const geoSuccess = (long, lat) => ({
-  type: APP_SEARCH_PROJECT_COORDINATES,
-  long,
-  lat,
 });
 
 export const appSignInUpdate = (payload) => ({

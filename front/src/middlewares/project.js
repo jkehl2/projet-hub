@@ -5,12 +5,24 @@ import { push } from 'connected-react-router';
 
 // actions from store
 import {
-  PROJECT_CREATE, PROJECT_EDIT, PROJECT_DELETE, GET_PROJECT_BY_ID,
+  PROJECT_SEARCH,
+  PROJECT_CREATE,
+  PROJECT_EDIT,
+  PROJECT_DELETE,
+  GET_PROJECT_BY_ID,
+  GET_PROJECT_BY_GEO,
+  getProjectByGeo,
+  cleanProjectStore,
 } from 'src/store/actions/project';
 
 import {
-  APP_SEARCH_EXEC, APP_SEARCH_PROJECT_DONE, APP_SEARCH_PROJECT_COORDINATES,
-  geoSuccess, searchProjectDone,
+  appSearchUpdate,
+  appLoadingOn,
+  appLoadingOff,
+  appMsgUpdate,
+  appErrorUpdate,
+  appMsgClean,
+  appErrorClean,
 } from 'src/store/actions/app';
 // graphql queries
 import configGraphQl, {
@@ -23,76 +35,69 @@ import perimetersValue from 'src/utils/perimeters.json';
 // mw
 const projectMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
-    case APP_SEARCH_EXEC: {
+    case PROJECT_SEARCH: {
       // gathering values needed for geocoding
       const {
         app: {
           search: {
             localite,
+            perimeter,
+            archived,
           },
         },
       } = store.getState();
-
-      console.log('Nouvelle recherche', localite);
-      // Get GPS coordinates by location
-
-      // Positionstack API call for geocoding
       const params = {
         access_key: 'dc7156f13f34218aa5540fe1ef67fb52',
         query: localite,
       };
-
       axios.get('http://api.positionstack.com/v1/forward', { params })
-        .then((response) => store.dispatch(geoSuccess(response.data.data[0].longitude, response.data.data[0].latitude)))
-        .catch((error) => console.log(error))
-        .finally(() => store.dispatch(searchProjectDone()));
-
+        .then((response) => {
+          const geolocArr = response.data.data;
+          if (geolocArr.length > 0) {
+            const searchValue = {
+              long: geolocArr[0].longitude,
+              lat: geolocArr[0].latitude,
+              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10), 
+              archived,
+            };
+            store.dispatch(getProjectByGeo(searchValue));
+          }
+          else {
+            store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
+          }
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appErrorClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(cleanProjectStore());
+      store.dispatch(appLoadingOn());
       break;
     }
 
-    case APP_SEARCH_PROJECT_DONE: {
-      // gathering updated coordinates from the store to send to localhub API
-      const {
-        app: {
-          search: {
-            perimeter, lat, long, archived,
-          },
-        },
-      } = store.getState();
-        // get perimeter value in m
-
-      const scope = parseInt(perimetersValue.perimeters[perimeter].apiValue, 10);
-
-      console.log(lat, long);
-
-      // Object witholding the values for graphQL query
+    case GET_PROJECT_BY_GEO: {
       const data = JSON.stringify({
         ...queryGetProjectsByGeo,
-        variables: {
-          lat, long, scope, archived,
-        },
+        variables: action.payload,
       });
-
-      // building request for back-end
       const config = {
         ...configGraphQl,
         data,
       };
-      console.log('loader on');
       axios(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
+          store.dispatch(push('/projets'));
         })
         .catch((error) => {
-          console.log(error);
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
-          console.log('loader off');
+          store.dispatch(appLoadingOff());
         });
-
-      // redirect
-      store.dispatch(push('/projets'));
-      return;
+      break;
     }
     // CREATION
     case PROJECT_CREATE: {

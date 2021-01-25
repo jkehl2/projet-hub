@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 
 import SearchProjects from 'src/components/SearchProjects';
-import { appSearchUpdate, appSearchExec } from 'src/store/actions/app';
+import { appSearchUpdate } from 'src/store/actions/app';
+import { searchProject } from 'src/store/actions/project';
 
 const mapStateToProps = (state) => ({
   localite: state.app.search.localite,
   perimeter: state.app.search.perimeter,
   archived: state.app.search.archived,
-  coordinates: state.app.search.coordinates,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleSubmit: () => (event) => {
     event.preventDefault();
-    dispatch(appSearchExec());
+    dispatch(searchProject());
   },
 });
 
