@@ -7,7 +7,6 @@ import {
   Container,
 } from 'semantic-ui-react';
 import List from 'src/components/Projects/List';
-// import Map from 'src/components/Projects/Map';
 import SearchProjects from 'src/containers/SearchProjects';
 
 // == IMPORTS CONTAINERS
@@ -24,7 +23,6 @@ const Projects = ({ projects }) => (
       perimeter: 1,
     }}
     />
-    {/* <Map projects={projects} /> */}
     <List projects={projects} />
   </Container>
 );
