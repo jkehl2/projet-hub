@@ -42,7 +42,7 @@ const WhoAreWe = ({  }) => (
           <Card
             image src="https://ca.slack-edge.com/T018S94MBUY-U018C5HPW22-e6f9b98e388a-512"
             header="Aurore Picard"
-            description="Srum master."
+            description="Scrum master."
           />
         </Grid.Column>
         <Grid.Column>
