@@ -94,19 +94,21 @@ const projectMiddleware = (store) => (next) => (action) => {
       axios(config)
         .then((response) => {
           const { user } = store.getState();
-          const projects = response.data.projectsByGeo.map((project) => ({
+          console.log(response.data.data.projectsByGeo);
+          const projects = response.data.data.projectsByGeo.map((project) => ({
+            id: project.id,
             isFavorite: false,
             isArchived: project.archived,
             isAuthor: user.id === project.author.id,
             title: project.title,
             location: project.location,
-            expiration_date: project.expiration_date,
-            creation_date: project.created_at,
+            expiration_date: new Date(project.expiration_date).toLocaleDateString('fr-FR'),
+            creation_date: new Date(project.created_at).toLocaleDateString('fr-FR'),
             image: project.image,
             author: {
               id: project.author.id,
               name: project.author.name,
-              email: project.author.name,
+              email: project.author.email,
               avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
             },
           }));

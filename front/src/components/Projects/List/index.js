@@ -25,16 +25,19 @@ const List = ({ logged, projects }) => (
 List.propTypes = {
   logged: PropTypes.bool.isRequired,
   projects: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    authorEmail: PropTypes.string.isRequired,
-    expireDate: PropTypes.string.isRequired,
-    createDate: PropTypes.string.isRequired,
-    isAuthor: PropTypes.bool.isRequired,
-    adress: PropTypes.string.isRequired,
     isFavorite: PropTypes.bool.isRequired,
     isArchived: PropTypes.bool.isRequired,
+    isAuthor: PropTypes.bool.isRequired,
+    title: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    expiration_date: PropTypes.string.isRequired,
+    creation_date: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    author: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired).isRequired,
 };
 // == Export
