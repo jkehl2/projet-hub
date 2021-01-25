@@ -82,7 +82,6 @@ const projectMiddleware = (store) => (next) => (action) => {
     }
 
     case GET_PROJECT_BY_GEO: {
-      console.log(action.payload);
       const data = JSON.stringify({
         ...queryGetProjectsByGeo,
         variables: action.payload,
@@ -94,13 +93,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       axios(config)
         .then((response) => {
           const { user } = store.getState();
-<<<<<<< HEAD
-          const projet = response.data.projectsByGeo.map((project) => ({
-=======
-          console.log(response.data.data.projectsByGeo);
-          const projects = response.data.data.projectsByGeo.map((project) => ({
+          const projet = response.data.data.projectsByGeo.map((project) => ({
             id: project.id,
->>>>>>> 65a765ee67c0cd6ed749275e7d88a17a915b6802
             isFavorite: false,
             isArchived: project.archived,
             isAuthor: user.id === project.author.id,
@@ -108,7 +102,7 @@ const projectMiddleware = (store) => (next) => (action) => {
             location: project.location,
             expiration_date: new Date(project.expiration_date).toLocaleDateString('fr-FR'),
             creation_date: new Date(project.created_at).toLocaleDateString('fr-FR'),
-            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            image: project.image,
             author: {
               id: project.author.id,
               name: project.author.name,
@@ -240,8 +234,8 @@ const projectMiddleware = (store) => (next) => (action) => {
             isAuthor: user.id === project.author.id,
             title: project.title,
             location: project.location,
-            expiration_date: project.expiration_date,
-            creation_date: project.created_at,
+            expiration_date: new Date(project.expiration_date).toLocaleDateString('fr-FR'),
+            creation_date: new Date(project.created_at).toLocaleDateString('fr-FR'),
             image: project.image,
             author: {
               id: project.author.id,
@@ -249,46 +243,24 @@ const projectMiddleware = (store) => (next) => (action) => {
               email: project.author.name,
               avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
             },
-            needs: [
+            needs:
               {
                 id: project.needs.id,
                 title: project.needs.title,
                 description: project.needs.description,
                 checked: project.needs.completed,
               },
-            ],
+
           }));
 
-          store.dispatch(updateProjectStore({ projects }));
+          store.dispatch(updateProjectStore({ projet: projects }));
           store.dispatch(push('/projets'));
-          // isFavorite: PropTypes.bool.isRequired,
-          // isArchived: PropTypes.bool.isRequired,
-          // isAuthor: PropTypes.bool.isRequired,
-          // title: PropTypes.string.isRequired,
-          // location: PropTypes.string.isRequired,
-          // expiration_date: PropTypes.string.isRequired,
-          // creation_date: PropTypes.string.isRequired,
-          // image: PropTypes.string.isRequired,
-          // author: PropTypes.shape({
-          //   name: PropTypes.string.isRequired,
-          //   email: PropTypes.string.isRequired,
-          //   avatar: PropTypes.string.isRequired,
-          // }).isRequired,
-
-          // needs: PropTypes.arrayOf(PropTypes.shape({
-          //   id: PropTypes.string.isRequired,
-          //   title: PropTypes.string.isRequired,
-          //   description: PropTypes.string.isRequired,
-          //   checked: PropTypes.bool.isRequired,
-          // }).isRequired).isRequired,
-
-          console.log(JSON.stringify(response.data));
         })
         .catch((error) => {
-          console.log(error);
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
-          console.log('loader off');
+          store.dispatch(appLoadingOff());
         });
       return;
     }
