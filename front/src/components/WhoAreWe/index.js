@@ -17,7 +17,7 @@ const WhoAreWe = ({  }) => (
   <Container>
     <Header as="h1" textAlign="center">First Header</Header>
     <Grid divided="vertically">
-      <Grid.Row columns={2}>
+      <Grid.Row columns={4}>
         <Grid.Column>
           <Card
             image src="https://ca.slack-edge.com/T018S94MBUY-U018R0P25V4-09436bb6e88d-512"
