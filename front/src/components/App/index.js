@@ -19,6 +19,9 @@ import SignUp from 'src/components/SignUp';
 import Projects from 'src/components/Projects';
 import Confirmation from 'src/components/Confirmation';
 import CreateProject from 'src/components/CreateProject';
+import LegalMentions from 'src/components/LegalMentions';
+import WhoAreWe from 'src/components/WhoAreWe';
+import Footer from 'src/components/Footer';
 import ProtectedRoute from './ProtectedRoute';
 
 // == IMPORT STYLES
@@ -66,10 +69,13 @@ const App = ({
       </Route>
 
       {/* Sprint 2 - Mentions légales */}
-      <Route exact path="/mentionsLegales"> </Route>
+      <Route exact path="/mentionsLegales">
+        <LegalMentions />
+      </Route>
       {/* Sprint 2 - Présentation équipe */}
-      <Route exact path="/equipe"> </Route>
-
+      <Route exact path="/equipe">
+        <WhoAreWe />
+      </Route>
       {/* Routes ateignable uniquement si utilisateur logged */}
       {/* Sprint 1 - Page de confirmation par mot de passe */}
       <ProtectedRoute exact path="/utilisateur/confirm" isAllowed={logged} component={() => (<Confirmation />)} />
@@ -94,6 +100,8 @@ const App = ({
         }}
       />
     </Switch>
+    {/* Footer */}
+    <Footer />
   </Container>
 );
 
