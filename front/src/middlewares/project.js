@@ -13,6 +13,7 @@ import {
   GET_PROJECT_BY_GEO,
   getProjectByGeo,
   cleanProjectStore,
+  updateProjectStore,
 } from 'src/store/actions/project';
 
 import {
