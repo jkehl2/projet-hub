@@ -15,41 +15,23 @@ import './project.scss';
 
 // == Composant
 const Project = ({
-  isAuthor, isEditMode, isArchived, isFavorite,
+  project, logged, isEditMode,
 }) => (
   <Container className="project">
-    {isEditMode
-      ? (
-        <ProjectEdit
-          project={
-        {
-          title: 'Hello world project',
-          expireDate: '1986-10-10',
-          description: "I'm in place",
-          needs: [{
-            id: '1',
-            title: 'A Beautiful mind',
-            description: 'Everithing it need to be.',
-            isCompleted: true,
-          }, {
-            id: '2',
-            title: 'A freak zone',
-            description: 'Everithing it need to be.',
-            isCompleted: true,
-          }],
-        }
-      }
-        />
-      )
-      : <ProjectView isAuthor={isAuthor} isArchived={isArchived} isFavorite={isFavorite} />}
+    {(isEditMode && logged)
+      ? <ProjectEdit project={project} />
+      : <ProjectView props={{ logged, project }} />}
   </Container>
 );
 // == PROP TYPES
 Project.propTypes = {
-  isAuthor: PropTypes.bool.isRequired,
+  project: PropTypes.shape({
+    isAuthor: PropTypes.bool.isRequired,
+    isArchived: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+  }).isRequired,
+  logged: PropTypes.bool.isRequired,
   isEditMode: PropTypes.bool.isRequired,
-  isArchived: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
 };
 
 // == Export

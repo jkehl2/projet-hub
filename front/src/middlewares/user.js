@@ -30,7 +30,7 @@ const userMiddleware = (store) => (next) => (action) => {
       const data = JSON.stringify({ email: app.signIn.email, password: app.signIn.password });
       const config = {
         method: 'post',
-        url: 'http://localhost:3000/login',
+        url: 'https://localhub-api.herokuapp.com/login',
         headers: {
           'Content-Type': 'application/json',
         },
