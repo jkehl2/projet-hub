@@ -105,8 +105,6 @@ const projectMiddleware = (store) => (next) => (action) => {
           //   avatar: PropTypes.string.isRequired,
           // }).isRequired,
 
-          
-
           console.log(JSON.stringify(response.data));
           // store.dispatch(push('/projets'));
         })
@@ -222,7 +220,6 @@ const projectMiddleware = (store) => (next) => (action) => {
       console.log('loader on');
       axios(config)
         .then((response) => {
-
           // isFavorite: PropTypes.bool.isRequired,
           // isArchived: PropTypes.bool.isRequired,
           // isAuthor: PropTypes.bool.isRequired,
@@ -236,7 +233,7 @@ const projectMiddleware = (store) => (next) => (action) => {
           //   email: PropTypes.string.isRequired,
           //   avatar: PropTypes.string.isRequired,
           // }).isRequired,
-          
+
           // needs: PropTypes.arrayOf(PropTypes.shape({
           //   id: PropTypes.string.isRequired,
           //   title: PropTypes.string.isRequired,
