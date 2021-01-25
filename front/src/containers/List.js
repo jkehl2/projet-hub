@@ -4,7 +4,7 @@ import List from 'src/components/Projects/List';
 
 const mapStateToProps = (state) => ({
   logged: state.user.logged,
-  projects: state.projet.projects,
+  projects: state.project.projects,
 });
 
 const mapDispatchToProps = (dispatch) => ({});

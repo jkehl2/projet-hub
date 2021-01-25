@@ -13,10 +13,10 @@ import {
   GET_PROJECT_BY_GEO,
   getProjectByGeo,
   cleanProjectStore,
+  updateProjectStore,
 } from 'src/store/actions/project';
 
 import {
-  appSearchUpdate,
   appLoadingOn,
   appLoadingOff,
   appMsgUpdate,
@@ -31,6 +31,7 @@ import configGraphQl, {
 
 // == import utils to allow perimeter conversion
 import perimetersValue from 'src/utils/perimeters.json';
+import { useReducer } from 'react';
 
 // mw
 const projectMiddleware = (store) => (next) => (action) => {
@@ -55,10 +56,13 @@ const projectMiddleware = (store) => (next) => (action) => {
           const geolocArr = response.data.data;
           if (geolocArr.length > 0) {
             const searchValue = {
-              long: geolocArr[0].longitude,
-              lat: geolocArr[0].latitude,
-              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10), 
-              archived,
+              // long: geolocArr[0].longitude,
+              // lat: geolocArr[0].latitude,
+              lat: 2,
+              long: 1.9,
+              // scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
+              scope: 20000,
+              archived: false,
             };
             store.dispatch(getProjectByGeo(searchValue));
           }
@@ -74,10 +78,11 @@ const projectMiddleware = (store) => (next) => (action) => {
       store.dispatch(appMsgClean());
       store.dispatch(cleanProjectStore());
       store.dispatch(appLoadingOn());
-      break;
+      return;
     }
 
     case GET_PROJECT_BY_GEO: {
+      console.log(action.payload);
       const data = JSON.stringify({
         ...queryGetProjectsByGeo,
         variables: action.payload,
@@ -88,7 +93,26 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       axios(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          const { user } = store.getState();
+          console.log(response.data.data.projectsByGeo);
+          const projects = response.data.data.projectsByGeo.map((project) => ({
+            id: project.id,
+            isFavorite: false,
+            isArchived: project.archived,
+            isAuthor: user.id === project.author.id,
+            title: project.title,
+            location: project.location,
+            expiration_date: new Date(project.expiration_date).toLocaleDateString('fr-FR'),
+            creation_date: new Date(project.created_at).toLocaleDateString('fr-FR'),
+            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            author: {
+              id: project.author.id,
+              name: project.author.name,
+              email: project.author.email,
+              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+            },
+          }));
+          store.dispatch(updateProjectStore({ projects }));
           store.dispatch(push('/projets'));
         })
         .catch((error) => {
@@ -97,7 +121,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
-      break;
+      return;
     }
     // CREATION
     case PROJECT_CREATE: {
@@ -203,6 +227,27 @@ const projectMiddleware = (store) => (next) => (action) => {
       console.log('loader on');
       axios(config)
         .then((response) => {
+          // isFavorite: PropTypes.bool.isRequired,
+          // isArchived: PropTypes.bool.isRequired,
+          // isAuthor: PropTypes.bool.isRequired,
+          // title: PropTypes.string.isRequired,
+          // location: PropTypes.string.isRequired,
+          // expiration_date: PropTypes.string.isRequired,
+          // creation_date: PropTypes.string.isRequired,
+          // image: PropTypes.string.isRequired,
+          // author: PropTypes.shape({
+          //   name: PropTypes.string.isRequired,
+          //   email: PropTypes.string.isRequired,
+          //   avatar: PropTypes.string.isRequired,
+          // }).isRequired,
+
+          // needs: PropTypes.arrayOf(PropTypes.shape({
+          //   id: PropTypes.string.isRequired,
+          //   title: PropTypes.string.isRequired,
+          //   description: PropTypes.string.isRequired,
+          //   checked: PropTypes.bool.isRequired,
+          // }).isRequired).isRequired,
+
           console.log(JSON.stringify(response.data));
         })
         .catch((error) => {

@@ -10,18 +10,8 @@ import {
 
 // ==  INITIAL STATE : a project object containing an array
 export const initialState = {
-  projects: [{
-    title: '',
-    description: '',
-    expiration_date: '',
-    location: '',
-    scope: 0,
-    lat: 0,
-    long: 0,
-    image: '',
-    file: '',
-    author: 0,
-  }],
+  projects: [],
+  projet: null,
 };
 
 // == USER REDUCER - Gestion du store projet

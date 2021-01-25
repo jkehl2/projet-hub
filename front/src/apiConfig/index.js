@@ -4,7 +4,7 @@
  */
 
 // == URL SERVER BACK
-import CONFIG from './config.json';
+import CONFIG from './parameters.json';
 
 // == CONFIGURATION CONNECTEUR AXIOS GRAPHQL - END POINT + ENTÊTE
 export default {
@@ -81,20 +81,19 @@ export const queryProjectById = {
         created_at
         expiration_date
         location
-        lat
-        long
         image
         archived
         author{
+          id
           name
           email
+          avatar
         }
         needs{
+          id
           title
           description
-        }
-        comments{
-          content
+          completed
         }
     }
   }`,
@@ -109,16 +108,20 @@ export const queryDeleteProject = {
 };
 
 export const queryGetProjectsByGeo = {
-  query: `query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!) {
-    projectsByGeo(lat: $lat, long: $long, scope: $scope) {
+  query: `query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!, $archived: Boolean!) {
+    projectsByGeo(lat: $lat, long: $long, scope: $scope, archived: $archived) {
+      id
       title
-      description
+      image
       location
-      lat
-      long
+      created_at
+      expiration_date
+      archived
       author{
+        id
         name
         email
+        avatar
       }
     }
   }`,
