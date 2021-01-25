@@ -6,7 +6,7 @@
 // == CONFIGURATION CONNECTEUR AXIOS - END POINT + ENTÊTE
 export default {
   method: 'post',
-  url: 'http://localhost:3000/graphql/',
+  url: 'https://localhub-api.herokuapp.com/graphql',
   headers: {
     'Content-Type': 'application/json',
   },

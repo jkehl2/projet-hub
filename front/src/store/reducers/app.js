@@ -8,6 +8,8 @@ import {
   APP_LOADING_OFF,
   APP_CLEAN,
   APP_SEARCH_UPDATE,
+  APP_SEARCH_PROJECT_DONE,
+  APP_SEARCH_PROJECT_COORDINATES,
   APP_SIGNIN_UPDATE,
   APP_SIGNIN_CLEAN,
   APP_ERROR_UPDATE,
@@ -39,6 +41,8 @@ export const searchInitialState = {
   localite: '',
   perimeter: 0,
   archived: false,
+  lat: 0,
+  long: 0,
 };
 
 // ==  INITIALE STATE des paramètres applicatifs techniques
@@ -75,6 +79,17 @@ const reducer = (oldState = initialState, action = {}) => {
           ...action.payload,
         },
       };
+    case APP_SEARCH_PROJECT_COORDINATES:
+      return {
+        ...oldState,
+        lat: action.lat,
+        long: action.long,
+      };
+    case APP_SEARCH_PROJECT_DONE: {
+      return {
+        ...oldState,
+      };
+    }
     case APP_SIGNIN_UPDATE:
       return {
         ...oldState,
