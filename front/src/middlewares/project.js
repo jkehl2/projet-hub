@@ -13,6 +13,7 @@ import {
   GET_PROJECT_BY_GEO,
   getProjectByGeo,
   cleanProjectStore,
+  updateProjectStore,
 } from 'src/store/actions/project';
 
 import {
@@ -236,7 +237,7 @@ const projectMiddleware = (store) => (next) => (action) => {
           //   email: PropTypes.string.isRequired,
           //   avatar: PropTypes.string.isRequired,
           // }).isRequired,
-          
+
           // needs: PropTypes.arrayOf(PropTypes.shape({
           //   id: PropTypes.string.isRequired,
           //   title: PropTypes.string.isRequired,
