@@ -8,13 +8,13 @@ import SignIn from 'src/containers/SignIn';
 import Menu from 'src/containers/Menu';
 import Home from 'src/containers/Home';
 import Profil from 'src/containers/Profil';
+import Project from 'src/containers/Project';
 
 // == IMPORTS COMPOSANTS
 import {
   Container,
   Message,
 } from 'semantic-ui-react';
-import Project from 'src/components/Project';
 import SignUp from 'src/components/SignUp';
 import Projects from 'src/components/Projects';
 import Confirmation from 'src/components/Confirmation';
@@ -93,7 +93,6 @@ const App = ({
       </Route>
       {/* Sprint 1 - Page d'étail d'un projet */}
       <Route exact path="/projet/:slug">
-
         <Project isAuthor={false} isArchived={false} isFavorite={false} isEditMode={false} />
       </Route>
       {/* Sprint 1 - Page de connexion utlisateur */}

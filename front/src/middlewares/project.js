@@ -16,7 +16,6 @@ import {
 } from 'src/store/actions/project';
 
 import {
-  appSearchUpdate,
   appLoadingOn,
   appLoadingOff,
   appMsgUpdate,
@@ -55,10 +54,13 @@ const projectMiddleware = (store) => (next) => (action) => {
           const geolocArr = response.data.data;
           if (geolocArr.length > 0) {
             const searchValue = {
-              long: geolocArr[0].longitude,
-              lat: geolocArr[0].latitude,
-              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10), 
-              archived,
+              // long: geolocArr[0].longitude,
+              // lat: geolocArr[0].latitude,
+              lat: 2,
+              long: 1.9,
+              // scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
+              scope: 20000,
+              archived: false,
             };
             store.dispatch(getProjectByGeo(searchValue));
           }
@@ -74,10 +76,11 @@ const projectMiddleware = (store) => (next) => (action) => {
       store.dispatch(appMsgClean());
       store.dispatch(cleanProjectStore());
       store.dispatch(appLoadingOn());
-      break;
+      return;
     }
 
     case GET_PROJECT_BY_GEO: {
+      console.log(action.payload);
       const data = JSON.stringify({
         ...queryGetProjectsByGeo,
         variables: action.payload,
@@ -89,7 +92,7 @@ const projectMiddleware = (store) => (next) => (action) => {
       axios(config)
         .then((response) => {
           console.log(JSON.stringify(response.data));
-          store.dispatch(push('/projets'));
+          // store.dispatch(push('/projets'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -97,7 +100,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
-      break;
+      return;
     }
     // CREATION
     case PROJECT_CREATE: {

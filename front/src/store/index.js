@@ -22,7 +22,6 @@ export default function configureStore(preloadedState) {
         routerMiddleware(history), // for dispatching history actions
         userMiddleware,
         projectMiddleware,
-
       ),
     ),
   );
