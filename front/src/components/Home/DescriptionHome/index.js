@@ -26,13 +26,13 @@ const DescriptionHome = () => (
     </Item>
     <Item>
       <Item.Description>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident,
-        sunt in culpa qui officia deserunt mollit anim id est laborum."
+        Local Hub s'adresse aux particuliers, aux associations et aux entreprises. Il vise à favoriser
+        le lien social, mutualiser les moyens et les savoir-faire, mais aussi entreprendre des actions collectives
+        à l'échelle locale.
+        Notre but est de faire connaître vos idées de projets ainsi que leurs besoins.
+        Vous serez mis en relation grâce à un système de géolocalisationqui vous permettra
+        de participer ou proposer vos services afin que ces initiatives se concrétisent.
+        L'équipe Local Hub.
       </Item.Description>
     </Item>
   </Item.Group>
