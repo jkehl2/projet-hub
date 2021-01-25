@@ -1,0 +1,9 @@
+{
+  "perimeters": [
+      {"value" : "5", "apiValue" : "5000"},
+      {"value" : "10", "apiValue" : "10000"},
+      {"value" : "15", "apiValue" : "15000"},
+      {"value" : "25", "apiValue" : "25000"},
+      {"value" : "50", "apiValue" : "50000"}
+    ]
+}

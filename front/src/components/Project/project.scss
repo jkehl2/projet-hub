@@ -1,0 +1,15 @@
+@use 'src/styles/vars';
+
+.project {}
+
+.content>.header {
+  font-size: 2rem !important;
+
+  >.icon {
+    margin-left: 1rem !important;
+  }
+}
+
+.container{
+  margin-top: 0.5rem !important;
+}
