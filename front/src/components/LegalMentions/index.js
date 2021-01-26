@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 
@@ -10,16 +10,16 @@ import React from 'react';
 import './legalmentions.scss';
 
 // == Composant
-const LegalMentions = () => {
+const LegalMentions = ({ props }) => {
   return (
     <div className="legal-mentions">
     </div>
   );
 };
 
-// LegalMentions.propTypes = {
-//   props: PropTypes.object.isRequired,
-// };
+LegalMentions.propTypes = {
+  props: PropTypes.object.isRequired,
+};
 
 // == Export
 export default LegalMentions;
