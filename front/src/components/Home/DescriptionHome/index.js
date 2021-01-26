@@ -1,41 +1,25 @@
 // == Import npm
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
-import {
-  Grid, Item,
-} from 'semantic-ui-react';
-
-// == IMPORTS CONTAINERS
-
-// == STYLES
-import './descriptionHome.scss';
+import { Segment } from 'semantic-ui-react';
 
 // == Composant
 const DescriptionHome = () => (
-  <Item.Group relaxed="very">
-    <Item>
-      <Item.Content verticalAlign="middle">
-        <Grid columns={1}>
-          <Grid.Row centered>
-            <Item.Header as="h1">Local Hub</Item.Header>
-          </Grid.Row>
-        </Grid>
-      </Item.Content>
-    </Item>
-    <Item>
-      <Item.Description>
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident,
-        sunt in culpa qui officia deserunt mollit anim id est laborum."
-      </Item.Description>
-    </Item>
-  </Item.Group>
+  <>
+    <Segment inverted padded="very">
+      <p><strong>Local-Hub</strong> s'adresse aux particuliers, aux associations et aux entreprises.</p>
+      <p>Il vise à favoriser le lien social, mutualiser les moyens et les savoir-faire, mais aussi entreprendre des actions collectives
+        à l'échelle locale.
+      </p>
+      <p>Notre but est de faire connaître vos idées de projets ainsi que leurs besoins.
+        Vous serez mis en relation grâce à un système de géolocalisationqui vous permettra
+        de participer ou proposer vos services afin que ces initiatives se concrétisent.
+      </p>
+      <br />
+      <p><strong>L'équipe Local Hub.</strong></p>
+    </Segment>
+  </>
 );
 
 // == Export

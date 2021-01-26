@@ -7,7 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import userMiddleware from 'src/middlewares/user';
 import projectMiddleware from 'src/middlewares/project';
-import searchMiddleware from 'src/middlewares/search';
+
 import { routerMiddleware } from 'connected-react-router';
 
 export const history = createBrowserHistory();
@@ -22,7 +22,6 @@ export default function configureStore(preloadedState) {
         routerMiddleware(history), // for dispatching history actions
         userMiddleware,
         projectMiddleware,
-        searchMiddleware,
       ),
     ),
   );

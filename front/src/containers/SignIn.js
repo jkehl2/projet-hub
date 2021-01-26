@@ -2,25 +2,29 @@ import { connect } from 'react-redux';
 
 import SignIn from 'src/components/SignIn';
 
-import { updateSignInValue, execSignIn } from 'src/store/actions/user';
+import { appClean, appSignInUpdate } from 'src/store/actions/app';
+import { execSignIn } from 'src/store/actions/user';
 import { push } from 'connected-react-router';
 
 const mapStateToProps = (state) => ({
-  email: state.user.signInEmail,
-  password: state.user.signInPassword,
+  email: state.app.signIn.email,
+  password: state.app.signIn.password,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setSignInValue: (payLoad) => {
-    dispatch(updateSignInValue(payLoad));
+    dispatch(appSignInUpdate(payLoad));
   },
-  handleSubmit: () => (event) => {
+  handleSubmit: (event) => {
     event.preventDefault();
     dispatch(execSignIn());
   },
-  redirectSignUp: () => (event) =>{
+  redirectSignUp: (event) => {
     event.preventDefault();
     dispatch(push('/utilisateur/enregistrement'));
+  },
+  cleanAppParams: () => {
+    dispatch(appClean());
   },
 });
 

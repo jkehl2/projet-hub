@@ -8,7 +8,6 @@ import {
 } from 'semantic-ui-react';
 import Description from './Description';
 import Needs from './Needs';
-// import Comments from './Comments';
 import ProjectMenu from './ProjectMenu';
 // == IMPORTS CONTAINERS
 
@@ -16,28 +15,29 @@ import ProjectMenu from './ProjectMenu';
 import './projectView.scss';
 
 // == Composant
-const ProjectView = ({ isAuthor, isArchived, isFavorite }) => {
-  const isMenu = isAuthor && !isArchived;
+const ProjectView = (props) => {
+  const { project, logged } = props;
   return (
     <>
       {/* Menu projet - modifier / supprimer / archiver */}
-      {(isMenu) && <ProjectMenu />}
+      {(logged && project.isAuthor && !project.isArchived) && <ProjectMenu />}
       <Segment compact attached="top">
         {/* Description du projet */}
-        <Description isFavorite={isFavorite} isArchived={isArchived} isAuthor={isAuthor} />
+        <Description {...props} />
       </Segment>
       {/* Liste des besoins du projet */}
-      <Needs />
-      {/* Liste des commentaires du projet */}
-      {/* <Comments isArchived /> */}
+      <Needs needs={project.needs} />
     </>
   );
 };
 // == PROP TYPES
 ProjectView.propTypes = {
-  isAuthor: PropTypes.bool.isRequired,
-  isArchived: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
+  logged: PropTypes.bool.isRequired,
+  project: PropTypes.shape({
+    isAuthor: PropTypes.bool.isRequired,
+    isArchived: PropTypes.bool.isRequired,
+    needs: PropTypes.array.isRequired,
+  }).isRequired,
 };
 
 // == Export

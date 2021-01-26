@@ -1,5 +1,7 @@
 @use 'src/styles/vars';
 
-.header-home {
+.ui.teal .card,
+.ui.cards>.card {
+  background-color: #D9499A;
 }
 

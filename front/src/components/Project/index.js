@@ -1,5 +1,5 @@
 // == Import npm
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
@@ -15,41 +15,36 @@ import './project.scss';
 
 // == Composant
 const Project = ({
-  isAuthor, isEditMode, isArchived, isFavorite,
-}) => (
-  <Container className="project">
-    {isEditMode
-      ? (
-        <ProjectEdit
-          project={
-        {
-          title: 'Hello world project',
-          expireDate: '1986-10-10',
-          description: "I'm in place",
-          needs: [{
-            id: '1',
-            title: 'A Beautiful mind',
-            description: 'Everithing it need to be.',
-            isCompleted: true,
-          }, {
-            id: '2',
-            title: 'A freak zone',
-            description: 'Everithing it need to be.',
-            isCompleted: true,
-          }],
-        }
-      }
-        />
-      )
-      : <ProjectView isAuthor={isAuthor} isArchived={isArchived} isFavorite={isFavorite} />}
-  </Container>
-);
+  projectId, project, logged, isEditMode, getProjectById, cleanProject,
+}) => {
+  // Au montage du composant on charge les données du projet depuis l'API
+  // Au démontage on clean le store.
+  useEffect(() => {
+    getProjectById(projectId);
+    return () => {
+      cleanProject();
+    };
+  }, []);
+  return (
+    <Container className="project">
+      {(isEditMode && logged)
+        ? <ProjectEdit project={project} />
+        : <ProjectView logged={logged} project={project} />}
+    </Container>
+  );
+};
 // == PROP TYPES
 Project.propTypes = {
-  isAuthor: PropTypes.bool.isRequired,
+  projectId: PropTypes.string.isRequired,
+  project: PropTypes.shape({
+    isAuthor: PropTypes.bool.isRequired,
+    isArchived: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+  }).isRequired,
+  logged: PropTypes.bool.isRequired,
   isEditMode: PropTypes.bool.isRequired,
-  isArchived: PropTypes.bool.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
+  getProjectById: PropTypes.func.isRequired,
+  cleanProject: PropTypes.func.isRequired,
 };
 
 // == Export

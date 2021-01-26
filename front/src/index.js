@@ -1,6 +1,6 @@
 // == Import : npm
 import React from 'react';
-import App from 'src/components/App';
+import App from 'src/containers/App';
 
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
