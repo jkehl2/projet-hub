@@ -21,9 +21,6 @@ const Project = ({
   // Au démontage on clean le store.
   useEffect(() => {
     getProjectById(projectId);
-    return () => {
-      cleanProject();
-    };
   }, []);
   return (
     <Container className="project">
