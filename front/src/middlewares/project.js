@@ -57,13 +57,14 @@ const projectMiddleware = (store) => (next) => (action) => {
           const geolocArr = response.data.data;
           if (geolocArr.length > 0) {
             const searchValue = {
-              // long: geolocArr[0].longitude,
-              // lat: geolocArr[0].latitude,
-              lat: 2,
-              long: 1.9,
-              // scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
-              scope: 20000,
-              archived: false,
+              lat: geolocArr[0].latitude,
+              long: geolocArr[0].longitude,
+              // lat: 2,
+              // long: 1.9,
+              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
+              // scope: 20000,
+              // archived: false,
+              archived,
             };
             store.dispatch(getProjectByGeo(searchValue));
           }
