@@ -1,8 +1,8 @@
-/back/node_modules
-/back/.env
+back/node_modules
+back/.env
 
-/front/node_modules/
-/front/dist/
-/front/.DS_Store
-/front/Thumbs.db
-/front/yarn-error.log
+front/node_modules/
+front/dist/
+front/.DS_Store
+front/Thumbs.db
+front/yarn-error.log
