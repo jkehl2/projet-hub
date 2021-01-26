@@ -40,6 +40,7 @@ const SignIn = (
           type="text"
           label="Email"
           placeholder="monemail@domain.foo"
+          autoComplete="current-user"
           value={email}
           onChange={(event) => {
             setSignInValue({ email: event.target.value });
@@ -50,6 +51,7 @@ const SignIn = (
           type="password"
           label="Mot de passe"
           placeholder="mot de passe"
+          autoComplete="current-password"
           value={password}
           onChange={(event) => {
             setSignInValue({ password: event.target.value });
