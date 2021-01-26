@@ -6,13 +6,14 @@ import PropTypes from 'prop-types';
 import SearchProjects from 'src/containers/SearchProjects';
 // == IMPORTS COMPOSANTS
 import {
-  Container,
+  Container, Divider, Header,
 } from 'semantic-ui-react';
 import HeaderHome from './HeaderHome';
 import DescriptionHome from './DescriptionHome';
 
 // == STYLES
 import './home.scss';
+
 
 // == Composant
 const Home = ({ cleanAppParams }) => {
@@ -22,14 +23,16 @@ const Home = ({ cleanAppParams }) => {
   }, []);
   return (
     <Container className="home">
+      <Divider horizontal><Header as="h1" content="Local Hub" textAlign="center" /></Divider>
       {/** Page top with pictures */}
       <HeaderHome />
 
+      {/** Search Bar */}
+      <Divider horizontal>Rechercher</Divider>
+      <SearchProjects />
+
       {/** Page header with Local Hub presentation */}
       <DescriptionHome />
-
-      {/** Search Bar */}
-      <SearchProjects />
     </Container>
   );
 };

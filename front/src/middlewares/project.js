@@ -14,6 +14,7 @@ import {
   getProjectByGeo,
   cleanProjectStore,
   updateProjectStore,
+  cleanProject,
 } from 'src/store/actions/project';
 
 import {
@@ -93,7 +94,7 @@ const projectMiddleware = (store) => (next) => (action) => {
       axios(config)
         .then((response) => {
           const { user } = store.getState();
-          const projet = response.data.data.projectsByGeo.map((project) => ({
+          const projects = response.data.data.projectsByGeo.map((project) => ({
             id: project.id,
             isFavorite: false,
             isArchived: project.archived,
@@ -102,7 +103,7 @@ const projectMiddleware = (store) => (next) => (action) => {
             location: project.location,
             expiration_date: new Date(project.expiration_date).toLocaleDateString('fr-FR'),
             creation_date: new Date(project.created_at).toLocaleDateString('fr-FR'),
-            image: project.image,
+            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
             author: {
               id: project.author.id,
               name: project.author.name,
@@ -110,7 +111,7 @@ const projectMiddleware = (store) => (next) => (action) => {
               avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
             },
           }));
-          store.dispatch(updateProjectStore({ projet }));
+          store.dispatch(updateProjectStore({ projects }));
           store.dispatch(push('/projets'));
         })
         .catch((error) => {
@@ -211,50 +212,38 @@ const projectMiddleware = (store) => (next) => (action) => {
     }
     // GET BY ID == OK
     case GET_PROJECT_BY_ID: {
-      const { id } = action.payload;
       const data = JSON.stringify({
         ...queryProjectById,
-        variables: { id },
+        variables: { ...action.payload },
       });
-
       const config = {
         ...configGraphQl,
         data,
       };
-
-      console.log('loader on');
       axios(config)
         .then((response) => {
           const { user } = store.getState();
-
-          const projects = response.data.data.projectsById.map((project) => ({
-            id: project.id,
+          const apiData = response.data.data.project;
+          const project = {
+            id: apiData.id,
             isFavorite: false,
-            isArchived: project.archived,
-            isAuthor: user.id === project.author.id,
-            title: project.title,
-            location: project.location,
-            expiration_date: new Date(project.expiration_date).toLocaleDateString('fr-FR'),
-            creation_date: new Date(project.created_at).toLocaleDateString('fr-FR'),
-            image: project.image,
+            isArchived: apiData.archived,
+            isAuthor: (user.id === apiData.author.id),
+            title: apiData.title,
+            description: apiData.description,
+            location: apiData.location,
+            expiration_date: new Date(apiData.expiration_date).toLocaleDateString('fr-FR'),
+            creation_date: new Date(apiData.created_at).toLocaleDateString('fr-FR'),
+            image: apiData.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : apiData.image,
             author: {
-              id: project.author.id,
-              name: project.author.name,
-              email: project.author.name,
-              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+              id: apiData.author.id,
+              name: apiData.author.name,
+              email: apiData.author.email,
+              avatar: apiData.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : apiData.author.avatar,
             },
-            needs:
-              {
-                id: project.needs.id,
-                title: project.needs.title,
-                description: project.needs.description,
-                checked: project.needs.completed,
-              },
-
-          }));
-
-          store.dispatch(updateProjectStore({ projet: projects }));
-          store.dispatch(push('/projets'));
+            needs: apiData.needs,
+          };
+          store.dispatch(updateProjectStore({ project }));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -262,6 +251,8 @@ const projectMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
+      store.dispatch(cleanProject());
+      store.dispatch(appLoadingOn());
       return;
     }
     default:

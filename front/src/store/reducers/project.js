@@ -5,21 +5,21 @@
 
 // == IMPORT ACTIONS SUR STORE
 import {
-  PROJECT_STORE_UPDATE, PROJECT_STORE_CLEAN,
+  PROJECT_STORE_UPDATE, PROJECT_STORE_CLEAN, PROJECT_CLEAN_PROJECTS, PROJECT_CLEAN_PROJECT,
 } from 'src/store/actions/project';
 
-// ==  INITIAL STATE : a project object containing an array
-export const initialState = {
-  projects: [],
-  projet: {
+// ==  INITIAL STATE : a project object empty
+export const projectInitialState = {
+  project: {
     id: 0,
     isFavorite: false,
     isArchived: false,
     isAuthor: false,
-    title: 'un beau projet',
+    title: '',
     location: '',
-    expiration_date: '',
-    creation_date: '',
+    description: '',
+    expiration_date: new Date().toLocaleDateString('fr-FR'),
+    creation_date: new Date().toLocaleDateString('fr-FR'),
     image: '',
     author: {
       id: 0,
@@ -27,13 +27,14 @@ export const initialState = {
       email: '',
       avatar: '',
     },
-    needs: {
-      id: 0,
-      title: 'trop bien ce projet',
-      description: '',
-      checked: false,
-    },
+    needs: [],
   },
+};
+
+// ==  INITIAL STATE : a project object containing an array
+export const initialState = {
+  projects: [],
+  ...projectInitialState,
 };
 
 // == USER REDUCER - Gestion du store projet
@@ -47,6 +48,16 @@ const reducer = (oldState = initialState, action = {}) => {
     case PROJECT_STORE_CLEAN:
       return {
         ...initialState,
+      };
+    case PROJECT_CLEAN_PROJECTS:
+      return {
+        ...initialState,
+        projects: [],
+      };
+    case PROJECT_CLEAN_PROJECT:
+      return {
+        ...initialState,
+        ...projectInitialState,
       };
     default:
       return { ...oldState };

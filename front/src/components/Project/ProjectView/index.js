@@ -16,11 +16,11 @@ import './projectView.scss';
 
 // == Composant
 const ProjectView = (props) => {
-  const { project } = props;
+  const { project, logged } = props;
   return (
     <>
       {/* Menu projet - modifier / supprimer / archiver */}
-      {(project.isAuthor && !project.isArchived) && <ProjectMenu />}
+      {(logged && project.isAuthor && !project.isArchived) && <ProjectMenu />}
       <Segment compact attached="top">
         {/* Description du projet */}
         <Description {...props} />

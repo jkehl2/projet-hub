@@ -6,11 +6,9 @@ import PropTypes from 'prop-types';
 import {
   Dropdown, Grid, Icon, Label, Menu as MenuUi,
 } from 'semantic-ui-react';
-
-// == IMPORT STYLES
-import './menu.scss';
 import { Link } from 'react-router-dom';
 
+// DROPDOWN TRIGGER - SHOW USER CONNECTED INMODE WHIDE SCREEN, HIDE OVERWISE
 const DropDownTrigger = ({ logged, userName }) => (
   <>
     {logged && (
@@ -27,6 +25,9 @@ DropDownTrigger.propTypes = {
   logged: PropTypes.bool.isRequired,
   userName: PropTypes.string.isRequired,
 };
+
+// == IMPORT STYLES
+import './menu.scss';
 
 const Menu = ({ logged, userName, handleDisconnect }) => (
   <MenuUi attached="top" borderless compact inverted>
