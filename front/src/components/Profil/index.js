@@ -12,8 +12,8 @@ import {
 import './profil.scss';
 
 // == Composant Profil mode consultation
-<<<<<<< HEAD
-const Profil = ({ name, email, avatar, deleteProfil, setConfirmation, confirmation, }) => {
+const Profil = ({ name, email, avatar, deleteProfil,
+  setConfirmation, confirmation, switchToEditProFile, }) => {
   const [open, setOpen] = useState(false);
   return (
     <Container className="profil">
@@ -36,7 +36,14 @@ const Profil = ({ name, email, avatar, deleteProfil, setConfirmation, confirmati
         </Item.Group>
         <Button.Group vertical>
           {/* bouton modifer */}
-          <Button color="blue">Modifier mes informations personnelles</Button>
+          <Button
+            color="blue"
+            onClick={() => {
+              switchToEditProFile();
+            }}
+          >
+            Modifier mes informations personnelles
+          </Button>
           {/* bouton mes projets */}
           <Button color="grey">Mes projets</Button>
           {/* bouton mes favoris */}
@@ -73,62 +80,14 @@ const Profil = ({ name, email, avatar, deleteProfil, setConfirmation, confirmati
     </Container>
   );
 };
-=======
-const Profil = ({
-  name,
-  email,
-  avatar,
-  switchToEditProFile,
-}) => (
-  <Container className="profil">
-    <Segment textAlign="left">
-      {/* Titre */}
-      <Header as="h1">Profil utlisateur</Header>
-      <Item.Group relaxed>
-        <Item>
-          {/* avatar */}
-          <Item.Image size="small" src={`${avatar}`} />
-          <Item.Content>
-            {/* pseudo */}
-            <Item.Header as="h2">{`${name}`}</Item.Header>
-            <Item.Meta>
-              {/* email */}
-              <a href={`mailto:${email}`}>{`${email}`}</a>
-            </Item.Meta>
-          </Item.Content>
-        </Item>
-      </Item.Group>
-      <Button.Group vertical>
-        {/* bouton modifer */}
-        <Button
-          color="blue"
-          onClick={() => {
-            switchToEditProFile();
-          }}
-        >Modifier mes informations personnelles
-        </Button>
-        {/* bouton mes projets */}
-        <Button color="grey">Mes projets</Button>
-        {/* bouton mes favoris */}
-        <Button color="grey">Mes favoris</Button>
-        {/* bouton mes supprimer le compte */}
-        <Button negative>Supprimer le profil</Button>
-      </Button.Group>
-    </Segment>
-  </Container>
-);
->>>>>>> cfc178f786ccc1636fffb83f759b4c606c5d2732
 
 Profil.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-<<<<<<< HEAD
   deleteProfil: PropTypes.func.isRequired,
   setConfirmation: PropTypes.func.isRequired,
-=======
   switchToEditProFile: PropTypes.func.isRequired,
->>>>>>> cfc178f786ccc1636fffb83f759b4c606c5d2732
 };
 
 // == Export

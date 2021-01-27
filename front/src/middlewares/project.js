@@ -66,12 +66,7 @@ const projectMiddleware = (store) => (next) => (action) => {
               long: geolocArr[0].longitude,
               lat: geolocArr[0].latitude,
               scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
-<<<<<<< HEAD
-              // scope: 20000,
-              archived: false,
-=======
               archived,
->>>>>>> cfc178f786ccc1636fffb83f759b4c606c5d2732
             };
             store.dispatch(getProjectByGeo(searchValue));
           }

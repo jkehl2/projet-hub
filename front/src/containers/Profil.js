@@ -13,16 +13,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-<<<<<<< HEAD
   setConfirmation: (payload) => {
     dispatch(profilDeleteConfirm(payload));
   },
   deleteProfil: () => {
     dispatch(profilDeleteSubmit());
-=======
+  },
   switchToEditProFile: () => {
     dispatch(appEditProfilOn());
->>>>>>> cfc178f786ccc1636fffb83f759b4c606c5d2732
   },
 });
 

@@ -41,7 +41,7 @@ export const userSignIn = () => ({
 export const userSignOut = () => ({
   type: USER_SIGNOUT,
 });
-export const profiDeleteConfirm = (payload) => ({
+export const profilDeleteConfirm = (payload) => ({
   type: CONFIRM_DELETE,
   payload,
 });

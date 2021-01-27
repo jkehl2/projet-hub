@@ -19,19 +19,10 @@ import configGraphQl, {
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
-<<<<<<< HEAD
   USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN,
   updateUserStore, CONFIRM_DELETE_SUBMIT,
-=======
-  USER_CREATE,
-  USER_BY_ID,
-  USER_EDIT,
-  USER_DELETE,
-  USER_SIGNIN,
   USER_SIGNOUT,
-  updateUserStore,
   cleanUserStore,
->>>>>>> cfc178f786ccc1636fffb83f759b4c606c5d2732
 } from 'src/store/actions/user';
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
