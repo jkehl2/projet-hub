@@ -71,7 +71,6 @@ const App = ({
           </Route>
           {/* Sprint 1 - Page de connexion utlisateur */}
           <Route exact path="/utilisateur/connexion">
-
             <SignIn />
           </Route>
 
@@ -90,7 +89,7 @@ const App = ({
           {/* Sprint 1 - Page d'enregistrement utlisateur' */}
           <ProtectedRoute exact path="/utilisateur/enregistrement" isAllowed={logged} component={() => (<SignUp />)} />
           {/* Sprint 2 - Page Création de projet' */}
-          <ProtectedRoute exact path="/projet/create" isAllowed={logged} component={() => (<CreateProject />)} />
+          <ProtectedRoute exact path="/utilisateur/create" isAllowed={logged} component={() => (<CreateProject />)} />
           {/* Sprint 2 - Page mes favoris' */}
           <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={() => (<Projects />)} />
           {/* Sprint 2 - Page mes projets' */}
