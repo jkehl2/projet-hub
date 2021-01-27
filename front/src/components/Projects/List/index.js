@@ -1,5 +1,5 @@
 // == Import npm
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
@@ -13,13 +13,18 @@ import ProjectCard from 'src/components/Projects/ProjectCard';
 import './list.scss';
 
 // == Composant
-const List = ({ logged, projects }) => (
-  <>
-    {projects.map((project) => (
-      <ProjectCard key={project.id} logged={logged} project={project} />
-    ))}
-  </>
-);
+const List = ({ logged, projects, updateList }) => {
+  useEffect(() => {
+    updateList();
+  }, []);
+  return (
+    <>
+      {projects.map((project) => (
+        <ProjectCard key={project.id} logged={logged} project={project} />
+      ))}
+    </>
+  );
+};
 
 // == PROP TYPES
 List.propTypes = {
@@ -39,6 +44,7 @@ List.propTypes = {
       avatar: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired).isRequired,
+  updateList: PropTypes.func.isRequired,
 };
 // == Export
 export default List;

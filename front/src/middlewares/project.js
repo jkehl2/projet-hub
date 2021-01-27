@@ -54,6 +54,14 @@ const projectMiddleware = (store) => (next) => (action) => {
           },
         },
       } = store.getState();
+
+      if (localite.trim() === '') {
+        store.dispatch(appErrorClean());
+        store.dispatch(appMsgClean());
+        store.dispatch(cleanProjectStore());
+        store.dispatch(appMsgUpdate('Veuillez préciser une localité.'));
+        return;
+      }
       const params = {
         access_key: 'dc7156f13f34218aa5540fe1ef67fb52',
         query: localite,
