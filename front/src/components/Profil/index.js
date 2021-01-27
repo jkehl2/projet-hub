@@ -12,7 +12,12 @@ import {
 import './profil.scss';
 
 // == Composant Profil mode consultation
-const Profil = ({ name, email, avatar }) => (
+const Profil = ({
+  name,
+  email,
+  avatar,
+  switchToEditProFile,
+}) => (
   <Container className="profil">
     <Segment textAlign="left">
       {/* Titre */}
@@ -33,7 +38,13 @@ const Profil = ({ name, email, avatar }) => (
       </Item.Group>
       <Button.Group vertical>
         {/* bouton modifer */}
-        <Button color="blue">Modifier mes informations personnelles</Button>
+        <Button
+          color="blue"
+          onClick={() => {
+            switchToEditProFile();
+          }}
+        >Modifier mes informations personnelles
+        </Button>
         {/* bouton mes projets */}
         <Button color="grey">Mes projets</Button>
         {/* bouton mes favoris */}
@@ -49,6 +60,7 @@ Profil.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
+  switchToEditProFile: PropTypes.func.isRequired,
 };
 
 // == Export

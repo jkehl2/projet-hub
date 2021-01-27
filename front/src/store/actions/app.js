@@ -6,6 +6,10 @@
 // == [CLE-VALEURS] - ACTIONS sur le store applicatif technique
 export const APP_LOADING_ON = 'APP_LOADING_ON';
 export const APP_LOADING_OFF = 'APP_LOADING_OFF';
+
+export const APP_PROFIL_UPDATE = 'APP_PROFIL_UPDATE';
+export const APP_PROFIL_CLEAN = 'APP_PROFIL_CLEAN';
+
 export const APP_CLEAN = 'APP_CLEAN';
 
 // == ACTIONS GESTION FORMULAIRE DE RECHERCHE
@@ -72,3 +76,17 @@ export const appMsgUpdate = (message) => ({
 export const appMsgClean = () => ({
   type: APP_MSG_CLEAN,
 });
+
+export const appEditProfilOn = () => (
+  {
+    type: APP_PROFIL_UPDATE,
+    payload: { isEditMode: true },
+  }
+);
+
+export const appEditProfilOff = () => (
+  {
+    type: APP_PROFIL_UPDATE,
+    payload: { isEditMode: false },
+  }
+);
