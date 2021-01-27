@@ -13,7 +13,7 @@ import './profil.scss';
 
 // == Composant Profil mode consultation
 const Profil = ({ name, email, avatar, deleteProfil,
-  setConfirmation, confirmation, switchToEditProFile, }) => {
+  setConfirmation, confirmation, switchToEditProFile }) => {
   const [open, setOpen] = useState(false);
   return (
     <Container className="profil">
