@@ -5,6 +5,7 @@
 
 // == [CLE-VALEURS] - ACTIONS sur profil utilisateur (middleware user)
 export const USER_SIGNIN = 'USER_SIGNIN';
+export const USER_SIGNOUT = 'USER_SIGNOUT';
 export const USER_CREATE = 'USER_CREATE';
 export const USER_BY_ID = 'USER_BY_ID';
 export const USER_EDIT = 'USER_EDIT';
@@ -26,16 +27,18 @@ export const getUserById = (payload) => ({
   type: USER_BY_ID,
   payload,
 });
-export const editUser = (payload) => ({
+export const editUser = () => ({
   type: USER_EDIT,
-  payload,
 });
 export const deleteUser = (payload) => ({
   type: USER_DELETE,
   payload,
 });
-export const execSignIn = () => ({
+export const userSignIn = () => ({
   type: USER_SIGNIN,
+});
+export const userSignOut = () => ({
+  type: USER_SIGNOUT,
 });
 
 // == ===================================

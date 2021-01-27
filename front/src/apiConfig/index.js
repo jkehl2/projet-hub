@@ -24,6 +24,15 @@ export const signInConfig = {
   },
 };
 
+// == CONFIGURATION CONNECTEUR AXIOS SIGNOUT - END POINT + ENTÊTE
+export const signOutConfig = {
+  method: 'post',
+  url: `${CONFIG.URL_BACK}/logout`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
 // == QUERY - Créer le profil utlisateur
 export const queryUserCreate = {
   query: `mutation CreateNewUser($name: String!, $email: String!, $password: String!) {
@@ -51,11 +60,12 @@ export const queryUserById = {
 
 // == QUERY - Modifier le profil utlisateur
 export const queryUserEdit = {
-  query: `mutation editUser($id: ID!, $name: String, $email: String) {
-    editUser(id: $id, name: $name, email: $email) {
+  query: `mutation editUser($name: String!, $email: String!) {
+    editUserInfos(name: $name, email: $email) {
       id
       name
       email
+      avatar
     }
   }`,
 };

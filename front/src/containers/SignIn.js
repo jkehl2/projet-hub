@@ -5,7 +5,7 @@ import SignIn from 'src/components/SignIn';
 import {
   appSignInUpdate, appMsgClean, appErrorClean, appSignInClean,
 } from 'src/store/actions/app';
-import { execSignIn } from 'src/store/actions/user';
+import { userSignIn } from 'src/store/actions/user';
 import { push } from 'connected-react-router';
 
 const mapStateToProps = (state) => ({
@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleSubmit: (event) => {
     event.preventDefault();
-    dispatch(execSignIn());
+    dispatch(userSignIn());
   },
   redirectSignUp: (event) => {
     event.preventDefault();
@@ -28,6 +28,9 @@ const mapDispatchToProps = (dispatch) => ({
   cleanAppParams: () => {
     dispatch(appMsgClean());
     dispatch(appErrorClean());
+    dispatch(appSignInClean());
+  },
+  cleanSignIn: () => {
     dispatch(appSignInClean());
   },
 });

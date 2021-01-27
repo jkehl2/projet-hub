@@ -3,6 +3,9 @@
  * Configuration des actions sur le store applicatif technique
  */
 
+// == [CLE-VALEURS] - ACTIONS MIDDLEWARE applicatif technique
+export const APP_REFRESH_PROFIL = 'APP_REFRESH_PROFIL';
+
 // == [CLE-VALEURS] - ACTIONS sur le store applicatif technique
 export const APP_LOADING_ON = 'APP_LOADING_ON';
 export const APP_LOADING_OFF = 'APP_LOADING_OFF';
@@ -27,6 +30,14 @@ export const APP_ERROR_CLEAN = 'APP_ERROR_CLEAN';
 export const APP_MSG_UPDATE = 'APP_MSG_UPDATE';
 export const APP_MSG_CLEAN = 'APP_MSG_CLEAN';
 
+// == ===================================
+// == USER MIDDLEWARE - ACTIONS CREATORS PART
+export const appRefreshProfil = () => ({
+  type: APP_REFRESH_PROFIL,
+});
+
+// == ===================================
+// == USER STORE - ACTIONS CREATORS PART
 export const appLoadingOn = () => ({
   type: APP_LOADING_ON,
 });
@@ -76,6 +87,13 @@ export const appMsgUpdate = (message) => ({
 export const appMsgClean = () => ({
   type: APP_MSG_CLEAN,
 });
+
+export const appUpdateProfil = (payload) => (
+  {
+    type: APP_PROFIL_UPDATE,
+    payload,
+  }
+);
 
 export const appEditProfilOn = () => (
   {
