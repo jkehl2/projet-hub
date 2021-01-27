@@ -14,7 +14,8 @@ import configGraphQl, {
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
-  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN, updateUserStore,
+  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN,
+  updateUserStore, CONFIRM_DELETE_SUBMIT,
 } from 'src/store/actions/user';
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
@@ -142,6 +143,20 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log('loader off');
         });
       return; }
+    case CONFIRM_DELETE_SUBMIT: {
+      // 1 recup payload
+      const {
+        user: {
+          confirmation,
+        },
+      } = store.getState();
+      console.log(confirmation);
+      return;
+
+//2 verif si le payload corres à nos attentes
+//3 si corrs dispatch other action
+//4 si corres neg error message
+      }
     case USER_DELETE: {
       const { id } = action.payload;
       const data = JSON.stringify({
