@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Container, Header, Form, Button, Segment,
+  Container, Header, Form, Button, Segment, Message,
 } from 'semantic-ui-react';
 // == IMPORTS CONTAINERS
 
 // == STYLES
 import './SignIn.scss';
+import { useHistory } from 'react-router-dom';
 
 // == Composant
 const SignIn = (
@@ -23,6 +24,20 @@ const SignIn = (
     cleanSignIn,
   },
 ) => {
+  const history = useHistory();
+  const isRedirected = () => {
+    const isRedirect = (!!history.location.state) && !!history.location.state.isRedirect;
+    return (
+      <>{isRedirect && (
+      <Message>
+        <Message.Header>Notification</Message.Header>
+        <p>Veuillez vous connecter pour effectuer cette action.</p>
+      </Message>
+      )}
+      </>
+    );
+  };
+
   useEffect(() => {
     cleanAppParams();
     return () => {
@@ -33,7 +48,7 @@ const SignIn = (
     <Container className="Signin">
       {/** titre de la page */}
       <Header as="h1">Connexion</Header>
-
+      {isRedirected()}
       {/** formulaire d'identification */}
       <Form onSubmit={handleSubmit}>
         {/** email */}

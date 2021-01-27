@@ -1,4 +1,13 @@
 @use 'src/styles/vars';
 
 .search-project {
+  &__perimeter-label{
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-end !important;
+    padding: 0.5rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
 }

@@ -11,33 +11,41 @@ import {
 
 // == STYLES
 import './headerHome.scss';
+import { Link } from 'react-router-dom';
 
 // == Composant
 const HeaderHome = () => (
-  <Segment padded="very" basic textAlign="center">
-    <Step.Group>
-      <Step>
-        <Icon name="write" />
-        <Step.Content
-          href="/utilisateur/connexion"
-        >
-          <Step.Title>Poster</Step.Title>
-        </Step.Content>
-      </Step>
-      <Step>
-        <Icon name="comments" />
-        <Step.Content href="/projets">
-          <Step.Title>Echanger</Step.Title>
-        </Step.Content>
-      </Step>
-      <Step>
-        <Icon name="handshake" />
-        <Step.Content href="/">
-          <Step.Title>Collaborer</Step.Title>
-        </Step.Content>
-      </Step>
-    </Step.Group>
-  </Segment>
+  <Grid textAlign="center" padded="horizontally" className="header-home">
+    <Grid.Row only="computer" className="header-home--row-computer-padded">
+      <Step.Group widths={3} size="large">
+        <Link to="/utilisateur/create" className="step" title="Poster">
+          <Icon name="write" />
+          <Step.Content title="Poster" />
+        </Link>
+        <Link to="/utilisateur/projets" className="step" title="Echanger">
+          <Icon name="comments" />
+          <Step.Content title="Echanger" />
+        </Link>
+        <Link to="/projets" className="step" title="Collaborer">
+          <Icon name="handshake" />
+          <Step.Content title="Collaborer" />
+        </Link>
+      </Step.Group>
+    </Grid.Row>
+    <Grid.Row only="mobile" className="header-home--row-mobile-padded">
+      <Step.Group widths={3} size="tiny" unstackable>
+        <Link to="/utilisateur/create" className="step" title="Poster">
+          <Icon name="write" />
+        </Link>
+        <Link to="/utilisateur/projets" className="step" title="Echanger">
+          <Icon name="comments" />
+        </Link>
+        <Link to="/projets" className="step" title="Collaborer">
+          <Icon name="handshake" />
+        </Link>
+      </Step.Group>
+    </Grid.Row>
+  </Grid>
 );
 
 // == Export

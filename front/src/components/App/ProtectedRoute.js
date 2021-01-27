@@ -16,7 +16,7 @@ const ProtectedRoute = ({
     path={path}
     sensitive={sensitive}
     strict={strict}
-    render={() => (<>{isAllowed ? <Component/> : <Redirect to="/" />}</>)}
+    render={() => (<>{isAllowed ? <Component /> : <Redirect to={{ pathname: '/utilisateur/connexion', state: { isRedirect: true } }} />}</>)}
   />
 );
 

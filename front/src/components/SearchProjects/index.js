@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Form, Icon, Button, Segment, Grid,
+  Form, Icon, Button, Segment, Grid, Label,
 } from 'semantic-ui-react';
 
 // == IMPORTS CONTAINERS
@@ -36,6 +36,7 @@ const SearchProjects = ({
                 onChange={(event) => {
                   setSearch({ localite: event.target.value });
                 }}
+                required
               />
               <Form.Input
                 width={4}
@@ -49,7 +50,9 @@ const SearchProjects = ({
                   setSearch({ perimeter: parseInt(event.target.value, 10) });
                 }}
               />
-              <Form.Input width={2} label="(km)" value={`${utils.perimeters[perimeter].value} km`} disabled />
+              <div className="two wide field search-project__perimeter-label">
+                <Label size="big" basic content={`${utils.perimeters[perimeter].value} km`} horizontal />
+              </div>
             </Form.Group>
             <Form.Radio
               toggle
