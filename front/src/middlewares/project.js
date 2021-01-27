@@ -59,7 +59,6 @@ const projectMiddleware = (store) => (next) => (action) => {
         store.dispatch(appErrorClean());
         store.dispatch(appMsgClean());
         store.dispatch(cleanProjectStore());
-        store.dispatch(appMsgUpdate('Veuillez préciser une localité.'));
         return;
       }
       const params = {
