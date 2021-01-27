@@ -5,21 +5,36 @@
 
 /* eslint-disable no-case-declarations */
 import axios from 'axios';
-import { push } from 'connected-react-router';
+import { push, goBack } from 'connected-react-router';
 
 // == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTEUR AXIOS
 import configGraphQl, {
-  queryUserCreate, queryUserById, queryUserEdit, queryUserDelete, signInConfig,
+  queryUserCreate,
+  queryUserById,
+  queryUserEdit,
+  queryUserDelete,
+  signInConfig,
+  signOutConfig,
 } from 'src/apiConfig/';
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
-  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN, updateUserStore,
+  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN,
+  updateUserStore, CONFIRM_DELETE_SUBMIT,
+  USER_SIGNOUT,
+  cleanUserStore,
 } from 'src/store/actions/user';
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
-  appLoadingOn, appLoadingOff, appErrorUpdate, appMsgUpdate, appClean,
+  appLoadingOn,
+  appLoadingOff,
+  appErrorUpdate,
+  appMsgUpdate,
+  appMsgClean,
+  appErrorClean,
+  appSignInClean,
+  appEditProfilOff,
 } from 'src/store/actions/app';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
@@ -52,7 +67,7 @@ const userMiddleware = (store) => (next) => (action) => {
             }
             store.dispatch(updateUserStore(userdata));
             // On redirecte vers la page d'accueil
-            store.dispatch(push('/'));
+            store.dispatch(goBack());
             const { user } = store.getState();
             store.dispatch(appMsgUpdate(`Bienvenue ${user.name}.`));
           }
@@ -63,7 +78,33 @@ const userMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
-      store.dispatch(appClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appSignInClean());
+      store.dispatch(appLoadingOn());
+      return;
+    }
+
+    case USER_SIGNOUT: {
+      const config = {
+        ...signOutConfig,
+      };
+
+      axios(config)
+        .then((response) => {
+          if (response.data.error) {
+            store.dispatch(appErrorUpdate(response.data.error));
+          }
+          else {
+            store.dispatch(cleanUserStore());
+          }
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
       store.dispatch(appLoadingOn());
       return;
     }
@@ -119,10 +160,14 @@ const userMiddleware = (store) => (next) => (action) => {
       return;
     }
     case USER_EDIT: {
-      const { id, name, email } = action.payload;
+      const { app: { profil } } = store.getState();
+      const variables = {
+        name: profil.name,
+        email: profil.name,
+      };
       const data = JSON.stringify({
         ...queryUserEdit,
-        variables: { id, name, email },
+        ...variables,
       });
 
       const config = {
@@ -130,18 +175,37 @@ const userMiddleware = (store) => (next) => (action) => {
         data,
       };
 
-      console.log('loader on');
       axios(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          store.dispatch(appMsgUpdate('Votre profil utilisateur à été mis à jour.'));
+          store.dispatch(updateUserStore(response.data.data.editUserInfos));
+          store.dispatch(appEditProfilOff());
         })
         .catch((error) => {
-          console.log(error);
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
-          console.log('loader off');
+          store.dispatch(appLoadingOff());
         });
+
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
       return; }
+    case CONFIRM_DELETE_SUBMIT: {
+      // 1 recup payload
+      const {
+        user: {
+          confirmation,
+        },
+      } = store.getState();
+      console.log(confirmation);
+      return;
+
+//2 verif si le payload corres à nos attentes
+//3 si corrs dispatch other action
+//4 si corres neg error message
+      }
     case USER_DELETE: {
       const { id } = action.payload;
       const data = JSON.stringify({

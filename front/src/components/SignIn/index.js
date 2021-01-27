@@ -20,12 +20,13 @@ const SignIn = (
     handleSubmit,
     redirectSignUp,
     cleanAppParams,
+    cleanSignIn,
   },
 ) => {
   useEffect(() => {
     cleanAppParams();
     return () => {
-      cleanAppParams();
+      cleanSignIn();
     };
   }, []);
   return (
@@ -60,7 +61,7 @@ const SignIn = (
         {/** bouton connexion */}
         <Segment basic textAlign="right">
           <Button.Group>
-            <Form.Button type="button" onClick={handleSubmit}>
+            <Form.Button type="submit" onClick={handleSubmit}>
               Connexion
             </Form.Button>
             {/** bouton inscription */}
@@ -81,6 +82,7 @@ SignIn.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   redirectSignUp: PropTypes.func.isRequired,
   cleanAppParams: PropTypes.func.isRequired,
+  cleanSignIn: PropTypes.func.isRequired,
 };
 
 // == Export
