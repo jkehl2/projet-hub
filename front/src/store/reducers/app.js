@@ -14,6 +14,8 @@ import {
   APP_ERROR_CLEAN,
   APP_MSG_UPDATE,
   APP_MSG_CLEAN,
+  APP_PROFIL_UPDATE,
+  APP_PROFIL_CLEAN,
 } from 'src/store/actions/app';
 
 // ==  INITIALE SUB APP STATE - error
@@ -41,10 +43,16 @@ export const searchInitialState = {
   archived: false,
 };
 
+// ==  INITIALE SUB APP STATE - profil
+export const profilInitialState = {
+  isEditMode: false,
+};
+
 // ==  INITIALE STATE des paramètres applicatifs techniques
 export const initialState = {
   loading: false,
   isEditMode: false,
+  profil: { ...profilInitialState },
   error: { ...errorInitialState },
   message: { ...messageInitialState },
   signIn: { ...signInInitialState },
@@ -119,6 +127,21 @@ const reducer = (oldState = initialState, action = {}) => {
         ...oldState,
         message: {
           ...messageInitialState,
+        },
+      };
+    case APP_PROFIL_UPDATE:
+      return {
+        ...oldState,
+        profil: {
+          ...oldState.profil,
+          ...action.payload,
+        },
+      };
+    case APP_PROFIL_CLEAN:
+      return {
+        ...oldState,
+        profil: {
+          ...profilInitialState,
         },
       };
     default:

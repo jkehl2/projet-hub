@@ -51,12 +51,12 @@ const reducer = (oldState = initialState, action = {}) => {
       };
     case PROJECT_CLEAN_PROJECTS:
       return {
-        ...initialState,
+        ...oldState,
         projects: [],
       };
     case PROJECT_CLEAN_PROJECT:
       return {
-        ...initialState,
+        ...oldState,
         ...projectInitialState,
       };
     default:

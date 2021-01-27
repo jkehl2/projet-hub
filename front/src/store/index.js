@@ -5,6 +5,8 @@ import createRootReducer from 'src/store/reducers';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+// == IMPORT - PERSONNAL MIDDLEWARE
+import appMiddleware from 'src/middlewares/app';
 import userMiddleware from 'src/middlewares/user';
 import projectMiddleware from 'src/middlewares/project';
 
@@ -20,6 +22,7 @@ export default function configureStore(preloadedState) {
     composeWithDevTools(
       applyMiddleware(
         routerMiddleware(history), // for dispatching history actions
+        appMiddleware,
         userMiddleware,
         projectMiddleware,
       ),
