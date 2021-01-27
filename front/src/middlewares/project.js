@@ -64,7 +64,7 @@ const projectMiddleware = (store) => (next) => (action) => {
               // long: 1.9,
               scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
               // scope: 20000,
-              // archived: false,
+              archived: false,
             };
             store.dispatch(getProjectByGeo(searchValue));
           }
