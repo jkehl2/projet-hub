@@ -9,13 +9,14 @@ export const PROJECT_CREATE = 'PROJECT_CREATE';
 export const PROJECT_EDIT = 'PROJECT_EDIT';
 export const PROJECT_DELETE = 'PROJECT_DELETE';
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
-export const GET_PROJECT_BY_GEO = 'GET_PROJECT_BY_ID';
+export const GET_PROJECT_BY_GEO = 'GET_PROJECT_BY_GEO';
 
 // == [CLE-VALEURS] - ACTIONS sur le store projets(Reducer user)
-// en cas de connexion d'un user ses projets apparaissent
+
 export const PROJECT_STORE_UPDATE = 'PROJECT_STORE_UPDATE';
-// en cas de déconnexion ses projets n'apparaissent plus
 export const PROJECT_STORE_CLEAN = 'PROJECT_STORE_CLEAN';
+export const PROJECT_CLEAN_PROJECTS = 'PROJECT_CLEAN_PROJECTS';
+export const PROJECT_CLEAN_PROJECT = 'PROJECT_CLEAN_PROJECT';
 
 // == ===================================
 // == PROJECT STORE - ACTIONS CREATORS PART
@@ -25,9 +26,16 @@ export const updateProjectStore = (payload) => ({
   payload,
 });
 
-export const cleanProjectStore = (payload) => ({
+export const cleanProjectStore = () => ({
   type: PROJECT_STORE_CLEAN,
-  payload,
+});
+
+export const cleanProjects = () => ({
+  type: PROJECT_CLEAN_PROJECTS,
+});
+
+export const cleanProject = () => ({
+  type: PROJECT_CLEAN_PROJECT,
 });
 
 // == ===================================
@@ -59,7 +67,7 @@ export const deleteProject = (project) => ({
 // get a project by id
 export const getProjectById = (id) => ({
   type: GET_PROJECT_BY_ID,
-  payload: id,
+  payload: { id },
 });
 
 export const getProjectByGeo = (payload) => ({

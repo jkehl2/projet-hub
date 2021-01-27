@@ -14,11 +14,15 @@ import Project from 'src/containers/Project';
 import {
   Container,
   Message,
+  Loader,
+  Dimmer,
 } from 'semantic-ui-react';
 import SignUp from 'src/components/SignUp';
 import Projects from 'src/components/Projects';
 import Confirmation from 'src/components/Confirmation';
 import CreateProject from 'src/components/CreateProject';
+import Footer from 'src/components/Footer';
+import WhoAreWe from 'src/components/WhoAreWe';
 import ProtectedRoute from './ProtectedRoute';
 
 // == IMPORT STYLES
@@ -26,75 +30,86 @@ import './app.scss';
 
 // == Composant
 const App = ({
-  isError, error, isMessage, message, logged, setMessage,
+  isError, error, isMessage, message, logged, loading, setMessage,
 }) => (
-  <Container className="app">
+  <>
     {/* Menu de l'application */}
     <Menu />
-    {/* Affiche message d'erreur si il y en a */}
-    {isError && (
-      <Message negative>
-        <Message.Header>Une erreur c'est produite</Message.Header>
-        <p>{`${error}`}</p>
-      </Message>
-    )}
-    {/* Affiche message d'information si il y en a */}
-    {isMessage && (
-      <Message>
-        <Message.Header>Notification</Message.Header>
-        <p>{`${message}`}</p>
-      </Message>
-    )}
-    <Switch>
-      {/* Sprint 1 - Page d'accueil */}
-      <Route exact path="/">
-        <Home />
-      </Route>
-      {/* Sprint 1 - Page de rechercher */}
-      <Route exact path="/projets">
-        {/* Sprint 1 */}
-        <Projects />
-      </Route>
-      {/* Sprint 1 - Page d'étail d'un projet */}
-      <Route exact path="/projet/:slug">
-        <Project isAuthor={false} isArchived={false} isFavorite={false} isEditMode={false} />
-      </Route>
-      {/* Sprint 1 - Page de connexion utlisateur */}
-      <Route exact path="/utilisateur/connexion">
+    <div className="app">
+      <Container>
 
-        <SignIn />
-      </Route>
+        {/* Affiche message d'erreur si il y en a */}
+        {isError && (
+        <Message negative>
+          <Message.Header>Une erreur s'est produite</Message.Header>
+          <p>{`${error}`}</p>
+        </Message>
+        )}
+        {/* Affiche message d'information si il y en a */}
+        {isMessage && (
+        <Message>
+          <Message.Header>Notification</Message.Header>
+          <p>{`${message}`}</p>
+        </Message>
+        )}
+        <Dimmer active={loading} inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+        <Switch>
+          {/* Sprint 1 - Page d'accueil */}
+          <Route exact path="/">
+            <Home />
+          </Route>
+          {/* Sprint 1 - Page de rechercher */}
+          <Route exact path="/projets">
+            {/* Sprint 1 */}
+            <Projects />
+          </Route>
+          {/* Sprint 1 - Page d'étail d'un projet */}
+          <Route exact path="/projet/:slug">
+            <Project />
+          </Route>
+          {/* Sprint 1 - Page de connexion utlisateur */}
+          <Route exact path="/utilisateur/connexion">
 
-      {/* Sprint 2 - Mentions légales */}
-      <Route exact path="/mentionsLegales"> </Route>
-      {/* Sprint 2 - Présentation équipe */}
-      <Route exact path="/equipe"> </Route>
+            <SignIn />
+          </Route>
 
-      {/* Routes ateignable uniquement si utilisateur logged */}
-      {/* Sprint 1 - Page de confirmation par mot de passe */}
-      <ProtectedRoute exact path="/utilisateur/confirm" isAllowed={logged} component={() => (<Confirmation />)} />
-      {/* Sprint 1 - Page de profil */}
-      <ProtectedRoute exact path="/utilisateur/profil" isAllowed={logged} component={() => (<Profil />)} />
-      {/* Sprint 1 - Page d'enregistrement utlisateur' */}
-      <ProtectedRoute exact path="/utilisateur/enregistrement" isAllowed={logged} component={() => (<SignUp />)} />
-      {/* Sprint 2 - Page Création de projet' */}
-      <ProtectedRoute exact path="/projet/create" isAllowed={logged} component={() => (<CreateProject />)} />
-      {/* Sprint 2 - Page mes favoris' */}
-      <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={() => (<Projects />)} />
-      {/* Sprint 2 - Page mes projets' */}
-      <ProtectedRoute exact path="/utilisateur/projets" isAllowed={logged} component={() => (<Projects />)} />
+          {/* Sprint 2 - Mentions légales */}
+          <Route exact path="/mentionsLegales"> </Route>
+          {/* Sprint 2 - Présentation équipe */}
+          <Route exact path="/equipe">
+            <WhoAreWe />
+          </Route>
 
-      {/* MESSAGE POUR 404 ET REDIRECT VERS Accueil */}
-      <Route
-        path="*"
-        exact
-        render={() => {
-          setMessage('404 - NOT FOUND - URL invalide');
-          return (<Redirect to="/" />);
-        }}
-      />
-    </Switch>
-  </Container>
+          {/* Routes ateignable uniquement si utilisateur logged */}
+          {/* Sprint 1 - Page de confirmation par mot de passe */}
+          <ProtectedRoute exact path="/utilisateur/confirm" isAllowed={logged} component={() => (<Confirmation />)} />
+          {/* Sprint 1 - Page de profil */}
+          <ProtectedRoute exact path="/utilisateur/profil" isAllowed={logged} component={() => (<Profil />)} />
+          {/* Sprint 1 - Page d'enregistrement utlisateur' */}
+          <ProtectedRoute exact path="/utilisateur/enregistrement" isAllowed={logged} component={() => (<SignUp />)} />
+          {/* Sprint 2 - Page Création de projet' */}
+          <ProtectedRoute exact path="/projet/create" isAllowed={logged} component={() => (<CreateProject />)} />
+          {/* Sprint 2 - Page mes favoris' */}
+          <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={() => (<Projects />)} />
+          {/* Sprint 2 - Page mes projets' */}
+          <ProtectedRoute exact path="/utilisateur/projets" isAllowed={logged} component={() => (<Projects />)} />
+
+          {/* MESSAGE POUR 404 ET REDIRECT VERS Accueil */}
+          <Route
+            path="*"
+            exact
+            render={() => {
+              setMessage('404 - NOT FOUND - URL invalide');
+              return (<Redirect to="/" />);
+            }}
+          />
+        </Switch>
+      </Container>
+    </div>
+    <Footer />
+  </>
 );
 
 App.propTypes = {
@@ -103,6 +118,7 @@ App.propTypes = {
   isMessage: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
   logged: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
   setMessage: PropTypes.func.isRequired,
 };
 

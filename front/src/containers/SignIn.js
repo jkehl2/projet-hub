@@ -2,7 +2,9 @@ import { connect } from 'react-redux';
 
 import SignIn from 'src/components/SignIn';
 
-import { appClean, appSignInUpdate } from 'src/store/actions/app';
+import {
+  appClean, appSignInUpdate, appMsgClean, appErrorClean, appSignInClean,
+} from 'src/store/actions/app';
 import { execSignIn } from 'src/store/actions/user';
 import { push } from 'connected-react-router';
 
@@ -24,7 +26,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(push('/utilisateur/enregistrement'));
   },
   cleanAppParams: () => {
-    dispatch(appClean());
+    dispatch(appMsgClean());
+    dispatch(appErrorClean());
+    dispatch(appSignInClean());
   },
 });
 

@@ -24,17 +24,17 @@ const Description = ({ logged, project }) => (
         <Image src={`${project.image}`} />
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column computer={3} only="computer">
+        <Grid.Column computer={6} only="computer">
           <Image src={`${project.image}`} />
         </Grid.Column>
-        <Grid.Column computer={13} mobile={16}>
+        <Grid.Column computer={10} mobile={16}>
           <Header as="h3">
             {(!project.isAuthor && logged) && (project.isFavorite ? <Icon name="star" color="yellow" /> : <Icon name="star outline" color="yellow" />)}
             <Header.Content>{`${project.title} `}</Header.Content>
           </Header>
-          <p><Image avatar spaced="right" src={`${project.author.avatar}`} />{`${project.author.name}`}</p>
+          <p><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
           <p><Icon name="target" />{`${project.location}`}</p>
-          <Divider>Description</Divider>
+          <Divider horizontal>Description</Divider>
           <Segment basic>{`${project.description}`}</Segment>
           <Divider />
           <Label.Group>
