@@ -99,8 +99,8 @@ const projectMiddleware = (store) => (next) => (action) => {
             isAuthor: user.id === project.author.id,
             title: project.title,
             location: project.location,
-            expiration_date: new Date(parseInt(project.expiration_date, 10)).toLocaleDateString('fr-FR'),
-            creation_date: new Date(parseInt(project.created_at, 10)).toLocaleDateString('fr-FR'),
+            expiration_date: new Date(project.expiration_date).toLocaleDateString('fr-FR'),
+            creation_date: new Date(project.created_at).toLocaleDateString('fr-FR'),
             image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
             author: {
               id: project.author.id,
