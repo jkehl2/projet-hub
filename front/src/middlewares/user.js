@@ -9,17 +9,32 @@ import { push } from 'connected-react-router';
 
 // == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTEUR AXIOS
 import configGraphQl, {
-  queryUserCreate, queryUserById, queryUserEdit, queryUserDelete, signInConfig,
+  queryUserCreate,
+  queryUserById,
+  queryUserEdit,
+  queryUserDelete,
+  signInConfig,
 } from 'src/apiConfig/';
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
-  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN, updateUserStore,
+  USER_CREATE,
+  USER_BY_ID,
+  USER_EDIT,
+  USER_DELETE,
+  USER_SIGNIN,
+  updateUserStore,
 } from 'src/store/actions/user';
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
-  appLoadingOn, appLoadingOff, appErrorUpdate, appMsgUpdate, appClean,
+  appLoadingOn,
+  appLoadingOff,
+  appErrorUpdate,
+  appMsgUpdate,
+  appMsgClean,
+  appErrorClean,
+  appSignInClean,
 } from 'src/store/actions/app';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
@@ -63,7 +78,9 @@ const userMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
-      store.dispatch(appClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appSignInClean());
       store.dispatch(appLoadingOn());
       return;
     }

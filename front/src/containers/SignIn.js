@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import SignIn from 'src/components/SignIn';
 
 import {
-  appClean, appSignInUpdate, appMsgClean, appErrorClean, appSignInClean,
+  appSignInUpdate, appMsgClean, appErrorClean, appSignInClean,
 } from 'src/store/actions/app';
 import { execSignIn } from 'src/store/actions/user';
 import { push } from 'connected-react-router';

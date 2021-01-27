@@ -13,7 +13,7 @@ const DescriptionHome = () => (
         à l'échelle locale.
       </p>
       <p>Notre but est de faire connaître vos idées de projets ainsi que leurs besoins.
-        Vous serez mis en relation grâce à un système de géolocalisationqui vous permettra
+        Vous serez mis en relation grâce à un système de géolocalisation qui vous permettra
         de participer ou proposer vos services afin que ces initiatives se concrétisent.
       </p>
       <br />

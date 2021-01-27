@@ -35,6 +35,11 @@ import configGraphQl, {
 import perimetersValue from 'src/utils/perimeters.json';
 import { useReducer } from 'react';
 
+// == PARSE DATE UTIL FUNCTION :
+const parseDate = (dateApiString) => (
+  new Date(dateApiString).toLocaleDateString('fr-FR')
+);
+
 // mw
 const projectMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -96,11 +101,11 @@ const projectMiddleware = (store) => (next) => (action) => {
             id: project.id,
             isFavorite: false,
             isArchived: project.archived,
-            isAuthor: user.id === project.author.id,
+            isAuthor: (parseInt(user.id, 10) === parseInt(project.author.id, 10)),
             title: project.title,
             location: project.location,
-            expiration_date: new Date(project.expiration_date).toLocaleDateString('fr-FR'),
-            creation_date: new Date(project.created_at).toLocaleDateString('fr-FR'),
+            expiration_date: parseDate(project.expiration_date),
+            creation_date: parseDate(project.created_at),
             image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
             author: {
               id: project.author.id,
@@ -226,12 +231,12 @@ const projectMiddleware = (store) => (next) => (action) => {
             id: apiData.id,
             isFavorite: false,
             isArchived: apiData.archived,
-            isAuthor: (user.id === apiData.author.id),
+            isAuthor: (parseInt(user.id, 10) === parseInt(apiData.author.id, 10)),
             title: apiData.title,
             description: apiData.description,
             location: apiData.location,
-            expiration_date: new Date(apiData.expiration_date).toLocaleDateString('fr-FR'),
-            creation_date: new Date(apiData.created_at).toLocaleDateString('fr-FR'),
+            expiration_date: parseDate(apiData.expiration_date),
+            creation_date: parseDate(apiData.created_at),
             image: apiData.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : apiData.image,
             author: {
               id: apiData.author.id,
