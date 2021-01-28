@@ -13,8 +13,14 @@ import './profil.scss';
 
 // == Composant Profil mode consultation
 const Profil = ({
-  name, email, avatar, deleteProfil,
-  setConfirmation, confirmation, switchToEditProFile,
+  name,
+  email,
+  avatar,
+  confirmation,
+  setConfirmation,
+  deleteProfil,
+  switchToEditProFile,
+  redirectToPasswordEdit,
 }) => {
   const [open, setOpen] = useState(false);
   return (
@@ -46,6 +52,8 @@ const Profil = ({
           >
             Modifier mes informations personnelles
           </Button>
+          {/* Bouton Modification du mot de passe */}
+          <Button color="grey" onClick={redirectToPasswordEdit}>Modification du mot de passe</Button>
           {/* bouton mes projets */}
           <Button color="grey">Mes projets</Button>
           {/* bouton mes favoris */}
@@ -86,9 +94,11 @@ Profil.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-  deleteProfil: PropTypes.func.isRequired,
+  confirmation: PropTypes.string.isRequired,
   setConfirmation: PropTypes.func.isRequired,
+  deleteProfil: PropTypes.func.isRequired,
   switchToEditProFile: PropTypes.func.isRequired,
+  redirectToPasswordEdit: PropTypes.func.isRequired,
 };
 
 // == Export
