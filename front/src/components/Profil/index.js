@@ -12,15 +12,11 @@ import {
 import './profil.scss';
 
 // == Composant Profil mode consultation
-<<<<<<< HEAD
-const Profil = ({ name, email, avatar, deleteProfil,
-  setConfirmation, confirmation, switchToEditProFile }) => {
-=======
+
 const Profil = ({
   name, email, avatar, deleteProfil,
   setConfirmation, confirmation, switchToEditProFile,
 }) => {
->>>>>>> ee6409a6691ec293dfe76bb31d37d5420c99c34a
   const [open, setOpen] = useState(false);
   return (
     <Container className="profil">
