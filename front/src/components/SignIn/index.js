@@ -53,10 +53,12 @@ const SignIn = (
       <Form onSubmit={handleSubmit}>
         {/** email */}
         <Form.Input
-          type="text"
-          label="Email"
-          placeholder="monemail@domain.foo"
+          type="email"
+          label="Email utilisateur"
+          title="Email utilisateur"
+          placeholder="albert.dupont@project-hub.fr"
           autoComplete="current-user"
+          required
           value={email}
           onChange={(event) => {
             setSignInValue({ email: event.target.value });
@@ -65,9 +67,11 @@ const SignIn = (
         {/** mot de passe */}
         <Form.Input
           type="password"
-          label="Mot de passe"
-          placeholder="mot de passe"
+          label="Mot de passe utilisateur"
+          title="Mot de passe utilisateur"
+          placeholder="******"
           autoComplete="current-password"
+          required
           value={password}
           onChange={(event) => {
             setSignInValue({ password: event.target.value });

@@ -46,6 +46,8 @@ export const searchInitialState = {
 // ==  INITIALE SUB APP STATE - profil
 export const profilInitialState = {
   isEditMode: false,
+  password: '',
+  passwordConfirm: '',
 };
 
 // ==  INITIALE STATE des paramètres applicatifs techniques

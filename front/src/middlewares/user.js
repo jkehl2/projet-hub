@@ -12,6 +12,7 @@ import configGraphQl, {
   queryUserCreate,
   queryUserById,
   queryUserEdit,
+  queryUserEditPassword,
   queryUserDelete,
   signInConfig,
   signOutConfig,
@@ -19,8 +20,14 @@ import configGraphQl, {
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
-  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN,
-  updateUserStore, CONFIRM_DELETE_SUBMIT,
+  USER_CREATE,
+  USER_BY_ID,
+  USER_EDIT,
+  USER_EDIT_PASSWORD,
+  USER_DELETE,
+  USER_SIGNIN,
+  CONFIRM_DELETE_SUBMIT,
+  updateUserStore,
   USER_SIGNOUT,
   cleanUserStore,
   deleteUser,
@@ -36,6 +43,7 @@ import {
   appErrorClean,
   appSignInClean,
   appEditProfilOff,
+  appProfilClean,
 } from 'src/store/actions/app';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
@@ -67,7 +75,7 @@ const userMiddleware = (store) => (next) => (action) => {
               delete userdata.avatar;
             }
             store.dispatch(updateUserStore(userdata));
-            // On redirecte vers la page d'accueil
+            // On redirecte vers la page précédente
             store.dispatch(goBack());
             const { user } = store.getState();
             store.dispatch(appMsgUpdate(`Bienvenue ${user.name}.`));
@@ -133,6 +141,36 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log('loader off');
         });
 
+      return;
+    }
+    case USER_EDIT_PASSWORD: {
+      const { app: { profil: { password } } } = store.getState();
+
+      const data = JSON.stringify({
+        ...queryUserEditPassword,
+        variables: { password },
+      });
+
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+
+      axios(config)
+        .then(() => {
+          store.dispatch(push('/utilisateur/profil'));
+          store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appProfilClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
       return;
     }
     case USER_BY_ID: {
@@ -205,29 +243,23 @@ const userMiddleware = (store) => (next) => (action) => {
       console.log(confirmation);
 
       // 2 verif si le payload corres à nos attentes
-      if (confirmation === 'CONFIRMER') {
-        // 3 si corrs dispatch other action
-        store.dispatch(deleteUser());
-        store.dispatch(appMsgUpdate('Vous avez confirmé la suppression de votre profil.'));
-        store.dispatch(appLoadingOn());
-      }
-      else if (confirmation.length > 0 && confirmation !== 'CONFIRMER') {
+      if (confirmation.length > 0 && confirmation !== 'CONFIRMER') {
         // 4 si corres neg error message
         store.dispatch(appMsgUpdate('Veuillez saisir de nouveau'));
       }
-
+      else if (confirmation === 'CONFIRMER') {
+        // 3 si corrs dispatch other action
+        store.dispatch(appLoadingOn());
+        store.dispatch(deleteUser());
+        store.dispatch(appMsgUpdate('Vous avez confirmé la suppression de votre profil.'));
+      }
       return;
     }
     case USER_DELETE: {
-      const {
-        user: {
-          id,
-        },
-      } = store.getState();
+      // Pas besoin de récupérer l'id du store pour la requête
 
       const data = JSON.stringify({
         ...queryUserDelete,
-        variables: { id },
       });
 
       const config = {
