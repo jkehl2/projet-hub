@@ -20,26 +20,37 @@ const SignUp = () => (
       {/* pseudo */}
       <Form.Input
         type="text"
-        placeholder="Nom d'utilisateur"
-        label="Pseudo"
+        label="Pseudo utilisateur"
+        title="Pseudo utilisateur"
+        placeholder="Albert Dupont"
+        required
       />
       {/* email */}
       <Form.Input
         type="email"
-        placeholder="utilisateur@domain.xyz"
-        label="Email"
+        label="Email utilisateur"
+        title="Email utilisateur"
+        placeholder="albert.dupont@project-hub.fr"
+        autoComplete="new-user"
+        required
       />
       {/* mot de passe */}
       <Form.Input
         type="password"
-        placeholder="Mot de passe"
-        label="Mot de passe"
+        label="Mot de passe utilisateur"
+        title="Mot de passe utilisateur"
+        placeholder="*******"
+        autoComplete="new-password"
+        required
       />
       {/* confirm de mot passe */}
       <Form.Input
         type="password"
-        placeholder="Confirmer mot de passe"
-        label="Confirmer mot de passe"
+        label="Confirmer mot de passe utilisateur"
+        title="Confirmer mot de passe utilisateur"
+        placeholder="*******"
+        autoComplete="new-password"
+        required
       />
       <Segment basic textAlign="right">
         <Button.Group>
