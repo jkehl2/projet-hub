@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Profil from 'src/components/Profil';
-import { profilDeleteConfirm, profilDeleteSubmit } from 'src/store/actions/user';
+import { updateUserStore, profilDeleteSubmit } from 'src/store/actions/user';
 
 import { appEditProfilOn } from 'src/store/actions/app';
 
@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setConfirmation: (payload) => {
-    dispatch(profilDeleteConfirm(payload));
+    dispatch(updateUserStore(payload));
   },
   deleteProfil: () => {
     dispatch(profilDeleteSubmit());

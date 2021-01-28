@@ -21,7 +21,7 @@ const Profil = ({
     <Container className="profil">
       <Segment textAlign="left">
         {/* Titre */}
-        <Header as="h1">Profil utlisateur</Header>
+        <Header as="h1">Profil utilisateur</Header>
         <Item.Group relaxed>
           <Item>
             {/* avatar */}

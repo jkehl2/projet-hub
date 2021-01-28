@@ -64,7 +64,8 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
           {!logged && (
           <> <Dropdown.Divider />
             <Link className="item" role="option" to="/utilisateur/connexion">Connexion</Link>
-            {/* <Link className="item" role="option" to="/utilisateur/enregistrement">S'enregistrer</Link> */}
+            <Dropdown.Divider />
+            <Link className="item" role="option" to="/utilisateur/enregistrement">S'enregistrer</Link>
           </>
           )}
         </Dropdown.Menu>
