@@ -9,6 +9,7 @@ export const USER_SIGNOUT = 'USER_SIGNOUT';
 export const USER_CREATE = 'USER_CREATE';
 export const USER_BY_ID = 'USER_BY_ID';
 export const USER_EDIT = 'USER_EDIT';
+export const USER_EDIT_PASSWORD = 'USER_EDIT_PASSWORD';
 export const USER_DELETE = 'USER_DELETE';
 export const CONFIRM_DELETE = 'CONFIRM_DELETE';
 export const CONFIRM_DELETE_SUBMIT = 'CONFIRM_DELETE_SUBMIT';
@@ -47,6 +48,10 @@ export const profilDeleteConfirm = (payload) => ({
 export const profilDeleteSubmit = () => ({
   type: CONFIRM_DELETE_SUBMIT,
 });
+export const userEditPassword = () => ({
+  type: USER_EDIT_PASSWORD,
+});
+
 // == ===================================
 // == USER STORE - ACTIONS CREATORS PART
 export const updateUserStore = (payload) => ({

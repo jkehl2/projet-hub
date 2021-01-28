@@ -12,6 +12,7 @@ import configGraphQl, {
   queryUserCreate,
   queryUserById,
   queryUserEdit,
+  queryUserEditPassword,
   queryUserDelete,
   signInConfig,
   signOutConfig,
@@ -19,8 +20,14 @@ import configGraphQl, {
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
-  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN,
-  updateUserStore, CONFIRM_DELETE_SUBMIT,
+  USER_CREATE,
+  USER_BY_ID,
+  USER_EDIT,
+  USER_EDIT_PASSWORD,
+  USER_DELETE,
+  USER_SIGNIN,
+  CONFIRM_DELETE_SUBMIT,
+  updateUserStore,
   USER_SIGNOUT,
   cleanUserStore,
   deleteUser,
@@ -36,6 +43,7 @@ import {
   appErrorClean,
   appSignInClean,
   appEditProfilOff,
+  appProfilClean,
 } from 'src/store/actions/app';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
@@ -133,6 +141,36 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log('loader off');
         });
 
+      return;
+    }
+    case USER_EDIT_PASSWORD: {
+      const { app: { profil: { password } } } = store.getState();
+
+      const data = JSON.stringify({
+        ...queryUserEditPassword,
+        variables: { password },
+      });
+
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+
+      axios(config)
+        .then(() => {
+          store.dispatch(push('/utilisateur/profil'));
+          store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appProfilClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
       return;
     }
     case USER_BY_ID: {

@@ -22,15 +22,12 @@ const PasswordEdit = ({
   handleSubmit,
   abortConfirmPassword,
 }) => {
-  useEffect(
-    () => {
+  useEffect(() => {
+    cleanProfil();
+    return (() => {
       cleanProfil();
-      return (() => {
-        cleanProfil();
-      });
-    },
-    [],
-  );
+    });
+  }, []);
   return (
     <Container className="password-edit">
       {/* titre */}
