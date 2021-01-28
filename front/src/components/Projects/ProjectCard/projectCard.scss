@@ -1,0 +1,9 @@
+@use 'src/styles/vars';
+
+.project-card {
+  &--padding-mobile{
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+}

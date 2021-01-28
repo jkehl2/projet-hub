@@ -111,6 +111,7 @@ const projectMiddleware = (store) => (next) => (action) => {
             isAuthor: (parseInt(user.id, 10) === parseInt(project.author.id, 10)),
             title: project.title,
             location: project.location,
+            description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
             image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,

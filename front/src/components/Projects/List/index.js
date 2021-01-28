@@ -35,6 +35,7 @@ List.propTypes = {
     isAuthor: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     expiration_date: PropTypes.string.isRequired,
     creation_date: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,

@@ -127,6 +127,7 @@ export const queryGetProjectsByGeo = {
       created_at
       expiration_date
       archived
+      description
       author{
         id
         name
