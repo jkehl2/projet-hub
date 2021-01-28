@@ -108,3 +108,9 @@ export const appEditProfilOff = () => (
     payload: { isEditMode: false },
   }
 );
+
+export const appProfilClean = () => (
+  {
+    type: APP_PROFIL_CLEAN,
+  }
+);

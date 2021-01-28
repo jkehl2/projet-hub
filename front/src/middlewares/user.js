@@ -67,7 +67,7 @@ const userMiddleware = (store) => (next) => (action) => {
               delete userdata.avatar;
             }
             store.dispatch(updateUserStore(userdata));
-            // On redirecte vers la page d'accueil
+            // On redirecte vers la page précédente
             store.dispatch(goBack());
             const { user } = store.getState();
             store.dispatch(appMsgUpdate(`Bienvenue ${user.name}.`));

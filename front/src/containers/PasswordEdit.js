@@ -2,12 +2,30 @@ import { connect } from 'react-redux';
 
 import PasswordEdit from 'src/components/PasswordEdit';
 
+import { push } from 'connected-react-router';
+import { appUpdateProfil, appProfilClean } from 'src/store/actions/app';
+
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  password: state.app.profil.password,
+  passwordConfirm: state.app.profil.passwordConfirm,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  
+  cleanProfil: () => {
+    dispatch(appProfilClean());
+  },
+  setProfilValue: (payload) => {
+    dispatch(appUpdateProfil(payload));
+  },
+  handleSubmit: (event) => {
+    event.preventDefault();
+    // TODO MAJ USER STORE + API
+  },
+  abortConfirmPassword: () => {
+    dispatch(appProfilClean());
+    dispatch(push('/utilisateur/profil'));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasswordEdit);
