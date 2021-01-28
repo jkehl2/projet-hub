@@ -31,9 +31,8 @@ export const getUserById = (payload) => ({
 export const editUser = () => ({
   type: USER_EDIT,
 });
-export const deleteUser = (payload) => ({
+export const deleteUser = () => ({
   type: USER_DELETE,
-  payload,
 });
 export const userSignIn = () => ({
   type: USER_SIGNIN,

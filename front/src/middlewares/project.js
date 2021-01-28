@@ -64,6 +64,7 @@ const projectMiddleware = (store) => (next) => (action) => {
       const params = {
         access_key: 'dc7156f13f34218aa5540fe1ef67fb52',
         query: localite,
+        country: 'FR',
       };
       axios.get('http://api.positionstack.com/v1/forward', { params })
         .then((response) => {
