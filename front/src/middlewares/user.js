@@ -205,29 +205,23 @@ const userMiddleware = (store) => (next) => (action) => {
       console.log(confirmation);
 
       // 2 verif si le payload corres à nos attentes
-      if (confirmation === 'CONFIRMER') {
-        // 3 si corrs dispatch other action
-        store.dispatch(deleteUser());
-        store.dispatch(appMsgUpdate('Vous avez confirmé la suppression de votre profil.'));
-        store.dispatch(appLoadingOn());
-      }
-      else if (confirmation.length > 0 && confirmation !== 'CONFIRMER') {
+      if (confirmation.length > 0 && confirmation !== 'CONFIRMER') {
         // 4 si corres neg error message
         store.dispatch(appMsgUpdate('Veuillez saisir de nouveau'));
       }
-
+      else if (confirmation === 'CONFIRMER') {
+        // 3 si corrs dispatch other action
+        store.dispatch(appLoadingOn());
+        store.dispatch(deleteUser());
+        store.dispatch(appMsgUpdate('Vous avez confirmé la suppression de votre profil.'));
+      }
       return;
     }
     case USER_DELETE: {
-      const {
-        user: {
-          id,
-        },
-      } = store.getState();
+      // Pas besoin de récupérer l'id du store pour la requête
 
       const data = JSON.stringify({
         ...queryUserDelete,
-        variables: { id },
       });
 
       const config = {
