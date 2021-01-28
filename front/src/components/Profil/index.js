@@ -59,7 +59,7 @@ const Profil = ({
           >
             <Modal.Header>Veuillez saisir CONFIRMER pour supprimer le profil</Modal.Header>
             <Modal.Content>
-              <Form onSubmit={deleteProfil()}>
+              <Form>
                 <Form.Input
                   type="text"
                   value={confirmation}
@@ -67,7 +67,6 @@ const Profil = ({
                     setConfirmation({ confirmation: event.target.value });
                   }}
                 />
-
                 <Button.Group>
                   <Form.Button type="button" onClick={deleteProfil}>
                     Confirmer la suppression du profil

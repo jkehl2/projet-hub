@@ -211,9 +211,9 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(appMsgUpdate('Vous avez confirmé la suppression de votre profil.'));
         store.dispatch(appLoadingOn());
       }
-      else {
+      else if (confirmation.length > 0 && confirmation !== 'CONFIRMER') {
         // 4 si corres neg error message
-        // store.dispatch(appMsgUpdate('Veuillez saisir de nouveau'));
+        store.dispatch(appMsgUpdate('Veuillez saisir de nouveau'));
       }
 
       return;
