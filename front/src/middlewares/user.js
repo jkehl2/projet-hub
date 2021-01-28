@@ -23,6 +23,7 @@ import {
   updateUserStore, CONFIRM_DELETE_SUBMIT,
   USER_SIGNOUT,
   cleanUserStore,
+  deleteUser,
 } from 'src/store/actions/user';
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
@@ -191,7 +192,9 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       store.dispatch(appLoadingOn());
-      return; }
+      return;
+    }
+
     case CONFIRM_DELETE_SUBMIT: {
       // 1 recup payload
       const {
@@ -200,14 +203,28 @@ const userMiddleware = (store) => (next) => (action) => {
         },
       } = store.getState();
       console.log(confirmation);
-      return;
 
-//2 verif si le payload corres à nos attentes
-//3 si corrs dispatch other action
-//4 si corres neg error message
+      // 2 verif si le payload corres à nos attentes
+      if (confirmation === 'CONFIRMER') {
+        // 3 si corrs dispatch other action
+        store.dispatch(deleteUser());
+        store.dispatch(appMsgUpdate('Vous avez confirmé la suppression de votre profil.'));
+        store.dispatch(appLoadingOn());
       }
+      else {
+        // 4 si corres neg error message
+        store.dispatch(appErrorUpdate('Veuillez saisir de nouveau'));
+      }
+
+      return;
+    }
     case USER_DELETE: {
-      const { id } = action.payload;
+      const {
+        user: {
+          id,
+        },
+      } = store.getState();
+
       const data = JSON.stringify({
         ...queryUserDelete,
         variables: { id },
@@ -218,17 +235,20 @@ const userMiddleware = (store) => (next) => (action) => {
         data,
       };
 
-      console.log('loader on');
       axios(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          store.dispatch(appMsgUpdate('Nous sommes désolés de vous voir partir, à bientôt ! '));
+          store.dispatch(cleanUserStore());
         })
         .catch((error) => {
-          console.log(error);
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
-          console.log('loader off');
+          store.dispatch(appLoadingOff());
         });
+
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
       return; }
     default:
       next(action);

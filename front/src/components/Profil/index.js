@@ -57,7 +57,7 @@ const Profil = ({
             open={open}
             trigger={<Button negative>supprimer le profil</Button>}
           >
-            <Modal.Header>veuillez taper confirmer pour supprimer le profil</Modal.Header>
+            <Modal.Header>Veuillez saisir CONFIRMER pour supprimer le profil</Modal.Header>
             <Modal.Content>
               <Form onSubmit={deleteProfil()}>
                 <Form.Input
