@@ -8,24 +8,42 @@ import {
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
+// == IMPORT STYLES
+import './projectCard.scss';
+
 // == Composant
 const ProjectCard = ({ logged, project }) => (
   <Segment>
     { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
-    <Grid divided stretched stackable padded="vertically">
-      <Grid.Row only="mobile">
-        <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded /></Link>
-      </Grid.Row>
+    <Grid divided stackable verticalAlign="middle">
       <Grid.Row>
         <Grid.Column computer={4} only="computer">
           <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded /></Link>
         </Grid.Column>
         <Grid.Column computer={12} mobile={16}>
-          <Header as="h3">
-            {(!project.isAuthor && logged) && (project.isFavorite ? <Icon name="star" color="yellow" /> : <Icon name="star outline" color="yellow" />)}
-            <Header.Content>{`${project.title} `}</Header.Content>
-          </Header>
+          <Link to={`/projet/${project.id}`}>
+            <Grid centered>
+              <Grid.Row>
+                <Grid.Column only="mobile" width={4} className="project-card--padding-mobile">
+                  <Image src={`${project.image}`} centered spaced rounded />
+                </Grid.Column>
+                <Grid.Column only="mobile" width={12} className="project-card--padding-mobile">
+                  <Header as="h3" size="small">
+                    {(!project.isAuthor && logged) && (project.isFavorite ? <Icon name="star" color="yellow" /> : <Icon name="star outline" color="yellow" />)}
+                    <Header.Content>{`${project.title} `}</Header.Content>
+                  </Header>
+                </Grid.Column>
+                <Grid.Column only="computer" width={16}>
+                  <Header as="h3">
+                    {(!project.isAuthor && logged) && (project.isFavorite ? <Icon name="star" color="yellow" /> : <Icon name="star outline" color="yellow" />)}
+                    <Header.Content>{`${project.title} `}</Header.Content>
+                  </Header>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Link>
           <p><Image avatar spaced="right" src={`${project.author.avatar}`} />{`${project.author.name}`}</p>
+          <p>{`${project.description}`}</p>
           <p><Icon name="target" />{`${project.location}`}</p>
           <Divider />
           <Label.Group>
@@ -49,6 +67,7 @@ ProjectCard.propTypes = {
     isAuthor: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     expiration_date: PropTypes.string.isRequired,
     creation_date: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
