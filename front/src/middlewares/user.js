@@ -213,7 +213,7 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       else {
         // 4 si corres neg error message
-        store.dispatch(appErrorUpdate('Veuillez saisir de nouveau'));
+        // store.dispatch(appMsgUpdate('Veuillez saisir de nouveau'));
       }
 
       return;
@@ -249,7 +249,8 @@ const userMiddleware = (store) => (next) => (action) => {
 
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
-      return; }
+      return;
+    }
     default:
       next(action);
       break;
