@@ -12,8 +12,10 @@ import {
 import './profil.scss';
 
 // == Composant Profil mode consultation
-const Profil = ({ name, email, avatar, deleteProfil,
-  setConfirmation, confirmation, switchToEditProFile, }) => {
+const Profil = ({
+  name, email, avatar, deleteProfil,
+  setConfirmation, confirmation, switchToEditProFile,
+}) => {
   const [open, setOpen] = useState(false);
   return (
     <Container className="profil">
@@ -53,9 +55,9 @@ const Profil = ({ name, email, avatar, deleteProfil,
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
-            trigger={<Button negative>supprimer le profil</Button>}
+            trigger={<Button negative>Supprimer le profil</Button>}
           >
-            <Modal.Header>veuillez taper confirmer pour supprimer le profil</Modal.Header>
+            <Modal.Header>Veuillez saisir CONFIRMER pour supprimer le profil</Modal.Header>
             <Modal.Content>
               <Form onSubmit={deleteProfil()}>
                 <Form.Input
@@ -65,12 +67,12 @@ const Profil = ({ name, email, avatar, deleteProfil,
                     setConfirmation({ confirmation: event.target.value });
                   }}
                 />
-                console.log(confirmation);
+
                 <Button.Group>
                   <Form.Button type="button" onClick={deleteProfil}>
-                    confirmer la suppression du profil
+                    Confirmer la suppression du profil
                   </Form.Button>
-                  <Button negative>annuler</Button>
+                  <Button negative>Annuler</Button>
                 </Button.Group>
               </Form>
             </Modal.Content>
