@@ -72,11 +72,12 @@ export const queryUserEdit = {
 
 // == QUERY - Supprimer le profil utlisateur
 export const queryUserDelete = {
-  query: `mutation deleteUser($id: ID!) {
-    deleteUser(id: $id){
-        msg
+  query: ` mutation{
+    deleteUser{
+      infos
+      errors
     }
-  }`,
+  }   `,
 };
 
 //= = PROJECT QUERIES
