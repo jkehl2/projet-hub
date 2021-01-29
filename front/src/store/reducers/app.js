@@ -16,6 +16,8 @@ import {
   APP_MSG_CLEAN,
   APP_PROFIL_UPDATE,
   APP_PROFIL_CLEAN,
+  APP_SIGNUP_CLEAN,
+  APP_SIGN_UP_UPDATE,
 } from 'src/store/actions/app';
 
 // ==  INITIALE SUB APP STATE - error
@@ -34,6 +36,14 @@ export const messageInitialState = {
 export const signInInitialState = {
   email: '',
   password: '',
+};
+
+// ==  INITIALE SUB APP STATE - signUp
+export const signUpInitialState = {
+  email: '',
+  password: '',
+  passwordVerification: '',
+  name: '',
 };
 
 // ==  INITIALE SUB APP STATE - search
@@ -59,6 +69,7 @@ export const initialState = {
   message: { ...messageInitialState },
   signIn: { ...signInInitialState },
   search: { ...searchInitialState },
+  signUp: { ...signUpInitialState },
 };
 
 // == USER REDUCER - Gestion du store des paramètres applicatifs techniques
@@ -94,11 +105,28 @@ const reducer = (oldState = initialState, action = {}) => {
           ...action.payload,
         },
       };
+
+    case APP_SIGN_UP_UPDATE:
+      return {
+        ...oldState,
+        signUp: {
+          ...oldState.signUp,
+          ...action.payload,
+        },
+      };
     case APP_SIGNIN_CLEAN:
       return {
         ...oldState,
         signIn: {
           ...signInInitialState,
+        },
+      };
+
+    case APP_SIGNUP_CLEAN:
+      return {
+        ...oldState,
+        signUp: {
+          ...signUpInitialState,
         },
       };
     case APP_ERROR_UPDATE:

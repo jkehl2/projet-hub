@@ -9,6 +9,7 @@ import Menu from 'src/containers/Menu';
 import Home from 'src/containers/Home';
 import Profil from 'src/containers/Profil';
 import Project from 'src/containers/Project';
+import SignUp from 'src/containers/SignUp';
 import PasswordEdit from 'src/containers/PasswordEdit';
 
 // == IMPORTS COMPOSANTS
@@ -18,7 +19,7 @@ import {
   Loader,
   Dimmer,
 } from 'semantic-ui-react';
-import SignUp from 'src/components/SignUp';
+
 import Projects from 'src/components/Projects';
 import Confirmation from 'src/components/Confirmation';
 import CreateProject from 'src/components/CreateProject';
@@ -74,7 +75,10 @@ const App = ({
           <Route exact path="/utilisateur/connexion">
             <SignIn />
           </Route>
-
+          {/* Sprint 1 - Page d'enregistrement utlisateur' */}
+          <Route exact path="/utilisateur/enregistrement">
+            <SignUp />
+          </Route>
           {/* Sprint 2 - Mentions légales */}
           <Route exact path="/mentionsLegales"> </Route>
           {/* Sprint 2 - Présentation équipe */}
@@ -87,8 +91,7 @@ const App = ({
           <ProtectedRoute exact path="/utilisateur/confirm" isAllowed={logged} component={() => (<Confirmation />)} />
           {/* Sprint 1 - Page de profil */}
           <ProtectedRoute exact path="/utilisateur/profil" isAllowed={logged} component={() => (<Profil />)} />
-          {/* Sprint 1 - Page d'enregistrement utlisateur' */}
-          <ProtectedRoute exact path="/utilisateur/enregistrement" isAllowed={logged} component={() => (<SignUp />)} />
+
           {/* Sprint 2 - Page Création de projet' */}
           <ProtectedRoute exact path="/utilisateur/create" isAllowed={logged} component={() => (<CreateProject />)} />
           {/* Sprint 2 - Page mes favoris' */}

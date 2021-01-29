@@ -66,7 +66,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         query: localite,
         country: 'FR',
       };
-      axios.get('http://api.positionstack.com/v1/forward', { params })
+      axios.get('https://api.positionstack.com/v1/forward', { params })
         .then((response) => {
           const geolocArr = response.data.data;
           if (geolocArr.length > 0) {

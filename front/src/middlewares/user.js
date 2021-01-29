@@ -42,6 +42,7 @@ import {
   appMsgClean,
   appErrorClean,
   appSignInClean,
+  appSignUpClean,
   appEditProfilOff,
   appProfilClean,
 } from 'src/store/actions/app';
@@ -98,7 +99,6 @@ const userMiddleware = (store) => (next) => (action) => {
       const config = {
         ...signOutConfig,
       };
-
       axios(config)
         .then((response) => {
           if (response.data.error) {
@@ -118,10 +118,18 @@ const userMiddleware = (store) => (next) => (action) => {
       return;
     }
     case USER_CREATE: {
-      const { name, email, password } = action.payload;
+      // 1 recup payload
+      const {
+        app: {
+          signUp: {
+            email, password, name,
+          },
+        },
+      } = store.getState();
+
       const data = JSON.stringify({
         ...queryUserCreate,
-        variables: { name, email, password },
+        variables: { email, password, name },
       });
 
       const config = {
@@ -129,20 +137,28 @@ const userMiddleware = (store) => (next) => (action) => {
         data,
       };
 
-      console.log('loader on');
       axios(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          // on envoie les données du store app à user
+          // on change le logged à true
+          store.dispatch(updateUserStore({ ...response.data.data.insertUser, logged: true }));
+          // on redirige vers la page profil
+          store.dispatch(push('/utilisateur/profil'));
         })
         .catch((error) => {
-          console.log(error);
+          // en cas d'erreur remontée de l'api, renvoi d'un msg erreur
+          store.dispatch(appErrorUpdate(error));
         })
         .finally(() => {
-          console.log('loader off');
+          // on clean le store app
+          store.dispatch(appErrorClean());
+          store.dispatch(appSignUpClean());
+          store.dispatch(appLoadingOff());
         });
 
       return;
     }
+
     case USER_EDIT_PASSWORD: {
       const { app: { profil: { password } } } = store.getState();
 
@@ -154,12 +170,18 @@ const userMiddleware = (store) => (next) => (action) => {
       const config = {
         ...configGraphQl,
         data,
+
       };
 
       axios(config)
-        .then(() => {
+        .then((response) => {
           store.dispatch(push('/utilisateur/profil'));
-          store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
+          if (response.data.error) {
+            store.dispatch(appErrorUpdate(response.data.error));
+          }
+          else {
+            store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
+          }
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -171,31 +193,6 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       store.dispatch(appLoadingOn());
-      return;
-    }
-    case USER_BY_ID: {
-      const { id } = action.payload;
-      const data = JSON.stringify({
-        ...queryUserById,
-        variables: { id },
-      });
-
-      const config = {
-        ...configGraphQl,
-        data,
-      };
-
-      console.log('loader on');
-      axios(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          console.log('loader off');
-        });
       return;
     }
     case USER_EDIT: {
@@ -255,6 +252,7 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       return;
     }
+
     case USER_DELETE: {
       // Pas besoin de récupérer l'id du store pour la requête
 
@@ -283,6 +281,7 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appErrorClean());
       return;
     }
+
     default:
       next(action);
       break;

@@ -13,6 +13,7 @@ export default {
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 };
 
 // == CONFIGURATION CONNECTEUR AXIOS SIGNIN - END POINT + ENTÊTE
@@ -22,6 +23,7 @@ export const signInConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 };
 
 // == CONFIGURATION CONNECTEUR AXIOS SIGNOUT - END POINT + ENTÊTE
@@ -31,16 +33,16 @@ export const signOutConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 };
 
 // == QUERY - Créer le profil utlisateur
 export const queryUserCreate = {
-  query: `mutation CreateNewUser($name: String!, $email: String!, $password: String!) {
-    insertUser(name: $name, email: $email, password: $password) {
+  query: `mutation createUser($name: String!, $email: String!,$password: String! ) {
+    insertUser(name: $name, email: $email,password: $password) {
       id
       name
       email
-      activated
     }
   }`,
 };

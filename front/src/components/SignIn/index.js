@@ -79,7 +79,7 @@ const SignIn = (
         />
         {/** bouton connexion */}
         <Segment basic textAlign="right">
-          <Button.Group>
+          <Button.Group compact>
             <Form.Button type="submit" onClick={handleSubmit}>
               Connexion
             </Form.Button>
