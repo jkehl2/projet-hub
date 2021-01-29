@@ -21,6 +21,8 @@ import {
 } from 'semantic-ui-react';
 
 import Projects from 'src/components/Projects';
+import MyFavorites from 'src/components/MyFavorites';
+import MyProjects from 'src/components/MyProjects';
 import CreateProject from 'src/components/CreateProject';
 import Footer from 'src/components/Footer';
 import WhoAreWe from 'src/components/WhoAreWe';
@@ -77,9 +79,9 @@ const App = ({
           {/* Sprint 2 - Page Création de projet' */}
           <ProtectedRoute exact path="/utilisateur/create" isAllowed={logged} component={() => (<CreateProject />)} />
           {/* Sprint 2 - Page mes favoris' */}
-          <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={() => (<Projects />)} />
+          <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={() => (<MyFavorites />)} />
           {/* Sprint 2 - Page mes projets' */}
-          <ProtectedRoute exact path="/utilisateur/projets" isAllowed={logged} component={() => (<Projects />)} />
+          <ProtectedRoute exact path="/utilisateur/projets" isAllowed={logged} component={() => (<MyProjects />)} />
           {/* Sprint 2 - Page mes projets' */}
           <ProtectedRoute exact path="/utilisateur/motdepasse-edit" isAllowed={logged} component={() => (<PasswordEdit />)} />
 
