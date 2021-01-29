@@ -81,7 +81,7 @@ const SignIn = (
             <Form.Button positive type="submit" onClick={handleSubmit}>
               Connexion
             </Form.Button>
-            <Button.Or />
+            <Button.Or text="ou" />
             {/** bouton inscription */}
             <Form.Button color="blue" type="button" onClick={redirectSignUp}>
               Inscription

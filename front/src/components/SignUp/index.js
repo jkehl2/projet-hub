@@ -65,7 +65,7 @@ const SignUp = ({
         <Button.Group>
           {/* bouton valider */}
           <Button positive onClick={handleSubmit}>Valider</Button>
-          <Button.Or />
+          <Button.Or text="ou" />
           {/* bouton annuler */}
           <Button>Annuler</Button>
         </Button.Group>

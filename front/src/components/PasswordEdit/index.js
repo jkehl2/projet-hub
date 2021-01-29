@@ -72,7 +72,7 @@ const PasswordEdit = ({
           <Button.Group>
             {/* bouton valider */}
             <Button positive type="submit">Valider</Button>
-            <Button.Or />
+            <Button.Or text="ou" />
             {/* bouton annuler */}
             <Button
               type="button"

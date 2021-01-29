@@ -64,7 +64,7 @@ const ProfilEdit = ({
         <Segment basic textAlign="right">
           <Button.Group>
             <Button positive type="submit">Valider</Button>
-            <Button.Or />
+            <Button.Or text="ou" />
             <Button
               type="button"
               onClick={abortEditProfil}

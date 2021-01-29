@@ -93,7 +93,7 @@ const ProfilView = ({
               />
               <Button.Group>
                 <Form.Button negative type="submit">Confirmer</Form.Button>
-                <Button.Or />
+                <Button.Or text="ou" />
                 <Button
                   type="button"
                   onClick={(event) => {
