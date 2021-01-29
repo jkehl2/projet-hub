@@ -163,9 +163,8 @@ const userMiddleware = (store) => (next) => (action) => {
 
       };
 
-      connector(config, 'editUserPassword', () => store.dispatch(push('/utilisateur/connexion')))
+      connector(config, 'editUserPassword', store.dispatch)
         .then((response) => {
-          console.log(response);
           store.dispatch(push('/utilisateur/profil'));
           store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
         })
