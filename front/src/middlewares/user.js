@@ -9,6 +9,7 @@ import { push, goBack } from 'connected-react-router';
 
 // == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTEUR AXIOS
 import configGraphQl, {
+  apiUrl,
   queryUserCreate,
   queryUserById,
   queryUserEdit,
@@ -47,6 +48,19 @@ import {
   appProfilClean,
 } from 'src/store/actions/app';
 
+axios.interceptors.request.use(
+  (config) => {
+    const { origin } = new URL(config.url);
+    const allowedOrigins = [apiUrl];
+    const token = localStorage.getItem('token');
+    if (allowedOrigins.includes(origin)) {
+      config.headers.authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
+
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -66,6 +80,8 @@ const userMiddleware = (store) => (next) => (action) => {
             store.dispatch(appErrorUpdate(response.data.error));
           }
           else {
+            console.log(response);
+            localStorage.setItem('token', response.data.token);
             // Sinon on récupère les infos utlisateur
             const userdata = {
               ...response.data,
