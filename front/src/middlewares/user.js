@@ -182,13 +182,9 @@ const userMiddleware = (store) => (next) => (action) => {
     }
     case USER_EDIT: {
       const { app: { profil: { name, email } } } = store.getState();
-      const variables = {
-        name,
-        email,
-      };
       const data = JSON.stringify({
         ...queryUserEdit,
-        ...variables,
+        variables: { name, email },
       });
 
       const config = {
