@@ -71,7 +71,10 @@ const ProfilView = ({
 
         {/* bouton mes supprimer le compte */}
         <Modal
-          onClose={() => setOpen(false)}
+          onClose={() => {
+            setOpen(false);
+            setConfirmation({ deleteConfirm: '' });
+          }}
           onOpen={() => setOpen(true)}
           open={open}
           trigger={<Button className="profil-view--marged" negative>Supprimer le profil</Button>}
