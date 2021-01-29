@@ -60,19 +60,11 @@ export const queryUserCreate = {
 export const queryUserById = {
   query: `query GetUserByID($id: ID!) {
     user(id: $id){
-      ... on User{
       id
       name
       email
       avatar
       activated
-      }
-      ... on Error{
-        error{
-          msg
-          code
-        }
-      }
     }
   }`,
 };
@@ -141,7 +133,6 @@ export const queryUserDelete = {
 export const queryProjectById = {
   query: `query GetProjectByID($id: ID!) {
     project(id: $id) {
-      ... on Project{
         id
         title
         description
@@ -162,13 +153,6 @@ export const queryProjectById = {
           description
           completed
         }
-      }
-      ... on Error{
-        error{
-          msg
-          code
-        }
-      }
     }
   }`,
 };
@@ -192,7 +176,6 @@ export const queryDeleteProject = {
 export const queryGetProjectsByGeo = {
   query: `query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!, $archived: Boolean!) {
     projectsByGeo(lat: $lat, long: $long, scope: $scope, archived: $archived) {
-      ... on Project{
         id
         title
         image
@@ -207,13 +190,6 @@ export const queryGetProjectsByGeo = {
           email
           avatar
         }
-      }
-      ... on Error{
-        error{
-          msg
-          code
-        }
-      }
     }
   }`,
 };
