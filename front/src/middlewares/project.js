@@ -284,9 +284,29 @@ const projectMiddleware = (store) => (next) => (action) => {
     }
     case SEND_PROJECT: {
       // call API geocoding => generate long & lat of location
+      const {
+        app: {
+          createProject: {
+            title, date, description, location, perimeter,
+          },
+        },
+      } = store.getState();
+      axios.get(`https://nominatim.openstreetmap.org/search/${location}?format=json&addressdetails=1&limit=1&polygon_svg=1`)
+        .then((response) => {
+          const geolocArr = response.data;
+          if (geolocArr.length > 0) {
+            const searchValue = {
+              long: geolocArr[0].long,
+              lat: geolocArr[0].lat,
+            };
+            store.dispatch(getProjectByGeo(searchValue));
+          }
+        });
+
       // once we have those = create new act that will send actualised data to our API
       // once API send succes msg, redirect to needs page
-      return;}
+      return;
+    }
 
     default:
       next(action);

@@ -10,6 +10,8 @@ import {
   appLoadingOn,
 } from 'src/store/actions/app';
 
+import { sendProjectApi } from 'src/store/actions/project';
+
 import { createUser, userEditPassword } from '../store/actions/user';
 
 // == IMPORT ACTIONS SUR USER
@@ -67,14 +69,20 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       return; }
     case APP_PROJECT_CREATE_VERIF: {
-      const { app: {createProject: { title, date, description, location, perimeter } } } = store.getState();
-    if (title.length === 0 && date.length === 0) {
-      store.dispatch(appMsgUpdate('Veuillez remplir les champs titre et date'))
-    }
-    else {
-      store.dispatch(sendProjectApi());
-    }
-  return; }
+      const {
+        app: {
+          createProject: {
+            title, date,
+          },
+        },
+      } = store.getState();
+      if (title.length === 0 && date.length === 0) {
+        store.dispatch(appMsgUpdate('Veuillez remplir les champs titre et date'));
+      }
+      else {
+        store.dispatch(sendProjectApi());
+      }
+      return; }
     default:
       next(action);
       break;
