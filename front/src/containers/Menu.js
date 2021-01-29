@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import Menu from 'src/components/Menu';
 
-import { userSignOut } from 'src/store/actions/user';
+import { cleanUserStore } from 'src/store/actions/user';
 import { appMsgUpdate } from 'src/store/actions/app';
 import { push } from 'connected-react-router';
 
@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   handleDisconnect: () => {
-    dispatch(userSignOut());
+    dispatch(cleanUserStore());
     dispatch(push('/'));
     dispatch(appMsgUpdate('Vous venez de vous déconnecter. Merci de votre visite'));
   },

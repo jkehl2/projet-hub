@@ -5,7 +5,7 @@
 
 // == IMPORT ACTIONS SUR STORE UTILISATEUR
 import {
-  USER_STORE_UPDATE, USER_STORE_CLEAN, CONFIRM_DELETE, CREATE_NEW_USER_STORE,
+  USER_STORE_UPDATE, USER_STORE_CLEAN,
 } from 'src/store/actions/user';
 
 // ==  INITIALE USER STATE
@@ -26,11 +26,12 @@ const reducer = (oldState = initialState, action = {}) => {
         ...oldState,
         ...action.payload,
       };
-    case USER_STORE_CLEAN:
+    case USER_STORE_CLEAN: {
+      localStorage.setItem('token', '');
       return {
         ...initialState,
       };
-
+    }
     default:
       return { ...oldState };
   }

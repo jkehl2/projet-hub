@@ -2,15 +2,37 @@
  * @module user-middleware
  * Middleware de gestion des connecteurs à la BD Utilisteurs
  */
+// == IMPORT NPM
+import axios from 'axios';
+import querystring from 'query-string';
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
-  APP_REFRESH_PROFIL, appUpdateProfil, USER_CREATION_VERIF,
-  appMsgUpdate, appErrorUpdate, appErrorClean, appClean,
-  appLoadingOn, APP_CONFIRM_PASSWORD,
+  APP_REFRESH_PROFIL,
+  appUpdateProfil,
+  USER_CREATION_VERIF,
+  appMsgUpdate,
+  appErrorUpdate,
+  appErrorClean,
+  appMsgClean,
+  appLoadingOn,
+  appLoadingOff,
+  APP_CONFIRM_PASSWORD,
 } from 'src/store/actions/app';
 
-import { userEditPassword, createUser } from 'src/store/actions/user';
+import {
+  PROJECT_SEARCH,
+  getProjectByGeo,
+  cleanProjectStore,
+} from 'src/store/actions/project';
+
+import {
+  userEditPassword,
+  createUser,
+} from 'src/store/actions/user';
+
+// == import utils to allow perimeter conversion
+import perimetersValue from 'src/utils/perimeters.json';
 
 // == IMPORT ACTIONS SUR USER
 
@@ -67,6 +89,51 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas égale au nouveau mot de passe. Veuillez ressaisir votre confirmation de mot de passe.'));
       }
       return; }
+    case PROJECT_SEARCH: {
+      // gathering values needed for geocoding
+      const {
+        app: {
+          search: {
+            localite,
+            perimeter,
+            archived,
+          },
+        },
+      } = store.getState();
+
+      if (localite.trim() === '') {
+        store.dispatch(appErrorClean());
+        store.dispatch(appMsgClean());
+        store.dispatch(cleanProjectStore());
+        return;
+      }
+      const search = querystring.stringify(localite);
+      axios.get(`https://nominatim.openstreetmap.org/search?adressdetails=1&q=${search}&format=json&limit=1`)
+        .then((response) => {
+          const geolocArr = response.data;
+          if (geolocArr.length > 0) {
+            const searchValue = {
+              long: geolocArr[0].lon,
+              lat: geolocArr[0].lat,
+              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
+              archived,
+            };
+            store.dispatch(getProjectByGeo(searchValue));
+          }
+          else {
+            store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
+          }
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appErrorClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(cleanProjectStore());
+      store.dispatch(appLoadingOn());
+      return;
+    }
     default:
       next(action);
       break;
