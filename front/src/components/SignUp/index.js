@@ -2,12 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// == IMPORTS CONTAINERS
+
 // == IMPORTS COMPOSANTS
 import {
-  Form, Header, Segment, Button, Container,
+  Form, Header, Segment, Button, Container, Divider,
 } from 'semantic-ui-react';
-
-// == IMPORTS CONTAINERS
 
 // == STYLES
 import './signUp.scss';
@@ -18,7 +18,7 @@ const SignUp = ({
 }) => (
   <Container className="signUp">
     {/* titre */}
-    <Header as="h1">Création du compte</Header>
+    <Header as="h1" content="Enregistrement" textAlign="center" dividing subheader="Pas de compte utilisateur ? Enregistrez-vous ici" />
     <Form onSubmit={handleSubmit}>
       {/* pseudo */}
       <Form.Input

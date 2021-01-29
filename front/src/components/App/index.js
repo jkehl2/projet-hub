@@ -24,6 +24,7 @@ import Projects from 'src/components/Projects';
 import CreateProject from 'src/components/CreateProject';
 import Footer from 'src/components/Footer';
 import WhoAreWe from 'src/components/WhoAreWe';
+import LegalMentions from 'src/components/LegalMentions';
 import ProtectedRoute from './ProtectedRoute';
 
 // == IMPORT STYLES
@@ -31,7 +32,7 @@ import './app.scss';
 
 // == Composant
 const App = ({
-  isError, error, isMessage, message, logged, loading, setMessage,
+  isError, error, isMessage, message, logged, loading, setError,
 }) => (
   <>
     {/* Menu de l'application */}
@@ -40,50 +41,36 @@ const App = ({
       <Container>
 
         {/* Affiche message d'erreur si il y en a */}
-        {isError && (
-        <Message negative>
-          <Message.Header>Une erreur s'est produite</Message.Header>
-          <p>{`${error}`}</p>
-        </Message>
-        )}
+        {isError
+        && (<Message negative header="Une erreur s'est produite" content={`${error}`} icon="thumbs down outline" />)}
+
         {/* Affiche message d'information si il y en a */}
-        {isMessage && (
-        <Message>
-          <Message.Header>Notification</Message.Header>
-          <p>{`${message}`}</p>
-        </Message>
-        )}
+        {isMessage
+        && (<Message header="Information" content={`${message}`} icon="idea" />)}
+
         <Dimmer active={loading} inverted>
           <Loader inverted>Loading</Loader>
         </Dimmer>
+
         <Switch>
           {/* Sprint 1 - Page d'accueil */}
-          <Route exact path="/">
-            <Home />
-          </Route>
+          <Route exact path="/" component={Home} />
+
           {/* Sprint 1 - Page de rechercher */}
-          <Route exact path="/projets">
-            {/* Sprint 1 */}
-            <Projects />
-          </Route>
+          <Route exact path="/projets" component={Projects} />
+
           {/* Sprint 1 - Page d'étail d'un projet */}
-          <Route exact path="/projet/:slug">
-            <Project />
-          </Route>
+          <Route exact path="/projet/:slug" component={Project} />
+
           {/* Sprint 1 - Page de connexion utlisateur */}
-          <Route exact path="/utilisateur/connexion">
-            <SignIn />
-          </Route>
+          <ProtectedRoute exact path="/utilisateur/connexion" isAllowed={!logged} component={() => (<SignIn />)} redirectTo="/" />
           {/* Sprint 1 - Page d'enregistrement utlisateur' */}
-          <Route exact path="/utilisateur/enregistrement">
-            <SignUp />
-          </Route>
+          <ProtectedRoute exact path="/utilisateur/enregistrement" isAllowed={!logged} component={() => (<SignUp />)} redirectTo="/" />
+
           {/* Sprint 2 - Mentions légales */}
-          <Route exact path="/mentionsLegales"> </Route>
+          <Route exact path="/mentionsLegales" component={LegalMentions} />
           {/* Sprint 2 - Présentation équipe */}
-          <Route exact path="/equipe">
-            <WhoAreWe />
-          </Route>
+          <Route exact path="/equipe" component={WhoAreWe} />
           {/* Routes ateignable uniquement si utilisateur logged */}
           {/* Sprint 1 - Page de profil */}
           <ProtectedRoute exact path="/utilisateur/profil" isAllowed={logged} component={() => (<Profil />)} />
@@ -101,7 +88,7 @@ const App = ({
             path="*"
             exact
             render={() => {
-              setMessage('404 - NOT FOUND - URL invalide');
+              setError('404 - NOT FOUND - URL invalide');
               return (<Redirect to="/" />);
             }}
           />
@@ -119,7 +106,7 @@ App.propTypes = {
   message: PropTypes.string.isRequired,
   logged: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  setMessage: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
 };
 
 // == Export

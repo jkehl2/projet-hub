@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Button, Form, Header, Item, Modal, Segment,
+  Button, Form, Item, Modal, Segment,
 } from 'semantic-ui-react';
 
 // == IMPORT STYLES
@@ -26,8 +26,6 @@ const ProfilView = ({
   const [open, setOpen] = useState(false);
   return (
     <Segment textAlign="left">
-      {/* Titre */}
-      <Header as="h1">Profil utlisateur</Header>
       <Item.Group relaxed>
         <Item>
           {/* avatar */}

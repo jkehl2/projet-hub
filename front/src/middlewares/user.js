@@ -67,7 +67,6 @@ const userMiddleware = (store) => (next) => (action) => {
         ...signInConfig,
         data,
       };
-
       axios(config)
         .then((response) => {
           // En cas de retour négatif à la demande de signin
@@ -126,7 +125,15 @@ const userMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           // on envoie les données du store app à user
           // on change le logged à true
-          store.dispatch(updateUserStore({ ...response.data.data.insertUser, logged: true }));
+          const userdata = {
+            ...response.data.data.insertUser,
+            logged: true,
+          };
+          // Si null dans avatar alors on ne garde pas ce paramètre pour la maj du store
+          if (userdata.avatar === null) {
+            delete userdata.avatar;
+          }
+          store.dispatch(updateUserStore(userdata));
           // on redirige vers la page profil
           store.dispatch(push('/utilisateur/profil'));
         })
@@ -184,7 +191,12 @@ const userMiddleware = (store) => (next) => (action) => {
       connector(config, 'editUserInfos', store.dispatch)
         .then((response) => {
           store.dispatch(appMsgUpdate('Votre profil utilisateur à été mis à jour.'));
-          store.dispatch(updateUserStore(response.data.data.editUserInfos));
+          const userdata = response.data.data.editUserInfos;
+          // Si null dans avatar alors on ne garde pas ce paramètre pour la maj du store
+          if (userdata.avatar === null) {
+            delete userdata.avatar;
+          }
+          store.dispatch(updateUserStore(userdata));
           store.dispatch(appEditProfilOff());
         })
         .catch((error) => {

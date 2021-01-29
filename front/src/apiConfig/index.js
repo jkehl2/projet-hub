@@ -39,12 +39,12 @@ export const signOutConfig = {
 
 // == QUERY - Créer le profil utlisateur
 export const queryUserCreate = {
-  query: `mutation createUser($name: String!, $email: String!,$password: String! ) {
-    insertUser(name: $name, email: $email,password: $password) {
+  query: `mutation createUser($name: String!, $email: String!, $password: String! ) {
+    insertUser(name: $name, email: $email, password: $password) {
       ... on User{
-      id
-      name
-      email
+        id
+        name
+        email
       }
       ... on Error{
         error{
@@ -74,10 +74,10 @@ export const queryUserEdit = {
   query: `mutation editUser($name: String!, $email: String!) {
     editUserInfos(name: $name, email: $email) {
       ... on User{
-      id
-      name
-      email
-      avatar
+        id
+        name
+        email
+        avatar
       }
       ... on Error{
         error{
@@ -94,10 +94,10 @@ export const queryUserEditPassword = {
   query: `mutation editUserPassword($password: String!) {
     editUserPassword(password: $password) {
       ... on User{
-      id
-      name
-      email
-      avatar
+        id
+        name
+        email
+        avatar
       }
       ... on Error{
         error{
