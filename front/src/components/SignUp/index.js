@@ -10,7 +10,7 @@ import {
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './SignUp.scss';
+import './signUp.scss';
 
 // == Composant
 const SignUp = ({

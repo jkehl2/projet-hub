@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 
 import Profil from 'src/components/Profil';
-import { updateUserStore, profilDeleteSubmit } from 'src/store/actions/user';
+import { updateUserStore, profilDeleteSubmit, profilDeleteConfirm } from 'src/store/actions/user';
+
+import { push } from 'connected-react-router';
 
 import { appEditProfilOn } from 'src/store/actions/app';
 
@@ -21,6 +23,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   switchToEditProFile: () => {
     dispatch(appEditProfilOn());
+  },
+  redirectToPasswordEdit: () => {
+    dispatch(push('/utilisateur/motdepasse-edit'));
   },
 });
 

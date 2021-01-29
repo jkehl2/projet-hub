@@ -29,7 +29,9 @@ const ProfilEdit = ({
         <Form.Input
           type="text"
           label="Nom d'utilisateur"
+          title="Nom d'utilisateur"
           placeholder="Albert Dupont"
+          required
           value={name}
           onChange={(event) => {
             setProfilValue({ name: event.target.value });
@@ -38,8 +40,11 @@ const ProfilEdit = ({
         {/** modifier l'email */}
         <Form.Input
           type="email"
-          label="Adresse mail"
+          label="Email utilisateur"
+          title="Email utilisateur"
           placeholder="albert.dupont@project-hub.fr"
+          autoComplete="current-user"
+          required
           value={email}
           onChange={(event) => {
             setProfilValue({ email: event.target.value });
@@ -49,7 +54,8 @@ const ProfilEdit = ({
         <Image size="small" src={`${avatar}`} />
         <Form.Input
           type="file"
-          label="Avatar"
+          label="Fichier avatar utilisateur"
+          title="Fichier avatar utilisateur"
           onChange={(event) => {
             uploadAvatar(event.target.files[0]);
           }}

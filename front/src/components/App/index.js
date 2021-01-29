@@ -10,6 +10,7 @@ import Home from 'src/containers/Home';
 import Profil from 'src/containers/Profil';
 import Project from 'src/containers/Project';
 import SignUp from 'src/containers/SignUp';
+import PasswordEdit from 'src/containers/PasswordEdit';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -97,6 +98,8 @@ const App = ({
           <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={() => (<Projects />)} />
           {/* Sprint 2 - Page mes projets' */}
           <ProtectedRoute exact path="/utilisateur/projets" isAllowed={logged} component={() => (<Projects />)} />
+          {/* Sprint 2 - Page mes projets' */}
+          <ProtectedRoute exact path="/utilisateur/motdepasse-edit" isAllowed={logged} component={() => (<PasswordEdit />)} />
 
           {/* MESSAGE POUR 404 ET REDIRECT VERS Accueil */}
           <Route

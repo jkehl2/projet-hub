@@ -12,6 +12,7 @@ import configGraphQl, {
   queryUserCreate,
   queryUserById,
   queryUserEdit,
+  queryUserEditPassword,
   queryUserDelete,
   signInConfig,
   signOutConfig,
@@ -19,8 +20,14 @@ import configGraphQl, {
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
-  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN,
-  updateUserStore, CONFIRM_DELETE_SUBMIT,
+  USER_CREATE,
+  USER_BY_ID,
+  USER_EDIT,
+  USER_EDIT_PASSWORD,
+  USER_DELETE,
+  USER_SIGNIN,
+  CONFIRM_DELETE_SUBMIT,
+  updateUserStore,
   USER_SIGNOUT,
   cleanUserStore,
   deleteUser,
@@ -37,6 +44,7 @@ import {
   appSignInClean,
   appSignUpClean,
   appEditProfilOff,
+  appProfilClean,
 } from 'src/store/actions/app';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
@@ -68,7 +76,7 @@ const userMiddleware = (store) => (next) => (action) => {
               delete userdata.avatar;
             }
             store.dispatch(updateUserStore(userdata));
-            // On redirecte vers la page d'accueil
+            // On redirecte vers la page précédente
             store.dispatch(goBack());
             const { user } = store.getState();
             store.dispatch(appMsgUpdate(`Bienvenue ${user.name}.`));
@@ -111,7 +119,7 @@ const userMiddleware = (store) => (next) => (action) => {
       return;
     }
     case USER_CREATE: {
-      // récupérer les données du store à envoyer à l'API
+      // 1 recup payload
       const {
         app: {
           signUp: {
@@ -148,9 +156,78 @@ const userMiddleware = (store) => (next) => (action) => {
           store.dispatch(appSignUpClean());
           store.dispatch(appLoadingOff());
         });
-    }
 
       return;
+    }
+
+    case USER_EDIT_PASSWORD: {
+      const { app: { profil: { password } } } = store.getState();
+
+      const data = JSON.stringify({
+        ...queryUserEditPassword,
+        variables: { password },
+      });
+
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+
+      axios(config)
+        .then(() => {
+          store.dispatch(push('/utilisateur/profil'));
+          store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appProfilClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
+      return;
+    }
+    case USER_EDIT: {
+      const { app: { profil } } = store.getState();
+      const variables = {
+        name: profil.name,
+        email: profil.name,
+      };
+      const data = JSON.stringify({
+        ...queryUserEdit,
+        ...variables,
+      });
+
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+
+      axios(config)
+        .then((response) => {
+          store.dispatch(appMsgUpdate('Votre profil utilisateur à été mis à jour.'));
+          store.dispatch(updateUserStore(response.data.data.editUserInfos));
+          store.dispatch(appEditProfilOff());
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
+      return;
+    }
+
+    case CONFIRM_DELETE_SUBMIT: {
+      return;
+    }
 
     default:
       next(action);

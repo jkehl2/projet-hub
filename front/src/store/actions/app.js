@@ -5,6 +5,7 @@
 
 // == [CLE-VALEURS] - ACTIONS MIDDLEWARE applicatif technique
 export const APP_REFRESH_PROFIL = 'APP_REFRESH_PROFIL';
+export const APP_CONFIRM_PASSWORD = 'APP_CONFIRM_PASSWORD';
 
 // == [CLE-VALEURS] - ACTIONS sur le store applicatif technique
 export const APP_LOADING_ON = 'APP_LOADING_ON';
@@ -40,6 +41,10 @@ export const APP_SIGNUP_CLEAN = 'APP_SIGNUP_CLEAN';
 // == USER MIDDLEWARE - ACTIONS CREATORS PART
 export const appRefreshProfil = () => ({
   type: APP_REFRESH_PROFIL,
+});
+
+export const appConfirmPassword = () => ({
+  type: APP_CONFIRM_PASSWORD,
 });
 
 // == ===================================
@@ -133,3 +138,8 @@ export const createUser = (payload) => ({
   type: USER_CREATE,
   payload,
 });
+export const appProfilClean = () => (
+  {
+    type: APP_PROFIL_CLEAN,
+  }
+);

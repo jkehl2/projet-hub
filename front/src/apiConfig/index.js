@@ -69,6 +69,18 @@ export const queryUserEdit = {
   }`,
 };
 
+// == QUERY - Modifier le mot de passe du profil utlisateur
+export const queryUserEditPassword = {
+  query: `mutation editUserPassword($password: String!) {
+    editUserPassword(password: $password) {
+      id
+      name
+      email
+      avatar
+    }
+  } `,
+};
+
 // == QUERY - Supprimer le profil utlisateur
 export const queryUserDelete = {
   query: ` mutation{
