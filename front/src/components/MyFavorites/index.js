@@ -2,8 +2,8 @@
 import React from 'react';
 
 // == IMPORTS CONTAINERS
-import List from 'src/containers/MyProjectsList';
-import SearchProjects from 'src/containers/MySearchProjects';
+import List from 'src/containers/MyFavoritesList';
+import SearchProjects from 'src/containers/MySearchFavorites';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -11,11 +11,11 @@ import {
 } from 'semantic-ui-react';
 
 // == STYLES
-import './myProjects.scss';
+import './MyFavorites.scss';
 
 // == Composant
-const MyProjects = () => (
-  <Container className="my-projects">
+const MyFavorites = () => (
+  <Container className="my-favorites">
     {/** Search Bar */}
     <SearchProjects />
     <List />
@@ -23,4 +23,4 @@ const MyProjects = () => (
 );
 
 // == Export
-export default MyProjects;
+export default MyFavorites;
