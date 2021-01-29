@@ -7,15 +7,12 @@
 import {
   APP_REFRESH_PROFIL, appUpdateProfil, USER_CREATION_VERIF,
   appMsgUpdate, appErrorUpdate, appErrorClean, appClean,
-  appLoadingOn,
+  appLoadingOn, APP_CONFIRM_PASSWORD,
 } from 'src/store/actions/app';
 
-import { createUser } from '../store/actions/user';
-  APP_REFRESH_PROFIL, APP_CONFIRM_PASSWORD, appUpdateProfil, appErrorUpdate,
-} from 'src/store/actions/app';
+import { userEditPassword, createUser } from 'src/store/actions/user';
 
 // == IMPORT ACTIONS SUR USER
-import { userEditPassword } from 'src/store/actions/user';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const userMiddleware = (store) => (next) => (action) => {
@@ -60,7 +57,7 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       return;
     }
-      
+
     case APP_CONFIRM_PASSWORD: {
       const { app: { profil: { password, passwordConfirm } } } = store.getState();
       if (password === passwordConfirm) {
