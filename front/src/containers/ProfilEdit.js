@@ -6,9 +6,9 @@ import { appUpdateProfil, appRefreshProfil, appEditProfilOff } from 'src/store/a
 import { editUser } from 'src/store/actions/user';
 
 const mapStateToProps = (state) => ({
-  name: state.user.name,
-  email: state.user.email,
-  avatar: state.user.avatar,
+  name: state.app.profil.name,
+  email: state.app.profil.email,
+  avatar: state.app.profil.avatar,
 });
 
 const mapDispatchToProps = (dispatch) => ({

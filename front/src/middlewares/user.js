@@ -174,24 +174,6 @@ const userMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
-
-      // axios(config)
-      //   .then((response) => {
-      //     store.dispatch(push('/utilisateur/profil'));
-      //     if (response.data.error) {
-      //       store.dispatch(appErrorUpdate(response.data.error));
-      //     }
-      //     else {
-      //       store.dispatch(appMsgUpdate('Votre mot de passe
-      // utlisateur a été modifié avec succès.'));
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     store.dispatch(appErrorUpdate(error.message));
-      //   })
-      //   .finally(() => {
-      //     store.dispatch(appLoadingOff());
-      //   });
       store.dispatch(appProfilClean());
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
@@ -199,10 +181,10 @@ const userMiddleware = (store) => (next) => (action) => {
       return;
     }
     case USER_EDIT: {
-      const { app: { profil } } = store.getState();
+      const { app: { profil: { name, email } } } = store.getState();
       const variables = {
-        name: profil.name,
-        email: profil.name,
+        name,
+        email,
       };
       const data = JSON.stringify({
         ...queryUserEdit,
@@ -213,8 +195,7 @@ const userMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-
-      axios(config)
+      connector(config, 'editUserInfos', store.dispatch)
         .then((response) => {
           store.dispatch(appMsgUpdate('Votre profil utilisateur à été mis à jour.'));
           store.dispatch(updateUserStore(response.data.data.editUserInfos));
