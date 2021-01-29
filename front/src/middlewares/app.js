@@ -116,14 +116,23 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(cleanProjectStore());
         return;
       }
-      const search = querystring.stringify(localite);
-      axios.get(`https://nominatim.openstreetmap.org/search?adressdetails=1&q=${search}&format=json&limit=1`)
+      const query = querystring.stringifyUrl({
+        url: 'https://nominatim.openstreetmap.org/search',
+        query: {
+          adressdetails: 1,
+          q: localite,
+          format: 'json',
+          limit: 1,
+        },
+      });
+
+      axios.get(query)
         .then((response) => {
           const geolocArr = response.data;
           if (geolocArr.length > 0) {
             const searchValue = {
-              long: geolocArr[0].lon,
-              lat: geolocArr[0].lat,
+              lat: parseFloat(geolocArr[0].lat),
+              long: parseFloat(geolocArr[0].lon),
               scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
               archived,
             };
