@@ -6,6 +6,7 @@
 // == URL SERVER BACK
 import CONFIG from './parameters.json';
 
+export const apiUrl = CONFIG.URL_BACK;
 // == CONFIGURATION CONNECTEUR AXIOS GRAPHQL - END POINT + ENTÊTE
 export default {
   method: 'post',
@@ -40,9 +41,17 @@ export const signOutConfig = {
 export const queryUserCreate = {
   query: `mutation createUser($name: String!, $email: String!,$password: String! ) {
     insertUser(name: $name, email: $email,password: $password) {
+      ... on User{
       id
       name
       email
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
     }
   }`,
 };
@@ -51,11 +60,19 @@ export const queryUserCreate = {
 export const queryUserById = {
   query: `query GetUserByID($id: ID!) {
     user(id: $id){
+      ... on User{
       id
       name
       email
       avatar
       activated
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
     }
   }`,
 };
@@ -64,10 +81,18 @@ export const queryUserById = {
 export const queryUserEdit = {
   query: `mutation editUser($name: String!, $email: String!) {
     editUserInfos(name: $name, email: $email) {
+      ... on User{
       id
       name
       email
       avatar
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
     }
   }`,
 };
@@ -76,10 +101,18 @@ export const queryUserEdit = {
 export const queryUserEditPassword = {
   query: `mutation editUserPassword($password: String!) {
     editUserPassword(password: $password) {
+      ... on User{
       id
       name
       email
       avatar
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
     }
   } `,
 };
@@ -88,8 +121,16 @@ export const queryUserEditPassword = {
 export const queryUserDelete = {
   query: ` mutation{
     deleteUser{
-      infos
-      errors
+      ... on User{
+        infos
+        errors
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
     }
   }   `,
 };
@@ -100,6 +141,7 @@ export const queryUserDelete = {
 export const queryProjectById = {
   query: `query GetProjectByID($id: ID!) {
     project(id: $id) {
+      ... on Project{
         id
         title
         description
@@ -120,6 +162,13 @@ export const queryProjectById = {
           description
           completed
         }
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
     }
   }`,
 };
@@ -127,7 +176,15 @@ export const queryProjectById = {
 export const queryDeleteProject = {
   query: `mutation deleteProject($id: ID!) {
     deleteProject(id: $id) {
-      msg
+      ... on Project{
+      
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
     }
   }`,
 };
@@ -135,19 +192,27 @@ export const queryDeleteProject = {
 export const queryGetProjectsByGeo = {
   query: `query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!, $archived: Boolean!) {
     projectsByGeo(lat: $lat, long: $long, scope: $scope, archived: $archived) {
-      id
-      title
-      image
-      location
-      created_at
-      expiration_date
-      archived
-      description
-      author{
+      ... on Project{
         id
-        name
-        email
-        avatar
+        title
+        image
+        location
+        created_at
+        expiration_date
+        archived
+        description
+        author{
+          id
+          name
+          email
+          avatar
+        }
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
       }
     }
   }`,

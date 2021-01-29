@@ -3,6 +3,12 @@
 import axios from 'axios';
 import { push } from 'connected-react-router';
 
+// graphql queries
+import configGraphQl, {
+  apiUrl,
+  queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject, queryGetProjectsByGeo,
+} from 'src/apiConfig/';
+
 // actions from store
 import {
   PROJECT_SEARCH,
@@ -26,14 +32,22 @@ import {
   appMsgClean,
   appErrorClean,
 } from 'src/store/actions/app';
-// graphql queries
-import configGraphQl, {
-  queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject, queryGetProjectsByGeo,
-} from 'src/apiConfig/';
 
 // == import utils to allow perimeter conversion
 import perimetersValue from 'src/utils/perimeters.json';
-import { useReducer } from 'react';
+
+axios.interceptors.request.use(
+  (config) => {
+    const { origin } = new URL(config.url);
+    const allowedOrigins = [apiUrl];
+    const token = localStorage.getItem('token');
+    if (allowedOrigins.includes(origin)) {
+      config.headers.authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
 // == PARSE DATE UTIL FUNCTION :
 const parseDate = (dateApiString) => (
