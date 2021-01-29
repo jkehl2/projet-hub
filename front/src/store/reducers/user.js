@@ -5,7 +5,7 @@
 
 // == IMPORT ACTIONS SUR STORE UTILISATEUR
 import {
-  USER_STORE_UPDATE, USER_STORE_CLEAN, CONFIRM_DELETE,
+  USER_STORE_UPDATE, USER_STORE_CLEAN, CONFIRM_DELETE, CREATE_NEW_USER_STORE,
 } from 'src/store/actions/user';
 
 // ==  INITIALE USER STATE
@@ -30,11 +30,7 @@ const reducer = (oldState = initialState, action = {}) => {
       return {
         ...initialState,
       };
-    case CONFIRM_DELETE:
-      return {
-        ...oldState,
-        ...action.payload,
-      };
+
     default:
       return { ...oldState };
   }

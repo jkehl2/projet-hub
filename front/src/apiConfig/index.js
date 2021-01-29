@@ -38,12 +38,11 @@ export const signOutConfig = {
 
 // == QUERY - Créer le profil utlisateur
 export const queryUserCreate = {
-  query: `mutation CreateNewUser($name: String!, $email: String!, $password: String!) {
-    insertUser(name: $name, email: $email, password: $password) {
+  query: `mutation createUser($name: String!, $email: String!,$password: String! ) {
+    insertUser(name: $name, email: $email,password: $password) {
       id
       name
       email
-      activated
     }
   }`,
 };

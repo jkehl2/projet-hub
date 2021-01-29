@@ -42,6 +42,7 @@ import {
   appMsgClean,
   appErrorClean,
   appSignInClean,
+  appSignUpClean,
   appEditProfilOff,
   appProfilClean,
 } from 'src/store/actions/app';
@@ -117,10 +118,18 @@ const userMiddleware = (store) => (next) => (action) => {
       return;
     }
     case USER_CREATE: {
-      const { name, email, password } = action.payload;
+      // 1 recup payload
+      const {
+        app: {
+          signUp: {
+            email, password, name,
+          },
+        },
+      } = store.getState();
+
       const data = JSON.stringify({
         ...queryUserCreate,
-        variables: { name, email, password },
+        variables: { email, password, name },
       });
 
       const config = {
@@ -128,20 +137,28 @@ const userMiddleware = (store) => (next) => (action) => {
         data,
       };
 
-      console.log('loader on');
       axios(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          // on envoie les données du store app à user
+          // on change le logged à true
+          store.dispatch(updateUserStore({ ...response.data.data.insertUser, logged: true }));
+          // on redirige vers la page profil
+          store.dispatch(push('/utilisateur/profil'));
         })
         .catch((error) => {
-          console.log(error);
+          // en cas d'erreur remontée de l'api, renvoi d'un msg erreur
+          store.dispatch(appErrorUpdate(error));
         })
         .finally(() => {
-          console.log('loader off');
+          // on clean le store app
+          store.dispatch(appErrorClean());
+          store.dispatch(appSignUpClean());
+          store.dispatch(appLoadingOff());
         });
 
       return;
     }
+
     case USER_EDIT_PASSWORD: {
       const { app: { profil: { password } } } = store.getState();
 
@@ -176,31 +193,6 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       store.dispatch(appLoadingOn());
-      return;
-    }
-    case USER_BY_ID: {
-      const { id } = action.payload;
-      const data = JSON.stringify({
-        ...queryUserById,
-        variables: { id },
-      });
-
-      const config = {
-        ...configGraphQl,
-        data,
-      };
-
-      console.log('loader on');
-      axios(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          console.log('loader off');
-        });
       return;
     }
     case USER_EDIT: {
@@ -239,55 +231,9 @@ const userMiddleware = (store) => (next) => (action) => {
     }
 
     case CONFIRM_DELETE_SUBMIT: {
-      // 1 recup payload
-      const {
-        user: {
-          confirmation,
-        },
-      } = store.getState();
-      console.log(confirmation);
-
-      // 2 verif si le payload corres à nos attentes
-      if (confirmation.length > 0 && confirmation !== 'CONFIRMER') {
-        // 4 si corres neg error message
-        store.dispatch(appMsgUpdate('Veuillez saisir de nouveau'));
-      }
-      else if (confirmation === 'CONFIRMER') {
-        // 3 si corrs dispatch other action
-        store.dispatch(appLoadingOn());
-        store.dispatch(deleteUser());
-        store.dispatch(appMsgUpdate('Vous avez confirmé la suppression de votre profil.'));
-      }
       return;
     }
-    case USER_DELETE: {
-      // Pas besoin de récupérer l'id du store pour la requête
 
-      const data = JSON.stringify({
-        ...queryUserDelete,
-      });
-
-      const config = {
-        ...configGraphQl,
-        data,
-      };
-
-      axios(config)
-        .then((response) => {
-          store.dispatch(appMsgUpdate('Nous sommes désolés de vous voir partir, à bientôt ! '));
-          store.dispatch(cleanUserStore());
-        })
-        .catch((error) => {
-          store.dispatch(appErrorUpdate(error.message));
-        })
-        .finally(() => {
-          store.dispatch(appLoadingOff());
-        });
-
-      store.dispatch(appMsgClean());
-      store.dispatch(appErrorClean());
-      return;
-    }
     default:
       next(action);
       break;

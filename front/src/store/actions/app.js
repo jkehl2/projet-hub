@@ -31,6 +31,12 @@ export const APP_ERROR_CLEAN = 'APP_ERROR_CLEAN';
 export const APP_MSG_UPDATE = 'APP_MSG_UPDATE';
 export const APP_MSG_CLEAN = 'APP_MSG_CLEAN';
 
+// == ACTIONS SIGN UP
+export const APP_SIGN_UP_UPDATE = 'APP_SIGN_UP_UPDATE';
+export const USER_CREATION_VERIF = 'USER_CREATION_VERIF';
+export const USER_CREATE = 'USER_CREATE';
+export const APP_SIGNUP_CLEAN = 'APP_SIGNUP_CLEAN';
+
 // == ===================================
 // == USER MIDDLEWARE - ACTIONS CREATORS PART
 export const appRefreshProfil = () => ({
@@ -69,6 +75,9 @@ export const appSignInClean = () => ({
   type: APP_SIGNIN_CLEAN,
 });
 
+export const appSignUpClean = () => ({
+  type: APP_SIGNUP_CLEAN,
+});
 export const appErrorUpdate = (error) => ({
   type: APP_ERROR_UPDATE,
   payload: {
@@ -114,6 +123,21 @@ export const appEditProfilOff = () => (
   }
 );
 
+// == ===================================
+// == USER SIGN UP - ACTIONS CREATORS PART
+export const appSetUpSignUp = (payload) => ({
+  type: APP_SIGN_UP_UPDATE,
+  payload,
+});
+
+export const appCreateUserVerif = () => ({
+  type: USER_CREATION_VERIF,
+});
+
+export const createUser = (payload) => ({
+  type: USER_CREATE,
+  payload,
+});
 export const appProfilClean = () => (
   {
     type: APP_PROFIL_CLEAN,
