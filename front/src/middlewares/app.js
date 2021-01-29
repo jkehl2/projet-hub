@@ -18,14 +18,14 @@ import {
   appLoadingOn,
   appLoadingOff,
   APP_CONFIRM_PASSWORD,
-  APP_PROJECT_CREATE_VERIF, 
-  appClean,
+  APP_PROJECT_CREATE_VERIF,
 } from 'src/store/actions/app';
 
 import {
   PROJECT_SEARCH,
   getProjectByGeo,
   cleanProjectStore,
+  sendProjectApi,
 } from 'src/store/actions/project';
 
 import {
@@ -35,7 +35,6 @@ import {
 
 // == import utils to allow perimeter conversion
 import perimetersValue from 'src/utils/perimeters.json';
-
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const userMiddleware = (store) => (next) => (action) => {
@@ -89,7 +88,6 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas égale au nouveau mot de passe. Veuillez ressaisir votre confirmation de mot de passe.'));
       }
       return; }
-<<<<<<< HEAD
     case PROJECT_SEARCH: {
       // gathering values needed for geocoding
       const {
@@ -135,17 +133,21 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-=======
     case APP_PROJECT_CREATE_VERIF: {
-      const { app: {createProject: { title, date, description, location, perimeter } } } = store.getState();
-    if (title.length === 0 && date.length === 0) {
-      store.dispatch(appMsgUpdate('Veuillez remplir les champs titre et date'))
-    }
-    else {
-      store.dispatch(sendProjectApi());
-    }
-  return; }
->>>>>>> 1a69d00efd94ca75520774f055373929af7a7ebd
+      const {
+        app: {
+          createProject: {
+            title, date, description, location, perimeter,
+          },
+        },
+      } = store.getState();
+      if (title.length === 0 && date.length === 0) {
+        store.dispatch(appMsgUpdate('Veuillez remplir les champs titre et date'));
+      }
+      else {
+        store.dispatch(sendProjectApi());
+      }
+      return; }
     default:
       next(action);
       break;

@@ -81,7 +81,7 @@ const userMiddleware = (store) => (next) => (action) => {
             localStorage.setItem('token', response.data.token);
             // Sinon on récupère les infos utlisateur
             const userdata = {
-              ...response.data,
+              ...response.data.user,
               logged: true,
             };
             // Si null dans avatar alors on ne garde pas ce paramètre pour la maj du store
