@@ -12,6 +12,7 @@ import {
 import './profil.scss';
 
 // == Composant Profil mode consultation
+
 const Profil = ({
   name,
   email,

@@ -18,6 +18,7 @@ import {
   APP_PROFIL_CLEAN,
   APP_SIGNUP_CLEAN,
   APP_SIGN_UP_UPDATE,
+  APP_PROJECT_CREATE,
 } from 'src/store/actions/app';
 
 // ==  INITIALE SUB APP STATE - error
@@ -60,6 +61,15 @@ export const profilInitialState = {
   passwordConfirm: '',
 };
 
+// ==  INITIALE SUB APP STATE - createProject
+export const createProjectInitialState = {
+  title: '',
+  date: '',
+  description: '',
+  location: '',
+  perimeter: 0,
+};
+
 // ==  INITIALE STATE des paramètres applicatifs techniques
 export const initialState = {
   loading: false,
@@ -70,6 +80,7 @@ export const initialState = {
   signIn: { ...signInInitialState },
   search: { ...searchInitialState },
   signUp: { ...signUpInitialState },
+  createProject: { ...createProjectInitialState },
 };
 
 // == USER REDUCER - Gestion du store des paramètres applicatifs techniques
@@ -174,9 +185,16 @@ const reducer = (oldState = initialState, action = {}) => {
           ...profilInitialState,
         },
       };
+    case APP_PROJECT_CREATE:
+      return {
+        ...oldState,
+        createProject: {
+          ...oldState.createProject,
+          ...action.payload,
+        },
+      };
     default:
       return { ...oldState };
   }
 };
-
 export default reducer;
