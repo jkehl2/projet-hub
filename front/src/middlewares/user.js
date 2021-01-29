@@ -11,25 +11,23 @@ import { push, goBack } from 'connected-react-router';
 import configGraphQl, {
   apiUrl,
   queryUserCreate,
-  queryUserById,
   queryUserEdit,
   queryUserEditPassword,
   queryUserDelete,
   signInConfig,
-  signOutConfig,
 } from 'src/apiConfig/';
+
+import connector from 'src/apiConfig/connector';
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
   USER_CREATE,
-  USER_BY_ID,
   USER_EDIT,
   USER_EDIT_PASSWORD,
   USER_DELETE,
   USER_SIGNIN,
   CONFIRM_DELETE_SUBMIT,
   updateUserStore,
-  USER_SIGNOUT,
   cleanUserStore,
   deleteUser,
 } from 'src/store/actions/user';
@@ -80,7 +78,6 @@ const userMiddleware = (store) => (next) => (action) => {
             store.dispatch(appErrorUpdate(response.data.error));
           }
           else {
-            console.log(response);
             localStorage.setItem('token', response.data.token);
             // Sinon on récupère les infos utlisateur
             const userdata = {
@@ -107,29 +104,6 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       store.dispatch(appSignInClean());
-      store.dispatch(appLoadingOn());
-      return;
-    }
-
-    case USER_SIGNOUT: {
-      const config = {
-        ...signOutConfig,
-      };
-      axios(config)
-        .then((response) => {
-          if (response.data.error) {
-            store.dispatch(appErrorUpdate(response.data.error));
-          }
-          else {
-            store.dispatch(cleanUserStore());
-          }
-        })
-        .catch((error) => {
-          store.dispatch(appErrorUpdate(error.message));
-        })
-        .finally(() => {
-          store.dispatch(appLoadingOff());
-        });
       store.dispatch(appLoadingOn());
       return;
     }
@@ -189,15 +163,10 @@ const userMiddleware = (store) => (next) => (action) => {
 
       };
 
-      axios(config)
+      connector(config, 'editUserPassword', store.dispatch)
         .then((response) => {
           store.dispatch(push('/utilisateur/profil'));
-          if (response.data.error) {
-            store.dispatch(appErrorUpdate(response.data.error));
-          }
-          else {
-            store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
-          }
+          store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -205,6 +174,24 @@ const userMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
+
+      // axios(config)
+      //   .then((response) => {
+      //     store.dispatch(push('/utilisateur/profil'));
+      //     if (response.data.error) {
+      //       store.dispatch(appErrorUpdate(response.data.error));
+      //     }
+      //     else {
+      //       store.dispatch(appMsgUpdate('Votre mot de passe
+      // utlisateur a été modifié avec succès.'));
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     store.dispatch(appErrorUpdate(error.message));
+      //   })
+      //   .finally(() => {
+      //     store.dispatch(appLoadingOff());
+      //   });
       store.dispatch(appProfilClean());
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
@@ -253,7 +240,6 @@ const userMiddleware = (store) => (next) => (action) => {
           confirmation,
         },
       } = store.getState();
-      console.log(confirmation);
 
       // 2 verif si le payload corres à nos attentes
       if (confirmation.length > 0 && confirmation !== 'CONFIRMER') {

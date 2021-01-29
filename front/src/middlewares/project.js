@@ -11,14 +11,11 @@ import configGraphQl, {
 
 // actions from store
 import {
-  PROJECT_SEARCH,
   PROJECT_CREATE,
   PROJECT_EDIT,
   PROJECT_DELETE,
   GET_PROJECT_BY_ID,
   GET_PROJECT_BY_GEO,
-  getProjectByGeo,
-  cleanProjectStore,
   updateProjectStore,
   cleanProject,
   cleanProjects,
@@ -33,9 +30,6 @@ import {
   appMsgClean,
   appErrorClean,
 } from 'src/store/actions/app';
-
-// == import utils to allow perimeter conversion
-import perimetersValue from 'src/utils/perimeters.json';
 
 axios.interceptors.request.use(
   (config) => {
@@ -58,56 +52,6 @@ const parseDate = (dateApiString) => (
 // mw
 const projectMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
-    case PROJECT_SEARCH: {
-      // gathering values needed for geocoding
-      const {
-        app: {
-          search: {
-            localite,
-            perimeter,
-            archived,
-          },
-        },
-      } = store.getState();
-
-      if (localite.trim() === '') {
-        store.dispatch(appErrorClean());
-        store.dispatch(appMsgClean());
-        store.dispatch(cleanProjectStore());
-        return;
-      }
-      const params = {
-        access_key: 'dc7156f13f34218aa5540fe1ef67fb52',
-        query: localite,
-        country: 'FR',
-      };
-      axios.get('https://api.positionstack.com/v1/forward', { params })
-        .then((response) => {
-          const geolocArr = response.data.data;
-          if (geolocArr.length > 0) {
-            const searchValue = {
-              long: geolocArr[0].longitude,
-              lat: geolocArr[0].latitude,
-              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
-              archived,
-            };
-            store.dispatch(getProjectByGeo(searchValue));
-          }
-          else {
-            store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
-          }
-        })
-        .catch((error) => {
-          store.dispatch(appErrorUpdate(error.message));
-          store.dispatch(appLoadingOff());
-        });
-      store.dispatch(appErrorClean());
-      store.dispatch(appMsgClean());
-      store.dispatch(cleanProjectStore());
-      store.dispatch(appLoadingOn());
-      return;
-    }
-
     case GET_PROJECT_BY_GEO: {
       const data = JSON.stringify({
         ...queryGetProjectsByGeo,

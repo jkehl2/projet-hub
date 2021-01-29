@@ -27,7 +27,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   cleanAppParams: () => {
     dispatch(appMsgClean());
-    dispatch(appErrorClean());
     dispatch(appSignInClean());
   },
   cleanSignIn: () => {
