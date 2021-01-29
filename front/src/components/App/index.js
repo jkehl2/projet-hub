@@ -85,7 +85,6 @@ const App = ({
           <Route exact path="/equipe">
             <WhoAreWe />
           </Route>
-
           {/* Routes ateignable uniquement si utilisateur logged */}
           {/* Sprint 1 - Page de confirmation par mot de passe */}
           <ProtectedRoute exact path="/utilisateur/confirm" isAllowed={logged} component={() => (<Confirmation />)} />
@@ -93,7 +92,7 @@ const App = ({
           <ProtectedRoute exact path="/utilisateur/profil" isAllowed={logged} component={() => (<Profil />)} />
 
           {/* Sprint 2 - Page Création de projet' */}
-          <ProtectedRoute exact path="/utilisateur/create" isAllowed={logged} component={() => (<CreateProject />)} />
+          { <ProtectedRoute exact path="/utilisateur/create" isAllowed={logged} component={() => (<CreateProject />)} /> }
           {/* Sprint 2 - Page mes favoris' */}
           <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={() => (<Projects />)} />
           {/* Sprint 2 - Page mes projets' */}

@@ -5,12 +5,12 @@
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
-  APP_REFRESH_PROFIL, appUpdateProfil, USER_CREATION_VERIF,
+  APP_REFRESH_PROFIL, appUpdateProfil, USER_CREATION_VERIF, APP_CONFIRM_PASSWORD,
   appMsgUpdate, appErrorUpdate, appErrorClean, appClean,
-  appLoadingOn, APP_CONFIRM_PASSWORD,
+  appLoadingOn,
 } from 'src/store/actions/app';
 
-import { userEditPassword, createUser } from 'src/store/actions/user';
+import { createUser, userEditPassword } from '../store/actions/user';
 
 // == IMPORT ACTIONS SUR USER
 
@@ -57,7 +57,6 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       return;
     }
-
     case APP_CONFIRM_PASSWORD: {
       const { app: { profil: { password, passwordConfirm } } } = store.getState();
       if (password === passwordConfirm) {
