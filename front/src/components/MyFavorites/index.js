@@ -11,7 +11,7 @@ import {
 } from 'semantic-ui-react';
 
 // == STYLES
-import './MyFavorites.scss';
+import './myFavorites.scss';
 
 // == Composant
 const MyFavorites = () => (
