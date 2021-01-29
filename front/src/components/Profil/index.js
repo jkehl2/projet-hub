@@ -9,11 +9,7 @@ import ProfilEdit from 'src/containers/ProfilEdit';
 // == IMPORTS COMPOSANTS
 import { Container } from 'semantic-ui-react';
 
-// == STYLES
-import './profil.scss';
-
-// == Composant Profil mode consultation
-
+// == Composant Profil
 const Profil = ({ isEditMode }) => (
   <Container className="profil">
     {isEditMode ? <ProfilEdit /> : <ProfilView />}

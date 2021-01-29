@@ -26,10 +26,8 @@ import {
   USER_EDIT_PASSWORD,
   USER_DELETE,
   USER_SIGNIN,
-  CONFIRM_DELETE_SUBMIT,
   updateUserStore,
   cleanUserStore,
-  deleteUser,
 } from 'src/store/actions/user';
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
@@ -116,17 +114,14 @@ const userMiddleware = (store) => (next) => (action) => {
           },
         },
       } = store.getState();
-
       const data = JSON.stringify({
         ...queryUserCreate,
         variables: { email, password, name },
       });
-
       const config = {
         ...configGraphQl,
         data,
       };
-
       axios(config)
         .then((response) => {
           // on envoie les données du store app à user
@@ -145,26 +140,21 @@ const userMiddleware = (store) => (next) => (action) => {
           store.dispatch(appSignUpClean());
           store.dispatch(appLoadingOff());
         });
-
       return;
     }
 
     case USER_EDIT_PASSWORD: {
       const { app: { profil: { password } } } = store.getState();
-
       const data = JSON.stringify({
         ...queryUserEditPassword,
         variables: { password },
       });
-
       const config = {
         ...configGraphQl,
         data,
-
       };
-
       connector(config, 'editUserPassword', store.dispatch)
-        .then((response) => {
+        .then(() => {
           store.dispatch(push('/utilisateur/profil'));
           store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
         })
@@ -209,45 +199,19 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-
-    case CONFIRM_DELETE_SUBMIT: {
-      // 1 recup payload
-      const {
-        user: {
-          confirmation,
-        },
-      } = store.getState();
-
-      // 2 verif si le payload corres à nos attentes
-      if (confirmation.length > 0 && confirmation !== 'CONFIRMER') {
-        // 4 si corres neg error message
-        store.dispatch(appMsgUpdate('Veuillez saisir de nouveau'));
-      }
-      else if (confirmation === 'CONFIRMER') {
-        // 3 si corrs dispatch other action
-        store.dispatch(appLoadingOn());
-        store.dispatch(deleteUser());
-        store.dispatch(appMsgUpdate('Vous avez confirmé la suppression de votre profil.'));
-      }
-      return;
-    }
-
     case USER_DELETE: {
-      // Pas besoin de récupérer l'id du store pour la requête
-
       const data = JSON.stringify({
         ...queryUserDelete,
       });
-
       const config = {
         ...configGraphQl,
         data,
       };
-
-      axios(config)
-        .then((response) => {
-          store.dispatch(appMsgUpdate('Nous sommes désolés de vous voir partir, à bientôt ! '));
+      connector(config, 'deleteUser', store.dispatch)
+        .then(() => {
           store.dispatch(cleanUserStore());
+          store.dispatch(push('/'));
+          store.dispatch(appMsgUpdate('Nous sommes désolés de vous voir partir, à bientôt ! '));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -255,7 +219,7 @@ const userMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
-
+      store.dispatch(appLoadingOn());
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       return;

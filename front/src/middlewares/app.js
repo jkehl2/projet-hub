@@ -9,16 +9,18 @@ import querystring from 'query-string';
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
   APP_REFRESH_PROFIL,
-  appUpdateProfil,
+  APP_CONFIRM_PASSWORD,
+  APP_CONFIRM_DELETE,
+  APP_PROJECT_CREATE_VERIF,
   USER_CREATION_VERIF,
+  appUpdateProfil,
   appMsgUpdate,
   appErrorUpdate,
   appErrorClean,
   appMsgClean,
   appLoadingOn,
   appLoadingOff,
-  APP_CONFIRM_PASSWORD,
-  APP_PROJECT_CREATE_VERIF,
+
 } from 'src/store/actions/app';
 
 import {
@@ -31,6 +33,7 @@ import {
 import {
   userEditPassword,
   createUser,
+  deleteUser,
 } from 'src/store/actions/user';
 
 // == import utils to allow perimeter conversion
@@ -80,6 +83,15 @@ const userMiddleware = (store) => (next) => (action) => {
       return;
     }
     case APP_CONFIRM_PASSWORD: {
+      const { app: { profil: { deleteConfirm } } } = store.getState();
+      if (deleteConfirm === 'CONFIRMER') {
+        store.dispatch(deleteUser());
+      }
+      else {
+        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour supprimer définitivement votre compte utlisateur."));
+      }
+      return; }
+    case APP_CONFIRM_DELETE: {
       const { app: { profil: { password, passwordConfirm } } } = store.getState();
       if (password === passwordConfirm) {
         store.dispatch(userEditPassword());
@@ -89,7 +101,6 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       return; }
     case PROJECT_SEARCH: {
-      // gathering values needed for geocoding
       const {
         app: {
           search: {
@@ -99,7 +110,6 @@ const userMiddleware = (store) => (next) => (action) => {
           },
         },
       } = store.getState();
-
       if (localite.trim() === '') {
         store.dispatch(appErrorClean());
         store.dispatch(appMsgClean());

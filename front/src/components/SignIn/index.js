@@ -80,11 +80,12 @@ const SignIn = (
         {/** bouton connexion */}
         <Segment basic textAlign="right">
           <Button.Group compact>
-            <Form.Button type="submit" onClick={handleSubmit}>
+            <Form.Button positive type="submit" onClick={handleSubmit}>
               Connexion
             </Form.Button>
+            <Button.Or />
             {/** bouton inscription */}
-            <Form.Button type="button" onClick={redirectSignUp}>
+            <Form.Button color="blue" type="button" onClick={redirectSignUp}>
               Inscription
             </Form.Button>
           </Button.Group>

@@ -56,7 +56,11 @@ export const searchInitialState = {
 
 // ==  INITIALE SUB APP STATE - profil
 export const profilInitialState = {
+  name: '',
+  email: '',
+  avatar: 'https://react.semantic-ui.com/images/avatar/large/matt.jpg',
   isEditMode: false,
+  deleteConfirm: '',
   password: '',
   passwordConfirm: '',
 };

@@ -22,7 +22,8 @@ const mapDispatchToProps = (dispatch) => ({
     event.preventDefault();
     dispatch(appConfirmPassword());
   },
-  abortConfirmPassword: () => {
+  abortConfirmPassword: (event) => {
+    event.preventDefault();
     dispatch(appProfilClean());
     dispatch(push('/utilisateur/profil'));
   },

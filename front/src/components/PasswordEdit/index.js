@@ -74,9 +74,9 @@ const PasswordEdit = ({
             <Button positive type="submit">Valider</Button>
             <Button.Or />
             {/* bouton annuler */}
-            <Button onClick={() => {
-              abortConfirmPassword();
-            }}
+            <Button
+              type="button"
+              onClick={abortConfirmPassword}
             >Annuler
             </Button>
           </Button.Group>

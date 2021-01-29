@@ -2,18 +2,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+// == IMPORTS CONTAINERS
+
 // == IMPORTS COMPOSANTS
 import {
   Button, Form, Header, Item, Modal, Segment,
 } from 'semantic-ui-react';
-// == IMPORTS CONTAINERS
+
+// == IMPORT STYLES
+import './profilView.scss';
 
 // == Composant Profil mode consultation
 const ProfilView = ({
   name,
   email,
   avatar,
-  confirmation,
+  deleteConfirm,
   setConfirmation,
   deleteProfil,
   switchToEditProFile,
@@ -35,12 +39,21 @@ const ProfilView = ({
               {/* email */}
               <a href={`mailto:${email}`}>{`${email}`}</a>
             </Item.Meta>
+            <Item.Description>
+              <Button.Group>
+                {/* bouton mes projets */}
+                <Button basic color="green">Mes projets</Button>
+                {/* bouton mes favoris */}
+                <Button basic color="green">Mes favoris</Button>
+              </Button.Group>
+            </Item.Description>
           </Item.Content>
         </Item>
       </Item.Group>
       <Button.Group vertical>
         {/* bouton modifer */}
         <Button
+          basic
           color="blue"
           onClick={() => {
             switchToEditProFile();
@@ -48,33 +61,47 @@ const ProfilView = ({
         >Modifier mes informations personnelles
         </Button>
         {/* Bouton Modification du mot de passe */}
-        <Button color="grey" onClick={redirectToPasswordEdit}>Modification du mot de passe</Button>
-        {/* bouton mes projets */}
-        <Button color="grey">Mes projets</Button>
-        {/* bouton mes favoris */}
-        <Button color="grey">Mes favoris</Button>
+        <Button
+          className="profil-view--marged"
+          basic
+          color="orange"
+          onClick={redirectToPasswordEdit}
+        >Modification du mot de passe
+        </Button>
+
         {/* bouton mes supprimer le compte */}
         <Modal
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
           open={open}
-          trigger={<Button negative>Supprimer le profil</Button>}
+          trigger={<Button className="profil-view--marged" negative>Supprimer le profil</Button>}
         >
-          <Modal.Header>Veuillez saisir CONFIRMER pour supprimer le profil</Modal.Header>
+          <Modal.Header>Confirmation suppression compte utilisateur</Modal.Header>
           <Modal.Content>
-            <Form>
+            <Form onSubmit={deleteProfil}>
               <Form.Input
                 type="text"
-                value={confirmation}
+                label="Saisissez CONFIRMER pour supprimer définitivement votre compte utilisateur."
+                title="Saisissez CONFIRMER pour supprimer définitivement votre compte utilisateur."
+                placeholder=""
+                required
+                value={deleteConfirm}
                 onChange={(event) => {
-                  setConfirmation({ confirmation: event.target.value });
+                  setConfirmation({ deleteConfirm: event.target.value });
                 }}
               />
               <Button.Group>
-                <Form.Button type="button" onClick={deleteProfil}>
-                  Confirmer la suppression du profil
-                </Form.Button>
-                <Button negative>Annuler</Button>
+                <Form.Button negative type="submit">Confirmer</Form.Button>
+                <Button.Or />
+                <Button
+                  type="button"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setOpen(false);
+                    setConfirmation({ deleteConfirm: '' });
+                  }}
+                >Annuler
+                </Button>
               </Button.Group>
             </Form>
           </Modal.Content>
@@ -88,7 +115,7 @@ ProfilView.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-  confirmation: PropTypes.string.isRequired,
+  deleteConfirm: PropTypes.string.isRequired,
   setConfirmation: PropTypes.func.isRequired,
   deleteProfil: PropTypes.func.isRequired,
   switchToEditProFile: PropTypes.func.isRequired,
