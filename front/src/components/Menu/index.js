@@ -34,8 +34,8 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
     <MenuUi.Menu position="left">
       <Link className="item" to="/">
         <Grid padded="horizontally">
-          <Grid.Row only="computer"><Header icon="hubspot" size="huge" content="Local-hub" inverted /></Grid.Row>
-          <Grid.Row only="mobile"><Header icon="hubspot" size="small" content="Local-hub" inverted /></Grid.Row>
+          <Grid.Row only="computer"><Header icon="hubspot" size="huge" content="Local-Hub" inverted /></Grid.Row>
+          <Grid.Row only="mobile"><Header icon="hubspot" size="small" content="Local-Hub" inverted /></Grid.Row>
         </Grid>
       </Link>
     </MenuUi.Menu>

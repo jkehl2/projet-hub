@@ -11,7 +11,7 @@ import {
 // == Composant
 const WhoAreWe = () => (
   <Container>
-    <Header as="h1" content="La fine équipe Local-HUB" textAlign="center" dividing subheader="Une équipe de choc !" />
+    <Header as="h1" content="La fine équipe Local-Hub" textAlign="center" dividing subheader="Une équipe de choc !" />
     <Segment padded="very">
       <Grid verticalAlign="middle" textAlign="center" stackable columns="equal">
         <Grid.Row>
