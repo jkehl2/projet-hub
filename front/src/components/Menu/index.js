@@ -50,7 +50,6 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
           <Link className="item" role="option" to="/projets">Rechercher</Link>
           {logged && (
           <>
-            <Dropdown.Divider />
             <Link className="item" role="option" to="/utilisateur/create">Créer un projet</Link>
             <Dropdown.Divider />
             <Link className="item" role="option" to="/utilisateur/profil">Profil</Link>
