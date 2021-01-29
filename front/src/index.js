@@ -8,8 +8,9 @@ import configureStore, { history } from 'src/store';
 
 import { render } from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
+import { loadState } from 'src/store/localStorage';
 
-const store = configureStore();
+const store = configureStore(loadState());
 
 const rootReactElement = (
   <Provider store={store}>
