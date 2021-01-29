@@ -37,6 +37,9 @@ export const USER_CREATION_VERIF = 'USER_CREATION_VERIF';
 export const USER_CREATE = 'USER_CREATE';
 export const APP_SIGNUP_CLEAN = 'APP_SIGNUP_CLEAN';
 
+// == ACTIONS PROJECT CREATION
+export const APP_PROJECT_CREATE = 'APP_PROJECT_CREATE';
+export const APP_PROJECT_CREATE_VERIF = 'APP_PROJECT_CREATE_VERIF';
 // == ===================================
 // == USER MIDDLEWARE - ACTIONS CREATORS PART
 export const appRefreshProfil = () => ({
@@ -143,3 +146,10 @@ export const appProfilClean = () => (
     type: APP_PROFIL_CLEAN,
   }
 );
+export const appCreateProject = (payload) => ({
+  type: APP_PROJECT_CREATE,
+  payload,
+});
+export const appSubmitCreatedProject = () => ({
+  type: APP_PROJECT_CREATE_VERIF,
+});

@@ -23,7 +23,6 @@ setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
       {/* Titre */}
       <Header as="h1">Créer un projet</Header>
       <Form>
-        {/*change order*/}
         <Form.Input
           type="text"
           label="nom du projet"
@@ -39,8 +38,9 @@ setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
           type="text"
           label="date d'expiration"
           title="date d'expiration"
-          value={date}
           placeholder="date"
+          required
+          value={date}
           onChange={(event) => {
             setCreateProject({ date: event.target.value });
           }}
@@ -48,8 +48,10 @@ setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
         <Form.TextArea
           type="text"
           label="description"
-          value={description}
+          title="description"
           placeholder="description"
+          required
+          value={description}
           onChange={(event) => {
             setCreateProject({ description: event.target.value });
           }}
@@ -57,8 +59,10 @@ setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
         <Form.Input
           type="text"
           label="localité"
-          value={location}
+          title="localité"
           placeholder="localité"
+          required
+          value={location}
           onChange={(event) => {
             setCreateProject({ localité: event.target.value });
           }}

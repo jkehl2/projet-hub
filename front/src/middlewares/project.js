@@ -16,6 +16,7 @@ import {
   updateProjectStore,
   cleanProject,
   cleanProjects,
+  SEND_PROJECT,
 } from 'src/store/actions/project';
 
 import {
@@ -267,6 +268,12 @@ const projectMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
+    case SEND_PROJECT: {
+      // call API geocoding => generate long & lat of location
+      // once we have those = create new act that will send actualised data to our API
+      // once API send succes msg, redirect to needs page
+      return;}
+
     default:
       next(action);
       break;

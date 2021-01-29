@@ -6,7 +6,7 @@
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
   APP_REFRESH_PROFIL, appUpdateProfil, USER_CREATION_VERIF, APP_CONFIRM_PASSWORD,
-  appMsgUpdate, appErrorUpdate, appErrorClean, appClean,
+  APP_PROJECT_CREATE_VERIF, appMsgUpdate, appErrorUpdate, appErrorClean, appClean,
   appLoadingOn,
 } from 'src/store/actions/app';
 
@@ -66,6 +66,15 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas égale au nouveau mot de passe. Veuillez ressaisir votre confirmation de mot de passe.'));
       }
       return; }
+    case APP_PROJECT_CREATE_VERIF: {
+      const { app: {createProject: { title, date, description, location, perimeter } } } = store.getState();
+    if (title.length === 0 && date.length === 0) {
+      store.dispatch(appMsgUpdate('Veuillez remplir les champs titre et date'))
+    }
+    else {
+      store.dispatch(sendProjectApi());
+    }
+  return; }
     default:
       next(action);
       break;

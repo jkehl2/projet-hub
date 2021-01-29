@@ -1,11 +1,18 @@
+// == Import npm
+import React from 'react';
+import PropTypes from 'prop-types';
 
+// == IMPORTS COMPOSANTS
+import {
+  Button, Container, Header, Item, Segment, Form, Grid, Label,
+} from 'semantic-ui-react';
 
+// == IMPORTS CONTAINERS
 
+// == STYLES
+import './createProject.scss';
 
-
-
-
-
+// == Composant
 
 const CreateNeeds = ({ 
   
@@ -47,3 +54,9 @@ const CreateNeeds = ({
           </Grid.Row>
         </Grid>
 )
+CreateNeeds.propTypes = {
+  props: PropTypes.object.isRequired,
+};
+
+// == Export
+export default CreateNeeds;
