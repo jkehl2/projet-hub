@@ -98,7 +98,6 @@ const userMiddleware = (store) => (next) => (action) => {
       const config = {
         ...signOutConfig,
       };
-
       axios(config)
         .then((response) => {
           if (response.data.error) {
@@ -154,12 +153,18 @@ const userMiddleware = (store) => (next) => (action) => {
       const config = {
         ...configGraphQl,
         data,
+
       };
 
       axios(config)
-        .then(() => {
+        .then((response) => {
           store.dispatch(push('/utilisateur/profil'));
-          store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
+          if (response.data.error) {
+            store.dispatch(appErrorUpdate(response.data.error));
+          }
+          else {
+            store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
+          }
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
