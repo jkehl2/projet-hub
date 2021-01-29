@@ -10,7 +10,7 @@ import {
   appLoadingOn,
 } from 'src/store/actions/app';
 
-import { updateUserStore, createUser } from '../store/actions/user';
+import { createUser } from '../store/actions/user';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const userMiddleware = (store) => (next) => (action) => {

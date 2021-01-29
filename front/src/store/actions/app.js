@@ -120,12 +120,12 @@ export const appEditProfilOff = () => (
 
 // == ===================================
 // == USER SIGN UP - ACTIONS CREATORS PART
-export const setUpSignUp = (payload) => ({
+export const appSetUpSignUp = (payload) => ({
   type: APP_SIGN_UP_UPDATE,
   payload,
 });
 
-export const createUserVerif = () => ({
+export const appCreateUserVerif = () => ({
   type: USER_CREATION_VERIF,
 });
 

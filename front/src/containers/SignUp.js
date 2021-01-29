@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import SignUp from 'src/components/SignUp';
 
 import {
-  setUpSignUp, createUserVerif,
+  appSetUpSignUp, appCreateUserVerif,
 } from 'src/store/actions/app';
 
 import { push } from 'connected-react-router';
@@ -17,11 +17,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setSignUp: (payLoad) => {
-    dispatch(setUpSignUp(payLoad));
+    dispatch(appSetUpSignUp(payLoad));
   },
   handleSubmit: (event) => {
     event.preventDefault();
-    dispatch(createUserVerif());
+    dispatch(appCreateUserVerif());
   },
 });
 
