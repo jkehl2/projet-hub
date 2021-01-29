@@ -9,7 +9,6 @@ import { push, goBack } from 'connected-react-router';
 
 // == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTEUR AXIOS
 import configGraphQl, {
-  apiUrl,
   queryUserCreate,
   queryUserEdit,
   queryUserEditPassword,
@@ -17,7 +16,7 @@ import configGraphQl, {
   signInConfig,
 } from 'src/apiConfig/';
 
-import connector from 'src/apiConfig/connector';
+import connector from 'src/apiConfig/queryWithToken';
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
@@ -44,52 +43,39 @@ import {
   appProfilClean,
 } from 'src/store/actions/app';
 
-axios.interceptors.request.use(
-  (config) => {
-    const { origin } = new URL(config.url);
-    const allowedOrigins = [apiUrl];
-    const token = localStorage.getItem('token');
-    if (allowedOrigins.includes(origin)) {
-      config.headers.authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error),
-);
-
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case USER_SIGNIN: {
-      const { app } = store.getState();
-      const data = JSON.stringify({ email: app.signIn.email, password: app.signIn.password });
+      const { app: { signIn: { email, password } } } = store.getState();
+      const data = JSON.stringify({ email, password });
       const config = {
         ...signInConfig,
         data,
       };
       axios(config)
         .then((response) => {
-          // En cas de retour négatif à la demande de signin
-          // On affiche le message server à l'utlisateur
           if (response.data.error) {
             store.dispatch(appErrorUpdate(response.data.error));
           }
+          else if (response.data.errors) {
+            response.data.errors.forEach((error) => {
+              store.dispatch(appErrorUpdate(error));
+            });
+          }
           else {
             localStorage.setItem('token', response.data.token);
-            // Sinon on récupère les infos utlisateur
             const userdata = {
               ...response.data.user,
               logged: true,
             };
-            // Si null dans avatar alors on ne garde pas ce paramètre pour la maj du store
             if (userdata.avatar === null) {
               delete userdata.avatar;
             }
             store.dispatch(updateUserStore(userdata));
-            // On redirecte vers la page précédente
             store.dispatch(goBack());
-            const { user } = store.getState();
-            store.dispatch(appMsgUpdate(`Bienvenue ${user.name}.`));
+            const { user: { name } } = store.getState();
+            store.dispatch(appMsgUpdate(`Bienvenue ${name}.`));
           }
         })
         .catch((error) => {
@@ -123,19 +109,12 @@ const userMiddleware = (store) => (next) => (action) => {
       };
       axios(config)
         .then((response) => {
-          // on envoie les données du store app à user
-          // on change le logged à true
-          const userdata = {
-            ...response.data.data.insertUser,
-            logged: true,
-          };
-          // Si null dans avatar alors on ne garde pas ce paramètre pour la maj du store
-          if (userdata.avatar === null) {
-            delete userdata.avatar;
-          }
-          store.dispatch(updateUserStore(userdata));
-          // on redirige vers la page profil
-          store.dispatch(push('/utilisateur/profil'));
+          // TODO tester la réponse pour vérifier si il n'y a pas d'erreur
+          // avant de renvoyer vers la page de login.
+
+          // On redirige vers la page de login
+          store.dispatch(push('/utilisateur/connexion'));
+          store.dispatch(appMsgUpdate('Votre compte a été créé. Merci de vous connecter.'));
         })
         .catch((error) => {
           // en cas d'erreur remontée de l'api, renvoi d'un msg erreur

@@ -17,9 +17,9 @@ import './description.scss';
 
 // == Composant
 const Description = ({ logged, project }) => (
-  <Segment>
+  <>
     { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
-    <Grid divided stretched stackable padded="vertically">
+    <Grid divided stretched stackable>
       <Grid.Row only="mobile">
         <Image src={`${project.image}`} />
       </Grid.Row>
@@ -45,7 +45,7 @@ const Description = ({ logged, project }) => (
         </Grid.Column>
       </Grid.Row>
     </Grid>
-  </Segment>
+  </>
 );
 // == PROP TYPES
 Description.propTypes = {

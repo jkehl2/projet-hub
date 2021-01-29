@@ -9,6 +9,8 @@ import configGraphQl, {
   queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject, queryGetProjectsByGeo,
 } from 'src/apiConfig/';
 
+import connector from 'src/apiConfig/queryWithToken';
+
 // actions from store
 import {
   PROJECT_CREATE,
@@ -30,19 +32,6 @@ import {
   appMsgClean,
   appErrorClean,
 } from 'src/store/actions/app';
-
-axios.interceptors.request.use(
-  (config) => {
-    const { origin } = new URL(config.url);
-    const allowedOrigins = [apiUrl];
-    const token = localStorage.getItem('token');
-    if (allowedOrigins.includes(origin)) {
-      config.headers.authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error),
-);
 
 // == PARSE DATE UTIL FUNCTION :
 const parseDate = (dateApiString) => (
@@ -112,17 +101,17 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
 
       console.log('loader on');
-      axios(config)
+      connector(config,'insertProject', store.dispatch)
         .then((response) => {
           console.log(JSON.stringify(response.data));
         })
         .catch((error) => {
-          console.log(error);
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
-          console.log('loader off');
+          store.dispatch(appLoadingOff());
         });
-
+      store.dispatch(appLoadingOn());
       return;
     }
     // EDITING

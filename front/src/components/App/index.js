@@ -42,11 +42,11 @@ const App = ({
 
         {/* Affiche message d'erreur si il y en a */}
         {isError
-        && (<Message negative header="Une erreur s'est produite" content={`${error}`} icon="thumbs down outline" />)}
+        && (<Message negative header="Une erreur s'est produite" content={`${error}`} icon="thumbs down outline" size="small" />)}
 
         {/* Affiche message d'information si il y en a */}
         {isMessage
-        && (<Message header="Information" content={`${message}`} icon="idea" />)}
+        && (<Message header="Information" content={`${message}`} icon="idea" size="small" />)}
 
         <Dimmer active={loading} inverted>
           <Loader inverted>Loading</Loader>
