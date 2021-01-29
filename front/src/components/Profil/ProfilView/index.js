@@ -77,7 +77,7 @@ const ProfilView = ({
           open={open}
           trigger={<Button className="profil-view--marged" negative>Supprimer le profil</Button>}
         >
-          <Modal.Header>Confirmation suppression compte utilisateur</Modal.Header>
+          <Modal.Header>Confirmer la suppression de votre compte utilisateur</Modal.Header>
           <Modal.Content>
             <Form onSubmit={deleteProfil}>
               <Form.Input

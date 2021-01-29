@@ -49,10 +49,13 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
         <Dropdown.Menu>
           <Link className="item" role="option" to="/projets">Rechercher</Link>
           {logged && (
-          <> <Dropdown.Divider />
+          <>
+            <Dropdown.Divider />
+            <Link className="item" role="option" to="/utilisateur/create">Créer un projet</Link>
+            <Dropdown.Divider />
             <Link className="item" role="option" to="/utilisateur/profil">Profil</Link>
-            {/* <Dropdown.Item as="a" href="/utilisateur/projets">Mes projets</Dropdown.Item>
-            <Dropdown.Item as="a" href="/utilisateur/favoris">Mes favoris</Dropdown.Item> */}
+            <Link className="item" role="option" to="/utilisateur/projets">Mes projets</Link>
+            <Link className="item" role="option" to="/utilisateur/favoris">Mes favoris</Link>
             <Dropdown.Divider />
             <Dropdown.Item onClick={() => {
               handleDisconnect();

@@ -31,7 +31,7 @@ const PasswordEdit = ({
   return (
     <Container className="password-edit">
       {/* titre */}
-      <Header as="h1" content="Modification du mot de passer" textAlign="center" dividing subheader="On est jamais trop prudent" />
+      <Header as="h1" content="Modification du mot de passe" textAlign="center" dividing subheader="On est jamais trop prudent" />
       <Form onSubmit={handleSubmit}>
         {/* Accessibility user name hidden field */}
         <Input
