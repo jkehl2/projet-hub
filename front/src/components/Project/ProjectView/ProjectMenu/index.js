@@ -29,7 +29,7 @@ const ProjectMenu = ({ deleteConfirm, setConfirmation, archiveProject, deletePro
           onClick={handleItemClick}
           fitted="horizontally"
         >
-          <Button icon="edit" title="Editer" />
+          <Button icon="edit" color="blue" title="Editer" />
         </Menu.Item>
 
         <Menu.Item
@@ -40,7 +40,7 @@ const ProjectMenu = ({ deleteConfirm, setConfirmation, archiveProject, deletePro
         >
           <ModalConfirmDelete
             title="Confirmer l'archivage de votre projet"
-            trigger={<Button icon="archive" title="Archiver" />}
+            trigger={<Button icon="archive" color="brown" title="Archiver" />}
             deleteConfirm={deleteConfirm}
             setConfirmation={setConfirmation}
             handleDelete={archiveProject}
@@ -55,7 +55,7 @@ const ProjectMenu = ({ deleteConfirm, setConfirmation, archiveProject, deletePro
         >
           <ModalConfirmDelete
             title="Confirmer la suppression de votre projet"
-            trigger={<Button icon="archive" title="Archiver" />}
+            trigger={<Button icon="trash" color="red" title="Archiver" />}
             deleteConfirm={deleteConfirm}
             setConfirmation={setConfirmation}
             handleDelete={deleteProject}
