@@ -5,13 +5,18 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == IMPORTS COMPOSANTS
-import { Modal, Button, Form, Segment } from 'semantic-ui-react';
+import {
+  Modal,
+  Button,
+  Form,
+  Segment,
+} from 'semantic-ui-react';
 
 // == Composant Profil
 const ModalConfirmDelete = ({
   title,
   trigger,
-  deleteConfirm,
+  confirm,
   setConfirmation,
   handleDelete,
 }) => {
@@ -21,7 +26,7 @@ const ModalConfirmDelete = ({
       <Modal
         onClose={() => {
           setOpen(false);
-          setConfirmation({ deleteConfirm: '' });
+          setConfirmation({ confirm: '' });
         }}
         onOpen={() => setOpen(true)}
         open={open}
@@ -36,9 +41,9 @@ const ModalConfirmDelete = ({
               title="Saisissez CONFIRMER pour valider l'action"
               placeholder=""
               required
-              value={deleteConfirm}
+              value={confirm}
               onChange={(event) => {
-                setConfirmation({ deleteConfirm: event.target.value });
+                setConfirmation({ confirm: event.target.value });
               }}
             />
             <Segment basic compact textAlign="right">
@@ -50,7 +55,7 @@ const ModalConfirmDelete = ({
                   onClick={(event) => {
                     event.preventDefault();
                     setOpen(false);
-                    setConfirmation({ deleteConfirm: '' });
+                    setConfirmation({ confirm: '' });
                   }}
                 >Annuler
                 </Button>
@@ -66,7 +71,7 @@ const ModalConfirmDelete = ({
 ModalConfirmDelete.propTypes = {
   title: PropTypes.string.isRequired,
   trigger: PropTypes.object.isRequired,
-  deleteConfirm: PropTypes.string.isRequired,
+  confirm: PropTypes.string.isRequired,
   setConfirmation: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
 };

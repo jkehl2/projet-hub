@@ -18,7 +18,7 @@ const ProfilView = ({
   name,
   email,
   avatar,
-  deleteConfirm,
+  confirm,
   setConfirmation,
   deleteProfil,
   switchToEditProFile,
@@ -72,7 +72,7 @@ const ProfilView = ({
         <ModalConfirmDelete
           title="Confirmer la suppression de votre compte utilisateur"
           trigger={<Button className="profil-view--marged" negative>Supprimer votre compte</Button>}
-          deleteConfirm={deleteConfirm}
+          deleteConfirm={confirm}
           setConfirmation={setConfirmation}
           handleDelete={deleteProfil}
         />
@@ -85,7 +85,7 @@ ProfilView.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-  deleteConfirm: PropTypes.string.isRequired,
+  confirm: PropTypes.string.isRequired,
   setConfirmation: PropTypes.func.isRequired,
   deleteProfil: PropTypes.func.isRequired,
   switchToEditProFile: PropTypes.func.isRequired,

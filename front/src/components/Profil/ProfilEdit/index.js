@@ -12,10 +12,8 @@ import {
 const ProfilEdit = ({
   name,
   email,
-  avatar,
   refreshAppProfil,
   setProfilValue,
-  uploadAvatar,
   abortEditProfil,
   handleSubmit,
 }) => {
@@ -50,16 +48,6 @@ const ProfilEdit = ({
             setProfilValue({ email: event.target.value });
           }}
         />
-        {/** Uploader l'avatar */}
-        <Image size="small" centered spaced src={`${avatar}`} />
-        <Form.Input
-          type="file"
-          label="Fichier avatar utilisateur"
-          title="Fichier avatar utilisateur"
-          onChange={(event) => {
-            uploadAvatar(event.target.files[0]);
-          }}
-        />
         {/** bouton valider / annuler l'édition du profil */}
         <Segment basic textAlign="right">
           <Button.Group>
@@ -80,10 +68,8 @@ const ProfilEdit = ({
 ProfilEdit.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
   refreshAppProfil: PropTypes.func.isRequired,
   setProfilValue: PropTypes.func.isRequired,
-  uploadAvatar: PropTypes.func.isRequired,
   abortEditProfil: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };

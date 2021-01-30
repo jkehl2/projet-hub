@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import ProfilView from 'src/components/Profil/ProfilView';
 
 import { push } from 'connected-react-router';
-import { appEditProfilOn, appUpdateProfil, appConfirmDelete } from 'src/store/actions/app';
+import { appEditProfilOn, appUpdateProfil, appProfilConfirm } from 'src/store/actions/app';
 import { deleteUser } from 'src/store/actions/user';
 
 const mapStateToProps = (state) => ({
   name: state.user.name,
   email: state.user.email,
   avatar: state.user.avatar,
-  deleteConfirm: state.app.profil.deleteConfirm,
+  confirm: state.app.profil.confirm,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   deleteProfil: (event) => {
     event.preventDefault();
-    dispatch(appConfirmDelete(deleteUser));
+    dispatch(appProfilConfirm(deleteUser));
   },
   switchToEditProFile: () => {
     dispatch(appEditProfilOn());

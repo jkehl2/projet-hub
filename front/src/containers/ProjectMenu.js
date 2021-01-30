@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 
 import ProjectMenu from 'src/components/Project/ProjectView/ProjectMenu';
 
-import { appUpdateProject, appConfirmDelete } from 'src/store/actions/app';
+import { appUpdateProject, appProjectConfirm } from 'src/store/actions/app';
 import { archiveProjectById, deleteProjectById } from 'src/store/actions/project';
 
 const mapStateToProps = (state) => ({
-  deleteConfirm: state.app.project.deleteConfirm,
+  confirm: state.app.project.confirm,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -15,11 +15,11 @@ const mapDispatchToProps = (dispatch) => ({
   },
   archiveProject: (event) => {
     event.preventDefault();
-    dispatch(appConfirmDelete(archiveProjectById));
+    dispatch(appProjectConfirm(archiveProjectById));
   },
   deleteProject: (event) => {
     event.preventDefault();
-    dispatch(appConfirmDelete(deleteProjectById));
+    dispatch(appProjectConfirm(deleteProjectById));
   },
 });
 

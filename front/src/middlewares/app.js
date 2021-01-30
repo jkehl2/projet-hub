@@ -10,7 +10,8 @@ import querystring from 'query-string';
 import {
   APP_REFRESH_PROFIL,
   APP_CONFIRM_PASSWORD,
-  APP_CONFIRM_DELETE,
+  APP_PROFIL_CONFIRM,
+  APP_PROJECT_CONFIRM,
   APP_PROJECT_CREATE_VERIF,
   APP_CREATE_USER_VERIF,
   appUpdateProfil,
@@ -30,7 +31,6 @@ import {
 } from 'src/store/actions/project';
 
 import {
-  userEditPassword,
   createUser,
 } from 'src/store/actions/user';
 
@@ -77,9 +77,18 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       return;
     }
-    case APP_CONFIRM_DELETE: {
-      const { app: { profil: { deleteConfirm } } } = store.getState();
-      if (deleteConfirm === 'CONFIRMER') {
+    case APP_PROFIL_CONFIRM: {
+      const { app: { profil: { confirm } } } = store.getState();
+      if (confirm === 'CONFIRMER') {
+        store.dispatch(action.dispatch());
+      }
+      else {
+        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider la suppression."));
+      }
+      return; }
+    case APP_PROJECT_CONFIRM: {
+      const { app: { project: { confirm } } } = store.getState();
+      if (confirm === 'CONFIRMER') {
         store.dispatch(action.dispatch());
       }
       else {
@@ -95,6 +104,7 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas égale au nouveau mot de passe. Veuillez ressaisir votre confirmation de mot de passe.'));
       }
       return; }
+
     case PROJECT_SEARCH: {
       const {
         app: {

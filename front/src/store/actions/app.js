@@ -7,7 +7,8 @@
 // == [CLE-VALEURS] - ACTIONS MIDDLEWARE applicatif technique
 export const APP_REFRESH_PROFIL = 'APP_REFRESH_PROFIL';
 export const APP_CONFIRM_PASSWORD = 'APP_CONFIRM_PASSWORD';
-export const APP_CONFIRM_DELETE = 'APP_CONFIRM_DELETE';
+export const APP_PROFIL_CONFIRM = 'APP_PROFIL_CONFIRM';
+export const APP_PROJECT_CONFIRM = 'APP_PROJECT_CONFIRM';
 export const APP_CREATE_USER_VERIF = 'USER_CREATION_VERIF';
 export const APP_PROJECT_CREATE_VERIF = 'APP_PROJECT_CREATE_VERIF';
 
@@ -43,8 +44,13 @@ export const appConfirmPassword = (dispatch) => ({
   dispatch,
 });
 
-export const appConfirmDelete = (dispatch) => ({
-  type: APP_CONFIRM_DELETE,
+export const appProfilConfirm = (dispatch) => ({
+  type: APP_PROFIL_CONFIRM,
+  dispatch,
+});
+
+export const appProjectConfirm = (dispatch) => ({
+  type: APP_PROJECT_CONFIRM,
   dispatch,
 });
 

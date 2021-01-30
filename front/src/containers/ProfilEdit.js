@@ -8,7 +8,6 @@ import { editUser } from 'src/store/actions/user';
 const mapStateToProps = (state) => ({
   name: state.app.profil.name,
   email: state.app.profil.email,
-  avatar: state.app.profil.avatar,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -17,9 +16,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setProfilValue: (payload) => {
     dispatch(appUpdateProfil(payload));
-  },
-  uploadAvatar: (file) => {
-    console.log(file);
   },
   abortEditProfil: (event) => {
     event.preventDefault();

@@ -63,7 +63,7 @@ export const profilInitialState = {
   email: '',
   avatar: 'https://react.semantic-ui.com/images/avatar/large/matt.jpg',
   isEditMode: false,
-  deleteConfirm: '',
+  confirm: '',
   password: '',
   passwordConfirm: '',
 };
@@ -79,7 +79,7 @@ export const createProjectInitialState = {
 
 // ==  INITIALE SUB APP STATE - createProject
 export const projectInitialState = {
-  deleteConfirm: '',
+  confirm: '',
 };
 
 // ==  INITIALE STATE des paramètres applicatifs techniques

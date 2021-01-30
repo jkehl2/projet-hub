@@ -2,14 +2,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// == IMPORTS CONTAINERS
+import ProjectMenu from 'src/containers/ProjectMenu';
+
 // == IMPORTS COMPOSANTS
 import {
   Segment,
 } from 'semantic-ui-react';
 import Description from './Description';
 import Needs from './Needs';
-import ProjectMenu from './ProjectMenu';
-// == IMPORTS CONTAINERS
 
 // == STYLES
 import './projectView.scss';
