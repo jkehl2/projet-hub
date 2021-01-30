@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Button, Container, Header, Item, Segment, Form, Grid, Label,
+  Button, Container, Header, Segment, Form, Label,
 } from 'semantic-ui-react';
 
 // == IMPORTS UTILS
@@ -16,8 +16,10 @@ import utils from 'src/utils/perimeters.json';
 import './createProject.scss';
 
 // == Composant
-const CreateProject = ({ title, date, description, location,
-setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
+const CreateProject = ({
+  title, date, description, location,
+  setCreateProject, perimeter, handleSubmit,
+}) => (
   <Container className="createProject">
     <Segment textAlign="left">
       {/* Titre */}
@@ -92,7 +94,13 @@ setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
 );
 
 CreateProject.propTypes = {
-  props: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  setCreateProject: PropTypes.func.isRequired,
+  perimeter: PropTypes.number.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 // == Export

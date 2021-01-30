@@ -24,6 +24,7 @@ import Projects from 'src/components/Projects';
 import MyFavorites from 'src/components/MyFavorites';
 import MyProjects from 'src/components/MyProjects';
 import CreateProject from 'src/components/CreateProject';
+import CreateNeeds from 'src/components/CreateProject/CreateNeeds';
 import Footer from 'src/components/Footer';
 import WhoAreWe from 'src/components/WhoAreWe';
 import LegalMentions from 'src/components/LegalMentions';
@@ -76,8 +77,9 @@ const App = ({
           {/* Routes ateignable uniquement si utilisateur logged */}
           {/* Sprint 1 - Page de profil */}
           <ProtectedRoute exact path="/utilisateur/profil" isAllowed={logged} component={() => (<Profil />)} />
-          {/* Sprint 2 - Page Création de projet' */}
+          {/* Sprint 2 - Pages Création de projet + page création de besoins */}
           <ProtectedRoute exact path="/utilisateur/create" isAllowed={logged} component={() => (<CreateProject />)} />
+          <ProtectedRoute exact path="/utilisateur/create/needs" isAllowed={logged} component={() => (<CreateNeeds />)} />
           {/* Sprint 2 - Page mes favoris' */}
           <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={() => (<MyFavorites />)} />
           {/* Sprint 2 - Page mes projets' */}

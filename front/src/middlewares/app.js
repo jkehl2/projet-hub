@@ -152,6 +152,7 @@ const userMiddleware = (store) => (next) => (action) => {
       return;
     }
     case APP_PROJECT_CREATE_VERIF: {
+      // gather values stored in app mw after creation form submitted
       const {
         app: {
           createProject: {
@@ -163,6 +164,7 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(appMsgUpdate('Veuillez remplir les champs titre et date'));
       }
       else {
+        // if successfull send to geocoding API to get coordinates through location
         store.dispatch(sendProjectApi());
       }
       return; }

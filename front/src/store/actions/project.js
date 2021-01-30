@@ -11,6 +11,7 @@ export const PROJECT_DELETE = 'PROJECT_DELETE';
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const GET_PROJECT_BY_GEO = 'GET_PROJECT_BY_GEO';
 export const SEND_PROJECT = 'SEND_PROJECT';
+export const SEND_CREATED_PROJECT = 'SEND_CREATED_PROJECT';
 
 // == [CLE-VALEURS] - ACTIONS sur le store projets(Reducer user)
 
@@ -76,7 +77,13 @@ export const getProjectByGeo = (payload) => ({
   payload,
 });
 
-// send a project to API
+// send a project to geocoding API
 export const sendProjectApi = () => ({
   type: SEND_PROJECT,
+});
+
+// send a project to back-end API
+export const sendProjectCreated = (payload) => ({
+  type: SEND_CREATED_PROJECT,
+  payload,
 });
