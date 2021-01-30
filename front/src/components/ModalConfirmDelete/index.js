@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == IMPORTS COMPOSANTS
-import { Modal, Button, Form } from 'semantic-ui-react';
+import { Modal, Button, Form, Segment } from 'semantic-ui-react';
 
 // == Composant Profil
 const ModalConfirmDelete = ({
@@ -32,8 +32,8 @@ const ModalConfirmDelete = ({
           <Form onSubmit={handleDelete}>
             <Form.Input
               type="text"
-              label="Saisissez CONFIRMER pour supprimer définitivement"
-              title="Saisissez CONFIRMER pour supprimer définitivement"
+              label="Saisissez CONFIRMER pour valider l'action"
+              title="Saisissez CONFIRMER pour valider l'action"
               placeholder=""
               required
               value={deleteConfirm}
@@ -41,19 +41,21 @@ const ModalConfirmDelete = ({
                 setConfirmation({ deleteConfirm: event.target.value });
               }}
             />
-            <Button.Group>
-              <Form.Button negative type="submit">Confirmer</Form.Button>
-              <Button.Or text="ou" />
-              <Button
-                type="button"
-                onClick={(event) => {
-                  event.preventDefault();
-                  setOpen(false);
-                  setConfirmation({ deleteConfirm: '' });
-                }}
-              >Annuler
-              </Button>
-            </Button.Group>
+            <Segment textAlign="right">
+              <Button.Group>
+                <Form.Button negative type="submit">Confirmer</Form.Button>
+                <Button.Or text="ou" />
+                <Button
+                  type="button"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setOpen(false);
+                    setConfirmation({ deleteConfirm: '' });
+                  }}
+                >Annuler
+                </Button>
+              </Button.Group>
+            </Segment>
           </Form>
         </Modal.Content>
       </Modal>
