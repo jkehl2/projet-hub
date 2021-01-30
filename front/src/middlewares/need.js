@@ -5,7 +5,8 @@ import { push } from 'connected-react-router';
 
 // graphql queries
 import configGraphQl, {
-  queryEditCompletedNeed,
+  queryCompletedNeed,
+  queryUnCompletedNeed,
 } from 'src/apiConfig/';
 
 import connector from 'src/apiConfig/queryWithToken';
@@ -34,18 +35,26 @@ const parseDate = (dateApiString) => (
 const projectMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case PROJECT_NEED_ISCOMPLETED: {
-      const data = JSON.stringify({
-        ...queryEditCompletedNeed,
-        variables: { ...action.payload },
-      });
+      const { id, completed } = action.payload;
+      const data = JSON.stringify(
+        completed
+          ? {
+            ...queryCompletedNeed,
+            variables: { id },
+          }
+          : {
+            ...queryUnCompletedNeed,
+            variables: { id },
+          },
+      );
       const config = {
         ...configGraphQl,
         data,
       };
       connector(config, 'completeNeed', store.dispatch)
         .then((response) => {
-          const { data: { data: { completeNeed: { id, completed } } } } = response;
-          store.dispatch(updateProjectNeed({ id, completed }));
+          const { data: { data: { completeNeed } } } = response;
+          store.dispatch(updateProjectNeed(completeNeed));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));

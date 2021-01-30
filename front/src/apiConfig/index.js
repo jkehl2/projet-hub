@@ -228,9 +228,25 @@ export const queryEditProject = {
   query: '',
 };
 
-export const queryEditCompletedNeed = {
-  query: `mutation completeNeed($id: ID!, $completed: Boolean!) {
-    completeNeed(id: $id, completed: $completed) {
+export const queryCompletedNeed = {
+  query: `mutation completeNeed($id: ID!) {
+    completeNeed(id: $id) {
+      ... on Need{
+        id
+        completed
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }      
+    }
+  }`,
+};
+export const queryUnCompletedNeed = {
+  query: `mutation uncomplete($id: ID!) {
+    uncomplete(id: $id) {
       ... on Need{
         id
         completed
