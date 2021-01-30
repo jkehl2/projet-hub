@@ -15,7 +15,7 @@ import './project.scss';
 
 // == Composant
 const Project = ({
-  projectId, project, logged, isEditMode, getProjectById,
+  projectId, project, logged, isEditMode, getProjectById, updateNeedIdCompleted,
 }) => {
   // Au montage du composant on charge les données du projet depuis l'API
   // Au démontage on clean le store.
@@ -27,7 +27,7 @@ const Project = ({
       <Header as="h1" content="Détail du projet" textAlign="center" dividing subheader="Ici on vous dit tout sur ce projet" />
       {(isEditMode && logged)
         ? <ProjectEdit project={project} />
-        : <ProjectView logged={logged} project={project} />}
+        : <ProjectView logged={logged} project={project} updateNeedIdCompleted={updateNeedIdCompleted} />}
     </Container>
   );
 };
@@ -42,6 +42,7 @@ Project.propTypes = {
   logged: PropTypes.bool.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   getProjectById: PropTypes.func.isRequired,
+  updateNeedIdCompleted: PropTypes.func.isRequired,
 };
 
 // == Export

@@ -196,25 +196,51 @@ export const queryGetProjectsByGeo = {
 export const queryCreateProject = {
   query: `mutation CreateProject($title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String, $needs: [NeedInput]) {
     insertProject( title: $title, description: $description, expiration_date: $expiration_date, location: $location, lat: $lat, long: $long, image: $image, file: $file, needs: $needs) {
-      id
-      title
-      description
-      created_at
-      isFollowed
-      userIsAuthor
-      needs{
+      ... on Need{
         id
         title
-        project{
+        description
+        created_at
+        isFollowed
+        userIsAuthor
+        needs{
           id
-          title}
+          title
+          project{
+            id
+            title}
+        }
+        author{
+          name
+        }
       }
-      author{
-        name
+
+      ... on Error{
+        error{
+          msg
+          code
+        }
       }
     }
   }`,
 };
 export const queryEditProject = {
   query: '',
+};
+
+export const queryEditCompletedNeed = {
+  query: `mutation completeNeed($id: ID!, $completed: Boolean!) {
+    completeNeed(id: $id, completed: $completed) {
+      ... on Need{
+        id
+        completed
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }      
+    }
+  }`,
 };

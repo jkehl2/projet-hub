@@ -5,7 +5,6 @@ import { push } from 'connected-react-router';
 
 // graphql queries
 import configGraphQl, {
-  apiUrl,
   queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject, queryGetProjectsByGeo,
 } from 'src/apiConfig/';
 
@@ -87,21 +86,23 @@ const projectMiddleware = (store) => (next) => (action) => {
       const {
         title, description, expirationDate, location, lat, long, author,
       } = action.payload;
-
       const data = JSON.stringify({
         ...queryCreateProject,
         variables: {
-          title, description, expirationDate, location, lat, long, author,
+          title,
+          description,
+          expirationDate,
+          location,
+          lat,
+          long,
+          author,
         },
       });
-
       const config = {
         ...configGraphQl,
         data,
       };
-
-      console.log('loader on');
-      connector(config,'insertProject', store.dispatch)
+      connector(config, 'insertProject', store.dispatch)
         .then((response) => {
           console.log(JSON.stringify(response.data));
         })
@@ -112,6 +113,8 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appLoadingOff());
         });
       store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
       return;
     }
     // EDITING
@@ -125,23 +128,21 @@ const projectMiddleware = (store) => (next) => (action) => {
           id, title, description, expirationDate, location, lat, long, author,
         },
       });
-
       const config = {
         ...configGraphQl,
         data,
       };
-
-      console.log('loader on');
-      axios(config)
+      connector(config, 'ResponseObjectName', store.dispatch)
         .then((response) => {
           console.log(JSON.stringify(response.data));
         })
         .catch((error) => {
-          console.log(error);
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
-          console.log('loader off');
+          store.dispatch(appLoadingOff());
         });
+      store.dispatch(appLoadingOn());
       return;
     }
     // DELETING
@@ -151,23 +152,21 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...queryDeleteProject,
         variables: { id },
       });
-
       const config = {
         ...configGraphQl,
         data,
       };
-
-      console.log('loader on');
-      axios(config)
+      connector(config, 'ResponseObjectName', store.dispatch)
         .then((response) => {
           console.log(JSON.stringify(response.data));
         })
         .catch((error) => {
-          console.log(error);
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
-          console.log('loader off');
+          store.dispatch(appLoadingOff());
         });
+      store.dispatch(appLoadingOn());
       return;
     }
     // GET BY ID == OK
@@ -201,7 +200,9 @@ const projectMiddleware = (store) => (next) => (action) => {
               email: apiData.author.email,
               avatar: apiData.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : apiData.author.avatar,
             },
-            needs: apiData.needs,
+            needs: apiData.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
           };
           store.dispatch(updateProjectStore({ project }));
         })
@@ -213,14 +214,16 @@ const projectMiddleware = (store) => (next) => (action) => {
         });
       store.dispatch(cleanProject());
       store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
       return;
     }
     case SEND_PROJECT: {
       // call API geocoding => generate long & lat of location
       // once we have those = create new act that will send actualised data to our API
       // once API send succes msg, redirect to needs page
-      return;}
-
+      return;
+    }
     default:
       next(action);
       break;

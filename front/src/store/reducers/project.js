@@ -5,7 +5,11 @@
 
 // == IMPORT ACTIONS SUR STORE
 import {
-  PROJECT_STORE_UPDATE, PROJECT_STORE_CLEAN, PROJECT_CLEAN_PROJECTS, PROJECT_CLEAN_PROJECT,
+  PROJECT_STORE_UPDATE,
+  PROJECT_STORE_CLEAN,
+  PROJECT_CLEAN_PROJECTS,
+  PROJECT_CLEAN_PROJECT,
+  PROJECT_NEED_UPDATE_BY_ID,
 } from 'src/store/actions/project';
 
 // ==  INITIAL STATE : a project object empty
@@ -59,6 +63,25 @@ const reducer = (oldState = initialState, action = {}) => {
         ...oldState,
         ...projectInitialState,
       };
+    case PROJECT_NEED_UPDATE_BY_ID: {
+      const [updatedNeed] = [...oldState.project.needs
+        .find((need) => need.id === action.payload.id)];
+      updatedNeed.completed = action.payload.completed;
+
+      const updatedNeeds = [...oldState.project.needs
+        .filter((need) => need.id !== action.payload.id)];
+      updatedNeeds.push(updatedNeed);
+
+      return {
+        ...oldState,
+        project: {
+          ...oldState.project,
+          needs: updatedNeeds.sort((need1, need2) => (
+            parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+          )),
+        },
+      };
+    }
     default:
       return { ...oldState };
   }

@@ -17,7 +17,7 @@ import './needs.scss';
 // == Functions
 
 // == Composant
-const Needs = ({ needs }) => {
+const Needs = ({ isCheckEnable, needs, updateNeedIdCompleted }) => {
   const checkArr = needs.map((need) => (need.completed ? 1 : 0));
   const checkCount = checkArr.reduce((a, b) => a + b, 0);
 
@@ -47,7 +47,16 @@ const Needs = ({ needs }) => {
             {needs.map((need) => (
               <Grid.Row key={need.id}>
                 <Grid.Column width={2} verticalAlign="middle" textAlign="center">
-                  <Checkbox readOnly checked={need.completed} />
+                  {isCheckEnable
+                    ? (
+                      <Checkbox
+                        checked={need.completed}
+                        onChange={() => {
+                          updateNeedIdCompleted(need.id, !need.completed);
+                        }}
+                      />
+                    )
+                    : <Checkbox readOnly checked={need.completed} />}
                 </Grid.Column>
                 <Grid.Column width={14}>
                   <Header as="h3">{`${need.title}`}</Header>
@@ -63,12 +72,14 @@ const Needs = ({ needs }) => {
 };
 // == PROP TYPES
 Needs.propTypes = {
+  isCheckEnable: PropTypes.bool.isRequired,
   needs: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
   }).isRequired).isRequired,
+  updateNeedIdCompleted: PropTypes.func.isRequired,
 };
 
 // == Export

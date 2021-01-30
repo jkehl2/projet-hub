@@ -16,7 +16,7 @@ import './projectView.scss';
 
 // == Composant
 const ProjectView = (props) => {
-  const { project, logged } = props;
+  const { project, logged, updateNeedIdCompleted } = props;
   return (
     <>
       {/* Menu projet - modifier / supprimer / archiver */}
@@ -26,7 +26,11 @@ const ProjectView = (props) => {
         <Description {...props} />
       </Segment>
       {/* Liste des besoins du projet */}
-      <Needs needs={project.needs} />
+      <Needs
+        isCheckEnable={project.isAuthor && !project.isArchived}
+        needs={project.needs}
+        updateNeedIdCompleted={updateNeedIdCompleted}
+      />
     </>
   );
 };
@@ -38,6 +42,7 @@ ProjectView.propTypes = {
     isArchived: PropTypes.bool.isRequired,
     needs: PropTypes.array.isRequired,
   }).isRequired,
+  updateNeedIdCompleted: PropTypes.func.isRequired,
 };
 
 // == Export
