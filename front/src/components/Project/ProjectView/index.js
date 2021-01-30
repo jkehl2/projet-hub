@@ -17,17 +17,18 @@ import './projectView.scss';
 // == Composant
 const ProjectView = (props) => {
   const { project, logged, updateNeedIdCompleted } = props;
+  const isVisible = (logged && project.isAuthor && !project.isArchived);
   return (
     <>
       {/* Menu projet - modifier / supprimer / archiver */}
-      {(logged && project.isAuthor && !project.isArchived) && <ProjectMenu />}
+      {(isVisible) && <ProjectMenu />}
       <Segment compact attached="top">
         {/* Description du projet */}
         <Description {...props} />
       </Segment>
       {/* Liste des besoins du projet */}
       <Needs
-        isCheckEnable={project.isAuthor && !project.isArchived}
+        isCheckEnable={isVisible}
         needs={project.needs}
         updateNeedIdCompleted={updateNeedIdCompleted}
       />

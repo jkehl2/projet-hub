@@ -1,6 +1,6 @@
 // == Import npm
 import React, { useState } from 'react';
-import PropTypes, { shape } from 'prop-types';
+import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {

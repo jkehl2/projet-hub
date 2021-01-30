@@ -11,6 +11,7 @@ import { saveState } from 'src/store/localStorage';
 // == IMPORT - PERSONNAL MIDDLEWARE
 import appMiddleware from 'src/middlewares/app';
 import userMiddleware from 'src/middlewares/user';
+import needMiddleware from 'src/middlewares/need';
 import projectMiddleware from 'src/middlewares/project';
 
 import { routerMiddleware } from 'connected-react-router';
@@ -28,6 +29,7 @@ export default function configureStore(preloadedState) {
         appMiddleware,
         userMiddleware,
         projectMiddleware,
+        needMiddleware,
       ),
     ),
   );
