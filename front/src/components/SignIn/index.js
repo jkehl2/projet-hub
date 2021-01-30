@@ -78,14 +78,21 @@ const SignIn = (
         {/** bouton connexion */}
         <Segment basic textAlign="right">
           <Button.Group>
-            <Form.Button positive type="submit" onClick={handleSubmit}>
-              Connexion
-            </Form.Button>
+            <Form.Button
+              positive
+              type="submit"
+              content="Connexion"
+              title="Connexion"
+            />
             <Button.Or text="ou" />
             {/** bouton inscription */}
-            <Form.Button color="blue" type="button" onClick={redirectSignUp}>
-              Inscription
-            </Form.Button>
+            <Form.Button
+              color="blue"
+              type="button"
+              content="Inscription"
+              title="Inscription"
+              onClick={redirectSignUp}
+            />
           </Button.Group>
         </Segment>
       </Form>
