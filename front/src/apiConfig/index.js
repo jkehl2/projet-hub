@@ -114,8 +114,7 @@ export const queryUserDelete = {
   query: ` mutation{
     deleteUser{
       ... on User{
-        infos
-        errors
+        id
       }
       ... on Error{
         error{
