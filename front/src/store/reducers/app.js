@@ -19,6 +19,7 @@ import {
   APP_SIGNUP_CLEAN,
   APP_SIGN_UP_UPDATE,
   APP_PROJECT_CREATE,
+  APP_CLEAN_CREATE_PROJECT,
 } from 'src/store/actions/app';
 
 // ==  INITIALE SUB APP STATE - error
@@ -195,6 +196,14 @@ const reducer = (oldState = initialState, action = {}) => {
         createProject: {
           ...oldState.createProject,
           ...action.payload,
+        },
+      };
+
+    case APP_CLEAN_CREATE_PROJECT:
+      return {
+        ...oldState,
+        createProject: {
+          ...createProjectInitialState,
         },
       };
     default:

@@ -8,7 +8,12 @@ import configGraphQl, {
   queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject, queryGetProjectsByGeo,
 } from 'src/apiConfig/';
 
+// == import utils to allow perimeter conversion
+import perimetersValue from 'src/utils/perimeters.json';
+
 import connector from 'src/apiConfig/queryWithToken';
+
+import querystring from 'query-string';
 
 // actions from store
 import {
@@ -21,6 +26,8 @@ import {
   cleanProject,
   cleanProjects,
   SEND_PROJECT,
+  sendProjectCreated,
+  SEND_CREATED_PROJECT,
 } from 'src/store/actions/project';
 
 import {
@@ -30,6 +37,7 @@ import {
   appErrorUpdate,
   appMsgClean,
   appErrorClean,
+  cleanCreateProject,
 } from 'src/store/actions/app';
 
 // == PARSE DATE UTIL FUNCTION :
@@ -220,8 +228,85 @@ const projectMiddleware = (store) => (next) => (action) => {
     }
     case SEND_PROJECT: {
       // call API geocoding => generate long & lat of location
-      // once we have those = create new act that will send actualised data to our API
-      // once API send succes msg, redirect to needs page
+      const {
+        app: {
+          createProject: {
+            title, date, description, location, perimeter,
+          },
+        },
+      } = store.getState();
+
+      // building query
+      const query = querystring.stringifyUrl({
+        url: 'https://nominatim.openstreetmap.org/search',
+        query: {
+          adressdetails: 1,
+          q: location,
+          format: 'json',
+          limit: 1,
+        },
+      });
+      axios.get(query)
+        .then((response) => {
+          const geolocArr = response.data;
+          if (geolocArr.length > 0) {
+            const searchValue = {
+              long: parseFloat(geolocArr[0].long),
+              lat: parseFloat(geolocArr[0].lat),
+              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
+            };
+            store.dispatch(sendProjectCreated(searchValue));
+          }
+          else {
+            store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
+          }
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appErrorClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(appLoadingOn());
+      return;
+    }
+    case SEND_CREATED_PROJECT: {
+      // get the result of geocoding API
+      const { long, lat, scope } = action.payload;
+      // get other values from store
+      const {
+        app: {
+          createProject: {
+            title, date, description, location,
+          },
+        },
+      } = store.getState();
+      const data = JSON.stringify({
+        ...queryCreateProject,
+        variables: {
+          long, lat, scope, title, date, description, location,
+        },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      // send values
+      connector(config, 'insertProject', store.dispatch)
+        .then((response) => {
+          // redirect to needs page
+          store.dispatch(appMsgUpdate('Projet crée ! '));
+          store.dispatch(push('/utilisateur/create/needs'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+          store.dispatch(cleanCreateProject());
+        });
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
       return;
     }
     default:
