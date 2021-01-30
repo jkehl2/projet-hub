@@ -4,6 +4,7 @@ import ProfilView from 'src/components/Profil/ProfilView';
 
 import { push } from 'connected-react-router';
 import { appEditProfilOn, appUpdateProfil, appConfirmDelete } from 'src/store/actions/app';
+import { deleteUser } from 'src/store/actions/user';
 
 const mapStateToProps = (state) => ({
   name: state.user.name,
@@ -18,7 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   deleteProfil: (event) => {
     event.preventDefault();
-    dispatch(appConfirmDelete());
+    dispatch(appConfirmDelete(deleteUser));
   },
   switchToEditProFile: () => {
     dispatch(appEditProfilOn());

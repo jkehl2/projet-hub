@@ -63,13 +63,13 @@ export const createProject = (project) => ({
 
 // editing a project
 export const editProject = (project) => ({
-  type: PROJECT_CREATE,
+  type: PROJECT_EDIT,
   payload: project,
 });
 
 // deleting a project
 export const deleteProject = (project) => ({
-  type: PROJECT_CREATE,
+  type: PROJECT_DELETE,
   payload: project,
 });
 

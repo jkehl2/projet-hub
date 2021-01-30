@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 // == IMPORT NPM
 import axios from 'axios';
-import { push } from 'connected-react-router';
+import { goBack, push } from 'connected-react-router';
 
 // graphql queries
 import configGraphQl, {
@@ -164,9 +164,11 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      connector(config, 'ResponseObjectName', store.dispatch)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
+      connector(config, 'deleteProject', store.dispatch)
+        .then(() => {
+          store.dispatch(goBack());
+          store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
+          store.dispatch(cleanProject());
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -175,6 +177,8 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appLoadingOff());
         });
       store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
       return;
     }
     // GET BY ID == OK

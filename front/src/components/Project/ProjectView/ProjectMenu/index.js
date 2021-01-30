@@ -1,21 +1,20 @@
 // == Import npm
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
+// == IMPORTS CONTAINERS
 
 // == IMPORTS COMPOSANTS
 import {
   Button,
-  Icon, Menu, Segment,
+  Menu,
 } from 'semantic-ui-react';
-
-// == IMPORTS CONTAINERS
 
 // == STYLES
 import './projectMenu.scss';
 
-// == Functions
-
 // == Composant
-const ProjectMenu = () => {
+const ProjectMenu = (deleteConfirm, setConfirmation, deleteProject) => {
   const [state, setState] = useState({ activeItem: '' });
 
   const handleItemClick = (e, { name }) => {
@@ -54,6 +53,11 @@ const ProjectMenu = () => {
       </Menu>
     </>
   );
+};
+ProjectMenu.propTypes = {
+  deleteConfirm: PropTypes.string.isRequired,
+  setConfirmation: PropTypes.func.isRequired,
+  deleteProject: PropTypes.func.isRequired,
 };
 
 // == Export

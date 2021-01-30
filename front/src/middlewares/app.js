@@ -12,7 +12,7 @@ import {
   APP_CONFIRM_PASSWORD,
   APP_CONFIRM_DELETE,
   APP_PROJECT_CREATE_VERIF,
-  USER_CREATION_VERIF,
+  APP_CREATE_USER_VERIF,
   appUpdateProfil,
   appMsgUpdate,
   appErrorUpdate,
@@ -32,7 +32,6 @@ import {
 import {
   userEditPassword,
   createUser,
-  deleteUser,
 } from 'src/store/actions/user';
 
 // == import utils to allow perimeter conversion
@@ -42,8 +41,6 @@ import perimetersValue from 'src/utils/perimeters.json';
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case APP_REFRESH_PROFIL: {
-      // ON RECUPERE LES VALEUR ACTUEL DE USER
-      // POUR RAFRAICHIR LES PARAMETRES TECHNIQUES AVEC
       const { user } = store.getState();
       const payload = {
         name: user.name,
@@ -53,8 +50,7 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appUpdateProfil(payload));
       return;
     }
-
-    case USER_CREATION_VERIF: {
+    case APP_CREATE_USER_VERIF: {
       const {
         app: {
           signUp: {
@@ -81,16 +77,16 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       return;
     }
-    case APP_CONFIRM_PASSWORD: {
+    case APP_CONFIRM_DELETE: {
       const { app: { profil: { deleteConfirm } } } = store.getState();
       if (deleteConfirm === 'CONFIRMER') {
-        store.dispatch(deleteUser());
+        store.dispatch(action.dispatch());
       }
       else {
-        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour supprimer définitivement votre compte utlisateur."));
+        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider la suppression."));
       }
       return; }
-    case APP_CONFIRM_DELETE: {
+    case APP_CONFIRM_PASSWORD: {
       const { app: { profil: { password, passwordConfirm } } } = store.getState();
       if (password === passwordConfirm) {
         store.dispatch(userEditPassword());
