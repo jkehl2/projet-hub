@@ -24,7 +24,7 @@ const Project = ({
   }, []);
   return (
     <Container className="project">
-      <Header as="h1" content="Détail du projet" textAlign="center" dividing subheader="Ici on vous dit tout sur le projet" />
+      <Header as="h1" content="Détail du projet" textAlign="center" dividing subheader="Ici on vous dit tout sur ce projet" />
       {(isEditMode && logged)
         ? <ProjectEdit project={project} />
         : <ProjectView logged={logged} project={project} />}
