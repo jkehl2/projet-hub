@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Form, Item, Modal, Segment,
 } from 'semantic-ui-react';
+import ModalConfirmDelete from 'src/components/ModalConfirmDelete';
 
 // == IMPORT STYLES
 import './profilView.scss';
@@ -68,45 +69,13 @@ const ProfilView = ({
         </Button>
 
         {/* bouton mes supprimer le compte */}
-        <Modal
-          onClose={() => {
-            setOpen(false);
-            setConfirmation({ deleteConfirm: '' });
-          }}
-          onOpen={() => setOpen(true)}
-          open={open}
-          trigger={<Button className="profil-view--marged" negative>Supprimer le profil</Button>}
-        >
-          <Modal.Header>Confirmer la suppression de votre compte utilisateur</Modal.Header>
-          <Modal.Content>
-            <Form onSubmit={deleteProfil}>
-              <Form.Input
-                type="text"
-                label="Saisissez CONFIRMER pour supprimer définitivement votre compte utilisateur."
-                title="Saisissez CONFIRMER pour supprimer définitivement votre compte utilisateur."
-                placeholder=""
-                required
-                value={deleteConfirm}
-                onChange={(event) => {
-                  setConfirmation({ deleteConfirm: event.target.value });
-                }}
-              />
-              <Button.Group>
-                <Form.Button negative type="submit">Confirmer</Form.Button>
-                <Button.Or text="ou" />
-                <Button
-                  type="button"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    setOpen(false);
-                    setConfirmation({ deleteConfirm: '' });
-                  }}
-                >Annuler
-                </Button>
-              </Button.Group>
-            </Form>
-          </Modal.Content>
-        </Modal>
+        <ModalConfirmDelete
+          title="Confirmer la suppression de votre compte utilisateur"
+          trigger={<Button className="profil-view--marged" negative>Supprimer votre compte</Button>}
+          deleteConfirm={deleteConfirm}
+          setConfirmation={setConfirmation}
+          handleDelete={deleteProfil}
+        />
       </Button.Group>
     </Segment>
   );
