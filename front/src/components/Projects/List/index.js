@@ -1,13 +1,11 @@
 // == Import npm
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-
-// == IMPORTS COMPOSANTS
-import ProjectCard from 'src/components/Projects/ProjectCard';
-
+import PropTypes, { shape } from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == IMPORTS COMPOSANTS
+import ProjectCard from 'src/components/Projects/ProjectCard';
+import { Segment } from 'semantic-ui-react';
 
 // == STYLES
 import './list.scss';
@@ -18,11 +16,11 @@ const List = ({ logged, projects, updateList }) => {
     updateList();
   }, []);
   return (
-    <>
+    <Segment className="list--no-marged" basic compact>
       {projects.map((project) => (
         <ProjectCard key={project.id} logged={logged} project={project} />
       ))}
-    </>
+    </Segment>
   );
 };
 
@@ -34,6 +32,12 @@ List.propTypes = {
     isArchived: PropTypes.bool.isRequired,
     isAuthor: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
+    followers: PropTypes.arrayOf(
+      shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
     location: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     expiration_date: PropTypes.string.isRequired,

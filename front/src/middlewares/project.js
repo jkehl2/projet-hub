@@ -85,6 +85,9 @@ const projectMiddleware = (store) => (next) => (action) => {
               email: project.author.email,
               avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
             },
+            needs: project.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
           }));
           store.dispatch(updateProjectStore({ projects }));
           store.dispatch(push('/projets'));

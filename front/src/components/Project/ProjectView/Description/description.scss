@@ -1,6 +1,10 @@
 @use 'src/styles/vars';
 
-.description {}
+.description {
+  &--marged-top{
+    margin-top: 0.5rem !important;
+  }
+}
 
 .content>.header {
   font-size: 2rem !important;

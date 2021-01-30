@@ -198,6 +198,10 @@ export const queryGetProjectsByGeo = {
         }
         isFollowed
         userIsAuthor
+        needs{
+          id
+          completed
+        }
         followers{
           id
           name

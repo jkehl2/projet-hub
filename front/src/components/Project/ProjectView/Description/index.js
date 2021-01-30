@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { shape } from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -16,37 +16,59 @@ import {
 import './description.scss';
 
 // == Composant
-const Description = ({ logged, project }) => (
-  <>
-    { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
-    <Grid divided stretched stackable>
-      <Grid.Row only="mobile">
-        <Image src={`${project.image}`} />
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column computer={6} only="computer">
-          <Image src={`${project.image}`} />
-        </Grid.Column>
-        <Grid.Column computer={10} mobile={16}>
-          <Header as="h3">
-            {(!project.isAuthor && logged) && (project.isFavorite ? <Icon name="star" color="yellow" /> : <Icon name="star outline" color="yellow" />)}
-            <Header.Content>{`${project.title} `}</Header.Content>
-          </Header>
-          <p><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
-          <p><Icon name="target" />{`${project.location}`}</p>
-          <Divider horizontal>Description</Divider>
-          <Segment basic>{`${project.description}`}</Segment>
-          <Divider />
-          <Label.Group>
-            <Label basic content="Créé le" detail={`${project.creation_date}`} />
-            <Label basic content="Expire le" detail={`${project.expiration_date}`} />
-            <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
-          </Label.Group>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
-  </>
-);
+const Description = ({ logged, project }) => {
+  // eslint-disable-next-line no-nested-ternary
+  const iconFavorite = (project.isAuthor || !logged)
+    ? {}
+    : project.isFavorite
+      ? {
+        name: 'star',
+        color: 'yellow',
+        size: 'small',
+      }
+      : {
+        name: 'star outline',
+        color: 'yellow',
+        size: 'small',
+      };
+
+  return (
+    <>
+      { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
+      <Grid divided stretched stackable verticalAlign="middle">
+        <Grid.Row only="mobile">
+          <Segment basic computer textAlign="center">
+            <Image src={`${project.image}`} centered spaced rounded />
+          </Segment>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column computer={6} only="computer">
+            <Segment basic computer>
+              <Image src={`${project.image}`} centered spaced rounded />
+            </Segment>
+          </Grid.Column>
+          <Grid.Column computer={10} mobile={16}>
+            <Header
+              size="small"
+              icon={iconFavorite}
+              content={` ${project.title}`}
+            />
+            <p className="description--marged-top"><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
+            <p className="description--marged-top"><Icon name="target" />{`${project.location}`}</p>
+            <Divider horizontal>Description</Divider>
+            <Segment basic>{`${project.description}`}</Segment>
+            <Divider />
+            <Label.Group>
+              <Label basic content="Créé le" detail={`${project.creation_date}`} />
+              <Label basic content="Expire le" detail={`${project.expiration_date}`} />
+              <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
+            </Label.Group>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </>
+  );
+};
 // == PROP TYPES
 Description.propTypes = {
   logged: PropTypes.bool.isRequired,
@@ -54,6 +76,12 @@ Description.propTypes = {
     isFavorite: PropTypes.bool.isRequired,
     isArchived: PropTypes.bool.isRequired,
     isAuthor: PropTypes.bool.isRequired,
+    followers: PropTypes.arrayOf(
+      shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
