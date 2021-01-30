@@ -51,7 +51,7 @@ const ProfilEdit = ({
           }}
         />
         {/** Uploader l'avatar */}
-        <Image size="small" src={`${avatar}`} />
+        <Image size="small" centered spaced src={`${avatar}`} />
         <Form.Input
           type="file"
           label="Fichier avatar utilisateur"
@@ -64,10 +64,10 @@ const ProfilEdit = ({
         <Segment basic textAlign="right">
           <Button.Group>
             <Button positive type="submit">Valider</Button>
-            <Button.Or />
-            <Button onClick={() => {
-              abortEditProfil();
-            }}
+            <Button.Or text="ou" />
+            <Button
+              type="button"
+              onClick={abortEditProfil}
             >Annuler
             </Button>
           </Button.Group>

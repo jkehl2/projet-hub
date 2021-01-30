@@ -1,9 +1,12 @@
 import { createBrowserHistory } from 'history';
 
+import throttle from 'lodash.throttle';
+
 import createRootReducer from 'src/store/reducers';
 
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { saveState } from 'src/store/localStorage';
 
 // == IMPORT - PERSONNAL MIDDLEWARE
 import appMiddleware from 'src/middlewares/app';
@@ -28,5 +31,12 @@ export default function configureStore(preloadedState) {
       ),
     ),
   );
+
+  store.subscribe(throttle(() => {
+    saveState({
+      user: store.getState().user,
+    });
+  }, 1000));
+
   return store;
 }

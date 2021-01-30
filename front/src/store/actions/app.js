@@ -6,6 +6,7 @@
 // == [CLE-VALEURS] - ACTIONS MIDDLEWARE applicatif technique
 export const APP_REFRESH_PROFIL = 'APP_REFRESH_PROFIL';
 export const APP_CONFIRM_PASSWORD = 'APP_CONFIRM_PASSWORD';
+export const APP_CONFIRM_DELETE = 'APP_CONFIRM_DELETE';
 
 // == [CLE-VALEURS] - ACTIONS sur le store applicatif technique
 export const APP_LOADING_ON = 'APP_LOADING_ON';
@@ -48,6 +49,10 @@ export const appRefreshProfil = () => ({
 
 export const appConfirmPassword = () => ({
   type: APP_CONFIRM_PASSWORD,
+});
+
+export const appConfirmDelete = () => ({
+  type: APP_CONFIRM_DELETE,
 });
 
 // == ===================================

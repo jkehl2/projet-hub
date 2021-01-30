@@ -16,9 +16,6 @@ const mapDispatchToProps = (dispatch) => ({
   getProjectById: (projectId) => {
     dispatch(getProjectById(projectId));
   },
-  cleanProject: () => {
-    dispatch(cleanProject);
-  },
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Project));

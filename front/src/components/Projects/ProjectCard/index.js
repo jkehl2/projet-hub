@@ -13,7 +13,7 @@ import './projectCard.scss';
 
 // == Composant
 const ProjectCard = ({ logged, project }) => (
-  <Segment>
+  <Segment compact>
     { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
     <Grid divided stackable verticalAlign="middle">
       <Grid.Row>
@@ -43,7 +43,7 @@ const ProjectCard = ({ logged, project }) => (
             </Grid>
           </Link>
           <p><Image avatar spaced="right" src={`${project.author.avatar}`} />{`${project.author.name}`}</p>
-          <p>{`${project.description}`}</p>
+          <Segment basic compact>{`${project.description}`}</Segment>
           <p><Icon name="target" />{`${project.location}`}</p>
           <Divider />
           <Label.Group>

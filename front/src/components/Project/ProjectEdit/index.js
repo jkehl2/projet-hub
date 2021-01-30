@@ -48,7 +48,7 @@ const ProjectEdit = ({ project }) => (
       <Segment basic textAlign="right">
         <Button.Group>
           <Button positive>Valider</Button>
-          <Button.Or />
+          <Button.Or text="ou" />
           <Button>Annuler</Button>
         </Button.Group>
       </Segment>

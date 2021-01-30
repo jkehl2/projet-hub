@@ -9,17 +9,17 @@ import querystring from 'query-string';
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
   APP_REFRESH_PROFIL,
-  appUpdateProfil,
+  APP_CONFIRM_PASSWORD,
+  APP_CONFIRM_DELETE,
+  APP_PROJECT_CREATE_VERIF,
   USER_CREATION_VERIF,
+  appUpdateProfil,
   appMsgUpdate,
   appErrorUpdate,
   appErrorClean,
   appMsgClean,
   appLoadingOn,
   appLoadingOff,
-  APP_CONFIRM_PASSWORD,
-  APP_PROJECT_CREATE_VERIF,
-  appClean,
 } from 'src/store/actions/app';
 
 import {
@@ -29,10 +29,14 @@ import {
   cleanProjectStore,
 } from 'src/store/actions/project';
 
-import perimetersValue from 'src/utils/perimeters.json';
-import { createUser, userEditPassword } from '../store/actions/user';
+import {
+  userEditPassword,
+  createUser,
+  deleteUser,
+} from 'src/store/actions/user';
 
 // == import utils to allow perimeter conversion
+import perimetersValue from 'src/utils/perimeters.json';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const userMiddleware = (store) => (next) => (action) => {
@@ -78,6 +82,15 @@ const userMiddleware = (store) => (next) => (action) => {
       return;
     }
     case APP_CONFIRM_PASSWORD: {
+      const { app: { profil: { deleteConfirm } } } = store.getState();
+      if (deleteConfirm === 'CONFIRMER') {
+        store.dispatch(deleteUser());
+      }
+      else {
+        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour supprimer définitivement votre compte utlisateur."));
+      }
+      return; }
+    case APP_CONFIRM_DELETE: {
       const { app: { profil: { password, passwordConfirm } } } = store.getState();
       if (password === passwordConfirm) {
         store.dispatch(userEditPassword());
@@ -86,9 +99,7 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas égale au nouveau mot de passe. Veuillez ressaisir votre confirmation de mot de passe.'));
       }
       return; }
-
     case PROJECT_SEARCH: {
-      // gathering values needed for geocoding
       const {
         app: {
           search: {
@@ -98,21 +109,29 @@ const userMiddleware = (store) => (next) => (action) => {
           },
         },
       } = store.getState();
-
       if (localite.trim() === '') {
         store.dispatch(appErrorClean());
         store.dispatch(appMsgClean());
         store.dispatch(cleanProjectStore());
         return;
       }
-      const search = querystring.stringify(localite);
-      axios.get(`https://nominatim.openstreetmap.org/search?adressdetails=1&q=${search}&format=json&limit=1`)
+      const query = querystring.stringifyUrl({
+        url: 'https://nominatim.openstreetmap.org/search',
+        query: {
+          adressdetails: 1,
+          q: localite,
+          format: 'json',
+          limit: 1,
+        },
+      });
+
+      axios.get(query)
         .then((response) => {
           const geolocArr = response.data;
           if (geolocArr.length > 0) {
             const searchValue = {
-              long: geolocArr[0].lon,
-              lat: geolocArr[0].lat,
+              lat: parseFloat(geolocArr[0].lat),
+              long: parseFloat(geolocArr[0].lon),
               scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
               archived,
             };
@@ -132,7 +151,6 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-
     case APP_PROJECT_CREATE_VERIF: {
       const {
         app: {
@@ -148,7 +166,6 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(sendProjectApi());
       }
       return; }
-
     default:
       next(action);
       break;
