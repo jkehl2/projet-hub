@@ -141,6 +141,8 @@ export const queryProjectById = {
         location
         image
         archived
+        isFollowed
+        userIsAuthor
         author{
           id
           name
@@ -152,6 +154,10 @@ export const queryProjectById = {
           title
           description
           completed
+        }
+        followers{
+          id
+          name
         }
     }
   }`,
@@ -189,6 +195,12 @@ export const queryGetProjectsByGeo = {
           name
           email
           avatar
+        }
+        isFollowed
+        userIsAuthor
+        followers{
+          id
+          name
         }
     }
   }`,

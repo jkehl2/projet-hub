@@ -65,13 +65,15 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       axios(config)
         .then((response) => {
-          const { user } = store.getState();
           const projects = response.data.data.projectsByGeo.map((project) => ({
             id: project.id,
-            isFavorite: false,
+            isFavorite: project.isFollowed,
             isArchived: project.archived,
-            isAuthor: (parseInt(user.id, 10) === parseInt(project.author.id, 10)),
+            isAuthor: project.userIsAuthor,
             title: project.title,
+            followers: project.followers.sort((follower1, follower2) => (
+              parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
+            )),
             location: project.location,
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
@@ -95,7 +97,56 @@ const projectMiddleware = (store) => (next) => (action) => {
         });
       return;
     }
-    // CREATION
+    case GET_PROJECT_BY_ID: {
+      const data = JSON.stringify({
+        ...queryProjectById,
+        variables: { ...action.payload },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      axios(config)
+        .then((response) => {
+          const apiData = response.data.data.project;
+          const project = {
+            id: apiData.id,
+            isFavorite: apiData.isFollowed,
+            isArchived: apiData.archived,
+            isAuthor: apiData.userIsAuthor,
+            title: apiData.title,
+            followers: apiData.followers.sort((follower1, follower2) => (
+              parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
+            )),
+            description: apiData.description,
+            location: apiData.location,
+            expiration_date: parseDate(apiData.expiration_date),
+            creation_date: parseDate(apiData.created_at),
+            image: apiData.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : apiData.image,
+            author: {
+              id: apiData.author.id,
+              name: apiData.author.name,
+              email: apiData.author.email,
+              avatar: apiData.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : apiData.author.avatar,
+            },
+            needs: apiData.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
+          };
+          store.dispatch(updateProjectStore({ project }));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(cleanProject());
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
     case PROJECT_CREATE: {
       const {
         title, description, expirationDate, location, lat, long, author,
@@ -131,7 +182,6 @@ const projectMiddleware = (store) => (next) => (action) => {
       store.dispatch(appErrorClean());
       return;
     }
-    // EDITING
     case PROJECT_EDIT: {
       const {
         id, title, description, expirationDate, location, lat, long, author,
@@ -208,55 +258,6 @@ const projectMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
-      store.dispatch(appLoadingOn());
-      store.dispatch(appMsgClean());
-      store.dispatch(appErrorClean());
-      return;
-    }
-    // GET BY ID == OK
-    case GET_PROJECT_BY_ID: {
-      const data = JSON.stringify({
-        ...queryProjectById,
-        variables: { ...action.payload },
-      });
-      const config = {
-        ...configGraphQl,
-        data,
-      };
-      axios(config)
-        .then((response) => {
-          const { user } = store.getState();
-          const apiData = response.data.data.project;
-          const project = {
-            id: apiData.id,
-            isFavorite: false,
-            isArchived: apiData.archived,
-            isAuthor: (parseInt(user.id, 10) === parseInt(apiData.author.id, 10)),
-            title: apiData.title,
-            description: apiData.description,
-            location: apiData.location,
-            expiration_date: parseDate(apiData.expiration_date),
-            creation_date: parseDate(apiData.created_at),
-            image: apiData.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : apiData.image,
-            author: {
-              id: apiData.author.id,
-              name: apiData.author.name,
-              email: apiData.author.email,
-              avatar: apiData.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : apiData.author.avatar,
-            },
-            needs: apiData.needs.sort((need1, need2) => (
-              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
-            )),
-          };
-          store.dispatch(updateProjectStore({ project }));
-        })
-        .catch((error) => {
-          store.dispatch(appErrorUpdate(error.message));
-        })
-        .finally(() => {
-          store.dispatch(appLoadingOff());
-        });
-      store.dispatch(cleanProject());
       store.dispatch(appLoadingOn());
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
