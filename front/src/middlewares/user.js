@@ -91,7 +91,6 @@ const userMiddleware = (store) => (next) => (action) => {
       return;
     }
     case USER_CREATE: {
-      // 1 recup payload
       const {
         app: {
           signUp: {
@@ -128,7 +127,6 @@ const userMiddleware = (store) => (next) => (action) => {
         });
       return;
     }
-
     case USER_EDIT_PASSWORD: {
       const { app: { profil: { password } } } = store.getState();
       const data = JSON.stringify({

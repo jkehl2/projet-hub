@@ -5,7 +5,12 @@ import { goBack, push } from 'connected-react-router';
 
 // graphql queries
 import configGraphQl, {
-  queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject, queryGetProjectsByGeo,
+  queryCreateProject,
+  queryEditProject,
+  queryProjectById,
+  queryDeleteProject,
+  queryGetProjectsByGeo,
+  queryArchivedProject,
 } from 'src/apiConfig/';
 
 // == import utils to allow perimeter conversion
@@ -19,15 +24,16 @@ import querystring from 'query-string';
 import {
   PROJECT_CREATE,
   PROJECT_EDIT,
-  PROJECT_DELETE,
+  PROJECT_DELETE_CURRENT,
+  PROJECT_ARCHIVED_CURRENT,
   GET_PROJECT_BY_ID,
   GET_PROJECT_BY_GEO,
+  SEND_PROJECT,
+  SEND_CREATED_PROJECT,
   updateProjectStore,
   cleanProject,
   cleanProjects,
-  SEND_PROJECT,
   sendProjectCreated,
-  SEND_CREATED_PROJECT,
 } from 'src/store/actions/project';
 
 import {
@@ -153,9 +159,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-    // DELETING
-    case PROJECT_DELETE: {
-      const { id } = action.payload;
+    case PROJECT_DELETE_CURRENT: {
+      const { project: { project: { id } } } = store.getState();
       const data = JSON.stringify({
         ...queryDeleteProject,
         variables: { id },
@@ -167,7 +172,34 @@ const projectMiddleware = (store) => (next) => (action) => {
       connector(config, 'deleteProject', store.dispatch)
         .then(() => {
           store.dispatch(goBack());
-          store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
+          store.dispatch(appMsgUpdate('Votre projet à été supprimmé définitivement.'));
+          store.dispatch(cleanProject());
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_ARCHIVED_CURRENT: {
+      const { project: { project: { id } } } = store.getState();
+      const data = JSON.stringify({
+        ...queryArchivedProject,
+        variables: { id },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'archiveProject', store.dispatch)
+        .then(() => {
+          store.dispatch(goBack());
+          store.dispatch(appMsgUpdate('Votre projet à été archivé.'));
           store.dispatch(cleanProject());
         })
         .catch((error) => {

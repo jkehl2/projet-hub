@@ -9,18 +9,17 @@ import {
   Button,
   Menu,
 } from 'semantic-ui-react';
+import ModalConfirmDelete from 'src/components/ModalConfirmDelete';
 
 // == STYLES
 import './projectMenu.scss';
 
 // == Composant
-const ProjectMenu = (deleteConfirm, setConfirmation, deleteProject) => {
+const ProjectMenu = ({ deleteConfirm, setConfirmation, archiveProject, deleteProject }) => {
   const [state, setState] = useState({ activeItem: '' });
-
   const handleItemClick = (e, { name }) => {
     setState({ activeItem: name });
   };
-
   return (
     <>
       <Menu compact icon secondary attached="bottom">
@@ -39,7 +38,13 @@ const ProjectMenu = (deleteConfirm, setConfirmation, deleteProject) => {
           onClick={handleItemClick}
           fitted="horizontally"
         >
-          <Button icon="archive" title="Archiver" />
+          <ModalConfirmDelete
+            title="Confirmer l'archivage de votre projet"
+            trigger={<Button icon="archive" title="Archiver" />}
+            deleteConfirm={deleteConfirm}
+            setConfirmation={setConfirmation}
+            handleDelete={archiveProject}
+          />
         </Menu.Item>
 
         <Menu.Item
@@ -48,7 +53,13 @@ const ProjectMenu = (deleteConfirm, setConfirmation, deleteProject) => {
           onClick={handleItemClick}
           fitted="horizontally"
         >
-          <Button icon="trash" color="red" title="Supprimer" />
+          <ModalConfirmDelete
+            title="Confirmer la suppression de votre projet"
+            trigger={<Button icon="archive" title="Archiver" />}
+            deleteConfirm={deleteConfirm}
+            setConfirmation={setConfirmation}
+            handleDelete={deleteProject}
+          />
         </Menu.Item>
       </Menu>
     </>
@@ -57,6 +68,7 @@ const ProjectMenu = (deleteConfirm, setConfirmation, deleteProject) => {
 ProjectMenu.propTypes = {
   deleteConfirm: PropTypes.string.isRequired,
   setConfirmation: PropTypes.func.isRequired,
+  archiveProject: PropTypes.func.isRequired,
   deleteProject: PropTypes.func.isRequired,
 };
 

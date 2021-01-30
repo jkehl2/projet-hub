@@ -38,8 +38,9 @@ export const appRefreshProfil = () => ({
   type: APP_REFRESH_PROFIL,
 });
 
-export const appConfirmPassword = () => ({
+export const appConfirmPassword = (dispatch) => ({
   type: APP_CONFIRM_PASSWORD,
+  dispatch,
 });
 
 export const appConfirmDelete = (dispatch) => ({

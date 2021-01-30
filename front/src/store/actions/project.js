@@ -7,7 +7,9 @@
 export const PROJECT_SEARCH = 'PROJECT_SEARCH';
 export const PROJECT_CREATE = 'PROJECT_CREATE';
 export const PROJECT_EDIT = 'PROJECT_EDIT';
-export const PROJECT_DELETE = 'PROJECT_DELETE';
+export const PROJECT_DELETE_CURRENT = 'PROJECT_DELETE';
+export const PROJECT_ARCHIVED_CURRENT = 'PROJECT_ARCHIVED';
+
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const GET_PROJECT_BY_GEO = 'GET_PROJECT_BY_GEO';
 export const SEND_PROJECT = 'SEND_PROJECT';
@@ -68,9 +70,13 @@ export const editProject = (project) => ({
 });
 
 // deleting a project
-export const deleteProject = (project) => ({
-  type: PROJECT_DELETE,
-  payload: project,
+export const deleteProjectById = () => ({
+  type: PROJECT_DELETE_CURRENT,
+});
+
+// Archiving a project
+export const archiveProjectById = () => ({
+  type: PROJECT_ARCHIVED_CURRENT,
 });
 
 // get a project by id

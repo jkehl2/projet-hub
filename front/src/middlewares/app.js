@@ -89,7 +89,7 @@ const userMiddleware = (store) => (next) => (action) => {
     case APP_CONFIRM_PASSWORD: {
       const { app: { profil: { password, passwordConfirm } } } = store.getState();
       if (password === passwordConfirm) {
-        store.dispatch(userEditPassword());
+        store.dispatch(action.dispatch());
       }
       else {
         store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas égale au nouveau mot de passe. Veuillez ressaisir votre confirmation de mot de passe.'));

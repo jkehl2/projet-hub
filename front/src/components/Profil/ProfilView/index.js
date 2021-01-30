@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Button, Form, Item, Modal, Segment,
+  Button, Item, Segment,
 } from 'semantic-ui-react';
 import ModalConfirmDelete from 'src/components/ModalConfirmDelete';
 

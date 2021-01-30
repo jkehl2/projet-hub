@@ -161,7 +161,7 @@ export const queryDeleteProject = {
   query: `mutation deleteProject($id: ID!) {
     deleteProject(id: $id) {
       ... on Project{
-      
+        id
       }
       ... on Error{
         error{
@@ -196,25 +196,9 @@ export const queryGetProjectsByGeo = {
 export const queryCreateProject = {
   query: `mutation CreateProject($title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String, $needs: [NeedInput]) {
     insertProject( title: $title, description: $description, expiration_date: $expiration_date, location: $location, lat: $lat, long: $long, image: $image, file: $file, needs: $needs) {
-      ... on Need{
+      ... on Project{
         id
-        title
-        description
-        created_at
-        isFollowed
-        userIsAuthor
-        needs{
-          id
-          title
-          project{
-            id
-            title}
-        }
-        author{
-          name
-        }
       }
-
       ... on Error{
         error{
           msg
@@ -257,6 +241,22 @@ export const queryUnCompletedNeed = {
           code
         }
       }      
+    }
+  }`,
+};
+
+export const queryArchivedProject = {
+  query: `mutation archiveProject($id: ID!) {
+    archiveProject(id: $id) {
+      ... on Project{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
     }
   }`,
 };

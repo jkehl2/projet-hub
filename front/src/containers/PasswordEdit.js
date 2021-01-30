@@ -4,6 +4,7 @@ import PasswordEdit from 'src/components/PasswordEdit';
 
 import { push } from 'connected-react-router';
 import { appUpdateProfil, appProfilClean, appConfirmPassword } from 'src/store/actions/app';
+import { userEditPassword } from 'src/store/actions/user';
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
@@ -20,7 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleSubmit: (event) => {
     event.preventDefault();
-    dispatch(appConfirmPassword());
+    dispatch(appConfirmPassword(userEditPassword));
   },
   abortConfirmPassword: (event) => {
     event.preventDefault();
