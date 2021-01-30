@@ -64,7 +64,7 @@ const reducer = (oldState = initialState, action = {}) => {
         ...projectInitialState,
       };
     case PROJECT_NEED_UPDATE_BY_ID: {
-      const [updatedNeed] = [...oldState.project.needs
+      const [updatedNeed] = [oldState.project.needs
         .find((need) => need.id === action.payload.id)];
       updatedNeed.completed = action.payload.completed;
 

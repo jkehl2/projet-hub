@@ -51,10 +51,16 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      connector(config, 'completeNeed', store.dispatch)
+      connector(config, completed ? 'completeNeed' : 'uncompleteNeed', store.dispatch)
         .then((response) => {
-          const { data: { data: { completeNeed } } } = response;
-          store.dispatch(updateProjectNeed(completeNeed));
+          if (completed) {
+            const { data: { data: { completeNeed } } } = response;
+            store.dispatch(updateProjectNeed(completeNeed));
+          }
+          else {
+            const { data: { data: { uncompleteNeed } } } = response;
+            store.dispatch(updateProjectNeed(uncompleteNeed));
+          }
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));

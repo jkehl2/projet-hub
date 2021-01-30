@@ -245,8 +245,8 @@ export const queryCompletedNeed = {
   }`,
 };
 export const queryUnCompletedNeed = {
-  query: `mutation uncomplete($id: ID!) {
-    uncomplete(id: $id) {
+  query: `mutation uncompleteNeed($id: ID!) {
+    uncompleteNeed(id: $id) {
       ... on Need{
         id
         completed

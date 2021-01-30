@@ -1,9 +1,9 @@
 // == Import npm
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
+  Button,
   Icon, Menu, Segment,
 } from 'semantic-ui-react';
 
@@ -23,40 +23,37 @@ const ProjectMenu = () => {
   };
 
   return (
-    <Segment basic>
-      <Menu compact icon="labeled" secondary floated="right">
+    <>
+      <Menu compact icon secondary attached="bottom">
         <Menu.Item
           name="Editer"
           active={state.activeItem === 'edit'}
           onClick={handleItemClick}
+          fitted="horizontally"
         >
-          <Icon name="edit" />
-          Editer
+          <Button icon="edit" title="Editer" />
         </Menu.Item>
 
         <Menu.Item
           name="Archiver"
           active={state.activeItem === 'archive'}
           onClick={handleItemClick}
+          fitted="horizontally"
         >
-          <Icon name="archive" />
-          Archiver
+          <Button icon="archive" title="Archiver" />
         </Menu.Item>
 
         <Menu.Item
           name="Supprimer"
           active={state.activeItem === 'delete'}
           onClick={handleItemClick}
+          fitted="horizontally"
         >
-          <Icon name="trash" color="red" />
-          Supprimer
+          <Button icon="trash" color="red" title="Supprimer" />
         </Menu.Item>
       </Menu>
-    </Segment>
+    </>
   );
-};
-// == PROP TYPES
-ProjectMenu.propTypes = {
 };
 
 // == Export
