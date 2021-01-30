@@ -41,7 +41,7 @@ const ModalConfirmDelete = ({
                 setConfirmation({ deleteConfirm: event.target.value });
               }}
             />
-            <Segment textAlign="right">
+            <Segment basic compact textAlign="right">
               <Button.Group>
                 <Form.Button negative type="submit">Confirmer</Form.Button>
                 <Button.Or text="ou" />
