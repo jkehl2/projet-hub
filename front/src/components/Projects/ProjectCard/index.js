@@ -50,6 +50,7 @@ const ProjectCard = ({ logged, project }) => {
             <p><Icon name="target" />{`${project.location}`}</p>
             <Divider />
             <Label.Group>
+              <Label basic icon="star" content={`${project.followers.length}`} />
               <Label basic content="Créé le" detail={`${project.creation_date}`} />
               <Label basic content="Expire le" detail={`${project.expiration_date}`} />
               <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />

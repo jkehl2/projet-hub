@@ -32,6 +32,7 @@ export const projectInitialState = {
       avatar: '',
     },
     needs: [],
+    followers: [],
   },
 };
 
