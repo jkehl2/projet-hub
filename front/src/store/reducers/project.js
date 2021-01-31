@@ -10,6 +10,7 @@ import {
   PROJECT_CLEAN_PROJECTS,
   PROJECT_CLEAN_PROJECT,
   PROJECT_NEED_UPDATE_BY_ID,
+  GET_PROJECT_BY_ID,
 } from 'src/store/actions/project';
 
 // ==  INITIAL STATE : a project object empty
@@ -81,6 +82,13 @@ const reducer = (oldState = initialState, action = {}) => {
             parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
           )),
         },
+      };
+    }
+
+    case GET_PROJECT_BY_ID: {
+      return {
+        ...oldState,
+        ...action.payload,
       };
     }
     default:

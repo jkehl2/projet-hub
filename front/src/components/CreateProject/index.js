@@ -17,17 +17,17 @@ import './createProject.scss';
 
 // == Composant
 const CreateProject = ({
-  title, date, description, location,
+  title, expiration_date, description, location,
   setCreateProject, perimeter, handleSubmit,
 }) => (
   <Container className="createProject">
     <Segment textAlign="left">
       {/* Titre */}
-      <Header as="h1">Créer un projet</Header>
+      <Header as="h1">Créer un projet !</Header>
       <Form>
         <Form.Input
           type="text"
-          label="nom du projet"
+          label="Titre du projet"
           title="nom du projet"
           placeholder="titre"
           required
@@ -42,9 +42,9 @@ const CreateProject = ({
           title="date d'expiration"
           placeholder="date"
           required
-          value={date}
+          value={expiration_date}
           onChange={(event) => {
-            setCreateProject({ date: event.target.value });
+            setCreateProject({ expiration_date: event.target.value });
           }}
         />
         <Form.TextArea
@@ -66,7 +66,7 @@ const CreateProject = ({
           required
           value={location}
           onChange={(event) => {
-            setCreateProject({ localité: event.target.value });
+            setCreateProject({ location: event.target.value });
           }}
         />
         <Form.Input
@@ -95,7 +95,7 @@ const CreateProject = ({
 
 CreateProject.propTypes = {
   title: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
+  expiration_date: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   setCreateProject: PropTypes.func.isRequired,

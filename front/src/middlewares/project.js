@@ -34,6 +34,7 @@ import {
   cleanProject,
   cleanProjects,
   sendProjectCreated,
+  getProjectById,
 } from 'src/store/actions/project';
 
 import {
@@ -275,7 +276,7 @@ const projectMiddleware = (store) => (next) => (action) => {
       const {
         app: {
           createProject: {
-            title, date, description, location, perimeter,
+            title, expiration_date, description, location, perimeter,
           },
         },
       } = store.getState();
@@ -321,14 +322,14 @@ const projectMiddleware = (store) => (next) => (action) => {
       const {
         app: {
           createProject: {
-            title, date, description, location,
+            title, expiration_date, description, location,
           },
         },
       } = store.getState();
       const data = JSON.stringify({
         ...queryCreateProject,
         variables: {
-          long, lat, scope, title, date, description, location,
+          long, lat, scope, title, expiration_date, description, location,
         },
       });
       const config = {
@@ -338,8 +339,10 @@ const projectMiddleware = (store) => (next) => (action) => {
       // send values
       connector(config, 'insertProject', store.dispatch)
         .then((response) => {
-          // redirect to needs page
           store.dispatch(appMsgUpdate('Projet crée ! '));
+          // update the project store by giving id of newly created project
+          store.dispatch(getProjectById(response.data.data.insertProject.id));
+          // redirect to needs page
           store.dispatch(push('/utilisateur/create/needs'));
         })
         .catch((error) => {

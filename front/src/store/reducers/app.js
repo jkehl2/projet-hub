@@ -72,7 +72,7 @@ export const profilInitialState = {
 // ==  INITIALE SUB APP STATE - createProject
 export const createProjectInitialState = {
   title: '',
-  date: '',
+  expiration_date: '',
   description: '',
   location: '',
   perimeter: 0,

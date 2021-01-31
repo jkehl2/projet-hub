@@ -79,9 +79,9 @@ export const archiveProjectById = () => ({
 });
 
 // get a project by id
-export const getProjectById = (id) => ({
+export const getProjectById = (payload) => ({
   type: GET_PROJECT_BY_ID,
-  payload: { id },
+  payload,
 });
 
 export const getProjectByGeo = (payload) => ({
