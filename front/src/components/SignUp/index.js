@@ -43,7 +43,7 @@ const SignUp = ({
         label="Email utilisateur"
         title="Email utilisateur"
         placeholder="albert.dupont@project-hub.fr"
-        autoComplete="current-user"
+        autoComplete="new-user"
         required
         value={email}
         onChange={(event) => {
@@ -56,7 +56,7 @@ const SignUp = ({
         label="Mot de passe utilisateur"
         title="Mot de passe utilisateur"
         placeholder="******"
-        autoComplete="current-password"
+        autoComplete="new-password"
         required
         value={password}
         onChange={(event) => {
@@ -69,6 +69,7 @@ const SignUp = ({
         label="Confirmer mot de passe utilisateur"
         title="COnfirmer mot de passe utilisateur"
         placeholder="******"
+        autoComplete="new-password"
         required
         value={passwordVerification}
         onChange={(event) => {
