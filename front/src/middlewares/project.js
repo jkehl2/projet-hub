@@ -44,6 +44,7 @@ import {
   appMsgClean,
   appErrorClean,
   cleanCreateProject,
+  appEditProjectOff,
 } from 'src/store/actions/app';
 
 // == PARSE DATE UTIL FUNCTION :
@@ -189,13 +190,12 @@ const projectMiddleware = (store) => (next) => (action) => {
       return;
     }
     case PROJECT_EDIT: {
-      const {
-        id, title, description, expirationDate, location, lat, long, author,
-      } = action.payload;
+      const { project: { project: { id } } } = store.getState();
       const data = JSON.stringify({
         ...queryEditProject,
         variables: {
-          id, title, description, expirationDate, location, lat, long, author,
+          id,
+          ...action.payload,
         },
       });
       const config = {
@@ -204,7 +204,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       connector(config, 'ResponseObjectName', store.dispatch)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          store.dispatch(push(`/projet/${id}`));
+          store.dispatch(appMsgUpdate('Votre projet à été modifié.'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));

@@ -224,7 +224,52 @@ export const queryCreateProject = {
   }`,
 };
 export const queryEditProject = {
-  query: '',
+  query: `mutation EditProject(
+    $id: ID!,
+    $title: String!,
+    $description: String!,
+    $expiration_date: String!,
+    $location: String!,
+    $lat: Float!,
+    $long: Float!,
+    $image: String,
+    $file: String
+) {
+editProject(
+    id: $id,
+    title: $title,
+    description: $description,
+    expiration_date: $expiration_date,
+    location: $location,
+    lat: $lat,
+    long: $long,
+    image: $image,
+    file: $file
+) {
+... on Project{
+  id
+  title
+  description
+  expiration_date
+  location
+  lat
+  long
+  archived
+  needs{
+    id
+    title
+  }
+  
+}
+... on Error{
+  error{
+    msg
+    code
+  }
+}
+}
+}
+`,
 };
 
 export const queryCompletedNeed = {
