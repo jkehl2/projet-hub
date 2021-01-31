@@ -66,11 +66,11 @@ export const appSubmitCreatedProject = () => ({
 });
 
 export const appCreateUserVerif = () => ({
-  type: APP_PROJECT_EDIT,
+  type: APP_CREATE_USER_VERIF,
 });
 
 export const appProjectEdit = () => ({
-  type: APP_CREATE_USER_VERIF,
+  type: APP_PROJECT_EDIT,
 });
 
 export const appGetGeoCoding = (location, dispatchAction, payload) => ({
