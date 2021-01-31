@@ -7,6 +7,9 @@
 import axios from 'axios';
 import querystring from 'query-string';
 
+// ==  API CONFIGURATION URL
+import apiConfig from 'src/apiConfig/parameters.json';
+
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
   APP_REFRESH_PROFIL,
@@ -105,7 +108,7 @@ const userMiddleware = (store) => (next) => (action) => {
         return;
       }
       const query = querystring.stringifyUrl({
-        url: 'https://nominatim.openstreetmap.org/search',
+        url: apiConfig.URL_GEOCODE,
         query: {
           adressdetails: 1,
           q: location,
