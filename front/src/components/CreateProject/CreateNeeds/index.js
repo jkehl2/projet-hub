@@ -46,15 +46,6 @@ const CreateNeeds = ({
             </Button.Group>
           </Segment>
         </Form>
-        {needs.forEach((need) => (
-          <Segment>
-            <Form>
-              <Checkbox>{need.titleNeed}</Checkbox>
-              <Icon name="write" onClick={/**modify need function */} />
-              <Icon name="trash" onClick={/**delete need function */} />
-            </Form>
-          </Segment>
-        ))}
 
       </Grid.Column>
     </Grid.Row>
