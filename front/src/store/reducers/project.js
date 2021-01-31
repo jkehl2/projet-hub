@@ -85,12 +85,6 @@ const reducer = (oldState = initialState, action = {}) => {
       };
     }
 
-    case GET_PROJECT_BY_ID: {
-      return {
-        ...oldState,
-        ...action.payload,
-      };
-    }
     default:
       return { ...oldState };
   }

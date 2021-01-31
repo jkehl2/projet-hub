@@ -340,10 +340,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       connector(config, 'insertProject', store.dispatch)
         .then((response) => {
           store.dispatch(appMsgUpdate('Projet crée ! '));
-          // update the project store by giving id of newly created project
-          store.dispatch(getProjectById(response.data.data.insertProject.id));
-          // redirect to needs page
-          store.dispatch(push('/utilisateur/create/needs'));
+          // redirect to projects page
+          store.dispatch(push('/utilisateur/projets'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
