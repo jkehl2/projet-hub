@@ -14,6 +14,8 @@ export const APP_CREATE_USER_VERIF = 'USER_CREATION_VERIF';
 export const APP_PROJECT_CREATE_VERIF = 'APP_PROJECT_CREATE_VERIF';
 export const APP_PROJECT_EDIT = 'APP_PROJECT_EDIT';
 export const APP_GET_GEOCODING = 'APP_GET_GEOCODING';
+export const APP_CREATE_NEEDS = 'APP_CREATE_NEEDS';
+export const APP_SUBMIT_NEEDS = 'APP_SUBMIT_NEEDS';
 
 // == ===================================
 // == [CLE-VALEURS] - ACTIONS sur le store applicatif technique
@@ -200,3 +202,13 @@ export const appEditProjectOff = () => (
     payload: { isEditMode: false },
   }
 );
+
+// Create Needs
+export const appCreateNeeds = (payload) => ({
+  type: APP_CREATE_NEEDS,
+  payload,
+});
+
+export const appSubmitCreatedNeeds = () => ({
+  type: APP_SUBMIT_NEEDS,
+});

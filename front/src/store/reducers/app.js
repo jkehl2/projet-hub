@@ -22,6 +22,7 @@ import {
   APP_CLEAN_CREATE_PROJECT,
   APP_UPDATE_PROJECT,
   APP_CLEAN_PROJECT,
+  APP_CREATE_NEEDS,
 } from 'src/store/actions/app';
 
 // ==  INITIALE SUB APP STATE - error
@@ -87,6 +88,12 @@ export const projectInitialState = {
   location: '',
 };
 
+// == INITIAL STATE - createNeeds
+export const createNeedsInitialState = {
+  titleNeed: '',
+  descriptionNeed: '',
+};
+
 // ==  INITIALE STATE des paramètres applicatifs techniques
 export const initialState = {
   loading: false,
@@ -99,6 +106,7 @@ export const initialState = {
   signUp: { ...signUpInitialState },
   createProject: { ...createProjectInitialState },
   project: { ...projectInitialState },
+  createNeeds: { ...createNeedsInitialState },
 };
 
 // == USER REDUCER - Gestion du store des paramètres applicatifs techniques
@@ -233,6 +241,15 @@ const reducer = (oldState = initialState, action = {}) => {
         ...oldState,
         project: {
           ...projectInitialState,
+        },
+      };
+
+    case APP_CREATE_NEEDS:
+      return {
+        ...oldState,
+        createNeeds: {
+          ...oldState.createNeeds,
+          ...action.payload,
         },
       };
     default:

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Button, Header, Segment, Form, Grid, Checkbox,
+  Button, Header, Segment, Form, Grid, Checkbox, Icon,
 } from 'semantic-ui-react';
 
 // == IMPORTS CONTAINERS
@@ -12,7 +12,7 @@ import {
 // == Composant
 
 const CreateNeeds = ({
-  titleNeed, descriptionNeed, setCreateNeed,
+  titleNeed, descriptionNeed, setCreateNeed, handleSubmit, needs,
 }) => (
   <Grid columns={2} divided>
     <Grid.Row>
@@ -40,13 +40,22 @@ const CreateNeeds = ({
           />
           <Segment basic textAlign="right">
             <Button.Group>
-              <Button positive>Valider</Button>
+              <Button positive onClick={handleSubmit}>Valider</Button>
               <Button.Or />
-              <Button>Annuler</Button>
+              <Button negative>Annuler</Button>
             </Button.Group>
           </Segment>
-          <Checkbox>{titleNeed}</Checkbox>
         </Form>
+        {needs.forEach((need) => (
+          <Segment>
+            <Form>
+              <Checkbox>{need.titleNeed}</Checkbox>
+              <Icon name="write" onClick={/**modify need function */} />
+              <Icon name="trash" onClick={/**delete need function */} />
+            </Form>
+          </Segment>
+        ))}
+
       </Grid.Column>
     </Grid.Row>
   </Grid>
@@ -55,6 +64,11 @@ CreateNeeds.propTypes = {
   titleNeed: PropTypes.string.isRequired,
   descriptionNeed: PropTypes.string.isRequired,
   setCreateNeed: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  needs: PropTypes.arrayOf(PropTypes.shape({
+    titleNeed: PropTypes.string.isRequired,
+    descriptionNeed: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 // == Export
