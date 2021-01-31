@@ -296,7 +296,7 @@ const projectMiddleware = (store) => (next) => (action) => {
           const geolocArr = response.data;
           if (geolocArr.length > 0) {
             const searchValue = {
-              long: parseFloat(geolocArr[0].long),
+              long: parseFloat(geolocArr[0].lon),
               lat: parseFloat(geolocArr[0].lat),
               scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
             };

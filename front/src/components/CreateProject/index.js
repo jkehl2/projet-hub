@@ -38,7 +38,7 @@ const CreateProject = ({
         />
         <Form.Input
           type="text"
-          label="date d'expiration"
+          label="Date d'expiration"
           title="date d'expiration"
           placeholder="date"
           required
@@ -50,7 +50,7 @@ const CreateProject = ({
         <Form.TextArea
           type="text"
           label="description"
-          title="description"
+          title="Description du projet"
           placeholder="description"
           required
           value={description}
@@ -60,7 +60,7 @@ const CreateProject = ({
         />
         <Form.Input
           type="text"
-          label="localité"
+          label="Localité"
           title="localité"
           placeholder="localité"
           required
@@ -85,8 +85,8 @@ const CreateProject = ({
           <Label size="big" basic content={`${utils.perimeters[perimeter].value} km`} horizontal />
         </div>
         <Segment basic textAlign="right">
-          <Form.Button onClick={handleSubmit}>Ajouter</Form.Button>
-          <Button>Annuler</Button>
+          <Form.Button positive onClick={handleSubmit}>Valider</Form.Button>
+          <Button negative>Annuler</Button>
         </Segment>
       </Form>
     </Segment>
