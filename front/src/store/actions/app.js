@@ -6,11 +6,14 @@
 // == ===================================
 // == [CLE-VALEURS] - ACTIONS MIDDLEWARE applicatif technique
 export const APP_REFRESH_PROFIL = 'APP_REFRESH_PROFIL';
+export const APP_REFRESH_PROJECT = 'APP_REFRESH_PROJECT';
 export const APP_CONFIRM_PASSWORD = 'APP_CONFIRM_PASSWORD';
 export const APP_PROFIL_CONFIRM = 'APP_PROFIL_CONFIRM';
 export const APP_PROJECT_CONFIRM = 'APP_PROJECT_CONFIRM';
 export const APP_CREATE_USER_VERIF = 'USER_CREATION_VERIF';
 export const APP_PROJECT_CREATE_VERIF = 'APP_PROJECT_CREATE_VERIF';
+export const APP_PROJECT_EDIT = 'APP_PROJECT_EDIT';
+export const APP_GET_GEOCODING = 'APP_GET_GEOCODING';
 
 // == ===================================
 // == [CLE-VALEURS] - ACTIONS sur le store applicatif technique
@@ -49,6 +52,10 @@ export const appProfilConfirm = (dispatch) => ({
   dispatch,
 });
 
+export const appRefreshProject = () => ({
+  type: APP_REFRESH_PROJECT,
+});
+
 export const appProjectConfirm = (dispatch) => ({
   type: APP_PROJECT_CONFIRM,
   dispatch,
@@ -59,7 +66,18 @@ export const appSubmitCreatedProject = () => ({
 });
 
 export const appCreateUserVerif = () => ({
+  type: APP_PROJECT_EDIT,
+});
+
+export const appProjectEdit = () => ({
   type: APP_CREATE_USER_VERIF,
+});
+
+export const appGetGeoCoding = (location, dispatchAction, payload) => ({
+  type: APP_GET_GEOCODING,
+  location,
+  dispatchAction,
+  payload,
 });
 
 // == ===================================
@@ -157,7 +175,28 @@ export const cleanCreateProject = () => ({
   type: APP_CLEAN_CREATE_PROJECT,
 });
 
+// ============================================
+// == PROJECT SUB PART
 export const appUpdateProject = (payload) => ({
   type: APP_UPDATE_PROJECT,
   payload,
 });
+
+export const appCleanProject = (payload) => ({
+  type: APP_CLEAN_PROJECT,
+  payload,
+});
+
+export const appEditProjectOn = () => (
+  {
+    type: APP_UPDATE_PROJECT,
+    payload: { isEditMode: true },
+  }
+);
+
+export const appEditProjectOff = () => (
+  {
+    type: APP_UPDATE_PROJECT,
+    payload: { isEditMode: false },
+  }
+);

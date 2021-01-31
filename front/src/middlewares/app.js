@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /**
  * @module user-middleware
  * Middleware de gestion des connecteurs à la BD Utilisteurs
@@ -9,18 +10,23 @@ import querystring from 'query-string';
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
   APP_REFRESH_PROFIL,
+  APP_REFRESH_PROJECT,
   APP_CONFIRM_PASSWORD,
   APP_PROFIL_CONFIRM,
   APP_PROJECT_CONFIRM,
   APP_PROJECT_CREATE_VERIF,
+  APP_PROJECT_EDIT,
   APP_CREATE_USER_VERIF,
+  APP_GET_GEOCODING,
   appUpdateProfil,
+  appUpdateProject,
   appMsgUpdate,
   appErrorUpdate,
   appErrorClean,
   appMsgClean,
   appLoadingOn,
   appLoadingOff,
+  appGetGeoCoding,
 } from 'src/store/actions/app';
 
 import {
@@ -28,6 +34,7 @@ import {
   PROJECT_SEARCH,
   getProjectByGeo,
   cleanProjectStore,
+  editProject,
 } from 'src/store/actions/project';
 
 import {
@@ -48,6 +55,88 @@ const userMiddleware = (store) => (next) => (action) => {
         avatar: user.avatar,
       };
       store.dispatch(appUpdateProfil(payload));
+      return;
+    }
+    case APP_REFRESH_PROJECT: {
+      const {
+        project: {
+          project: {
+            title,
+            expiration_date,
+            description,
+            location,
+          },
+        },
+      } = store.getState();
+      const payload = {
+        title,
+        expiration_date,
+        description,
+        location,
+      };
+      store.dispatch(appUpdateProject(payload));
+      return;
+    }
+    case APP_PROJECT_EDIT: {
+      const { app: { project: { location } } } = store.getState();
+      const {
+        app: {
+          project: {
+            title,
+            expiration_date,
+            description,
+          },
+        },
+      } = store.getState();
+      const payload = {
+        title,
+        expiration_date,
+        description,
+        location,
+      };
+      store.dispatch(appGetGeoCoding(location, editProject, payload));
+      return;
+    }
+    case APP_GET_GEOCODING: {
+      const { location, dispatchAction } = action;
+      if (location.trim() === '') {
+        store.dispatch(appErrorClean());
+        store.dispatch(appMsgClean());
+        return;
+      }
+      const query = querystring.stringifyUrl({
+        url: 'https://nominatim.openstreetmap.org/search',
+        query: {
+          adressdetails: 1,
+          q: location,
+          format: 'json',
+          limit: 1,
+        },
+      });
+      axios.get(query)
+        .then((response) => {
+          const geolocArr = response.data;
+          if (geolocArr.length > 0) {
+            const payload = {
+              ...action.payload,
+              lat: parseFloat(geolocArr[0].lat),
+              long: parseFloat(geolocArr[0].lon),
+            };
+            store.dispatch(dispatchAction(payload));
+          }
+          else {
+            store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
+          }
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appErrorClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(appLoadingOn());
       return;
     }
     case APP_CREATE_USER_VERIF: {
@@ -115,46 +204,12 @@ const userMiddleware = (store) => (next) => (action) => {
           },
         },
       } = store.getState();
-      if (localite.trim() === '') {
-        store.dispatch(appErrorClean());
-        store.dispatch(appMsgClean());
-        store.dispatch(cleanProjectStore());
-        return;
-      }
-      const query = querystring.stringifyUrl({
-        url: 'https://nominatim.openstreetmap.org/search',
-        query: {
-          adressdetails: 1,
-          q: localite,
-          format: 'json',
-          limit: 1,
-        },
-      });
-
-      axios.get(query)
-        .then((response) => {
-          const geolocArr = response.data;
-          if (geolocArr.length > 0) {
-            const searchValue = {
-              lat: parseFloat(geolocArr[0].lat),
-              long: parseFloat(geolocArr[0].lon),
-              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
-              archived,
-            };
-            store.dispatch(getProjectByGeo(searchValue));
-          }
-          else {
-            store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
-          }
-        })
-        .catch((error) => {
-          store.dispatch(appErrorUpdate(error.message));
-          store.dispatch(appLoadingOff());
-        });
-      store.dispatch(appErrorClean());
-      store.dispatch(appMsgClean());
       store.dispatch(cleanProjectStore());
-      store.dispatch(appLoadingOn());
+      const payload = {
+        scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
+        archived,
+      };
+      store.dispatch(appGetGeoCoding(localite, getProjectByGeo, payload));
       return;
     }
     case APP_PROJECT_CREATE_VERIF: {

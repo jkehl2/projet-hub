@@ -59,10 +59,10 @@ export const searchInitialState = {
 
 // ==  INITIALE SUB APP STATE - profil
 export const profilInitialState = {
+  isEditMode: false,
   name: '',
   email: '',
   avatar: 'https://react.semantic-ui.com/images/avatar/large/matt.jpg',
-  isEditMode: false,
   confirm: '',
   password: '',
   passwordConfirm: '',
@@ -79,7 +79,12 @@ export const createProjectInitialState = {
 
 // ==  INITIALE SUB APP STATE - createProject
 export const projectInitialState = {
+  isEditMode: false,
   confirm: '',
+  title: '',
+  expiration_date: '',
+  description: '',
+  location: '',
 };
 
 // ==  INITIALE STATE des paramètres applicatifs techniques
