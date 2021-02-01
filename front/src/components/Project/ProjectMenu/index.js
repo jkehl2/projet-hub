@@ -23,6 +23,7 @@ const ProjectMenu = ({
   handleArchiveProject,
   handleDeleteProject,
   handleBackToView,
+  handleBackToPrevius,
 }) => (
   <Menu compact icon secondary attached="bottom" borderless size="mini">
     {isEditMode
@@ -99,6 +100,21 @@ const ProjectMenu = ({
               handleAction={handleDeleteProject}
             />
           </Menu.Item>
+          <Menu.Item
+            name="backPrevius"
+            fitted="horizontally"
+          >
+            <Button
+              type="button"
+              icon="arrow alternate circle left"
+              color="blue"
+              title="Revenir à la page précédente"
+              content="Retour"
+              labelPosition="left"
+              compact
+              onClick={handleBackToPrevius}
+            />
+          </Menu.Item>
         </>
       )}
   </Menu>
@@ -111,6 +127,7 @@ ProjectMenu.propTypes = {
   handleArchiveProject: PropTypes.func.isRequired,
   handleDeleteProject: PropTypes.func.isRequired,
   handleBackToView: PropTypes.func.isRequired,
+  handleBackToPrevius: PropTypes.func.isRequired,
 };
 
 // == Export

@@ -14,7 +14,7 @@ import {
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './projectEdit.scss';
+import './needForm.scss';
 
 // == Composant
 const NeedsForm = ({
@@ -62,7 +62,7 @@ const NeedsForm = ({
             syncNewNeedFields({ description: event.target.value });
           }}
         />
-        <Segment basic compact textAlign="right">
+        <Segment className="need-form--alignRight" basic compact textAlign="right">
           <Button
             positive
             type="submit"
@@ -121,10 +121,10 @@ const NeedsForm = ({
                 <Grid.Column width={4} verticalAlign="middle" textAlign="center">
                   <Button.Group>
                     <Button
-                      positive
                       type="submit"
                       title="Editer"
                       content="Editer"
+                      color="blue"
                       onClick={(event) => {
                         event.preventDefault();
                         EditNeedById(need.id);
@@ -132,6 +132,7 @@ const NeedsForm = ({
                     />
                     <Button.Or text="ou" />
                     <Button
+                      negative
                       type="button"
                       title="Supprimer"
                       content="Supprimer"

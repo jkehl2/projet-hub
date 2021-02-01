@@ -15,7 +15,7 @@ import {
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './projectEdit.scss';
+import './projectForm.scss';
 
 // == Composant
 const ProjectForm = ({
@@ -82,7 +82,7 @@ const ProjectForm = ({
             setProjectField({ expiration_date: event.target.value });
           }}
         />
-        <Segment basic compact textAlign="right">
+        <Segment className="projectForm--align-right" basic compact textAlign="right">
           <Button
             positive
             type="submit"

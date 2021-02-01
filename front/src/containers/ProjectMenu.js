@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import ProjectMenu from 'src/components/Project/ProjectMenu';
+import { goBack } from 'connected-react-router';
 
 import {
   appEditProjectOn,
@@ -38,6 +39,10 @@ const mapDispatchToProps = (dispatch) => ({
     event.preventDefault();
     dispatch(appCleanProject());
     dispatch(appEditProjectOff());
+  },
+  handleBackToPrevius: (event) => {
+    event.preventDefault();
+    dispatch(goBack());
   },
 });
 
