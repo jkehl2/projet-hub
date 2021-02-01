@@ -127,8 +127,7 @@ export const queryUserDelete = {
 };
 
 export const queryByAuthor = {
-  query: `
-    myInfos{
+  query: `{myInfos{
       ... on User{
         id
         projectsCreated{
@@ -194,7 +193,7 @@ export const queryByAuthor = {
           code
         }
       }
-    }`,
+    }}`,
 };
 // == QUERY - Get project by ID
 export const queryProjectById = {

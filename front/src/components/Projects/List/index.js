@@ -9,12 +9,14 @@ import { Segment } from 'semantic-ui-react';
 
 // == STYLES
 import './list.scss';
+import { useLocation } from 'react-router-dom';
 
 // == Composant
 const List = ({ logged, projects, updateList }) => {
+  const location = useLocation();
   useEffect(() => {
     updateList();
-  }, []);
+  }, [location]);
   return (
     <Segment className="list--no-marged" basic compact>
       {projects.map((project) => (

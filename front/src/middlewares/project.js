@@ -87,6 +87,8 @@ const projectMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
+          const projects = [];
+          store.dispatch(updateProjectStore({ projects }));
         })
         .finally(() => {
           store.dispatch(appLoadingOff());
@@ -292,6 +294,8 @@ const projectMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
+          const projects = [];
+          store.dispatch(updateProjectStore({ projects }));
         })
         .finally(() => {
           store.dispatch(appLoadingOff());
@@ -345,6 +349,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
+      store.dispatch(appLoadingOn());
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       return;

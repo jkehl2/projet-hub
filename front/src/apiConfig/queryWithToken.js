@@ -33,15 +33,8 @@ export default (config, dataLabel, dispatch) => new Promise((resolve, reject) =>
     }
     else if (response.data.errors) {
       const { errors } = response.data.data[dataLabel];
-      if (parseInt(errors[0].code, 10) === 1) {
-        dispatch(cleanUserStore());
-        dispatch(push('/utilisateur/connexion'));
-        reject(new Error('Utilisateur non connecté'));
-      }
-      else {
-        reject(new Error(errors[0].msg));
-        return;
-      }
+      reject(new Error(errors[0].message));
+      return;
     }
     resolve(response);
   }).catch((error) => {
