@@ -23,6 +23,10 @@ import {
   APP_UPDATE_PROJECT,
   APP_CLEAN_PROJECT,
   APP_CREATE_NEEDS,
+  APP_UPDATE_NEEDS_FIELDS,
+  APP_UPDATE_NEEDS_ARRAY_FIELDS_BY_ID,
+  APP_ADD_NEED_TO_ARRAY,
+  APP_DELETE_NEED_IN_ARRAY_BY_ID,
 } from 'src/store/actions/app';
 
 // ==  INITIALE SUB APP STATE - error
@@ -88,6 +92,18 @@ export const projectInitialState = {
   location: '',
 };
 
+// ==  INITIALE SUB APP STATE - needs fields
+export const needsFieldsInitialState = {
+  title: '',
+  description: '',
+};
+
+// ==  INITIALE SUB APP STATE - needs
+export const needsInitialState = {
+  needs: [],
+  fields: { ...needsFieldsInitialState },
+};
+
 // == INITIAL STATE - createNeeds
 export const createNeedsInitialState = {
   titleNeed: '',
@@ -106,6 +122,7 @@ export const initialState = {
   signUp: { ...signUpInitialState },
   createProject: { ...createProjectInitialState },
   project: { ...projectInitialState },
+  needs: { ...needsInitialState },
   createNeeds: { ...createNeedsInitialState },
 };
 
@@ -252,6 +269,61 @@ const reducer = (oldState = initialState, action = {}) => {
           ...action.payload,
         },
       };
+    case APP_UPDATE_NEEDS_FIELDS: {
+      return {
+        ...oldState,
+        needs: {
+          ...oldState.needs,
+          fields: {
+            ...oldState.needs.fields,
+            ...action.payload,
+          },
+        },
+      };
+    }
+    case APP_UPDATE_NEEDS_ARRAY_FIELDS_BY_ID: {
+      const newNeedsArr = [...oldState.needs.needs.filter((need) => need.id !== action.id)];
+      let [needToUpdate] = [oldState.needs.needs.find((need) => need.id === action.id)];
+      needToUpdate = {
+        ...needToUpdate,
+        ...action.payload,
+      };
+      newNeedsArr.push(needToUpdate);
+      return {
+        ...oldState,
+        needs: {
+          ...oldState.needs,
+          needs: newNeedsArr.sort((need1, need2) => (
+            parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+          )),
+        },
+      };
+    }
+    case APP_ADD_NEED_TO_ARRAY: {
+      const newNeedsArr = [...oldState.needs.needs];
+      newNeedsArr.push(action.newNeed);
+      return {
+        ...oldState,
+        needs: {
+          ...oldState.needs,
+          needs: newNeedsArr.sort((need1, need2) => (
+            parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+          )),
+        },
+      };
+    }
+    case APP_DELETE_NEED_IN_ARRAY_BY_ID: {
+      const newNeedsArr = [...oldState.needs.needs.filter((need) => need.id !== action.id)];
+      return {
+        ...oldState,
+        needs: {
+          ...oldState.needs,
+          needs: newNeedsArr.sort((need1, need2) => (
+            parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+          )),
+        },
+      };
+    }
     default:
       return { ...oldState };
   }

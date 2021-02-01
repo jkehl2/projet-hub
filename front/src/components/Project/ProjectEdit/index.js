@@ -1,22 +1,21 @@
 // == Import npm
 import React from 'react';
 
-// == IMPORTS COMPOSANTS
-import {
-  Segment,
-} from 'semantic-ui-react';
-
 // == IMPORTS CONTAINERS
+import ProjectForm from 'src/containers/ProjectForm';
+import NeedsForm from 'src/containers/NeedsForm';
+
+// == IMPORTS COMPOSANTS
 
 // == STYLES
 import './projectEdit.scss';
-import ProjectForm from 'src/containers/ProjectForm';
 
 // == Composant
 const ProjectEdit = () => (
-  <Segment basic>
+  <>
     <ProjectForm />
-  </Segment>
+    <NeedsForm />
+  </>
 );
 
 // == Export
