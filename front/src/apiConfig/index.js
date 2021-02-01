@@ -127,7 +127,30 @@ export const queryUserDelete = {
 };
 
 //= = PROJECT QUERIES
-
+export const queryByProjectsByAuthor = {
+  query: `query GetProjectsByAuthorID ($id: ID!){
+    user(id: $id){
+      projectsCreated{
+        id
+        title
+        description
+        created_at
+        expiration_date
+        location
+        lat
+        long
+        isFollowed
+        userIsAuthor
+        image
+        archived
+        author{
+          name
+          email
+        }
+      }
+    }
+  }`,
+};
 // == QUERY - Get project by ID
 export const queryProjectById = {
   query: `query GetProjectByID($id: ID!) {
@@ -396,3 +419,4 @@ export const queryDeleteNeedById = {
     }
   }`,
 };
+

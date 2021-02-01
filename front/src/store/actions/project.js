@@ -23,7 +23,7 @@ export const PROJECT_STORE_CLEAN = 'PROJECT_STORE_CLEAN';
 export const PROJECT_CLEAN_PROJECTS = 'PROJECT_CLEAN_PROJECTS';
 export const PROJECT_CLEAN_PROJECT = 'PROJECT_CLEAN_PROJECT';
 export const PROJECT_NEED_UPDATE_BY_ID = 'PROJECT_NEED_UPDATE_BY_ID';
-
+export const GET_PROJECTS_BY_AUTHOR = 'GET_PROJECTS_BY_AUTHOR';
 // == ===================================
 // == PROJECT STORE - ACTIONS CREATORS PART
 
@@ -102,4 +102,9 @@ export const updateProjectNeed = (payload) => ({
 export const sendProjectCreated = (payload) => ({
   type: SEND_CREATED_PROJECT,
   payload,
+});
+
+// get all projects by author
+export const getProjectsByAuthor = () => ({
+  type: GET_PROJECTS_BY_AUTHOR,
 });
