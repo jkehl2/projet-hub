@@ -8,6 +8,7 @@ import dateApiFormater from 'src/utils/dateHTMLFormater';
 
 // graphql queries
 import configGraphQl, {
+  queryByProjectsByAuthor,
   queryCreateProject,
   queryEditProject,
   queryProjectById,
@@ -25,6 +26,7 @@ import querystring from 'query-string';
 
 // actions from store
 import {
+  GET_PROJECTS_BY_AUTHOR,
   PROJECT_CREATE,
   PROJECT_EDIT,
   PROJECT_DELETE_CURRENT,
@@ -312,6 +314,31 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appMsgUpdate('Projet crée ! '));
           // redirect to projects page
           store.dispatch(push('/utilisateur/projets'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+          store.dispatch(cleanCreateProject());
+        });
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case GET_PROJECTS_BY_AUTHOR: {
+      {/* requête à l'API*/}
+      const data = JSON.stringify({
+        ...queryByProjectsByAuthor,
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'projectsCreated', store.dispatch)
+        .then((response) => {
+          store.dispatch(appLoadingOn());
+          store.dispatch(updateProjectStore(response.data.data.projectsCreated));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));

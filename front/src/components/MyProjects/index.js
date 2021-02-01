@@ -1,26 +1,29 @@
 // == Import npm
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // == IMPORTS CONTAINERS
 import List from 'src/containers/MyProjectsList';
-import SearchProjects from 'src/containers/MySearchProjects';
 
 // == IMPORTS COMPOSANTS
 import {
-  Container,
+  Container, 
 } from 'semantic-ui-react';
 
 // == STYLES
 import './myProjects.scss';
 
 // == Composant
-const MyProjects = () => (
+const MyProjects = ({ updateList }) => {
+  useEffect(() => {
+    updateList();
+  }, []);
+  return (
   <Container className="my-projects">
-    {/** Search Bar */}
-    <SearchProjects />
+    { /* coder une fonction qui sera appellée dans un use effect et qui déclenchera une requête permettant d'afficher les projets de la personne connectée */}
     <List />
   </Container>
-);
+  );
+};
 
 // == Export
 export default MyProjects;
