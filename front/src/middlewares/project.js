@@ -6,6 +6,7 @@ import { goBack, push } from 'connected-react-router';
 // graphql queries
 import configGraphQl, {
   queryByProjectsByAuthor,
+  queryByProjectsByFavorites,
   queryCreateProject,
   queryEditProject,
   queryProjectById,
@@ -19,6 +20,7 @@ import connector from 'src/apiConfig/queryWithToken';
 // actions from store
 import {
   GET_PROJECTS_BY_AUTHOR,
+  GET_PROJECTS_BY_FAVORITES,
   PROJECT_CREATE,
   PROJECT_EDIT,
   PROJECT_DELETE_CURRENT,
@@ -256,6 +258,7 @@ const projectMiddleware = (store) => (next) => (action) => {
       return;
     }
     case GET_PROJECTS_BY_AUTHOR: {
+      // requête à l'API
       const data = JSON.stringify({
         ...queryByProjectsByAuthor,
       });
@@ -263,10 +266,34 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      connector(config, 'projectsCreated', store.dispatch)
+      connector(config, 'myInfos', store.dispatch)
         .then((response) => {
           store.dispatch(appLoadingOn());
-          store.dispatch(updateProjectStore(response.data.data.projectsCreated));
+          store.dispatch(updateProjectStore(response.data.data.myInfos.projectsCreated));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case GET_PROJECTS_BY_FAVORITES: {
+      { /* requête à l'API */ }
+      const data = JSON.stringify({
+        ...queryByProjectsByFavorites,
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'myInfos', store.dispatch)
+        .then((response) => {
+          store.dispatch(appLoadingOn());
+          store.dispatch(updateProjectStore(response.data.data.myInfos.projectsFollowed));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));

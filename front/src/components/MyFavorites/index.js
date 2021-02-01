@@ -1,9 +1,8 @@
 // == Import npm
-import React from 'react';
-
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
-import List from 'src/containers/MyFavoritesList';
-import SearchProjects from 'src/containers/MySearchFavorites';
+import List from 'src/containers/List';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -14,13 +13,19 @@ import {
 import './myFavorites.scss';
 
 // == Composant
-const MyFavorites = () => (
-  <Container className="my-favorites">
-    {/** Search Bar */}
-    <SearchProjects />
-    <List />
-  </Container>
-);
+const MyFavorites = ({ updateList }) => {
+  useEffect(() => {
+    updateList();
+  }, []);
+  return (
+    <Container className="my-favorites">
+      <List />
+    </Container>
+  );
+};
 
+MyFavorites.propTypes = {
+  updateList: PropTypes.func.isRequired,
+};
 // == Export
 export default MyFavorites;
