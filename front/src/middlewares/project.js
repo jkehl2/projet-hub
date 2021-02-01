@@ -38,7 +38,6 @@ import {
   appErrorUpdate,
   appMsgClean,
   appErrorClean,
-  appEditProjectOn,
 } from 'src/store/actions/app';
 
 // == PARSE DATE UTIL FUNCTION :
@@ -162,9 +161,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       connector(config, 'insertProject', store.dispatch)
         .then((response) => {
           const { data: { data: { insertProject: { id } } } } = response;
-          store.dispatch(appMsgUpdate('Vous avez créé une nouvelle fiche projet.'));
           store.dispatch(push(`/projet/${id}`));
-          store.dispatch(appEditProjectOn());
+          store.dispatch(appMsgUpdate('Vous avez créé une nouvelle fiche projet.'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -216,8 +214,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       connector(config, 'deleteProject', store.dispatch)
         .then(() => {
           store.dispatch(goBack());
-          store.dispatch(appMsgUpdate('Votre projet à été supprimmé définitivement.'));
           store.dispatch(cleanProject());
+          store.dispatch(appMsgUpdate('Votre projet à été supprimmé définitivement.'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -243,8 +241,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       connector(config, 'archiveProject', store.dispatch)
         .then(() => {
           store.dispatch(goBack());
-          store.dispatch(appMsgUpdate('Votre projet à été archivé.'));
           store.dispatch(cleanProject());
+          store.dispatch(appMsgUpdate('Votre projet à été archivé.'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -282,7 +280,6 @@ const projectMiddleware = (store) => (next) => (action) => {
       return;
     }
     case GET_PROJECTS_BY_FAVORITES: {
-      { /* requête à l'API */ }
       const data = JSON.stringify({
         ...queryByProjectsByFavorites,
       });
