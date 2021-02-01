@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import MyProjects from 'src/components/Projects/MyProjects';
+import MyProjects from 'src/components/MyProjects';
 import { getProjectsByAuthor } from '../store/actions/project';
 
 { /* dispatcher une action de projects en passant par le middleware projects */}
