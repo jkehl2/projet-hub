@@ -235,7 +235,8 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       return; }
     case APP_REFRESH_NEEDS_ARRAY: {
-      const { project: { project: { needs: payload } } } = store.getState();
+      const { project: { project: { needs } } } = store.getState();
+      const payload = { needs };
       next(appUpdateNeedsArr(payload));
       break;
     }

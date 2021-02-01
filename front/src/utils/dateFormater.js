@@ -1,5 +1,6 @@
 export default (date) => {
   let d = new Date(date);
+  console.log(d);
   if (d === null) {
     d = Date.parse(date);
   }
