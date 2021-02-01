@@ -46,6 +46,7 @@ import {
   appErrorClean,
   cleanCreateProject,
   appEditProjectOff,
+  appGetGeoCoding,
 } from 'src/store/actions/app';
 
 // == PARSE DATE UTIL FUNCTION :
@@ -276,60 +277,29 @@ const projectMiddleware = (store) => (next) => (action) => {
       const {
         app: {
           createProject: {
-            title, expiration_date, description, location, perimeter,
-          },
-        },
-      } = store.getState();
-
-      // building query
-      const query = querystring.stringifyUrl({
-        url: 'https://nominatim.openstreetmap.org/search',
-        query: {
-          adressdetails: 1,
-          q: location,
-          format: 'json',
-          limit: 1,
-        },
-      });
-      axios.get(query)
-        .then((response) => {
-          const geolocArr = response.data;
-          if (geolocArr.length > 0) {
-            const searchValue = {
-              long: parseFloat(geolocArr[0].lon),
-              lat: parseFloat(geolocArr[0].lat),
-              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
-            };
-            store.dispatch(sendProjectCreated(searchValue));
-          }
-          else {
-            store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
-          }
-        })
-        .catch((error) => {
-          store.dispatch(appErrorUpdate(error.message));
-          store.dispatch(appLoadingOff());
-        });
-      store.dispatch(appErrorClean());
-      store.dispatch(appMsgClean());
-      store.dispatch(appLoadingOn());
-      return;
-    }
-    case SEND_CREATED_PROJECT: {
-      // get the result of geocoding API
-      const { long, lat, scope } = action.payload;
-      // get other values from store
-      const {
-        app: {
-          createProject: {
             title, expiration_date, description, location,
           },
         },
       } = store.getState();
+
+      const payload = {
+        title, expiration_date, description, location,
+      };
+
+      store.dispatch(appGetGeoCoding(location, sendProjectCreated, payload));
+
+      return;
+    }
+    case SEND_CREATED_PROJECT: {
+      // get the result of geocoding API + payload
+      const {
+        long, lat, title, expiration_date, description, location,
+      } = action.payload;
+
       const data = JSON.stringify({
         ...queryCreateProject,
         variables: {
-          long, lat, scope, title, expiration_date, description, location,
+          long, lat, title, expiration_date, description, location,
         },
       });
       const config = {
