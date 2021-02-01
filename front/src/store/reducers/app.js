@@ -309,7 +309,9 @@ const reducer = (oldState = initialState, action = {}) => {
         ...needToUpdate,
         ...action.payload,
       };
+      console.log(needToUpdate);
       newNeedsArr.push(needToUpdate);
+      console.table(newNeedsArr);
       return {
         ...oldState,
         needs: {
@@ -322,7 +324,9 @@ const reducer = (oldState = initialState, action = {}) => {
     }
     case APP_ADD_NEED_TO_ARRAY: {
       const newNeedsArr = [...oldState.needs.needs];
+      console.log(action.newNeed);
       newNeedsArr.push(action.newNeed);
+      console.table(newNeedsArr);
       return {
         ...oldState,
         needs: {
