@@ -317,7 +317,7 @@ const projectMiddleware = (store) => (next) => (action) => {
     }
     case SEND_CREATED_PROJECT: {
       // get the result of geocoding API
-      const { long, lat, scope } = action.payload;
+      const { long, lat } = action.payload;
       // get other values from store
       const {
         app: {
@@ -329,7 +329,7 @@ const projectMiddleware = (store) => (next) => (action) => {
       const data = JSON.stringify({
         ...queryCreateProject,
         variables: {
-          long, lat, scope, title, expiration_date, description, location,
+          long, lat, title, expiration_date, description, location,
         },
       });
       const config = {

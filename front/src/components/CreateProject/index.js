@@ -10,6 +10,9 @@ import {
 // == IMPORTS UTILS
 import utils from 'src/utils/perimeters.json';
 
+// IMPORT DATE UTIL
+import dateFormater from 'src/utils/dateFormater';
+
 // == IMPORTS CONTAINERS
 
 // == STYLES
@@ -37,12 +40,14 @@ const CreateProject = ({
           }}
         />
         <Form.Input
-          type="text"
+          type="date"
           label="Date d'expiration"
           title="date d'expiration"
-          placeholder="date"
+          placeholder={dateFormater(new Date().getTime() + (60 * 60 * 24 * 1000 * 30))}
+          min={dateFormater(new Date())}
+          max={dateFormater(new Date().getTime() + (60 * 60 * 24 * 1000 * 900))}
           required
-          value={expiration_date}
+          value={dateFormater(expiration_date)}
           onChange={(event) => {
             setCreateProject({ expiration_date: event.target.value });
           }}

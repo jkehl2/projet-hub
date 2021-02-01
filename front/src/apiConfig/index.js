@@ -217,8 +217,7 @@ export const queryCreateProject = {
     $lat: Float!,
     $long: Float!,
     $image: String,
-    $file: String,
-    $needs: [NeedInput]
+    $file: String
 ) {
 insertProject(
     title: $title,
@@ -228,8 +227,7 @@ insertProject(
     lat: $lat,
     long: $long,
     image: $image,
-    file: $file,
-    needs: $needs
+    file: $file
 ) {
 __typename
 ... on Project{
@@ -240,7 +238,6 @@ __typename
   location
   lat
   long
-  
 }
 ... on Error{
   error{
