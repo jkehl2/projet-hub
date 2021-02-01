@@ -15,7 +15,7 @@ import './myFavorites.scss';
 // == Composant
 const MyFavorites = () => (
   <Container className="my-favorites">
-    <Header as="h1" content="Mes projets" textAlign="center" dividing subheader="Tous mes projet en un seul endroit" />
+    <Header as="h1" content="Mes favoris" textAlign="center" dividing subheader="Tous ce que j'aime en un seul endroit" />
     <List />
   </Container>
 );
