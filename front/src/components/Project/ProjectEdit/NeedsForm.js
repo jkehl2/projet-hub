@@ -114,7 +114,7 @@ const NeedsForm = ({
                       syncEditNeedFields(
                         need.id,
                         {
-                          title: event.target.value,
+                          description: event.target.value,
                         },
                       );
                     }}
