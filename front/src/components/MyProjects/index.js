@@ -30,6 +30,5 @@ const MyProjects = ({ updateList }) => {
 MyProjects.propTypes = {
   updateList: PropTypes.func.isRequired,
 };
-
 // == Export
 export default MyProjects;
