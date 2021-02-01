@@ -3,51 +3,83 @@
  * Configuration des actions sur le store applicatif technique
  */
 
+// == ===================================
 // == [CLE-VALEURS] - ACTIONS MIDDLEWARE applicatif technique
 export const APP_REFRESH_PROFIL = 'APP_REFRESH_PROFIL';
+export const APP_REFRESH_PROJECT = 'APP_REFRESH_PROJECT';
 export const APP_CONFIRM_PASSWORD = 'APP_CONFIRM_PASSWORD';
+export const APP_PROFIL_CONFIRM = 'APP_PROFIL_CONFIRM';
+export const APP_PROJECT_CONFIRM = 'APP_PROJECT_CONFIRM';
+export const APP_CREATE_USER_VERIF = 'USER_CREATION_VERIF';
+export const APP_PROJECT_CREATE_VERIF = 'APP_PROJECT_CREATE_VERIF';
+export const APP_PROJECT_EDIT = 'APP_PROJECT_EDIT';
+export const APP_GET_GEOCODING = 'APP_GET_GEOCODING';
+export const APP_CREATE_NEEDS = 'APP_CREATE_NEEDS';
+export const APP_SUBMIT_NEEDS = 'APP_SUBMIT_NEEDS';
 
+// == ===================================
 // == [CLE-VALEURS] - ACTIONS sur le store applicatif technique
+export const APP_CLEAN = 'APP_CLEAN';
 export const APP_LOADING_ON = 'APP_LOADING_ON';
 export const APP_LOADING_OFF = 'APP_LOADING_OFF';
-
 export const APP_PROFIL_UPDATE = 'APP_PROFIL_UPDATE';
 export const APP_PROFIL_CLEAN = 'APP_PROFIL_CLEAN';
-
-export const APP_CLEAN = 'APP_CLEAN';
-
-// == ACTIONS GESTION FORMULAIRE DE RECHERCHE
 export const APP_SEARCH_UPDATE = 'APP_SEARCH_UPDATE';
-
-// == ACTIONS GESTION FORMULAIRE DE CONNEXION
 export const APP_SIGNIN_UPDATE = 'APP_SIGNIN_UPDATE';
 export const APP_SIGNIN_CLEAN = 'APP_SIGNIN_CLEAN';
-
-// == ACTIONS GESTION MESSAGE D'ERREUR
 export const APP_ERROR_UPDATE = 'APP_ERROR_UPDATE';
 export const APP_ERROR_CLEAN = 'APP_ERROR_CLEAN';
-
-// == ACTIONS GESTION MESSAGE D'INFORMATION
 export const APP_MSG_UPDATE = 'APP_MSG_UPDATE';
 export const APP_MSG_CLEAN = 'APP_MSG_CLEAN';
-
-// == ACTIONS SIGN UP
 export const APP_SIGN_UP_UPDATE = 'APP_SIGN_UP_UPDATE';
-export const USER_CREATION_VERIF = 'USER_CREATION_VERIF';
-export const USER_CREATE = 'USER_CREATE';
 export const APP_SIGNUP_CLEAN = 'APP_SIGNUP_CLEAN';
-
-// == ACTIONS PROJECT CREATION
 export const APP_PROJECT_CREATE = 'APP_PROJECT_CREATE';
-export const APP_PROJECT_CREATE_VERIF = 'APP_PROJECT_CREATE_VERIF';
+export const APP_CLEAN_CREATE_PROJECT = 'APP_CLEAN_CREATE_PROJECT';
+export const APP_UPDATE_PROJECT = 'APP_UPDATE_PROJECT';
+export const APP_CLEAN_PROJECT = 'APP_CLEAN_PROJECT';
+
 // == ===================================
 // == USER MIDDLEWARE - ACTIONS CREATORS PART
 export const appRefreshProfil = () => ({
   type: APP_REFRESH_PROFIL,
 });
 
-export const appConfirmPassword = () => ({
+export const appConfirmPassword = (dispatch) => ({
   type: APP_CONFIRM_PASSWORD,
+  dispatch,
+});
+
+export const appProfilConfirm = (dispatch) => ({
+  type: APP_PROFIL_CONFIRM,
+  dispatch,
+});
+
+export const appRefreshProject = () => ({
+  type: APP_REFRESH_PROJECT,
+});
+
+export const appProjectConfirm = (dispatch) => ({
+  type: APP_PROJECT_CONFIRM,
+  dispatch,
+});
+
+export const appSubmitCreatedProject = () => ({
+  type: APP_PROJECT_CREATE_VERIF,
+});
+
+export const appCreateUserVerif = () => ({
+  type: APP_CREATE_USER_VERIF,
+});
+
+export const appProjectEdit = () => ({
+  type: APP_PROJECT_EDIT,
+});
+
+export const appGetGeoCoding = (location, dispatchAction, payload) => ({
+  type: APP_GET_GEOCODING,
+  location,
+  dispatchAction,
+  payload,
 });
 
 // == ===================================
@@ -126,21 +158,11 @@ export const appEditProfilOff = () => (
   }
 );
 
-// == ===================================
-// == USER SIGN UP - ACTIONS CREATORS PART
 export const appSetUpSignUp = (payload) => ({
   type: APP_SIGN_UP_UPDATE,
   payload,
 });
 
-export const appCreateUserVerif = () => ({
-  type: USER_CREATION_VERIF,
-});
-
-export const createUser = (payload) => ({
-  type: USER_CREATE,
-  payload,
-});
 export const appProfilClean = () => (
   {
     type: APP_PROFIL_CLEAN,
@@ -150,6 +172,43 @@ export const appCreateProject = (payload) => ({
   type: APP_PROJECT_CREATE,
   payload,
 });
-export const appSubmitCreatedProject = () => ({
-  type: APP_PROJECT_CREATE_VERIF,
+
+export const cleanCreateProject = () => ({
+  type: APP_CLEAN_CREATE_PROJECT,
+});
+
+// ============================================
+// == PROJECT SUB PART
+export const appUpdateProject = (payload) => ({
+  type: APP_UPDATE_PROJECT,
+  payload,
+});
+
+export const appCleanProject = (payload) => ({
+  type: APP_CLEAN_PROJECT,
+  payload,
+});
+
+export const appEditProjectOn = () => (
+  {
+    type: APP_UPDATE_PROJECT,
+    payload: { isEditMode: true },
+  }
+);
+
+export const appEditProjectOff = () => (
+  {
+    type: APP_UPDATE_PROJECT,
+    payload: { isEditMode: false },
+  }
+);
+
+// Create Needs
+export const appCreateNeeds = (payload) => ({
+  type: APP_CREATE_NEEDS,
+  payload,
+});
+
+export const appSubmitCreatedNeeds = () => ({
+  type: APP_SUBMIT_NEEDS,
 });

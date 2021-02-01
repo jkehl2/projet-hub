@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import App from 'src/components/App';
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
-import { appMsgUpdate } from 'src/store/actions/app';
+import { appErrorUpdate } from 'src/store/actions/app';
 
 const mapStateToProps = (state) => ({
   isError: state.app.error.isError,
@@ -15,8 +15,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setMessage: (message) => {
-    dispatch(appMsgUpdate(message));
+  setError: (message) => {
+    dispatch(appErrorUpdate(message));
   },
 });
 

@@ -6,7 +6,7 @@ import { appCreateProject, appSubmitCreatedProject } from 'src/store/actions/app
 
 const mapStateToProps = (state) => ({
   title: state.app.createProject.title,
-  date: state.app.createProject.date,
+  expiration_date: state.app.createProject.expiration_date,
   description: state.app.createProject.description,
   location: state.app.createProject.location,
   perimeter: state.app.createProject.perimeter,

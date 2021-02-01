@@ -29,19 +29,24 @@ const SearchProjects = ({
           <Segment>
             <Form.Group>
               <Form.Input
+                type="text"
+                className="search-project--marged-top"
                 label="Localité"
+                title="Localité"
                 placeholder="adresse, code postale, ville"
                 width={10}
+                required
                 value={localite}
                 onChange={(event) => {
                   setSearch({ localite: event.target.value });
                 }}
-                required
               />
               <Form.Input
-                width={4}
                 type="range"
+                className="search-project--marged-top"
                 label="Périmètre"
+                title="Périmètre"
+                width={4}
                 min={0}
                 max={4}
                 step={1}
@@ -56,7 +61,9 @@ const SearchProjects = ({
             </Form.Group>
             <Form.Radio
               toggle
+              className="search-project--marged-top"
               label="Inclure les projets archivés ?"
+              title="Inclure les projets archivés ?"
               checked={archived}
               onChange={(_) => {
                 setSearch({ archived: !archived });

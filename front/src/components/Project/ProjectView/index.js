@@ -2,31 +2,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// == IMPORTS CONTAINERS
+import ProjectMenu from 'src/containers/ProjectMenu';
+
 // == IMPORTS COMPOSANTS
 import {
   Segment,
 } from 'semantic-ui-react';
 import Description from './Description';
 import Needs from './Needs';
-import ProjectMenu from './ProjectMenu';
-// == IMPORTS CONTAINERS
 
 // == STYLES
 import './projectView.scss';
 
 // == Composant
 const ProjectView = (props) => {
-  const { project, logged } = props;
+  const { project, logged, updateNeedIdCompleted } = props;
+  const isVisible = (logged && project.isAuthor && !project.isArchived);
   return (
     <>
       {/* Menu projet - modifier / supprimer / archiver */}
-      {(logged && project.isAuthor && !project.isArchived) && <ProjectMenu />}
+      {(isVisible) && <ProjectMenu />}
       <Segment compact attached="top">
         {/* Description du projet */}
         <Description {...props} />
       </Segment>
       {/* Liste des besoins du projet */}
-      <Needs needs={project.needs} />
+      <Needs
+        isCheckEnable={isVisible}
+        needs={project.needs}
+        updateNeedIdCompleted={updateNeedIdCompleted}
+      />
     </>
   );
 };
@@ -38,6 +44,7 @@ ProjectView.propTypes = {
     isArchived: PropTypes.bool.isRequired,
     needs: PropTypes.array.isRequired,
   }).isRequired,
+  updateNeedIdCompleted: PropTypes.func.isRequired,
 };
 
 // == Export

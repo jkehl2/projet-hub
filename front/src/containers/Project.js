@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import Project from 'src/components/Project/';
 
-import { getProjectById, cleanProject } from 'src/store/actions/project';
+import { getProjectById, projectNeedIsCompleted } from 'src/store/actions/project';
 
 const mapStateToProps = (state, ownProps) => ({
   projectId: ownProps.match.params.slug,
@@ -16,8 +16,10 @@ const mapDispatchToProps = (dispatch) => ({
   getProjectById: (projectId) => {
     dispatch(getProjectById(projectId));
   },
-  cleanProject: () => {
-    dispatch(cleanProject);
+  updateNeedIdCompleted: (id, completed) => {
+    dispatch(
+      projectNeedIsCompleted({ id, completed }),
+    );
   },
 });
 

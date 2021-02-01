@@ -2,11 +2,12 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+// == IMPORTS CONTAINERS
+
 // == IMPORTS COMPOSANTS
 import {
   Container, Header, Form, Button, Segment, Message,
 } from 'semantic-ui-react';
-// == IMPORTS CONTAINERS
 
 // == STYLES
 import './SignIn.scss';
@@ -28,12 +29,9 @@ const SignIn = (
   const isRedirected = () => {
     const isRedirect = (!!history.location.state) && !!history.location.state.isRedirect;
     return (
-      <>{isRedirect && (
-      <Message>
-        <Message.Header>Notification</Message.Header>
-        <p>Veuillez vous connecter pour effectuer cette action.</p>
-      </Message>
-      )}
+      <>
+        {isRedirect
+        && (<Message header="Information" content="Veuillez vous connecter pour effectuer cette action." />)}
       </>
     );
   };
@@ -46,9 +44,9 @@ const SignIn = (
   }, []);
   return (
     <Container className="Signin">
-      {/** titre de la page */}
-      <Header as="h1">Connexion</Header>
       {isRedirected()}
+      {/** titre de la page */}
+      <Header as="h1" content="Connexion" textAlign="center" dividing subheader="Déjà un compte utilisateur ? Connectez-vous ici" />
       {/** formulaire d'identification */}
       <Form onSubmit={handleSubmit}>
         {/** email */}
@@ -79,14 +77,22 @@ const SignIn = (
         />
         {/** bouton connexion */}
         <Segment basic textAlign="right">
-          <Button.Group compact>
-            <Form.Button type="submit" onClick={handleSubmit}>
-              Connexion
-            </Form.Button>
+          <Button.Group>
+            <Form.Button
+              positive
+              type="submit"
+              content="Connexion"
+              title="Connexion"
+            />
+            <Button.Or text="ou" />
             {/** bouton inscription */}
-            <Form.Button type="button" onClick={redirectSignUp}>
-              Inscription
-            </Form.Button>
+            <Form.Button
+              color="blue"
+              type="button"
+              content="Inscription"
+              title="Inscription"
+              onClick={redirectSignUp}
+            />
           </Button.Group>
         </Segment>
       </Form>

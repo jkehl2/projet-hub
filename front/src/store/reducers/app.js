@@ -19,6 +19,10 @@ import {
   APP_SIGNUP_CLEAN,
   APP_SIGN_UP_UPDATE,
   APP_PROJECT_CREATE,
+  APP_CLEAN_CREATE_PROJECT,
+  APP_UPDATE_PROJECT,
+  APP_CLEAN_PROJECT,
+  APP_CREATE_NEEDS,
 } from 'src/store/actions/app';
 
 // ==  INITIALE SUB APP STATE - error
@@ -57,6 +61,10 @@ export const searchInitialState = {
 // ==  INITIALE SUB APP STATE - profil
 export const profilInitialState = {
   isEditMode: false,
+  name: '',
+  email: '',
+  avatar: 'https://react.semantic-ui.com/images/avatar/large/matt.jpg',
+  confirm: '',
   password: '',
   passwordConfirm: '',
 };
@@ -64,10 +72,26 @@ export const profilInitialState = {
 // ==  INITIALE SUB APP STATE - createProject
 export const createProjectInitialState = {
   title: '',
-  date: '',
+  expiration_date: '',
   description: '',
   location: '',
   perimeter: 0,
+};
+
+// ==  INITIALE SUB APP STATE - createProject
+export const projectInitialState = {
+  isEditMode: false,
+  confirm: '',
+  title: '',
+  expiration_date: '',
+  description: '',
+  location: '',
+};
+
+// == INITIAL STATE - createNeeds
+export const createNeedsInitialState = {
+  titleNeed: '',
+  descriptionNeed: '',
 };
 
 // ==  INITIALE STATE des paramètres applicatifs techniques
@@ -81,6 +105,8 @@ export const initialState = {
   search: { ...searchInitialState },
   signUp: { ...signUpInitialState },
   createProject: { ...createProjectInitialState },
+  project: { ...projectInitialState },
+  createNeeds: { ...createNeedsInitialState },
 };
 
 // == USER REDUCER - Gestion du store des paramètres applicatifs techniques
@@ -190,6 +216,39 @@ const reducer = (oldState = initialState, action = {}) => {
         ...oldState,
         createProject: {
           ...oldState.createProject,
+          ...action.payload,
+        },
+      };
+
+    case APP_CLEAN_CREATE_PROJECT:
+      return {
+        ...oldState,
+        createProject: {
+          ...createProjectInitialState,
+        },
+      };
+    case APP_UPDATE_PROJECT:
+      return {
+        ...oldState,
+        project: {
+          ...oldState.project,
+          ...action.payload,
+        },
+      };
+
+    case APP_CLEAN_PROJECT:
+      return {
+        ...oldState,
+        project: {
+          ...projectInitialState,
+        },
+      };
+
+    case APP_CREATE_NEEDS:
+      return {
+        ...oldState,
+        createNeeds: {
+          ...oldState.createNeeds,
           ...action.payload,
         },
       };

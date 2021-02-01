@@ -1,3 +1,4 @@
 {
-  "URL_BACK":"https://localhub-api.herokuapp.com"
+  "URL_BACK":"https://localhub-api.herokuapp.com",
+  "URL_GEOCODE":"https://nominatim.openstreetmap.org/search"
 }

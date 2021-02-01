@@ -7,10 +7,14 @@
 export const PROJECT_SEARCH = 'PROJECT_SEARCH';
 export const PROJECT_CREATE = 'PROJECT_CREATE';
 export const PROJECT_EDIT = 'PROJECT_EDIT';
-export const PROJECT_DELETE = 'PROJECT_DELETE';
+export const PROJECT_DELETE_CURRENT = 'PROJECT_DELETE';
+export const PROJECT_ARCHIVED_CURRENT = 'PROJECT_ARCHIVED';
+
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const GET_PROJECT_BY_GEO = 'GET_PROJECT_BY_GEO';
 export const SEND_PROJECT = 'SEND_PROJECT';
+export const PROJECT_NEED_ISCOMPLETED = 'PROJECT_NEED_ISCOMPLETED';
+export const SEND_CREATED_PROJECT = 'SEND_CREATED_PROJECT';
 
 // == [CLE-VALEURS] - ACTIONS sur le store projets(Reducer user)
 
@@ -18,6 +22,7 @@ export const PROJECT_STORE_UPDATE = 'PROJECT_STORE_UPDATE';
 export const PROJECT_STORE_CLEAN = 'PROJECT_STORE_CLEAN';
 export const PROJECT_CLEAN_PROJECTS = 'PROJECT_CLEAN_PROJECTS';
 export const PROJECT_CLEAN_PROJECT = 'PROJECT_CLEAN_PROJECT';
+export const PROJECT_NEED_UPDATE_BY_ID = 'PROJECT_NEED_UPDATE_BY_ID';
 
 // == ===================================
 // == PROJECT STORE - ACTIONS CREATORS PART
@@ -39,6 +44,11 @@ export const cleanProject = () => ({
   type: PROJECT_CLEAN_PROJECT,
 });
 
+export const projectNeedIsCompleted = (payload) => ({
+  type: PROJECT_NEED_ISCOMPLETED,
+  payload,
+});
+
 // == ===================================
 // == PROJECT CONNECTORS - ACTIONS CREATORS PART
 
@@ -54,15 +64,18 @@ export const createProject = (project) => ({
 });
 
 // editing a project
-export const editProject = (project) => ({
-  type: PROJECT_CREATE,
-  payload: project,
+export const editProject = () => ({
+  type: PROJECT_EDIT,
 });
 
 // deleting a project
-export const deleteProject = (project) => ({
-  type: PROJECT_CREATE,
-  payload: project,
+export const deleteProjectById = () => ({
+  type: PROJECT_DELETE_CURRENT,
+});
+
+// Archiving a project
+export const archiveProjectById = () => ({
+  type: PROJECT_ARCHIVED_CURRENT,
 });
 
 // get a project by id
@@ -76,7 +89,17 @@ export const getProjectByGeo = (payload) => ({
   payload,
 });
 
-// send a project to API
+// send a project to geocoding API
 export const sendProjectApi = () => ({
   type: SEND_PROJECT,
+});
+
+export const updateProjectNeed = (payload) => ({
+  type: PROJECT_NEED_UPDATE_BY_ID,
+  payload,
+});
+// send a project to back-end API
+export const sendProjectCreated = (payload) => ({
+  type: SEND_CREATED_PROJECT,
+  payload,
 });

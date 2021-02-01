@@ -31,7 +31,7 @@ const PasswordEdit = ({
   return (
     <Container className="password-edit">
       {/* titre */}
-      <Header as="h1">Modification du mot de passe</Header>
+      <Header as="h1" content="Modification du mot de passe" textAlign="center" dividing subheader="On est jamais trop prudent" />
       <Form onSubmit={handleSubmit}>
         {/* Accessibility user name hidden field */}
         <Input
@@ -72,11 +72,11 @@ const PasswordEdit = ({
           <Button.Group>
             {/* bouton valider */}
             <Button positive type="submit">Valider</Button>
-            <Button.Or />
+            <Button.Or text="ou" />
             {/* bouton annuler */}
-            <Button onClick={() => {
-              abortConfirmPassword();
-            }}
+            <Button
+              type="button"
+              onClick={abortConfirmPassword}
             >Annuler
             </Button>
           </Button.Group>

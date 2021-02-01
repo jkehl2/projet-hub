@@ -2,61 +2,74 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+// == IMPORTS CONTAINERS
+
 // == IMPORTS COMPOSANTS
 import {
-  Icon, Menu, Segment,
+  Button,
+  Menu,
 } from 'semantic-ui-react';
-
-// == IMPORTS CONTAINERS
+import ModalConfirmDelete from 'src/components/ModalConfirmDelete';
 
 // == STYLES
 import './projectMenu.scss';
 
-// == Functions
-
 // == Composant
-const ProjectMenu = () => {
+const ProjectMenu = ({ deleteConfirm, setConfirmation, archiveProject, deleteProject }) => {
   const [state, setState] = useState({ activeItem: '' });
-
   const handleItemClick = (e, { name }) => {
     setState({ activeItem: name });
   };
-
   return (
-    <Segment basic>
-      <Menu compact icon="labeled" secondary floated="right">
+    <>
+      <Menu compact icon secondary attached="bottom">
         <Menu.Item
           name="Editer"
           active={state.activeItem === 'edit'}
           onClick={handleItemClick}
+          fitted="horizontally"
         >
-          <Icon name="edit" />
-          Editer
+          <Button icon="edit" color="blue" title="Editer" />
         </Menu.Item>
 
         <Menu.Item
           name="Archiver"
           active={state.activeItem === 'archive'}
           onClick={handleItemClick}
+          fitted="horizontally"
         >
-          <Icon name="archive" />
-          Archiver
+          <ModalConfirmDelete
+            title="Confirmer l'archivage de votre projet"
+            trigger={<Button icon="archive" color="brown" title="Archiver" />}
+            deleteConfirm={deleteConfirm}
+            setConfirmation={setConfirmation}
+            handleDelete={archiveProject}
+          />
         </Menu.Item>
 
         <Menu.Item
           name="Supprimer"
           active={state.activeItem === 'delete'}
           onClick={handleItemClick}
+          fitted="horizontally"
         >
-          <Icon name="trash" color="red" />
-          Supprimer
+          <ModalConfirmDelete
+            title="Confirmer la suppression de votre projet"
+            trigger={<Button icon="trash" color="red" title="Archiver" />}
+            deleteConfirm={deleteConfirm}
+            setConfirmation={setConfirmation}
+            handleDelete={deleteProject}
+          />
         </Menu.Item>
       </Menu>
-    </Segment>
+    </>
   );
 };
-// == PROP TYPES
 ProjectMenu.propTypes = {
+  deleteConfirm: PropTypes.string.isRequired,
+  setConfirmation: PropTypes.func.isRequired,
+  archiveProject: PropTypes.func.isRequired,
+  deleteProject: PropTypes.func.isRequired,
 };
 
 // == Export

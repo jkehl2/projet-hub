@@ -23,6 +23,10 @@ const mapDispatchToProps = (dispatch) => ({
     event.preventDefault();
     dispatch(appCreateUserVerif());
   },
+  redirectHome: (event) => {
+    event.preventDefault();
+    dispatch(push('/'));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

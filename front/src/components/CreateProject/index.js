@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Button, Container, Header, Item, Segment, Form, Grid, Label,
+  Button, Container, Header, Segment, Form, Label,
 } from 'semantic-ui-react';
 
 // == IMPORTS UTILS
@@ -16,16 +16,18 @@ import utils from 'src/utils/perimeters.json';
 import './createProject.scss';
 
 // == Composant
-const CreateProject = ({ title, date, description, location,
-setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
+const CreateProject = ({
+  title, expiration_date, description, location,
+  setCreateProject, perimeter, handleSubmit,
+}) => (
   <Container className="createProject">
     <Segment textAlign="left">
       {/* Titre */}
-      <Header as="h1">Créer un projet</Header>
+      <Header as="h1">Créer un projet !</Header>
       <Form>
         <Form.Input
           type="text"
-          label="nom du projet"
+          label="Titre du projet"
           title="nom du projet"
           placeholder="titre"
           required
@@ -36,19 +38,19 @@ setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
         />
         <Form.Input
           type="text"
-          label="date d'expiration"
+          label="Date d'expiration"
           title="date d'expiration"
           placeholder="date"
           required
-          value={date}
+          value={expiration_date}
           onChange={(event) => {
-            setCreateProject({ date: event.target.value });
+            setCreateProject({ expiration_date: event.target.value });
           }}
         />
         <Form.TextArea
           type="text"
           label="description"
-          title="description"
+          title="Description du projet"
           placeholder="description"
           required
           value={description}
@@ -58,13 +60,13 @@ setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
         />
         <Form.Input
           type="text"
-          label="localité"
+          label="Localité"
           title="localité"
           placeholder="localité"
           required
           value={location}
           onChange={(event) => {
-            setCreateProject({ localité: event.target.value });
+            setCreateProject({ location: event.target.value });
           }}
         />
         <Form.Input
@@ -83,8 +85,8 @@ setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
           <Label size="big" basic content={`${utils.perimeters[perimeter].value} km`} horizontal />
         </div>
         <Segment basic textAlign="right">
-          <Form.Button onClick={handleSubmit}>Ajouter</Form.Button>
-          <Button>Annuler</Button>
+          <Form.Button positive onClick={handleSubmit}>Valider</Form.Button>
+          <Button negative>Annuler</Button>
         </Segment>
       </Form>
     </Segment>
@@ -92,7 +94,13 @@ setCreateProject, titleNeed, descriptionNeed, perimeter, handleSubmit }) => (
 );
 
 CreateProject.propTypes = {
-  props: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  expiration_date: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  setCreateProject: PropTypes.func.isRequired,
+  perimeter: PropTypes.number.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 // == Export
