@@ -136,26 +136,62 @@ export const queryUserDelete = {
 };
 
 //= = PROJECT QUERIES
+export const queryByProjectsByFavorites = {
+  query: `
+  {
+    myInfos{
+      ... on User{
+        id
+        created_at
+        name
+        email
+        avatar
+        activated
+        projectsFollowed{
+          id
+          title
+          isFollowed
+          userIsAuthor
+          description
+        location
+        archived
+        expiration_date
+        }
+      }
+        ... on Error{
+        error{
+          msg
+          code
+        }
+      }
+    }
+  } `,
+};
+
 export const queryByProjectsByAuthor = {
-  query: `query GetProjectsByAuthorID ($id: ID!){
-    user(id: $id){
+  query: `{
+    myInfos{
+    ... on User{
+      id
+      created_at
+      name
+      email
+      avatar
+      activated
       projectsCreated{
         id
         title
-        description
-        created_at
-        expiration_date
-        location
-        lat
-        long
-        isFollowed
         userIsAuthor
-        image
+        description
+        location
         archived
-        author{
-          name
-          email
-        }
+        expiration_date
+      }
+    }
+      ... on Error{
+      error{
+        msg
+        code
       }
     }
   }`,
@@ -451,4 +487,3 @@ export const queryDeleteNeedById = {
   }`,
 >>>>>>> 7891ea350b90fee53d306517793e3947e0ba2871
 };
-

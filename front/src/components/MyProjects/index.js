@@ -1,12 +1,13 @@
+/* eslint-disable import/no-unresolved */
 // == Import npm
 import React, { useEffect } from 'react';
 
 // == IMPORTS CONTAINERS
-import List from 'src/containers/MyProjectsList';
+import List from 'src/containers/MyProjects';
 
 // == IMPORTS COMPOSANTS
 import {
-  Container, 
+  Container,
 } from 'semantic-ui-react';
 
 // == STYLES
@@ -18,10 +19,11 @@ const MyProjects = ({ updateList }) => {
     updateList();
   }, []);
   return (
-  <Container className="my-projects">
-    { /* coder une fonction qui sera appellée dans un use effect et qui déclenchera une requête permettant d'afficher les projets de la personne connectée */}
-    <List />
-  </Container>
+    <Container className="my-projects">
+      { /* coder une fonction qui sera appellée dans un use effect */}
+      {/* et déclenchera une requête permettant d'afficher les projets de la personne connectée */}
+      <List />
+    </Container>
   );
 };
 
