@@ -18,8 +18,6 @@ import {
   APP_PROFIL_CLEAN,
   APP_SIGNUP_CLEAN,
   APP_SIGN_UP_UPDATE,
-  APP_PROJECT_CREATE,
-  APP_CLEAN_CREATE_PROJECT,
   APP_UPDATE_PROJECT,
   APP_CLEAN_PROJECT,
   APP_CREATE_NEEDS,
@@ -76,15 +74,6 @@ export const profilInitialState = {
 };
 
 // ==  INITIALE SUB APP STATE - createProject
-export const createProjectInitialState = {
-  title: '',
-  expiration_date: new Date().toLocaleDateString('fr-FR'),
-  description: '',
-  location: '',
-  perimeter: 0,
-};
-
-// ==  INITIALE SUB APP STATE - createProject
 export const projectInitialState = {
   isEditMode: false,
   confirm: '',
@@ -121,7 +110,6 @@ export const initialState = {
   signIn: { ...signInInitialState },
   search: { ...searchInitialState },
   signUp: { ...signUpInitialState },
-  createProject: { ...createProjectInitialState },
   project: { ...projectInitialState },
   needs: { ...needsInitialState },
   createNeeds: { ...createNeedsInitialState },
@@ -229,22 +217,7 @@ const reducer = (oldState = initialState, action = {}) => {
           ...profilInitialState,
         },
       };
-    case APP_PROJECT_CREATE:
-      return {
-        ...oldState,
-        createProject: {
-          ...oldState.createProject,
-          ...action.payload,
-        },
-      };
 
-    case APP_CLEAN_CREATE_PROJECT:
-      return {
-        ...oldState,
-        createProject: {
-          ...createProjectInitialState,
-        },
-      };
     case APP_UPDATE_PROJECT:
       return {
         ...oldState,
@@ -309,9 +282,7 @@ const reducer = (oldState = initialState, action = {}) => {
         ...needToUpdate,
         ...action.payload,
       };
-      console.log(needToUpdate);
       newNeedsArr.push(needToUpdate);
-      console.table(newNeedsArr);
       return {
         ...oldState,
         needs: {
@@ -324,9 +295,7 @@ const reducer = (oldState = initialState, action = {}) => {
     }
     case APP_ADD_NEED_TO_ARRAY: {
       const newNeedsArr = [...oldState.needs.needs];
-      console.log(action.newNeed);
       newNeedsArr.push(action.newNeed);
-      console.table(newNeedsArr);
       return {
         ...oldState,
         needs: {

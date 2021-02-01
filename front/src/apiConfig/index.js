@@ -232,90 +232,44 @@ export const queryGetProjectsByGeo = {
   }`,
 };
 export const queryCreateProject = {
-  query: `mutation CreateProject(
-    $title: String!,
-    $description: String!,
-    $expiration_date: String!,
-    $location: String!,
-    $lat: Float!,
-    $long: Float!,
-    $image: String,
-    $file: String
-) {
-insertProject(
-    title: $title,
-    description: $description,
-    expiration_date: $expiration_date,
-    location: $location,
-    lat: $lat,
-    long: $long,
-    image: $image,
-    file: $file
-) {
-__typename
-... on Project{
-  id
-  title
-  description
-  expiration_date
-  location
-  lat
-  long
-}
-... on Error{
-  error{
-    msg
-    code
-  }
-}
-}
+  query: `mutation CreateProject($title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String) {
+    insertProject(title: $title, description: $description, expiration_date: $expiration_date, location: $location, lat: $lat, long: $long, image: $image, file: $file) {
+      __typename
+      ... on Project{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
+    }
 }`,
 };
 export const queryEditProject = {
-  query: `mutation EditProject(
-    $id: ID!,
-    $title: String!,
-    $description: String!,
-    $expiration_date: String!,
-    $location: String!,
-    $lat: Float!,
-    $long: Float!,
-    $image: String,
-    $file: String
-) {
-editProject(
-    id: $id,
-    title: $title,
-    description: $description,
-    expiration_date: $expiration_date,
-    location: $location,
-    lat: $lat,
-    long: $long,
-    image: $image,
-    file: $file
-) {
-... on Project{
-  id
-  title
-  description
-  expiration_date
-  location
-  lat
-  long
-  archived
-  needs{
-    id
-    title
-  }
-  
-}
-... on Error{
-  error{
-    msg
-    code
-  }
-}
-}
+  query: `mutation EditProject($id: ID!, $title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String) {
+      editProject(
+          id: $id,
+          title: $title,
+          description: $description,
+          expiration_date: $expiration_date,
+          location: $location,
+          lat: $lat,
+          long: $long,
+          image: $image,
+          file: $file
+      ) {
+      ... on Project{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
+    }
 }
 `,
 };
@@ -422,4 +376,3 @@ export const queryDeleteNeedById = {
     }
   }`,
 };
-

@@ -27,7 +27,6 @@ const ProjectForm = ({
   syncProjectFields,
   setProjectField,
   handleSubmit,
-  handleCancel,
 }) => {
   useEffect(() => {
     syncProjectFields();
@@ -84,22 +83,13 @@ const ProjectForm = ({
           }}
         />
         <Segment basic compact textAlign="right">
-          <Button.Group>
-            <Form.Button
-              positive
-              type="submit"
-              content="Modifier"
-              title="Modifier votre projet"
-              onClick={handleSubmit}
-            />
-            <Button.Or text="ou" />
-            <Button
-              type="button"
-              content="Annuler"
-              title="Annuler"
-              onClick={handleCancel}
-            />
-          </Button.Group>
+          <Button
+            positive
+            type="submit"
+            title="Modifier votre projet"
+            content="Modifier"
+            onClick={handleSubmit}
+          />
         </Segment>
       </Form>
     </>
@@ -114,7 +104,6 @@ ProjectForm.propTypes = {
   syncProjectFields: PropTypes.func.isRequired,
   setProjectField: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  handleCancel: PropTypes.func.isRequired,
 };
 
 // == Export

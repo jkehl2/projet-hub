@@ -63,15 +63,13 @@ const NeedsForm = ({
           }}
         />
         <Segment basic compact textAlign="right">
-          <Button.Group>
-            <Form.Button
-              positive
-              type="submit"
-              content="Ajouter"
-              title="Ajouter un besoin"
-              onClick={handleAddNeed}
-            />
-          </Button.Group>
+          <Button
+            positive
+            type="submit"
+            title="Ajouter un besoin"
+            content="Ajouter"
+            onClick={handleAddNeed}
+          />
         </Segment>
       </Form>
       <Grid divided padded="horizontally" stackable centered>
@@ -122,11 +120,11 @@ const NeedsForm = ({
                 </Grid.Column>
                 <Grid.Column width={4} verticalAlign="middle" textAlign="center">
                   <Button.Group>
-                    <Form.Button
+                    <Button
                       positive
                       type="submit"
-                      content="Editer"
                       title="Editer"
+                      content="Editer"
                       onClick={(event) => {
                         event.preventDefault();
                         EditNeedById(need.id);
@@ -135,8 +133,8 @@ const NeedsForm = ({
                     <Button.Or text="ou" />
                     <Button
                       type="button"
-                      content="Supprimer"
                       title="Supprimer"
+                      content="Supprimer"
                       onClick={(event) => {
                         event.preventDefault();
                         DeleteNeedById(need.id);

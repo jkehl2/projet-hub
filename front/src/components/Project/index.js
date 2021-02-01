@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
+import ProjectMenu from 'src/containers/ProjectMenu';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -22,6 +23,7 @@ const Project = ({
   useEffect(() => {
     getProjectById(projectId);
   }, []);
+  const isVisible = (logged && project.isAuthor && !project.isArchived);
   return (
     <Container className="project">
       <Header
@@ -31,6 +33,8 @@ const Project = ({
         dividing
         subheader="Ici on vous dit tout sur ce projet"
       />
+      {/* Menu projet - modifier / supprimer / archiver */}
+      {(isVisible) && <ProjectMenu />}
       {(isEditMode && logged)
         ? <ProjectEdit project={project} />
         : (

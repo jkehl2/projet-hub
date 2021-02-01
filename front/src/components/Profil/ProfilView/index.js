@@ -84,7 +84,7 @@ const ProfilView = ({
         trigger={<Button className="profil-view--marged" negative>Supprimer votre compte</Button>}
         confirm={confirm}
         setConfirmation={setConfirmation}
-        handleDelete={deleteProfil}
+        handleAction={deleteProfil}
       />
     </Button.Group>
   </Segment>

@@ -12,9 +12,7 @@ export const PROJECT_ARCHIVED_CURRENT = 'PROJECT_ARCHIVED';
 
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const GET_PROJECT_BY_GEO = 'GET_PROJECT_BY_GEO';
-export const SEND_PROJECT = 'SEND_PROJECT';
 export const PROJECT_NEED_ISCOMPLETED = 'PROJECT_NEED_ISCOMPLETED';
-export const SEND_CREATED_PROJECT = 'SEND_CREATED_PROJECT';
 
 // == [CLE-VALEURS] - ACTIONS sur le store projets(Reducer user)
 
@@ -24,6 +22,7 @@ export const PROJECT_CLEAN_PROJECTS = 'PROJECT_CLEAN_PROJECTS';
 export const PROJECT_CLEAN_PROJECT = 'PROJECT_CLEAN_PROJECT';
 export const PROJECT_NEED_UPDATE_BY_ID = 'PROJECT_NEED_UPDATE_BY_ID';
 export const GET_PROJECTS_BY_AUTHOR = 'GET_PROJECTS_BY_AUTHOR';
+
 // == ===================================
 // == PROJECT STORE - ACTIONS CREATORS PART
 
@@ -58,9 +57,9 @@ export const searchProject = () => ({
 });
 
 // uploading a project
-export const createProject = (project) => ({
+export const createProject = (payload) => ({
   type: PROJECT_CREATE,
-  payload: project,
+  payload,
 });
 
 // editing a project
@@ -90,18 +89,8 @@ export const getProjectByGeo = (payload) => ({
   payload,
 });
 
-// send a project to geocoding API
-export const sendProjectApi = () => ({
-  type: SEND_PROJECT,
-});
-
 export const updateProjectNeed = (payload) => ({
   type: PROJECT_NEED_UPDATE_BY_ID,
-  payload,
-});
-// send a project to back-end API
-export const sendProjectCreated = (payload) => ({
-  type: SEND_CREATED_PROJECT,
   payload,
 });
 

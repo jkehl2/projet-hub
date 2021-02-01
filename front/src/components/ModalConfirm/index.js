@@ -18,7 +18,7 @@ const ModalConfirmDelete = ({
   trigger,
   confirm,
   setConfirmation,
-  handleDelete,
+  handleAction,
 }) => {
   const [open, setOpen] = useState(false);
   return (
@@ -34,7 +34,7 @@ const ModalConfirmDelete = ({
       >
         <Modal.Header>{`${title}`}</Modal.Header>
         <Modal.Content>
-          <Form onSubmit={handleDelete}>
+          <Form onSubmit={handleAction}>
             <Form.Input
               type="text"
               label="Saisissez CONFIRMER pour valider l'action"
@@ -48,17 +48,24 @@ const ModalConfirmDelete = ({
             />
             <Segment basic compact textAlign="right">
               <Button.Group>
-                <Form.Button negative type="submit">Confirmer</Form.Button>
+                <Button
+                  negative
+                  type="submit"
+                  title="Confirmer"
+                  content="Confirmer"
+                  onClick={handleAction}
+                />
                 <Button.Or text="ou" />
                 <Button
                   type="button"
+                  title="Annuler"
                   onClick={(event) => {
                     event.preventDefault();
                     setOpen(false);
                     setConfirmation({ confirm: '' });
                   }}
-                >Annuler
-                </Button>
+                  content="Annuler"
+                />
               </Button.Group>
             </Segment>
           </Form>
@@ -73,7 +80,7 @@ ModalConfirmDelete.propTypes = {
   trigger: PropTypes.object.isRequired,
   confirm: PropTypes.string.isRequired,
   setConfirmation: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
+  handleAction: PropTypes.func.isRequired,
 };
 
 // == Export

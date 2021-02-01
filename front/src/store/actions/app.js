@@ -6,17 +6,17 @@
 // == ===================================
 // == [CLE-VALEURS] - ACTIONS MIDDLEWARE applicatif technique
 export const APP_REFRESH_PROFIL = 'APP_REFRESH_PROFIL';
-export const APP_REFRESH_PROJECT = 'APP_REFRESH_PROJECT';
-export const APP_CONFIRM_PASSWORD = 'APP_CONFIRM_PASSWORD';
 export const APP_PROFIL_CONFIRM = 'APP_PROFIL_CONFIRM';
-export const APP_PROJECT_CONFIRM = 'APP_PROJECT_CONFIRM';
 export const APP_CREATE_USER_VERIF = 'USER_CREATION_VERIF';
-export const APP_PROJECT_CREATE_VERIF = 'APP_PROJECT_CREATE_VERIF';
+export const APP_REFRESH_PROJECT = 'APP_REFRESH_PROJECT';
+export const APP_PROJECT_CREATE = 'APP_PROJECT_CREATE';
 export const APP_PROJECT_EDIT = 'APP_PROJECT_EDIT';
-export const APP_GET_GEOCODING = 'APP_GET_GEOCODING';
+export const APP_PROJECT_CONFIRM = 'APP_PROJECT_CONFIRM';
 export const APP_CREATE_NEEDS = 'APP_CREATE_NEEDS';
 export const APP_SUBMIT_NEEDS = 'APP_SUBMIT_NEEDS';
 export const APP_REFRESH_NEEDS_ARRAY = 'APP_REFRESH_NEEDS_ARRAY';
+export const APP_CONFIRM_PASSWORD = 'APP_CONFIRM_PASSWORD';
+export const APP_GET_GEOCODING = 'APP_GET_GEOCODING';
 
 // == ===================================
 // == [CLE-VALEURS] - ACTIONS sur le store applicatif technique
@@ -34,8 +34,6 @@ export const APP_MSG_UPDATE = 'APP_MSG_UPDATE';
 export const APP_MSG_CLEAN = 'APP_MSG_CLEAN';
 export const APP_SIGN_UP_UPDATE = 'APP_SIGN_UP_UPDATE';
 export const APP_SIGNUP_CLEAN = 'APP_SIGNUP_CLEAN';
-export const APP_PROJECT_CREATE = 'APP_PROJECT_CREATE';
-export const APP_CLEAN_CREATE_PROJECT = 'APP_CLEAN_CREATE_PROJECT';
 export const APP_UPDATE_PROJECT = 'APP_UPDATE_PROJECT';
 export const APP_CLEAN_PROJECT = 'APP_CLEAN_PROJECT';
 export const APP_CLEAN_NEEDS_FIELDS = 'APP_CLEAN_NEEDS_FIELDS';
@@ -65,13 +63,13 @@ export const appRefreshProject = () => ({
   type: APP_REFRESH_PROJECT,
 });
 
+export const appProjectCreate = () => ({
+  type: APP_PROJECT_CREATE,
+});
+
 export const appProjectConfirm = (dispatch) => ({
   type: APP_PROJECT_CONFIRM,
   dispatch,
-});
-
-export const appSubmitCreatedProject = () => ({
-  type: APP_PROJECT_CREATE_VERIF,
 });
 
 export const appCreateUserVerif = () => ({
@@ -180,17 +178,10 @@ export const appProfilClean = () => (
     type: APP_PROFIL_CLEAN,
   }
 );
-export const appCreateProject = (payload) => ({
-  type: APP_PROJECT_CREATE,
-  payload,
-});
-
-export const cleanCreateProject = () => ({
-  type: APP_CLEAN_CREATE_PROJECT,
-});
 
 // ============================================
 // == PROJECT SUB PART
+
 export const appUpdateProject = (payload) => ({
   type: APP_UPDATE_PROJECT,
   payload,

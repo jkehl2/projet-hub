@@ -2,9 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS CONTAINERS
-import ProjectMenu from 'src/containers/ProjectMenu';
-
 // == IMPORTS COMPOSANTS
 import {
   Segment,
@@ -21,8 +18,6 @@ const ProjectView = (props) => {
   const isVisible = (logged && project.isAuthor && !project.isArchived);
   return (
     <>
-      {/* Menu projet - modifier / supprimer / archiver */}
-      {(isVisible) && <ProjectMenu />}
       <Segment compact attached="top">
         {/* Description du projet */}
         <Description {...props} />
