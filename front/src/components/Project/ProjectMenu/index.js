@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 // == Import npm
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -18,6 +19,8 @@ import './projectMenu.scss';
 const ProjectMenu = ({
   confirm,
   isEditMode,
+  isAuthor,
+  isArchived,
   setEditModeOn,
   setConfirmation,
   handleArchiveProject,
@@ -44,7 +47,7 @@ const ProjectMenu = ({
           />
         </Menu.Item>
       )
-      : (
+      : (!isArchived && isAuthor) && (
         <>
           <Menu.Item
             name="Editer"
@@ -100,28 +103,38 @@ const ProjectMenu = ({
               handleAction={handleDeleteProject}
             />
           </Menu.Item>
-          <Menu.Item
-            name="backPrevius"
-            fitted="horizontally"
-          >
-            <Button
-              type="button"
-              icon="arrow alternate circle left"
-              color="blue"
-              title="Revenir à la page précédente"
-              content="Retour"
-              labelPosition="left"
-              compact
-              onClick={handleBackToPrevius}
-            />
-          </Menu.Item>
         </>
       )}
+    <>
+      {(!isEditMode
+
+            && (
+            <Menu.Item
+              name="backPrevius"
+              fitted="horizontally"
+            >
+              <Button
+                type="button"
+                icon="arrow alternate circle left"
+                color="blue"
+                title="Revenir à la page précédente"
+                content="Retour"
+                labelPosition="left"
+                compact
+                onClick={handleBackToPrevius}
+              />
+            </Menu.Item>
+            )
+
+        )}
+    </>
   </Menu>
 );
 ProjectMenu.propTypes = {
   confirm: PropTypes.string.isRequired,
   isEditMode: PropTypes.bool.isRequired,
+  isAuthor: PropTypes.bool.isRequired,
+  isArchived: PropTypes.bool.isRequired,
   setEditModeOn: PropTypes.func.isRequired,
   setConfirmation: PropTypes.func.isRequired,
   handleArchiveProject: PropTypes.func.isRequired,

@@ -24,7 +24,6 @@ const Project = ({
     setEditModeOff();
     getProjectById();
   }, []);
-  const isVisible = (logged && project.isAuthor && !project.isArchived);
   return (
     <Container className="project">
       <Header
@@ -35,7 +34,7 @@ const Project = ({
         subheader="Ici on vous dit tout sur ce projet"
       />
       {/* Menu projet - modifier / supprimer / archiver */}
-      {(isVisible) && <ProjectMenu />}
+      <ProjectMenu />
       {(isEditMode && logged)
         ? (
           <ProjectEdit

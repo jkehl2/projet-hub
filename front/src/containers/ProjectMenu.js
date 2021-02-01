@@ -18,6 +18,8 @@ import {
 const mapStateToProps = (state) => ({
   confirm: state.app.project.confirm,
   isEditMode: state.app.project.isEditMode,
+  isAuthor: state.project.project.isAuthor,
+  isArchived: state.project.project.isArchived,
 });
 
 const mapDispatchToProps = (dispatch) => ({
