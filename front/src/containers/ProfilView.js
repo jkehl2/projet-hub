@@ -27,6 +27,12 @@ const mapDispatchToProps = (dispatch) => ({
   redirectToPasswordEdit: () => {
     dispatch(push('/utilisateur/motdepasse-edit'));
   },
+  redirectToMyProjects: () => {
+    dispatch(push('/utilisateur/projets'));
+  },
+  redirectToMyFavorites: () => {
+    dispatch(push('/utilisateur/favoris'));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilView);
