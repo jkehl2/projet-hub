@@ -18,8 +18,8 @@ import connector from 'src/apiConfig/queryWithToken';
 
 // actions from store
 import {
-  GET_PROJECTS_BY_AUTHOR,
-  GET_PROJECTS_BY_FAVORITES,
+  GET_MY_PROJECTS,
+  GET_MY_FAVORITES,
   PROJECT_CREATE,
   PROJECT_EDIT,
   PROJECT_DELETE_CURRENT,
@@ -254,7 +254,7 @@ const projectMiddleware = (store) => (next) => (action) => {
       store.dispatch(appErrorClean());
       return;
     }
-    case GET_PROJECTS_BY_AUTHOR: {
+    case GET_MY_PROJECTS: {
       const data = JSON.stringify({
         ...queryByAuthor,
       });
@@ -301,7 +301,7 @@ const projectMiddleware = (store) => (next) => (action) => {
       store.dispatch(appErrorClean());
       return;
     }
-    case GET_PROJECTS_BY_FAVORITES: {
+    case GET_MY_FAVORITES: {
       const data = JSON.stringify({
         ...queryByAuthor,
       });
