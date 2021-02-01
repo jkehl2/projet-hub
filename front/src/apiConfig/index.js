@@ -197,6 +197,34 @@ export const queryByAuthor = {
           name
         }
       }
+      projectsFollowed{
+        id
+        title
+        description
+        created_at
+        expiration_date
+        location
+        image
+        archived
+        isFollowed
+        userIsAuthor
+        author{
+          id
+          name
+          email
+          avatar
+        }
+        needs{
+          id
+          title
+          description
+          completed
+        }
+        followers{
+          id
+          name
+        }
+      }
     }
       ... on Error{
       error{

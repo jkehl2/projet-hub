@@ -21,8 +21,8 @@ export const PROJECT_STORE_CLEAN = 'PROJECT_STORE_CLEAN';
 export const PROJECT_CLEAN_PROJECTS = 'PROJECT_CLEAN_PROJECTS';
 export const PROJECT_CLEAN_PROJECT = 'PROJECT_CLEAN_PROJECT';
 export const PROJECT_NEED_UPDATE_BY_ID = 'PROJECT_NEED_UPDATE_BY_ID';
-export const GET_PROJECTS_BY_AUTHOR = 'GET_PROJECTS_BY_AUTHOR';
-export const GET_PROJECTS_BY_FAVORITES = 'GET_PROJECTS_BY_FAVORITES';
+export const GET_MY_PROJECTS = 'GET_MY_PROJECTS';
+export const GET_MY_FAVORITES = 'GET_MY_FAVORITES';
 
 // == ===================================
 // == PROJECT STORE - ACTIONS CREATORS PART
@@ -51,12 +51,12 @@ export const projectNeedIsCompleted = (payload) => ({
 
 // get all projects by author
 export const getProjectsByAuthor = () => ({
-  type: GET_PROJECTS_BY_AUTHOR,
+  type: GET_MY_PROJECTS,
 });
 
 // get all projects by favorites
 export const getProjectsByFavorites = () => ({
-  type: GET_PROJECTS_BY_FAVORITES,
+  type: GET_MY_FAVORITES,
 });
 
 // == ===================================
@@ -104,5 +104,3 @@ export const updateProjectNeed = (payload) => ({
   type: PROJECT_NEED_UPDATE_BY_ID,
   payload,
 });
-
-

@@ -10,7 +10,6 @@ import {
   PROJECT_CLEAN_PROJECTS,
   PROJECT_CLEAN_PROJECT,
   PROJECT_NEED_UPDATE_BY_ID,
-  GET_PROJECT_BY_ID,
 } from 'src/store/actions/project';
 
 // ==  INITIAL STATE : a project object empty
