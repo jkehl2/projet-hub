@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // IMPORT DATE UTIL
-import dateFormater from 'src/utils/dateFormater';
+import dateFormater from 'src/utils/dateHTMLFormater';
 
 // == IMPORTS COMPOSANTS
 import {

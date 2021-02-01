@@ -11,7 +11,7 @@ import {
 import utils from 'src/utils/perimeters.json';
 
 // IMPORT DATE UTIL
-import dateFormater from 'src/utils/dateFormater';
+import dateFormater from 'src/utils/dateHTMLFormater';
 
 // == IMPORTS CONTAINERS
 

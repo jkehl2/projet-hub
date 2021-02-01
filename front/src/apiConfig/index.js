@@ -351,7 +351,7 @@ export const queryUnCompletedNeed = {
 };
 
 export const queryAddNeedToProject = {
-  query: `mutation insertNeeds($title: String!, $description: String!, $projectId: ID) {
+  query: `mutation insertNeed($title: String!, $description: String!, $projectId: ID!) {
     insertNeed(title: $title, description: $description, project_id: $projectId) {
       ... on Need{
         id

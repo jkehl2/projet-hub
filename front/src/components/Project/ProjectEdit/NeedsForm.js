@@ -74,7 +74,7 @@ const NeedsForm = ({
           </Button.Group>
         </Segment>
       </Form>
-      <Grid divided padded="horizontally">
+      <Grid divided padded="horizontally" stackable centered>
         {needs.map((need) => (
           <Grid.Row key={need.id}>
             <Form onSubmit={(event) => {
@@ -82,7 +82,7 @@ const NeedsForm = ({
               EditNeedById(need.id);
             }}
             >
-              <Grid columns={2} divided>
+              <Grid columns={2} divided stackable centered>
                 <Grid.Column width={12}>
                   <Form.Input
                     type="text"

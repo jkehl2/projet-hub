@@ -87,6 +87,9 @@ const needMiddleware = (store) => (next) => (action) => {
               description,
             },
           },
+        },
+        project:
+        {
           project: {
             id: projectId,
           },
@@ -106,7 +109,7 @@ const needMiddleware = (store) => (next) => (action) => {
       };
       connector(config, 'insertNeed', store.dispatch)
         .then((response) => {
-          const { data: { data: { insertNeeds: { newNeed } } } } = response;
+          const { data: { data: { insertNeed: { newNeed } } } } = response;
           store.dispatch(appAddNeedToArray(newNeed));
         })
         .catch((error) => {

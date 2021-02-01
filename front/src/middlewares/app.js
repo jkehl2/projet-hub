@@ -7,6 +7,9 @@
 import axios from 'axios';
 import querystring from 'query-string';
 
+// == import utilitary date formater HTML to ISO STRING
+import dateApiFormater from 'src/utils/dateHTMLFormater';
+
 // ==  API CONFIGURATION URL
 import apiConfig from 'src/apiConfig/parameters.json';
 
@@ -92,12 +95,20 @@ const userMiddleware = (store) => (next) => (action) => {
             description,
           },
         },
+        project: {
+          project: {
+            id,
+            image,
+          },
+        },
       } = store.getState();
       const payload = {
+        id,
         title,
-        expiration_date,
+        expiration_date: dateApiFormater(expiration_date),
         description,
         location,
+        image,
       };
       store.dispatch(appGetGeoCoding(location, editProject, payload));
       return;
