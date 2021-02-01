@@ -339,6 +339,8 @@ const projectMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
+          const projects = [];
+          store.dispatch(updateProjectStore({ projects }));
         })
         .finally(() => {
           store.dispatch(appLoadingOff());

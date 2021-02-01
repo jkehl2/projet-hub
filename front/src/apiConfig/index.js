@@ -126,113 +126,75 @@ export const queryUserDelete = {
   }   `,
 };
 
-//= = PROJECT QUERIES
-export const queryByProjectsByFavorites = {
+export const queryByAuthor = {
   query: `
-  {
     myInfos{
       ... on User{
         id
-        created_at
-        name
-        email
-        avatar
-        activated
+        projectsCreated{
+          id
+          title
+          description
+          created_at
+          expiration_date
+          location
+          image
+          archived
+          isFollowed
+          userIsAuthor
+          author{
+            id
+            name
+            email
+            avatar
+          }
+          needs{
+            id
+            title
+            description
+            completed
+          }
+          followers{
+            id
+            name
+          }
+        }
         projectsFollowed{
           id
           title
+          description
+          created_at
+          expiration_date
+          location
+          image
+          archived
           isFollowed
           userIsAuthor
-          description
-        location
-        archived
-        expiration_date
+          author{
+            id
+            name
+            email
+            avatar
+          }
+          needs{
+            id
+            title
+            description
+            completed
+          }
+          followers{
+            id
+            name
+          }
         }
       }
-        ... on Error{
+      ... on Error{
         error{
           msg
           code
         }
       }
-    }
-  } `,
-};
-
-export const queryByAuthor = {
-  query: `{
-    myInfos{
-    ... on User{
-      id
-      created_at
-      name
-      email
-      avatar
-      activated
-      projectsCreated{
-        id
-        title
-        description
-        created_at
-        expiration_date
-        location
-        image
-        archived
-        isFollowed
-        userIsAuthor
-        author{
-          id
-          name
-          email
-          avatar
-        }
-        needs{
-          id
-          title
-          description
-          completed
-        }
-        followers{
-          id
-          name
-        }
-      }
-      projectsFollowed{
-        id
-        title
-        description
-        created_at
-        expiration_date
-        location
-        image
-        archived
-        isFollowed
-        userIsAuthor
-        author{
-          id
-          name
-          email
-          avatar
-        }
-        needs{
-          id
-          title
-          description
-          completed
-        }
-        followers{
-          id
-          name
-        }
-      }
-    }
-      ... on Error{
-      error{
-        msg
-        code
-      }
-    }
-  }`,
+    }`,
 };
 // == QUERY - Get project by ID
 export const queryProjectById = {
