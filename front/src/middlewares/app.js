@@ -89,7 +89,6 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas égale au nouveau mot de passe. Veuillez ressaisir votre confirmation de mot de passe.'));
       }
       return; }
-<<<<<<< HEAD
     case PROJECT_SEARCH: {
       // gathering values needed for geocoding
       const {
@@ -135,7 +134,6 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-=======
     case APP_PROJECT_CREATE_VERIF: {
       const { app: {createProject: { title, date, description, location, perimeter } } } = store.getState();
     if (title.length === 0 && date.length === 0) {
@@ -145,7 +143,6 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(sendProjectApi());
     }
   return; }
->>>>>>> 1a69d00efd94ca75520774f055373929af7a7ebd
     default:
       next(action);
       break;
