@@ -245,11 +245,11 @@ const userMiddleware = (store) => (next) => (action) => {
 
       return;
     }
-  return; }
 
     default:
       next(action);
       break;
+  }
 };
 
 export default userMiddleware;

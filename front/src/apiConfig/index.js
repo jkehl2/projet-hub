@@ -260,9 +260,9 @@ export const queryCreateProject = {
   }
   }
   }`,
-  };
-  export const queryEditProject = {
-    query: `mutation EditProject(
+};
+export const queryEditProject = {
+  query: `mutation EditProject(
       $id: ID!,
       $title: String!,
       $description: String!,
@@ -307,10 +307,10 @@ export const queryCreateProject = {
     }
     }
     `,
-    };
+};
 
-    export const queryCompletedNeed = {
-      query: `mutation completeNeed($id: ID!) {
+export const queryCompletedNeed = {
+  query: `mutation completeNeed($id: ID!) {
         completeNeed(id: $id) {
           ... on Need{
             id
@@ -324,9 +324,9 @@ export const queryCreateProject = {
           }
         }
       }`,
-    };
-    export const queryUnCompletedNeed = {
-      query: `mutation uncompleteNeed($id: ID!) {
+};
+export const queryUnCompletedNeed = {
+  query: `mutation uncompleteNeed($id: ID!) {
         uncompleteNeed(id: $id) {
           ... on Need{
             id
@@ -340,9 +340,9 @@ export const queryCreateProject = {
           }
         }
       }`,
-    };
-    export const queryArchivedProject = {
-      query: `mutation archiveProject($id: ID!) {
+};
+export const queryArchivedProject = {
+  query: `mutation archiveProject($id: ID!) {
         archiveProject(id: $id) {
           ... on Project{
             id
@@ -355,10 +355,4 @@ export const queryCreateProject = {
           }
         }
       }`,
-    };
-export const queryCreateProject = {
-  query: '',
-};
-export const queryEditProject = {
-  query: '',
 };
