@@ -23,6 +23,8 @@ const ProfilView = ({
   deleteProfil,
   switchToEditProFile,
   redirectToPasswordEdit,
+  redirectToMyProjects,
+  redirectToMyFavorites,
 }) => {
   const [open, setOpen] = useState(false);
   return (
@@ -41,9 +43,19 @@ const ProfilView = ({
             <Item.Description>
               <Button.Group>
                 {/* bouton mes projets */}
-                <Button basic color="green">Mes projets</Button>
+                <Button
+                  basic
+                  color="green"
+                  onClick={redirectToMyProjects}
+                >Mes projets
+                </Button>
                 {/* bouton mes favoris */}
-                <Button basic color="green">Mes favoris</Button>
+                <Button
+                  basic
+                  color="green"
+                  onClick={redirectToMyFavorites}
+                >Mes favoris
+                </Button>
               </Button.Group>
             </Item.Description>
           </Item.Content>
@@ -90,6 +102,8 @@ ProfilView.propTypes = {
   deleteProfil: PropTypes.func.isRequired,
   switchToEditProFile: PropTypes.func.isRequired,
   redirectToPasswordEdit: PropTypes.func.isRequired,
+  redirectToMyProjects: PropTypes.func.isRequired,
+  redirectToMyFavorites: PropTypes.func.isRequired,
 };
 
 // == Export
