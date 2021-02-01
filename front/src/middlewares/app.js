@@ -210,6 +210,7 @@ const userMiddleware = (store) => (next) => (action) => {
       else {
         store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider la suppression."));
       }
+      store.dispatch(appUpdateProfil({ confirm: '' }));
       return; }
     case APP_PROJECT_CONFIRM: {
       const { app: { project: { confirm } } } = store.getState();
@@ -219,6 +220,7 @@ const userMiddleware = (store) => (next) => (action) => {
       else {
         store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider la suppression."));
       }
+      store.dispatch(appUpdateProject({ confirm: '' }));
       return; }
     case APP_CONFIRM_PASSWORD: {
       const { app: { profil: { password, passwordConfirm } } } = store.getState();
