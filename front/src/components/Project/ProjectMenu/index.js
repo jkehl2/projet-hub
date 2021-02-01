@@ -9,13 +9,19 @@ import {
   Button,
   Menu,
 } from 'semantic-ui-react';
-import ModalConfirmDelete from 'src/components/ModalConfirmDelete';
+import ModalConfirm from 'src/components/ModalConfirm';
 
 // == STYLES
 import './projectMenu.scss';
 
 // == Composant
-const ProjectMenu = ({ deleteConfirm, setConfirmation, archiveProject, deleteProject }) => {
+const ProjectMenu = ({
+  confirm,
+  setEditModeOn,
+  setConfirmation,
+  archiveProject,
+  deleteProject,
+}) => {
   const [state, setState] = useState({ activeItem: '' });
   const handleItemClick = (e, { name }) => {
     setState({ activeItem: name });
@@ -29,7 +35,16 @@ const ProjectMenu = ({ deleteConfirm, setConfirmation, archiveProject, deletePro
           onClick={handleItemClick}
           fitted="horizontally"
         >
-          <Button icon="edit" color="blue" title="Editer" />
+          <Button
+            type="button"
+            icon="edit"
+            color="blue"
+            title="Editer"
+            onClick={(event) => {
+              event.preventDefault();
+              setEditModeOn();
+            }}
+          />
         </Menu.Item>
 
         <Menu.Item
@@ -38,10 +53,10 @@ const ProjectMenu = ({ deleteConfirm, setConfirmation, archiveProject, deletePro
           onClick={handleItemClick}
           fitted="horizontally"
         >
-          <ModalConfirmDelete
+          <ModalConfirm
             title="Confirmer l'archivage de votre projet"
             trigger={<Button icon="archive" color="brown" title="Archiver" />}
-            deleteConfirm={deleteConfirm}
+            confirm={confirm}
             setConfirmation={setConfirmation}
             handleDelete={archiveProject}
           />
@@ -53,10 +68,10 @@ const ProjectMenu = ({ deleteConfirm, setConfirmation, archiveProject, deletePro
           onClick={handleItemClick}
           fitted="horizontally"
         >
-          <ModalConfirmDelete
+          <ModalConfirm
             title="Confirmer la suppression de votre projet"
-            trigger={<Button icon="trash" color="red" title="Archiver" />}
-            deleteConfirm={deleteConfirm}
+            trigger={<Button icon="trash" color="red" title="Supprimer" />}
+            confirm={confirm}
             setConfirmation={setConfirmation}
             handleDelete={deleteProject}
           />
@@ -66,7 +81,8 @@ const ProjectMenu = ({ deleteConfirm, setConfirmation, archiveProject, deletePro
   );
 };
 ProjectMenu.propTypes = {
-  deleteConfirm: PropTypes.string.isRequired,
+  confirm: PropTypes.string.isRequired,
+  setEditModeOn: PropTypes.func.isRequired,
   setConfirmation: PropTypes.func.isRequired,
   archiveProject: PropTypes.func.isRequired,
   deleteProject: PropTypes.func.isRequired,

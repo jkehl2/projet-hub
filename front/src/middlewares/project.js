@@ -3,6 +3,9 @@
 import axios from 'axios';
 import { goBack, push } from 'connected-react-router';
 
+// == import utilitary date formater HTML to ISO STRING
+import dateApiFormater from 'src/utils/dateHTMLFormater';
+
 // graphql queries
 import configGraphQl, {
   queryByProjectsByAuthor,
@@ -167,7 +170,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         variables: {
           title,
           description,
-          expirationDate,
+          expirationDate: dateApiFormater(expirationDate),
           location,
           lat,
           long,
@@ -194,11 +197,9 @@ const projectMiddleware = (store) => (next) => (action) => {
       return;
     }
     case PROJECT_EDIT: {
-      const { project: { project: { id } } } = store.getState();
       const data = JSON.stringify({
         ...queryEditProject,
         variables: {
-          id,
           ...action.payload,
         },
       });
@@ -206,9 +207,8 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      connector(config, 'ResponseObjectName', store.dispatch)
-        .then((response) => {
-          store.dispatch(push(`/projet/${id}`));
+      connector(config, 'editProject', store.dispatch)
+        .then(() => {
           store.dispatch(appMsgUpdate('Votre projet à été modifié.'));
         })
         .catch((error) => {

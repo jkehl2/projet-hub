@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // IMPORT DATE UTIL
-import dateFormater from 'src/utils/dateFormater';
+import dateFormater from 'src/utils/dateHTMLFormater';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -33,7 +33,7 @@ const ProjectForm = ({
     syncProjectFields();
   }, []);
   return (
-    <Segment basic>
+    <>
       <Form onSubmit={handleSubmit}>
         <Form.Input
           type="text"
@@ -61,7 +61,10 @@ const ProjectForm = ({
           label="Description du projet"
           title="Description du projet"
           placeholder="Les potagers urbains se définissent simplement comme la culture de légumes ..."
-          required
+          maxlength={700}
+          spellcheck
+          cols={100}
+          wrap="soft"
           value={description}
           onChange={(event) => {
             setProjectField({ description: event.target.value });
@@ -85,8 +88,8 @@ const ProjectForm = ({
             <Form.Button
               positive
               type="submit"
-              content="Confirmer"
-              title="Confirmer"
+              content="Modifier"
+              title="Modifier votre projet"
               onClick={handleSubmit}
             />
             <Button.Or text="ou" />
@@ -99,7 +102,7 @@ const ProjectForm = ({
           </Button.Group>
         </Segment>
       </Form>
-    </Segment>
+    </>
   );
 };
 // == PROP TYPES
