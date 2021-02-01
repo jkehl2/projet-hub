@@ -24,6 +24,8 @@ export const PROJECT_CLEAN_PROJECTS = 'PROJECT_CLEAN_PROJECTS';
 export const PROJECT_CLEAN_PROJECT = 'PROJECT_CLEAN_PROJECT';
 export const PROJECT_NEED_UPDATE_BY_ID = 'PROJECT_NEED_UPDATE_BY_ID';
 export const GET_PROJECTS_BY_AUTHOR = 'GET_PROJECTS_BY_AUTHOR';
+export const GET_PROJECTS_BY_FAVORITES = 'GET_PROJECTS_BY_FAVORITES';
+
 // == ===================================
 // == PROJECT STORE - ACTIONS CREATORS PART
 
@@ -108,4 +110,9 @@ export const sendProjectCreated = (payload) => ({
 // get all projects by author
 export const getProjectsByAuthor = () => ({
   type: GET_PROJECTS_BY_AUTHOR,
+});
+
+// get all projects by favorites
+export const getProjectsByFavorites = () => ({
+  type: GET_PROJECTS_BY_FAVORITES,
 });
