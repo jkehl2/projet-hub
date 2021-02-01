@@ -7,6 +7,7 @@ import {
   Button,
   Form,
   Grid,
+  Header,
   Segment,
 } from 'semantic-ui-react';
 
@@ -33,7 +34,8 @@ const NeedsForm = ({
     cleanNewNeedFields();
   }, []);
   return (
-    <Segment basic>
+    <Segment>
+      <Header size="medium" content="Editer la liste de vos besoins" subheader="Ajouter, supprimer, modifier un besoin" />
       <Form onSubmit={handleAddNeed}>
         <Form.Input
           type="text"
@@ -61,16 +63,18 @@ const NeedsForm = ({
           }}
         />
         <Segment basic compact textAlign="right">
-          <Form.Button
-            positive
-            type="submit"
-            content="Confirmer"
-            title="Confirmer"
-            onClick={handleAddNeed}
-          />
+          <Button.Group>
+            <Form.Button
+              positive
+              type="submit"
+              content="Ajouter"
+              title="Ajouter un besoin"
+              onClick={handleAddNeed}
+            />
+          </Button.Group>
         </Segment>
       </Form>
-      <Grid divided>
+      <Grid divided padded="horizontally">
         {needs.map((need) => (
           <Grid.Row key={need.id}>
             <Form onSubmit={(event) => {
@@ -86,7 +90,7 @@ const NeedsForm = ({
                     title="Titre du besoin"
                     placeholder="Titre de votre besoin"
                     required
-                    value={title}
+                    value={need.title}
                     onChange={(event) => {
                       syncEditNeedFields({
                         id: need.id,
@@ -105,7 +109,7 @@ const NeedsForm = ({
                     cols={50}
                     wrap="soft"
                     required
-                    value={description}
+                    value={need.description}
                     onChange={(event) => {
                       syncEditNeedFields({
                         id: need.id,

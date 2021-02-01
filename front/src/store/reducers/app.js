@@ -78,7 +78,7 @@ export const profilInitialState = {
 // ==  INITIALE SUB APP STATE - createProject
 export const createProjectInitialState = {
   title: '',
-  expiration_date: '',
+  expiration_date: new Date().toLocaleDateString('fr-FR'),
   description: '',
   location: '',
   perimeter: 0,
@@ -89,7 +89,7 @@ export const projectInitialState = {
   isEditMode: false,
   confirm: '',
   title: '',
-  expiration_date: '',
+  expiration_date: new Date().toLocaleDateString('fr-FR'),
   description: '',
   location: '',
 };

@@ -33,7 +33,7 @@ const ProjectForm = ({
     syncProjectFields();
   }, []);
   return (
-    <Segment basic>
+    <>
       <Form onSubmit={handleSubmit}>
         <Form.Input
           type="text"
@@ -85,8 +85,8 @@ const ProjectForm = ({
             <Form.Button
               positive
               type="submit"
-              content="Confirmer"
-              title="Confirmer"
+              content="Modifier"
+              title="Modifier votre projet"
               onClick={handleSubmit}
             />
             <Button.Or text="ou" />
@@ -99,7 +99,7 @@ const ProjectForm = ({
           </Button.Group>
         </Segment>
       </Form>
-    </Segment>
+    </>
   );
 };
 // == PROP TYPES
