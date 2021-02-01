@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
-import List from 'src/containers/MyProjects';
+import List from 'src/containers/List';
 
 // == IMPORTS COMPOSANTS
 import {
