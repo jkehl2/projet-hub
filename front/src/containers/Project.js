@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Project from 'src/components/Project/';
 
 import { getProjectById, projectNeedIsCompleted } from 'src/store/actions/project';
+import { appEditProjectOff } from 'src/store/actions/app';
 
 const mapStateToProps = (state, ownProps) => ({
   projectId: ownProps.match.params.slug,
@@ -12,9 +13,12 @@ const mapStateToProps = (state, ownProps) => ({
   isEditMode: state.app.project.isEditMode,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getProjectById: (projectId) => {
-    dispatch(getProjectById(projectId));
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  setEditModeOff: () => {
+    dispatch(appEditProjectOff());
+  },
+  getProjectById: () => {
+    dispatch(getProjectById(ownProps.match.params.slug));
   },
   updateNeedIdCompleted: (id, completed) => {
     dispatch(

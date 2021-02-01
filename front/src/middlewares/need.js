@@ -109,8 +109,8 @@ const needMiddleware = (store) => (next) => (action) => {
       };
       connector(config, 'insertNeed', store.dispatch)
         .then((response) => {
-          const { data: { data: { insertNeed: { newNeed } } } } = response;
-          store.dispatch(appAddNeedToArray(newNeed));
+          const { data: { data: { insertNeed } } } = response;
+          store.dispatch(appAddNeedToArray(insertNeed));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));

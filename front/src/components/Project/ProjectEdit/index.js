@@ -1,5 +1,6 @@
 // == Import npm
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 // == IMPORTS CONTAINERS
 import ProjectForm from 'src/containers/ProjectForm';
@@ -11,12 +12,21 @@ import NeedsForm from 'src/containers/NeedsForm';
 import './projectEdit.scss';
 
 // == Composant
-const ProjectEdit = () => (
-  <>
-    <ProjectForm />
-    <NeedsForm />
-  </>
-);
+const ProjectEdit = ({ getProjectById }) => {
+  useEffect(() => {
+    getProjectById();
+  }, []);
+  return (
+    <>
+      <ProjectForm />
+      <NeedsForm />
+    </>
+  );
+};
+// == PROP TYPES
+ProjectEdit.propTypes = {
+  getProjectById: PropTypes.func.isRequired,
+};
 
 // == Export
 export default ProjectEdit;

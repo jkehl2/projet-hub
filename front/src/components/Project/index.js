@@ -16,12 +16,13 @@ import './project.scss';
 
 // == Composant
 const Project = ({
-  projectId, project, logged, isEditMode, getProjectById, updateNeedIdCompleted,
+  project, logged, isEditMode, setEditModeOff, getProjectById, updateNeedIdCompleted,
 }) => {
   // Au montage du composant on charge les données du projet depuis l'API
   // Au démontage on clean le store.
   useEffect(() => {
-    getProjectById(projectId);
+    setEditModeOff();
+    getProjectById();
   }, []);
   const isVisible = (logged && project.isAuthor && !project.isArchived);
   return (
@@ -36,9 +37,14 @@ const Project = ({
       {/* Menu projet - modifier / supprimer / archiver */}
       {(isVisible) && <ProjectMenu />}
       {(isEditMode && logged)
-        ? <ProjectEdit project={project} />
+        ? (
+          <ProjectEdit
+            getProjectById={getProjectById}
+          />
+        )
         : (
           <ProjectView
+            getProjectById={getProjectById}
             logged={logged}
             project={project}
             updateNeedIdCompleted={updateNeedIdCompleted}
@@ -50,13 +56,13 @@ const Project = ({
 
 // == PROP TYPES
 Project.propTypes = {
-  projectId: PropTypes.string.isRequired,
   project: PropTypes.shape({
     isAuthor: PropTypes.bool.isRequired,
     isArchived: PropTypes.bool.isRequired,
     isFavorite: PropTypes.bool.isRequired,
   }).isRequired,
   logged: PropTypes.bool.isRequired,
+  setEditModeOff: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   getProjectById: PropTypes.func.isRequired,
   updateNeedIdCompleted: PropTypes.func.isRequired,
