@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 
-import MyProjects from 'src/components/MyProjects';
+import List from 'src/components/Projects/List';
 import { getProjectsByAuthor } from 'src/store/actions/project';
 
 const mapStateToProps = (state) => ({
+  logged: state.user.logged,
+  projects: state.project.projects,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -12,4 +14,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyProjects);
+export default connect(mapStateToProps, mapDispatchToProps)(List);

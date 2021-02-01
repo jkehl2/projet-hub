@@ -1,8 +1,8 @@
 // == Import npm
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+
 // == IMPORTS CONTAINERS
-import List from 'src/containers/List';
+import List from 'src/containers/MyFavoritesList';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -13,19 +13,11 @@ import {
 import './myFavorites.scss';
 
 // == Composant
-const MyFavorites = ({ updateList }) => {
-  useEffect(() => {
-    updateList();
-  }, []);
-  return (
-    <Container className="my-favorites">
-      <List />
-    </Container>
-  );
-};
+const MyFavorites = () => (
+  <Container className="my-favorites">
+    <List />
+  </Container>
+);
 
-MyFavorites.propTypes = {
-  updateList: PropTypes.func.isRequired,
-};
 // == Export
 export default MyFavorites;

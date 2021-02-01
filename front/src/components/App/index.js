@@ -13,8 +13,7 @@ import Project from 'src/containers/Project';
 import SignUp from 'src/containers/SignUp';
 import PasswordEdit from 'src/containers/PasswordEdit';
 import CreateProject from 'src/containers/CreateProject';
-import MyProjects from 'src/containers/MyProjects';
-import MyFavorites from 'src/containers/MyFavorites';
+
 
 // == IMPORTS COMPOSANTS
 import {
@@ -25,6 +24,8 @@ import {
 } from 'semantic-ui-react';
 
 import Projects from 'src/components/Projects';
+import MyProjects from 'src/components/MyProjects';
+import MyFavorites from 'src/components/MyFavorites';
 import Footer from 'src/components/Footer';
 import WhoAreWe from 'src/components/WhoAreWe';
 import LegalMentions from 'src/components/LegalMentions';
