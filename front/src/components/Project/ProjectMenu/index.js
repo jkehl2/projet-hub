@@ -70,7 +70,7 @@ const ProjectMenu = ({
         >
           <ModalConfirm
             title="Confirmer la suppression de votre projet"
-            trigger={<Button icon="trash" color="red" title="Archiver" />}
+            trigger={<Button icon="trash" color="red" title="Supprimer" />}
             confirm={confirm}
             setConfirmation={setConfirmation}
             handleDelete={deleteProject}

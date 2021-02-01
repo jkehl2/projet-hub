@@ -23,6 +23,8 @@ import {
   APP_UPDATE_PROJECT,
   APP_CLEAN_PROJECT,
   APP_CREATE_NEEDS,
+  APP_CLEAN_NEEDS_FIELDS,
+  APP_UPDATE_NEEDS_ARRAY,
   APP_UPDATE_NEEDS_FIELDS,
   APP_UPDATE_NEEDS_ARRAY_FIELDS_BY_ID,
   APP_ADD_NEED_TO_ARRAY,
@@ -113,7 +115,6 @@ export const createNeedsInitialState = {
 // ==  INITIALE STATE des paramètres applicatifs techniques
 export const initialState = {
   loading: false,
-  isEditMode: false,
   profil: { ...profilInitialState },
   error: { ...errorInitialState },
   message: { ...messageInitialState },
@@ -269,6 +270,17 @@ const reducer = (oldState = initialState, action = {}) => {
           ...action.payload,
         },
       };
+    case APP_CLEAN_NEEDS_FIELDS: {
+      return {
+        ...oldState,
+        needs: {
+          ...oldState.needs,
+          fields: {
+            ...needsFieldsInitialState,
+          },
+        },
+      };
+    }
     case APP_UPDATE_NEEDS_FIELDS: {
       return {
         ...oldState,
@@ -278,6 +290,15 @@ const reducer = (oldState = initialState, action = {}) => {
             ...oldState.needs.fields,
             ...action.payload,
           },
+        },
+      };
+    }
+    case APP_UPDATE_NEEDS_ARRAY: {
+      return {
+        ...oldState,
+        needs: {
+          ...oldState.needs,
+          ...action.payload,
         },
       };
     }

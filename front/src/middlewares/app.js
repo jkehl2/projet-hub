@@ -21,7 +21,7 @@ import {
   APP_PROJECT_EDIT,
   APP_CREATE_USER_VERIF,
   APP_GET_GEOCODING,
-  APP_SUBMIT_NEEDS,
+  APP_REFRESH_NEEDS_ARRAY,
   appUpdateProfil,
   appUpdateProject,
   appMsgUpdate,
@@ -31,6 +31,7 @@ import {
   appLoadingOn,
   appLoadingOff,
   appGetGeoCoding,
+  appUpdateNeedsArr,
 } from 'src/store/actions/app';
 
 import {
@@ -233,19 +234,11 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(sendProjectApi());
       }
       return; }
-
-    case APP_SUBMIT_NEEDS: {
-      const {
-        app: {
-          createNeeds: {
-            titleNeed, descriptionNeed,
-          },
-        },
-      } = store.getState();
-
-      return;
+    case APP_REFRESH_NEEDS_ARRAY: {
+      const { project: { project: { needs: payload } } } = store.getState();
+      next(appUpdateNeedsArr(payload));
+      break;
     }
-
     default:
       next(action);
       break;

@@ -1,5 +1,8 @@
 export default (date) => {
-  const d = new Date(date);
+  let d = new Date(date);
+  if (d === null) {
+    d = Date.parse(date);
+  }
   let month = `${d.getMonth() + 1}`;
   let day = `${d.getDate()}`;
   const year = d.getFullYear();

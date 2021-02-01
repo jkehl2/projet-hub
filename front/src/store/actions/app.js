@@ -17,7 +17,6 @@ export const APP_GET_GEOCODING = 'APP_GET_GEOCODING';
 export const APP_CREATE_NEEDS = 'APP_CREATE_NEEDS';
 export const APP_SUBMIT_NEEDS = 'APP_SUBMIT_NEEDS';
 export const APP_REFRESH_NEEDS_ARRAY = 'APP_REFRESH_NEEDS_ARRAY';
-export const APP_CLEAN_NEEDS_FIELDS = 'APP_CLEAN_NEEDS_FIELDS';
 
 // == ===================================
 // == [CLE-VALEURS] - ACTIONS sur le store applicatif technique
@@ -39,6 +38,8 @@ export const APP_PROJECT_CREATE = 'APP_PROJECT_CREATE';
 export const APP_CLEAN_CREATE_PROJECT = 'APP_CLEAN_CREATE_PROJECT';
 export const APP_UPDATE_PROJECT = 'APP_UPDATE_PROJECT';
 export const APP_CLEAN_PROJECT = 'APP_CLEAN_PROJECT';
+export const APP_CLEAN_NEEDS_FIELDS = 'APP_CLEAN_NEEDS_FIELDS';
+export const APP_UPDATE_NEEDS_ARRAY = '';
 export const APP_UPDATE_NEEDS_FIELDS = 'APP_UPDATE_NEEDS_FIELDS';
 export const APP_UPDATE_NEEDS_ARRAY_FIELDS_BY_ID = 'APP_UPDATE_NEEDS_ARRAY_FIELDS_BY_ID';
 export const APP_ADD_NEED_TO_ARRAY = 'APP_ADD_NEED_TO_ARRAY';
@@ -91,10 +92,6 @@ export const appGetGeoCoding = (location, dispatchAction, payload) => ({
 // == EDIT / ADD NEEDS SUB PART
 export const appRefreshNeedsArr = () => ({
   type: APP_REFRESH_NEEDS_ARRAY,
-});
-
-export const appCleanNeedFields = () => ({
-  type: APP_CLEAN_NEEDS_FIELDS,
 });
 
 // == ===================================
@@ -230,10 +227,19 @@ export const appSubmitCreatedNeeds = () => ({
 
 // ==
 // == EDIT / ADD NEEDS SUB PART
+
+export const appCleanNeedFields = () => ({
+  type: APP_CLEAN_NEEDS_FIELDS,
+});
+
+export const appUpdateNeedsArr = (payload) => ({
+  type: APP_UPDATE_NEEDS_ARRAY,
+  payload,
+});
+
 export const appUpdateNeedFields = (payload) => ({
   type: APP_UPDATE_NEEDS_FIELDS,
   payload,
-
 });
 
 export const appUpdateNeedArrFieldsById = (id, payload) => ({

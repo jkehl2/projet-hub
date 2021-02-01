@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => ({
   projectId: ownProps.match.params.slug,
   project: state.project.project,
   logged: state.user.logged,
-  isEditMode: state.app.isEditMode,
+  isEditMode: state.app.project.isEditMode,
 });
 
 const mapDispatchToProps = (dispatch) => ({
