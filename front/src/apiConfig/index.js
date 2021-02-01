@@ -313,6 +313,7 @@ export const queryArchivedProject = {
   }`,
 };
 
+// == ==========================================
 // == NEEDS PART
 
 export const queryCompletedNeed = {
@@ -351,7 +352,7 @@ export const queryUnCompletedNeed = {
 
 export const queryAddNeedToProject = {
   query: `mutation insertNeeds($title: String!, $description: String!, $projectId: ID) {
-    insertNeeds(title: $title, description: $description, project_id: $projectId) {
+    insertNeed(title: $title, description: $description, project_id: $projectId) {
       ... on Need{
         id
       }
@@ -366,8 +367,8 @@ export const queryAddNeedToProject = {
 };
 
 export const queryEditNeedById = {
-  query: `mutation insertNeeds($id: ID!, $title: String!, $description: String!) {
-    insertNeeds(id: $id, title: $title, description: $description) {
+  query: `mutation editNeed($id: ID!, $title: String!, $description: String!) {
+    editNeed(id: $id, title: $title, description: $description) {
       ... on Need{
         id
       }
@@ -382,8 +383,8 @@ export const queryEditNeedById = {
 };
 
 export const queryDeleteNeedById = {
-  query: `mutation insertNeeds($id: ID!) {
-    insertNeeds(id: $id) {
+  query: `mutation deleteNeed($id: ID!) {
+    deleteNeed(id: $id) {
       ... on Need{
         id
       }

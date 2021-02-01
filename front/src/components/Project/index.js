@@ -1,6 +1,7 @@
 // == Import npm
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+// == IMPORTS CONTAINERS
 
 // == IMPORTS COMPOSANTS
 import {
@@ -8,7 +9,6 @@ import {
 } from 'semantic-ui-react';
 import ProjectView from './ProjectView';
 import ProjectEdit from './ProjectEdit';
-// == IMPORTS CONTAINERS
 
 // == STYLES
 import './project.scss';
@@ -24,13 +24,26 @@ const Project = ({
   }, []);
   return (
     <Container className="project">
-      <Header as="h1" content="Détail du projet" textAlign="center" dividing subheader="Ici on vous dit tout sur ce projet" />
+      <Header
+        as="h1"
+        content="Détail du projet"
+        textAlign="center"
+        dividing
+        subheader="Ici on vous dit tout sur ce projet"
+      />
       {(isEditMode && logged)
         ? <ProjectEdit project={project} />
-        : <ProjectView logged={logged} project={project} updateNeedIdCompleted={updateNeedIdCompleted} />}
+        : (
+          <ProjectView
+            logged={logged}
+            project={project}
+            updateNeedIdCompleted={updateNeedIdCompleted}
+          />
+        )}
     </Container>
   );
 };
+
 // == PROP TYPES
 Project.propTypes = {
   projectId: PropTypes.string.isRequired,

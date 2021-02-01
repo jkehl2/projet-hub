@@ -104,9 +104,9 @@ const needMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      connector(config, 'editNeed', store.dispatch)
+      connector(config, 'insertNeed', store.dispatch)
         .then((response) => {
-          const { data: { data: { editNeed: { newNeed } } } } = response;
+          const { data: { data: { insertNeeds: { newNeed } } } } = response;
           store.dispatch(appAddNeedToArray(newNeed));
         })
         .catch((error) => {
@@ -170,7 +170,7 @@ const needMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      connector(config, 'deleteNeed', store.dispatch)
+      connector(config, 'editNeed', store.dispatch)
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
         })
