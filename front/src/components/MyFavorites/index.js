@@ -1,5 +1,6 @@
 // == Import npm
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 // == IMPORTS CONTAINERS
 import List from 'src/containers/MyFavorites';
@@ -24,5 +25,8 @@ const MyFavorites = ({ updateList }) => {
   );
 };
 
+MyFavorites.propTypes = {
+  updateList: PropTypes.func.isRequired,
+};
 // == Export
 export default MyFavorites;
