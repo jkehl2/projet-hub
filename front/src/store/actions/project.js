@@ -64,8 +64,9 @@ export const createProject = (project) => ({
 });
 
 // editing a project
-export const editProject = () => ({
+export const editProject = (payload) => ({
   type: PROJECT_EDIT,
+  payload,
 });
 
 // deleting a project
