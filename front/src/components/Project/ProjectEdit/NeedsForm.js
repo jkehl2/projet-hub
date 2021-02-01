@@ -92,12 +92,12 @@ const NeedsForm = ({
                     required
                     value={need.title}
                     onChange={(event) => {
-                      syncEditNeedFields({
-                        id: need.id,
-                        payload: {
+                      syncEditNeedFields(
+                        need.id,
+                        {
                           title: event.target.value,
                         },
-                      });
+                      );
                     }}
                   />
                   <Form.TextArea
@@ -111,12 +111,12 @@ const NeedsForm = ({
                     required
                     value={need.description}
                     onChange={(event) => {
-                      syncEditNeedFields({
-                        id: need.id,
-                        payload: {
+                      syncEditNeedFields(
+                        need.id,
+                        {
                           description: event.target.value,
                         },
-                      });
+                      );
                     }}
                   />
                 </Grid.Column>
