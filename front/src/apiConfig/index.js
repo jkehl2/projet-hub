@@ -159,7 +159,7 @@ export const queryByProjectsByFavorites = {
   } `,
 };
 
-export const queryByProjectsByAuthor = {
+export const queryByAuthor = {
   query: `{
     myInfos{
     ... on User{
@@ -172,11 +172,30 @@ export const queryByProjectsByAuthor = {
       projectsCreated{
         id
         title
-        userIsAuthor
         description
-        location
-        archived
+        created_at
         expiration_date
+        location
+        image
+        archived
+        isFollowed
+        userIsAuthor
+        author{
+          id
+          name
+          email
+          avatar
+        }
+        needs{
+          id
+          title
+          description
+          completed
+        }
+        followers{
+          id
+          name
+        }
       }
     }
       ... on Error{

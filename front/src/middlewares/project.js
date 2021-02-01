@@ -5,8 +5,7 @@ import { goBack, push } from 'connected-react-router';
 
 // graphql queries
 import configGraphQl, {
-  queryByProjectsByAuthor,
-  queryByProjectsByFavorites,
+  queryByAuthor,
   queryCreateProject,
   queryEditProject,
   queryProjectById,
@@ -256,9 +255,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       return;
     }
     case GET_PROJECTS_BY_AUTHOR: {
-      // requête à l'API
       const data = JSON.stringify({
-        ...queryByProjectsByAuthor,
+        ...queryByAuthor,
       });
       const config = {
         ...configGraphQl,
@@ -266,8 +264,31 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       connector(config, 'myInfos', store.dispatch)
         .then((response) => {
-          store.dispatch(appLoadingOn());
-          store.dispatch(updateProjectStore(response.data.data.myInfos.projectsCreated));
+          const projects = response.data.data.myInfos.projectsCreated.map((project) => ({
+            id: project.id,
+            isFavorite: project.isFollowed,
+            isArchived: project.archived,
+            isAuthor: project.userIsAuthor,
+            title: project.title,
+            followers: project.followers.sort((follower1, follower2) => (
+              parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
+            )),
+            location: project.location,
+            description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
+            expiration_date: parseDate(project.expiration_date),
+            creation_date: parseDate(project.created_at),
+            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            author: {
+              id: project.author.id,
+              name: project.author.name,
+              email: project.author.email,
+              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+            },
+            needs: project.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
+          }));
+          store.dispatch(updateProjectStore({ projects }));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -275,13 +296,14 @@ const projectMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
+      store.dispatch(appLoadingOn());
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       return;
     }
     case GET_PROJECTS_BY_FAVORITES: {
       const data = JSON.stringify({
-        ...queryByProjectsByFavorites,
+        ...queryByAuthor,
       });
       const config = {
         ...configGraphQl,
@@ -289,8 +311,31 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       connector(config, 'myInfos', store.dispatch)
         .then((response) => {
-          store.dispatch(appLoadingOn());
-          store.dispatch(updateProjectStore(response.data.data.myInfos.projectsFollowed));
+          const projects = response.data.data.myInfos.projectsFollowed.map((project) => ({
+            id: project.id,
+            isFavorite: project.isFollowed,
+            isArchived: project.archived,
+            isAuthor: project.userIsAuthor,
+            title: project.title,
+            followers: project.followers.sort((follower1, follower2) => (
+              parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
+            )),
+            location: project.location,
+            description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
+            expiration_date: parseDate(project.expiration_date),
+            creation_date: parseDate(project.created_at),
+            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            author: {
+              id: project.author.id,
+              name: project.author.name,
+              email: project.author.email,
+              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+            },
+            needs: project.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
+          }));
+          store.dispatch(updateProjectStore({ projects }));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));

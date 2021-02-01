@@ -49,6 +49,16 @@ export const projectNeedIsCompleted = (payload) => ({
   payload,
 });
 
+// get all projects by author
+export const getProjectsByAuthor = () => ({
+  type: GET_PROJECTS_BY_AUTHOR,
+});
+
+// get all projects by favorites
+export const getProjectsByFavorites = () => ({
+  type: GET_PROJECTS_BY_FAVORITES,
+});
+
 // == ===================================
 // == PROJECT CONNECTORS - ACTIONS CREATORS PART
 
@@ -95,12 +105,4 @@ export const updateProjectNeed = (payload) => ({
   payload,
 });
 
-// get all projects by author
-export const getProjectsByAuthor = () => ({
-  type: GET_PROJECTS_BY_AUTHOR,
-});
 
-// get all projects by favorites
-export const getProjectsByFavorites = () => ({
-  type: GET_PROJECTS_BY_FAVORITES,
-});
