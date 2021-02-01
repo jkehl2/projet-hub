@@ -20,6 +20,7 @@ import './projectEdit.scss';
 // == Composant
 const ProjectForm = ({
   title,
+  // eslint-disable-next-line camelcase
   expiration_date,
   description,
   location,
@@ -52,6 +53,9 @@ const ProjectForm = ({
           placeholder="Place de la Duchesse Anne 44000 NANTES"
           required
           value={location}
+          onChange={(event) => {
+            setProjectField({ location: event.target.value });
+          }}
         />
         <Form.TextArea
           label="Description du projet"
@@ -59,6 +63,9 @@ const ProjectForm = ({
           placeholder="Les potagers urbains se définissent simplement comme la culture de légumes ..."
           required
           value={description}
+          onChange={(event) => {
+            setProjectField({ description: event.target.value });
+          }}
         />
         <Form.Input
           type="date"
@@ -69,6 +76,9 @@ const ProjectForm = ({
           max={dateFormater(new Date().getTime() + (60 * 60 * 24 * 1000 * 900))}
           required
           value={dateFormater(expiration_date)}
+          onChange={(event) => {
+            setProjectField({ expiration_date: event.target.value });
+          }}
         />
         <Segment basic compact textAlign="right">
           <Button.Group>
@@ -77,6 +87,7 @@ const ProjectForm = ({
               type="submit"
               content="Confirmer"
               title="Confirmer"
+              onClick={handleSubmit}
             />
             <Button.Or text="ou" />
             <Button
