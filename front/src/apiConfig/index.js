@@ -297,6 +297,24 @@ editProject(
 `,
 };
 
+export const queryArchivedProject = {
+  query: `mutation archiveProject($id: ID!) {
+    archiveProject(id: $id) {
+      ... on Project{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
+    }
+  }`,
+};
+
+// == NEEDS PART
+
 export const queryCompletedNeed = {
   query: `mutation completeNeed($id: ID!) {
     completeNeed(id: $id) {
@@ -313,6 +331,7 @@ export const queryCompletedNeed = {
     }
   }`,
 };
+
 export const queryUnCompletedNeed = {
   query: `mutation uncompleteNeed($id: ID!) {
     uncompleteNeed(id: $id) {
@@ -330,10 +349,10 @@ export const queryUnCompletedNeed = {
   }`,
 };
 
-export const queryArchivedProject = {
-  query: `mutation archiveProject($id: ID!) {
-    archiveProject(id: $id) {
-      ... on Project{
+export const queryAddNeedToProject = {
+  query: `mutation insertNeeds($title: String!, $description: String!, $projectId: ID) {
+    insertNeeds(title: $title, description: $description, project_id: $projectId) {
+      ... on Need{
         id
       }
       ... on Error{
@@ -341,7 +360,39 @@ export const queryArchivedProject = {
           msg
           code
         }
+      }      
+    }
+  }`,
+};
+
+export const queryEditNeedById = {
+  query: `mutation insertNeeds($id: ID!, $title: String!, $description: String!) {
+    insertNeeds(id: $id, title: $title, description: $description) {
+      ... on Need{
+        id
       }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }      
+    }
+  }`,
+};
+
+export const queryDeleteNeedById = {
+  query: `mutation insertNeeds($id: ID!) {
+    insertNeeds(id: $id) {
+      ... on Need{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }      
     }
   }`,
 };

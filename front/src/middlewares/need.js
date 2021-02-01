@@ -161,7 +161,9 @@ const needMiddleware = (store) => (next) => (action) => {
       const data = JSON.stringify({
         ...queryEditNeedById,
         variables: {
-          ...needFields,
+          id: needFields.id,
+          title: needFields.title,
+          description: needFields.description,
         },
       });
       const config = {
