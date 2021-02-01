@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // IMPORT DATE UTIL
-import dateFormater from 'src/utils/dateFormater';
+import dateFormater from 'src/utils/dateHTMLFormater';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -20,6 +20,7 @@ import './projectEdit.scss';
 // == Composant
 const ProjectForm = ({
   title,
+  // eslint-disable-next-line camelcase
   expiration_date,
   description,
   location,
@@ -32,7 +33,7 @@ const ProjectForm = ({
     syncProjectFields();
   }, []);
   return (
-    <Segment basic>
+    <>
       <Form onSubmit={handleSubmit}>
         <Form.Input
           type="text"
@@ -52,13 +53,22 @@ const ProjectForm = ({
           placeholder="Place de la Duchesse Anne 44000 NANTES"
           required
           value={location}
+          onChange={(event) => {
+            setProjectField({ location: event.target.value });
+          }}
         />
         <Form.TextArea
           label="Description du projet"
           title="Description du projet"
           placeholder="Les potagers urbains se définissent simplement comme la culture de légumes ..."
-          required
+          maxlength={700}
+          spellcheck
+          cols={100}
+          wrap="soft"
           value={description}
+          onChange={(event) => {
+            setProjectField({ description: event.target.value });
+          }}
         />
         <Form.Input
           type="date"
@@ -69,14 +79,18 @@ const ProjectForm = ({
           max={dateFormater(new Date().getTime() + (60 * 60 * 24 * 1000 * 900))}
           required
           value={dateFormater(expiration_date)}
+          onChange={(event) => {
+            setProjectField({ expiration_date: event.target.value });
+          }}
         />
         <Segment basic compact textAlign="right">
           <Button.Group>
             <Form.Button
               positive
               type="submit"
-              content="Confirmer"
-              title="Confirmer"
+              content="Modifier"
+              title="Modifier votre projet"
+              onClick={handleSubmit}
             />
             <Button.Or text="ou" />
             <Button
@@ -88,7 +102,7 @@ const ProjectForm = ({
           </Button.Group>
         </Segment>
       </Form>
-    </Segment>
+    </>
   );
 };
 // == PROP TYPES

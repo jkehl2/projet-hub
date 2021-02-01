@@ -3,8 +3,12 @@
 import axios from 'axios';
 import { goBack, push } from 'connected-react-router';
 
+// == import utilitary date formater HTML to ISO STRING
+import dateApiFormater from 'src/utils/dateHTMLFormater';
+
 // graphql queries
 import configGraphQl, {
+  queryByProjectsByAuthor,
   queryCreateProject,
   queryEditProject,
   queryProjectById,
@@ -22,6 +26,7 @@ import querystring from 'query-string';
 
 // actions from store
 import {
+  GET_PROJECTS_BY_AUTHOR,
   PROJECT_CREATE,
   PROJECT_EDIT,
   PROJECT_DELETE_CURRENT,
@@ -46,6 +51,7 @@ import {
   appErrorClean,
   cleanCreateProject,
   appEditProjectOff,
+  appGetGeoCoding,
 } from 'src/store/actions/app';
 
 // == PARSE DATE UTIL FUNCTION :
@@ -164,7 +170,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         variables: {
           title,
           description,
-          expirationDate,
+          expirationDate: dateApiFormater(expirationDate),
           location,
           lat,
           long,
@@ -191,11 +197,9 @@ const projectMiddleware = (store) => (next) => (action) => {
       return;
     }
     case PROJECT_EDIT: {
-      const { project: { project: { id } } } = store.getState();
       const data = JSON.stringify({
         ...queryEditProject,
         variables: {
-          id,
           ...action.payload,
         },
       });
@@ -203,9 +207,8 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      connector(config, 'ResponseObjectName', store.dispatch)
-        .then((response) => {
-          store.dispatch(push(`/projet/${id}`));
+      connector(config, 'editProject', store.dispatch)
+        .then(() => {
           store.dispatch(appMsgUpdate('Votre projet à été modifié.'));
         })
         .catch((error) => {
@@ -276,56 +279,25 @@ const projectMiddleware = (store) => (next) => (action) => {
       const {
         app: {
           createProject: {
-            title, expiration_date, description, location, perimeter,
-          },
-        },
-      } = store.getState();
-
-      // building query
-      const query = querystring.stringifyUrl({
-        url: 'https://nominatim.openstreetmap.org/search',
-        query: {
-          adressdetails: 1,
-          q: location,
-          format: 'json',
-          limit: 1,
-        },
-      });
-      axios.get(query)
-        .then((response) => {
-          const geolocArr = response.data;
-          if (geolocArr.length > 0) {
-            const searchValue = {
-              long: parseFloat(geolocArr[0].lon),
-              lat: parseFloat(geolocArr[0].lat),
-              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
-            };
-            store.dispatch(sendProjectCreated(searchValue));
-          }
-          else {
-            store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
-          }
-        })
-        .catch((error) => {
-          store.dispatch(appErrorUpdate(error.message));
-          store.dispatch(appLoadingOff());
-        });
-      store.dispatch(appErrorClean());
-      store.dispatch(appMsgClean());
-      store.dispatch(appLoadingOn());
-      return;
-    }
-    case SEND_CREATED_PROJECT: {
-      // get the result of geocoding API
-      const { long, lat } = action.payload;
-      // get other values from store
-      const {
-        app: {
-          createProject: {
             title, expiration_date, description, location,
           },
         },
       } = store.getState();
+
+      const payload = {
+        title, expiration_date, description, location,
+      };
+
+      store.dispatch(appGetGeoCoding(location, sendProjectCreated, payload));
+
+      return;
+    }
+    case SEND_CREATED_PROJECT: {
+      // get the result of geocoding API + payload
+      const {
+        long, lat, title, expiration_date, description, location,
+      } = action.payload;
+
       const data = JSON.stringify({
         ...queryCreateProject,
         variables: {
@@ -342,6 +314,31 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appMsgUpdate('Projet crée ! '));
           // redirect to projects page
           store.dispatch(push('/utilisateur/projets'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+          store.dispatch(cleanCreateProject());
+        });
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case GET_PROJECTS_BY_AUTHOR: {
+      {/* requête à l'API*/}
+      const data = JSON.stringify({
+        ...queryByProjectsByAuthor,
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'projectsCreated', store.dispatch)
+        .then((response) => {
+          store.dispatch(appLoadingOn());
+          store.dispatch(updateProjectStore(response.data.data.projectsCreated));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));

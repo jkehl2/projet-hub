@@ -7,6 +7,9 @@
 import axios from 'axios';
 import querystring from 'query-string';
 
+// == import utilitary date formater HTML to ISO STRING
+import dateApiFormater from 'src/utils/dateHTMLFormater';
+
 // ==  API CONFIGURATION URL
 import apiConfig from 'src/apiConfig/parameters.json';
 
@@ -21,7 +24,7 @@ import {
   APP_PROJECT_EDIT,
   APP_CREATE_USER_VERIF,
   APP_GET_GEOCODING,
-  APP_SUBMIT_NEEDS,
+  APP_REFRESH_NEEDS_ARRAY,
   appUpdateProfil,
   appUpdateProject,
   appMsgUpdate,
@@ -31,6 +34,7 @@ import {
   appLoadingOn,
   appLoadingOff,
   appGetGeoCoding,
+  appUpdateNeedsArr,
 } from 'src/store/actions/app';
 
 import {
@@ -91,12 +95,20 @@ const userMiddleware = (store) => (next) => (action) => {
             description,
           },
         },
+        project: {
+          project: {
+            id,
+            image,
+          },
+        },
       } = store.getState();
       const payload = {
+        id,
         title,
-        expiration_date,
+        expiration_date: dateApiFormater(expiration_date),
         description,
         location,
+        image,
       };
       store.dispatch(appGetGeoCoding(location, editProject, payload));
       return;
@@ -233,19 +245,12 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(sendProjectApi());
       }
       return; }
-
-    case APP_SUBMIT_NEEDS: {
-      const {
-        app: {
-          createNeeds: {
-            titleNeed, descriptionNeed,
-          },
-        },
-      } = store.getState();
-
-      return;
+    case APP_REFRESH_NEEDS_ARRAY: {
+      const { project: { project: { needs } } } = store.getState();
+      const payload = { needs };
+      next(appUpdateNeedsArr(payload));
+      break;
     }
-
     default:
       next(action);
       break;

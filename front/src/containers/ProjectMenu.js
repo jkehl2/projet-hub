@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 
-import ProjectMenu from 'src/components/Project/ProjectView/ProjectMenu';
+import ProjectMenu from 'src/components/Project/ProjectMenu';
 
-import { appUpdateProject, appProjectConfirm } from 'src/store/actions/app';
+import { appEditProjectOn, appUpdateProject, appProjectConfirm } from 'src/store/actions/app';
 import { archiveProjectById, deleteProjectById } from 'src/store/actions/project';
 
 const mapStateToProps = (state) => ({
@@ -10,6 +10,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  setEditModeOn: () => {
+    dispatch(appEditProjectOn());
+  },
   setConfirmation: (payload) => {
     dispatch(appUpdateProject(payload));
   },
