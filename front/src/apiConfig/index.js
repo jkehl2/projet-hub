@@ -355,6 +355,8 @@ export const queryAddNeedToProject = {
     insertNeed(title: $title, description: $description, project_id: $projectId) {
       ... on Need{
         id
+        title
+        description
       }
       ... on Error{
         error{
