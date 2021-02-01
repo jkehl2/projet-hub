@@ -197,10 +197,7 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas égale au nouveau mot de passe. Veuillez ressaisir votre confirmation de mot de passe.'));
       }
       return; }
-<<<<<<< HEAD
-=======
 
->>>>>>> ea20f8284e91f6434dce6ddc94268ae6ca881f6b
     case PROJECT_SEARCH: {
       const {
         app: {
@@ -248,15 +245,11 @@ const userMiddleware = (store) => (next) => (action) => {
 
       return;
     }
-<<<<<<< HEAD
   return; }
-=======
 
->>>>>>> ea20f8284e91f6434dce6ddc94268ae6ca881f6b
     default:
       next(action);
       break;
-  }
 };
 
 export default userMiddleware;

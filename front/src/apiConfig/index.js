@@ -192,7 +192,6 @@ export const queryDeleteProject = {
 export const queryGetProjectsByGeo = {
   query: `query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!, $archived: Boolean!) {
     projectsByGeo(lat: $lat, long: $long, scope: $scope, archived: $archived) {
-      ... on Project{
         id
         title
         image
@@ -207,16 +206,156 @@ export const queryGetProjectsByGeo = {
           email
           avatar
         }
-      }
-      ... on Error{
-        error{
-          msg
-          code
-        }
+<<<<<<< HEAD
+=======
+isFollowed
+userIsAuthor
+needs{
+  id
+  completed
+}
+followers{
+  id
+  name
+}
+}
+}`,
+};
+export const queryCreateProject = {
+  query: `mutation CreateProject(
+    $title: String!,
+    $description: String!,
+    $expiration_date: String!,
+    $location: String!,
+    $lat: Float!,
+    $long: Float!,
+    $image: String,
+    $file: String
+) {
+  insertProject(
+    title: $title,
+    description: $description,
+    expiration_date: $expiration_date,
+    location: $location,
+    lat: $lat,
+    long: $long,
+    image: $image,
+    file: $file
+) {
+  __typename
+  ... on Project{
+    id
+    title
+    description
+    expiration_date
+    location
+    lat
+    long
+  }
+  ... on Error{
+    error{
+      msg
+      code
+    }
+  }
+  }
+  }`,
+  };
+  export const queryEditProject = {
+    query: `mutation EditProject(
+      $id: ID!,
+      $title: String!,
+      $description: String!,
+      $expiration_date: String!,
+      $location: String!,
+      $lat: Float!,
+      $long: Float!,
+      $image: String,
+      $file: String
+  ) {
+    editProject(
+      id: $id,
+      title: $title,
+      description: $description,
+      expiration_date: $expiration_date,
+      location: $location,
+      lat: $lat,
+      long: $long,
+      image: $image,
+      file: $file
+  ) {
+    ... on Project{
+      id
+      title
+      description
+      expiration_date
+      location
+      lat
+      long
+      archived
+      needs{
+        id
+        title
       }
     }
-  }`,
-};
+    ... on Error{
+      error{
+        msg
+        code
+      }
+    }
+    }
+    }
+    `,
+    };
+
+    export const queryCompletedNeed = {
+      query: `mutation completeNeed($id: ID!) {
+        completeNeed(id: $id) {
+          ... on Need{
+            id
+            completed
+          }
+          ... on Error{
+            error{
+              msg
+              code
+            }
+          }
+        }
+      }`,
+    };
+    export const queryUnCompletedNeed = {
+      query: `mutation uncompleteNeed($id: ID!) {
+        uncompleteNeed(id: $id) {
+          ... on Need{
+            id
+            completed
+          }
+          ... on Error{
+            error{
+              msg
+              code
+            }
+          }
+        }
+      }`,
+    };
+    export const queryArchivedProject = {
+      query: `mutation archiveProject($id: ID!) {
+        archiveProject(id: $id) {
+          ... on Project{
+            id
+          }
+          ... on Error{
+            error{
+              msg
+              code
+            }
+          }
+        }
+      }`,
+    };
 export const queryCreateProject = {
   query: '',
 };
