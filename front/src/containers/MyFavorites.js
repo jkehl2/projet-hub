@@ -5,7 +5,6 @@ import MyFavorites from 'src/components/MyFavorites';
 import { getProjectsByFavorites } from '../store/actions/project';
 
 { /* dispatcher une action de projects en passant par le middleware projects */ }
-
 const mapDispatchToProps = (dispatch) => ({
   updateList: () => {
     dispatch(getProjectsByFavorites());

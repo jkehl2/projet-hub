@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved */
 // == Import npm
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 // == IMPORTS CONTAINERS
 import List from 'src/containers/MyProjects';
@@ -27,5 +28,8 @@ const MyProjects = ({ updateList }) => {
   );
 };
 
+MyProjects.propTypes = {
+  updateList: PropTypes.func.isRequired,
+};
 // == Export
 export default MyProjects;
