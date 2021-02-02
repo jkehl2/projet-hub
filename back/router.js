@@ -1,18 +1,31 @@
 const express = require('express');
-const authController = require('./controllers/authController');
-const isConnected = require('./middlewares/isConnected');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const UserDataSource = require('./dataSource/userDataSource');
 const client = require('./dataSource/client');
-const { user } = require('./dataSource');
-const bcrypt = require('bcrypt');
-
-
-
+const _ = require('lodash');
+const jwt = require('jsonwebtoken');
+const storeFile = require('./dataSource/storeFile');
+const seeder = require('./dataSource/seeder')
 
 
 /** Gestion des utilisateurs */
+
+router.get('/',async (req, res) => {
+    res.sendFile('index.html');
+})
+
+router.get('/seeder/user/:nb',async (req, res) => {
+    const nb = req.params.nb;
+    const accountsCreated = await seeder.user(nb);
+    res.json(accountsCreated);
+})
+
+router.get('/seeder/project/:userId/:place/:nb',async (req, res) => {
+    const nb = req.params.nb;
+    const place = req.params.place;
+    const userId = req.params.userId
+    const projectsCreated = await seeder.project(userId, place, nb);
+    res.json(projectsCreated);
+})
 
 
 
@@ -20,40 +33,86 @@ router.post('/login',async (req, res) => {
     // Read username and password from request body
     const { email, password } = req.body;
     try{
-
         if (!email)
             throw "email/password was not provided";
 
-        const result = await client.query(
-            'SELECT * FROM users WHERE email LIKE $1',
-            [email]);
+        const result = await client.query(`
+            SELECT 
+                id,
+                created_at,
+                name,
+                email,
+                avatar 
+            FROM users 
+            WHERE
+                email = $1
+            AND 
+                password = crypt($2, password)
+                `,
+            [email, password]);
 
         if (result.rowCount < 1)
             throw "wrong password or email";
         console.log("user found");
-        const user = result.rows[0]
-        
-        if (user.password !== password) {
-            console.log("password incorrect")
-            throw "wrong password or email";
-        }
-            
-        req.session.user = user;
-        res.json(user);
+        const user = result.rows[0];
+        const accessTokenSecret = 'youraccesstokensecret';
+        const token = jwt.sign({id: user.id}, accessTokenSecret, {expiresIn: 100000});
+        res.json({
+            token,
+            user
+        });
     } catch(error) {
         res.json({"error": error})
     }
 });
 
-router.post("/logout", (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            return console.log(err);
-        }
-        res.json({"info": `user logged out`})
 
-    });
+
+router.post('/upload-avatar', async (req, res) => {
+    try {
+        if(!req.files) 
+            res.json({
+                status: false,
+                message: 'No file uploaded'
+            });
+
+        const authHeader = req.headers.authorization    
+        if (!authHeader) 
+            throw "identification error"
+
+        const token = authHeader.split(' ')[1];
+
+        const accessTokenSecret = 'youraccesstokensecret';
+
+        const user = await jwt.verify(token, accessTokenSecret,{ignoreExpiration: false});
+
+        let avatar = req.files.avatar;
+
+        console.log(`uploading file "${avatar.name}"`);
+         
+        const filePath = await storeFile.dbUpdate('users', 'avatar', 'avatars', avatar.name, user.id)
+
+            //Use the mv() method to place the file in upload directory (i.e. "uploads")
+            avatar.mv('./public' + filePath);
+
+            //send response
+            res.json({
+                status: true,
+                message: 'File is uploaded',
+                data: {
+                    path: filePath,
+                    mimetype: avatar.mimetype,
+                    size: avatar.size
+                }
+            });
+        
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
+
+
+
 
 
 

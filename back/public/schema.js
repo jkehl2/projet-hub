@@ -50,8 +50,6 @@ type Project {
 
     userIsAuthor: Boolean
 
-    distance: Float
-
 }
 
 type User {
@@ -204,14 +202,6 @@ type Mutation {
     insertNeeds(
         needs: [NeedInput]
     ): [NeedResult]
-
-    insertNeed(
-        title: String!
-
-        description: String!
-
-        project_id: ID!
-    ): NeedResult
 
     editNeed(
         id: ID!,

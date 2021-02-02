@@ -1,6 +1,6 @@
 const redis = require('redis');
 
-const client = redis.createClient();
+const client = redis.createClient(process.env.REDIS_URL);
 
 module.exports = {
 
@@ -59,21 +59,29 @@ module.exports = {
     },
 
     async wrapper(key,callback){
+
+        // activate / deactivate wrapper
+        if (true === true){
+            console.log("Cache disabled")
+            return callback();
+
+        }
+        // -------------------------------
+        console.log("Cache enabled")
         const cached = await this.read(key);
         const valueAlreadyInCache = await this.has(key);
         if (!valueAlreadyInCache){
-            result = await callback();
+            const result = await callback();
             if(result){
-                console.log(`caching ${key}`);
                 await this.store(key, JSON.stringify(result));
             }
             return result;
         }else {
-            let result = JSON.parse(cached);
-            console.log(`cach found`);
+            const result = JSON.parse(cached);
+            console.log(`cache found for "${key}"`);
             return result
         }
-        // return callback();
+
     }
 
 

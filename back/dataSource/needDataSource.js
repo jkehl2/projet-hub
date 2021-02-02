@@ -1,5 +1,6 @@
 const { DataSource } = require('apollo-datasource');
 const DataLoader = require('dataloader');
+const cache = require('./cache');
 
 class NeedDataSource extends DataSource {
 
@@ -25,7 +26,6 @@ class NeedDataSource extends DataSource {
 
     async findNeedById(needId) {
         await this.needLoader.clear(needId)
-        console.log(`-- Adding ${needId} to need dataloader`);
         return await this.needLoader.load(needId);
     }
 
@@ -35,8 +35,147 @@ class NeedDataSource extends DataSource {
         return await this.needsByProjectLoader.load(projectId);
     }
 
-    // Le constructeur de dataLoader reçoit une fonction
-    // qui a pour paramètre une liste d'élément à récupérer
+    async insertNeed(need, user) {
+        try{
+            const userCheck = await this.checkUserPermission(need, user);
+            if(!userCheck)
+                throw {msg:"Project edit not allowed with this user profile", code:'whatever'};
+            const newNeed = await this.client
+                .query(
+                    `INSERT INTO needs
+                        (title, description, project_id)
+                    VALUES ($1, $2, $3) 
+                    RETURNING *`,
+                    [need.title, need.description, need.project_id])
+                .catch(error => {throw {msg:error.stack,code:error.code}})
+                
+            return newNeed.rows[0];
+        } catch (error) {
+            return{error: error}
+        }
+    };
+
+    async editNeed(need, user) {
+        try{
+            const userCheck = await this.checkUserPermission(need, user);
+            if(!userCheck)
+                throw {msg:"Project edit not allowed with this user profile", code:'whatever'};
+            const needUpdated = await this.client
+            .query(`
+                UPDATE needs
+                SET
+                title = $1,
+                description = $2
+                WHERE id = $3
+                RETURNING *`,
+                [need.title, need.description, need.id])
+            .catch(error => {throw {msg:error.stack,code:error.code}})
+            return needUpdated.rows[0];
+        } catch (error) {
+            return{error: error}
+        }
+
+    };
+    async needCompletion(need, user) {
+        try{
+            const userCheck = await this.checkUserPermission(need, user);
+            if(!userCheck)
+                throw {msg:"Project edit not allowed with this user profile", code:'whatever'};
+            if(userCheck.msg){
+                console.log(userCheck)
+                throw userCheck
+            }
+            const needUpdated = await this.client
+            .query(`
+                UPDATE needs
+                SET
+                    completed = $1
+                WHERE id = $2
+                RETURNING *`,
+                [need.state, need.id])
+            .catch(error => {throw {msg:error.stack,code:error.code}})
+            return needUpdated.rows[0];
+        } catch (error) {
+            return{error: error}
+        }
+        
+    };
+
+    async completeNeed(need, user) {
+        try{
+            const userCheck = await this.checkUserPermission(need, user);
+            if(!userCheck)
+                throw {msg:"Project edit not allowed with this user profile", code:'whatever'};
+            if(userCheck.msg){
+                console.log(userCheck)
+                throw userCheck
+            }
+            const needUpdated = await this.client
+            .query(`
+                UPDATE needs
+                SET
+                    completed = true
+                WHERE id = $1
+                RETURNING *`,
+                [ need.id])
+            .catch(error => {throw {msg:error.stack,code:error.code}})
+            return needUpdated.rows[0];
+        } catch (error) {
+            return{error: error}
+        }
+        
+    };
+
+    async uncompleteNeed(need, user) {
+        try{
+            const userCheck = await this.checkUserPermission(need, user);
+
+            if(!userCheck)
+                throw {msg:"Project edit not allowed with this user profile", code:'whatever'};
+            const needUpdated = await this.client
+            .query(`
+                UPDATE needs
+                SET
+                    completed = false
+                WHERE id = $1
+                RETURNING *`,
+                [ need.id])
+            .catch(error => {throw {msg:error.stack,code:error.code}})
+            return needUpdated.rows[0];
+        } catch (error) {
+            return{error: error}
+        }
+    };
+
+    async deleteNeed(need, user) {
+        try{
+            const userCheck = await this.checkUserPermission(need, user);
+            if(!userCheck)
+                throw {msg:"Project edit not allowed with this user profile", code:'whatever'};
+
+            const deletion = await this.client
+            .query(`
+                DELETE FROM needs
+                WHERE
+                    id = $1
+                RETURNING *
+                `,
+                [need.id]
+                )
+            .catch(error => {throw {msg:error.stack,code:error.code}})
+            
+            if (!deletion.rows[0])
+                throw {msg:"Need not found", code:"10"}
+            
+            return deletion.rows[0];
+
+        } catch (error) {
+            return{error: error}
+        }
+    };
+
+
+
     needLoader = new DataLoader(async (ids) => {
         console.log('Running batch function categoriesLoader with', ids);
         // Dans mon loader
@@ -56,7 +195,7 @@ class NeedDataSource extends DataSource {
             // les categories correspondantes histoire d'assurer l'ordre
             return result.rows.find( author => author.id == id);
         });
-
+        console.log(data)
         return data;
     });
 
@@ -85,6 +224,48 @@ class NeedDataSource extends DataSource {
         // ]
         return data;
     });
-}
 
+    async checkUserPermission(need, user){
+        try{
+            console.log("checking permission")
+            console.log(need.project_id)
+            let projectId;
+            if(need.project_id === undefined){
+                console.log("project_id not found")
+                const needToUpdate = await this.findNeedById(need.id)
+                if (needToUpdate === undefined)
+                    throw {msg:"need to update not found", code:"whatever"}
+                projectId = needToUpdate.project_id;
+
+            }
+            else{
+                projectId = need.project_id
+            }
+            const cacheKey = "projectToEdit"+ projectId.toString();
+            const projectSearch = await cache.wrapper(cacheKey, async () => {
+                return await this.client.query(
+                    'SELECT * FROM projects WHERE id = $1',
+                    [projectId]);
+            });
+            console.log(projectSearch.rows)
+
+            const projectToUpdade = projectSearch.rows[0];
+            console.log(`user ${user.id}`)
+            if (!projectToUpdade)
+                throw "project to update not found";
+
+            if (projectToUpdade.author !== user.id) {
+                console.log("user not authorized")
+                return false;
+            } else {
+                console.log(`user ${user.id} authorized`)
+                return true;
+            }
+        } catch (error) {
+            return false
+        }
+    }
+
+
+}
 module.exports = NeedDataSource;

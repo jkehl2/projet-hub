@@ -1,6 +1,8 @@
 const { DataSource } = require('apollo-datasource');
 const DataLoader = require('dataloader');
 const cache = require('./cache');
+const timestampConverter = require('./timestampConverter')
+
 
 
 class UserDataSource extends DataSource {
@@ -15,6 +17,7 @@ class UserDataSource extends DataSource {
 
     async findAllUsers() {
         const result = await this.client.query('SELECT * FROM users');
+        timestampConverter.toIso(result.rows);
         return result.rows;
     }
 
@@ -22,96 +25,117 @@ class UserDataSource extends DataSource {
         const cacheKey = "user"+ userId.toString();
         return cache.wrapper(cacheKey,async () => {
             await this.userLoader.clear(userId)
-            console.log(`-- Adding ${userId} to category dataloader`);
             return await this.userLoader.load(userId);
         });
     };
 
     async insertUser(user) {
-        const savedUser = await this.client.query(
-            `INSERT INTO users
-                (name, email, password)
-             VALUES ($1, $2, $3) RETURNING *`,
-            [user.name, user.email, user.password]
-             );
-        return savedUser.rows[0];
-    };
+        try{ 
+            const insertion = await this.client
+                .query(`
+                    INSERT INTO users(
+                        name, 
+                        email, 
+                        password)
+                    VALUES (
+                        $1, 
+                        $2, 
+                        crypt($3,gen_salt('md5'))) 
+                    RETURNING *`,
+                    [user.name, user.email, user.password])
+                .catch(error => {throw {msg:error.stack,code:error.code}})
 
-    async editUserInfos(user) {
-        const savedUser = await this.client.query(`
-            UPDATE users
-            SET 
-                name = $1,
-                email = $2
-            WHERE
-                id = $3
-            RETURNING *
-             `,
-            [user.name, user.email, user.id]
-             );
-        return savedUser.rows[0];
-    };
-
-    async editUserAvatar(user) {
-        const savedUser = await this.client.query(`
-            UPDATE users
-            SET 
-                avatar = $1
-            WHERE
-                id = $2
-            RETURNING *
-             `,
-            [user.avatar, user.id]
-             );
-        return savedUser.rows[0];
-    };
-
-    async editUserPassword(user) {
-        const savedUser = await this.client.query(`
-            UPDATE users
-            SET 
-                password = $1
-            WHERE
-                id = $2
-            RETURNING *
-             `,
-            [user.password, user.id]
-             );
-        return savedUser.rows[0];
-    };
-
-    async deleteUser(id) {
-        const deletion = await this.client.query(`
-            DELETE FROM users
-            WHERE
-                id = $1
-            RETURNING 'Deletion completed'
-             `,
-            [id]
-             );
-        console.log(deletion);
-        return {msg: deletion};
-    };
-
-    async findUserByEmail(email) {
-        const user = await this.client.query(
-            'SELECT * FROM users WHERE email LIKE $1',
-            [email]);
-
-        if (user.rowCount > 0){
-            console.log("user found");
-
-        } else {
-            console.log("user not found");
+            timestampConverter.toIso(insertion.rows);
             
-        }
-        return user.rows[0];                
+            return insertion.rows[0];
 
+        } catch (error) {
+            if(error.code === "23505")
+                error.msg = "Email already used"
+            return{error: error}
+        }
+    };
+
+    async editUserInfos(newInfos, user) {
+        try{
+            const update = await this.client
+                .query(`
+                    UPDATE users
+                    SET 
+                        name = $1,
+                        email = $2
+                    WHERE
+                        id = $3
+                    RETURNING *
+                    `,
+                    [newInfos.name, newInfos.email, user.id])
+                .catch(error => {throw {msg:error.stack,code:error.code}})
+
+            if (!update.rows[0])
+                throw {msg:"User not found", code:"10"}
+
+
+            timestampConverter.toIso(update.rows[0]);
+
+            return update.rows[0];
+        } catch (error) {
+            return{error: error}
+        }
+    };
+
+
+    async editUserPassword(newInfos, user) {
+        try{
+            const update = await this.client
+            .query(`
+                UPDATE users
+                SET 
+                    password = crypt($1,gen_salt('md5'))
+                WHERE
+                    id = $2
+                RETURNING *
+                `,
+                [newInfos.password, user.id])
+            .catch(error => {throw {msg:error.stack,code:error.code}})
+            
+            if (!update.rows[0])
+                throw {msg:"User not found", code:"10"}
+
+            timestampConverter.toIso(update.rows[0]);
+
+            return update.rows[0];
+     } catch (error) {
+         return{error: error}
+     }
+    };
+
+    async deleteUser(user) {
+        try{
+            const deletion = await this.client
+            .query(`
+                DELETE FROM users
+                WHERE
+                    id = $1
+                RETURNING *
+                `,
+                [user.id]
+                )
+            .catch(error => {throw {msg:error.stack,code:error.code}})
+            
+            if (!deletion.rows[0])
+                throw {msg:"User not found", code:"10"}
+            
+            timestampConverter.toIso(deletion.rows[0]);
+            return deletion.rows[0];
+
+        } catch (error) {
+            return{error: error}
+        }
     };
 
     userLoader = new DataLoader(async (ids) => {
         console.log('Running batch function user Loader with', ids);
-       
+
         const result = await this.client.query(
             'SELECT * FROM users WHERE id = ANY($1)',
             [ids]);
@@ -120,6 +144,9 @@ class UserDataSource extends DataSource {
         });
         return data;
     });
+
+
+
 
 
 }
