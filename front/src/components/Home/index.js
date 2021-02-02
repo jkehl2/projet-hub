@@ -8,12 +8,12 @@ import SearchProjects from 'src/containers/SearchProjects';
 import {
   Container, Divider, Header,
 } from 'semantic-ui-react';
+
 import HeaderHome from './HeaderHome';
 import DescriptionHome from './DescriptionHome';
 
 // == STYLES
 import './home.scss';
-
 
 // == Composant
 const Home = ({ cleanAppParams }) => {
@@ -26,7 +26,7 @@ const Home = ({ cleanAppParams }) => {
       <Divider horizontal><Header as="h1" content="Local Hub" textAlign="center" /></Divider>
       {/** Page top with pictures */}
       <HeaderHome />
-
+      
       {/** Search Bar */}
       <Divider horizontal>Rechercher</Divider>
       <SearchProjects isHome />

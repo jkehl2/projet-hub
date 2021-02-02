@@ -1,8 +1,16 @@
 @use 'src/styles/vars';
 
 .list {
-  &--no-marged{
+  &--no-marged {
     margin: 0 !important;
     padding: 0 !important;
+  }
+  &--map {
+    z-index: 1 !important;
+    height: 30vh !important;
+    width: 100% !important;
+  }
+  &--fullwidth {
+    width: 100% !important;
   }
 }

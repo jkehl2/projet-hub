@@ -5,4 +5,7 @@
     flex-shrink: 0!important;
     flex-basis: content;
     padding: 0.25rem !important;
+    &--padded{
+      padding: 0 1rem !important;
+    }
 }

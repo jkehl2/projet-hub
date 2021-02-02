@@ -167,6 +167,8 @@ export const queryByAuthor = {
           created_at
           expiration_date
           location
+          lat
+          long
           image
           archived
           isFollowed
