@@ -5,6 +5,7 @@ import PropTypes, { shape } from 'prop-types';
 // == IMPORTS COMPOSANTS
 import {
   Button,
+  Divider,
   Form,
   Grid,
   Header,
@@ -72,7 +73,7 @@ const NeedsForm = ({
           />
         </Segment>
       </Form>
-      <Grid divided padded="horizontally" stackable centered>
+      <Grid divided="vertically" padded="horizontally" stackable centered>
         {needs.map((need) => (
           <Grid.Row key={need.id}>
             <Form onSubmit={(event) => {
