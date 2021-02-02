@@ -21,6 +21,10 @@ const ProjectMenu = ({
   isEditMode,
   isAuthor,
   isArchived,
+  isError,
+  error,
+  isMessage,
+  message,
   setEditModeOn,
   setConfirmation,
   handleArchiveProject,
@@ -70,7 +74,7 @@ const ProjectMenu = ({
             fitted="horizontally"
           >
             <ModalConfirm
-              title="Confirmer l'archivage de votre projet"
+              title="Confirmer l'archivage définitif de votre projet"
               trigger={(
                 <Button
                   icon="archive"
@@ -82,6 +86,10 @@ const ProjectMenu = ({
               confirm={confirm}
               setConfirmation={setConfirmation}
               handleAction={handleArchiveProject}
+              isError={isError}
+              error={error}
+              isMessage={isMessage}
+              message={message}
             />
           </Menu.Item>
           <Menu.Item
@@ -89,7 +97,7 @@ const ProjectMenu = ({
             fitted="horizontally"
           >
             <ModalConfirm
-              title="Confirmer la suppression de votre projet"
+              title="Confirmer la suppression définitive de votre projet"
               trigger={(
                 <Button
                   icon="trash"
@@ -101,6 +109,10 @@ const ProjectMenu = ({
               confirm={confirm}
               setConfirmation={setConfirmation}
               handleAction={handleDeleteProject}
+              isError={isError}
+              error={error}
+              isMessage={isMessage}
+              message={message}
             />
           </Menu.Item>
         </>
@@ -135,6 +147,10 @@ ProjectMenu.propTypes = {
   isEditMode: PropTypes.bool.isRequired,
   isAuthor: PropTypes.bool.isRequired,
   isArchived: PropTypes.bool.isRequired,
+  isError: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  isMessage: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
   setEditModeOn: PropTypes.func.isRequired,
   setConfirmation: PropTypes.func.isRequired,
   handleArchiveProject: PropTypes.func.isRequired,

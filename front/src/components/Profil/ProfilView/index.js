@@ -19,6 +19,10 @@ const ProfilView = ({
   email,
   avatar,
   confirm,
+  isError,
+  error,
+  isMessage,
+  message,
   setConfirmation,
   deleteProfil,
   switchToEditProFile,
@@ -80,11 +84,15 @@ const ProfilView = ({
 
       {/* bouton mes supprimer le compte */}
       <ModalConfirm
-        title="Confirmer la suppression de votre compte utilisateur"
+        title="Confirmer la suppression définitive de votre compte utilisateur"
         trigger={<Button className="profil-view--marged" negative>Supprimer votre compte</Button>}
         confirm={confirm}
         setConfirmation={setConfirmation}
         handleAction={deleteProfil}
+        isError={isError}
+        error={error}
+        isMessage={isMessage}
+        message={message}
       />
     </Button.Group>
   </Segment>
@@ -95,6 +103,10 @@ ProfilView.propTypes = {
   email: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   confirm: PropTypes.string.isRequired,
+  isError: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  isMessage: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
   setConfirmation: PropTypes.func.isRequired,
   deleteProfil: PropTypes.func.isRequired,
   switchToEditProFile: PropTypes.func.isRequired,
