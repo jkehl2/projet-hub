@@ -13,8 +13,6 @@ import Project from 'src/containers/Project';
 import SignUp from 'src/containers/SignUp';
 import PasswordEdit from 'src/containers/PasswordEdit';
 import CreateProject from 'src/containers/CreateProject';
-import MyProjects from 'src/containers/MyProjects';
-import MyFavorites from 'src/containers/MyFavorites';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -25,8 +23,8 @@ import {
 } from 'semantic-ui-react';
 
 import Projects from 'src/components/Projects';
-
-import CreateNeeds from 'src/components/CreateProject/CreateNeeds';
+import MyProjects from 'src/components/MyProjects';
+import MyFavorites from 'src/components/MyFavorites';
 import Footer from 'src/components/Footer';
 import WhoAreWe from 'src/components/WhoAreWe';
 import LegalMentions from 'src/components/LegalMentions';
@@ -68,9 +66,9 @@ const App = ({
           <Route exact path="/projet/:slug" component={Project} />
 
           {/* Sprint 1 - Page de connexion utlisateur */}
-          <ProtectedRoute exact path="/utilisateur/connexion" isAllowed={!logged} component={() => (<SignIn />)} redirectTo="/" />
+          <ProtectedRoute exact path="/utilisateur/connexion" isAllowed={!logged} component={SignIn} redirectTo="/" />
           {/* Sprint 1 - Page d'enregistrement utlisateur' */}
-          <ProtectedRoute exact path="/utilisateur/enregistrement" isAllowed={!logged} component={() => (<SignUp />)} redirectTo="/" />
+          <ProtectedRoute exact path="/utilisateur/enregistrement" isAllowed={!logged} component={SignUp} redirectTo="/" />
 
           {/* Sprint 2 - Mentions légales */}
           <Route exact path="/mentionsLegales" component={LegalMentions} />
@@ -78,16 +76,17 @@ const App = ({
           <Route exact path="/equipe" component={WhoAreWe} />
           {/* Routes ateignable uniquement si utilisateur logged */}
           {/* Sprint 1 - Page de profil */}
-          <ProtectedRoute exact path="/utilisateur/profil" isAllowed={logged} component={() => (<Profil />)} />
+          <ProtectedRoute exact path="/utilisateur/profil" isAllowed={logged} component={Profil} />
           {/* Sprint 2 - Pages Création de projet + page création de besoins */}
-          <ProtectedRoute exact path="/utilisateur/create" isAllowed={logged} component={() => (<CreateProject />)} />
-          <ProtectedRoute exact path="/utilisateur/create/needs" isAllowed={logged} component={() => (<CreateNeeds />)} />
+          <ProtectedRoute exact path="/utilisateur/create" isAllowed={logged} component={CreateProject} />
           {/* Sprint 2 - Page mes favoris' */}
-          <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={() => (<MyFavorites />)} />
+          {/* <Route exact path="/utilisateur/favoris" component={MyFavorites} /> */}
+          <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={MyFavorites} />
           {/* Sprint 2 - Page mes projets' */}
-          <ProtectedRoute exact path="/utilisateur/projets" isAllowed={logged} component={() => (<MyProjects />)} />
+          {/* <Route exact path="/utilisateur/projets" component={MyProjects} /> */}
+          <ProtectedRoute exact path="/utilisateur/projets" isAllowed={logged} component={MyProjects} />
           {/* Sprint 2 - Page mes projets' */}
-          <ProtectedRoute exact path="/utilisateur/motdepasse-edit" isAllowed={logged} component={() => (<PasswordEdit />)} />
+          <ProtectedRoute exact path="/utilisateur/motdepasse-edit" isAllowed={logged} component={PasswordEdit} />
 
           {/* MESSAGE POUR 404 ET REDIRECT VERS Accueil */}
           <Route

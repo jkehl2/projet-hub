@@ -15,7 +15,7 @@ import {
 // == IMPORTS CONTAINERS
 
 // == STYLES
-import './projectEdit.scss';
+import './projectForm.scss';
 
 // == Composant
 const ProjectForm = ({
@@ -27,7 +27,6 @@ const ProjectForm = ({
   syncProjectFields,
   setProjectField,
   handleSubmit,
-  handleCancel,
 }) => {
   useEffect(() => {
     syncProjectFields();
@@ -83,23 +82,14 @@ const ProjectForm = ({
             setProjectField({ expiration_date: event.target.value });
           }}
         />
-        <Segment basic compact textAlign="right">
-          <Button.Group>
-            <Form.Button
-              positive
-              type="submit"
-              content="Modifier"
-              title="Modifier votre projet"
-              onClick={handleSubmit}
-            />
-            <Button.Or text="ou" />
-            <Button
-              type="button"
-              content="Annuler"
-              title="Annuler"
-              onClick={handleCancel}
-            />
-          </Button.Group>
+        <Segment className="projectForm--align-right" basic compact textAlign="right">
+          <Button
+            positive
+            type="submit"
+            title="Modifier votre projet"
+            content="Modifier"
+            onClick={handleSubmit}
+          />
         </Segment>
       </Form>
     </>
@@ -114,7 +104,6 @@ ProjectForm.propTypes = {
   syncProjectFields: PropTypes.func.isRequired,
   setProjectField: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  handleCancel: PropTypes.func.isRequired,
 };
 
 // == Export

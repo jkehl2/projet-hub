@@ -12,19 +12,21 @@ export const PROJECT_ARCHIVED_CURRENT = 'PROJECT_ARCHIVED';
 
 export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const GET_PROJECT_BY_GEO = 'GET_PROJECT_BY_GEO';
-export const SEND_PROJECT = 'SEND_PROJECT';
 export const PROJECT_NEED_ISCOMPLETED = 'PROJECT_NEED_ISCOMPLETED';
-export const SEND_CREATED_PROJECT = 'SEND_CREATED_PROJECT';
+
+export const PROJECT_ADD_FAVORITE_BY_ID = 'PROJECT_ADD_FAVORITE_BY_ID';
+export const PROJECT_REMOVE_FAVORITE_BY_ID = 'PROJECT_REMOVE_FAVORITE_BY_ID';
 
 // == [CLE-VALEURS] - ACTIONS sur le store projets(Reducer user)
 
 export const PROJECT_STORE_UPDATE = 'PROJECT_STORE_UPDATE';
+export const PROJECT_UPDATE_FAVORITE = 'PROJECT_UPDATE_FAVORITE';
 export const PROJECT_STORE_CLEAN = 'PROJECT_STORE_CLEAN';
 export const PROJECT_CLEAN_PROJECTS = 'PROJECT_CLEAN_PROJECTS';
 export const PROJECT_CLEAN_PROJECT = 'PROJECT_CLEAN_PROJECT';
 export const PROJECT_NEED_UPDATE_BY_ID = 'PROJECT_NEED_UPDATE_BY_ID';
-export const GET_PROJECTS_BY_AUTHOR = 'GET_PROJECTS_BY_AUTHOR';
-export const GET_PROJECTS_BY_FAVORITES = 'GET_PROJECTS_BY_FAVORITES';
+export const GET_MY_PROJECTS = 'GET_MY_PROJECTS';
+export const GET_MY_FAVORITES = 'GET_MY_FAVORITES';
 
 // == ===================================
 // == PROJECT STORE - ACTIONS CREATORS PART
@@ -51,6 +53,22 @@ export const projectNeedIsCompleted = (payload) => ({
   payload,
 });
 
+// get all projects by author
+export const getProjectsByAuthor = () => ({
+  type: GET_MY_PROJECTS,
+});
+
+// get all projects by favorites
+export const getProjectsByFavorites = () => ({
+  type: GET_MY_FAVORITES,
+});
+
+export const updateProjectFavorite = (id, payload) => ({
+  type: PROJECT_UPDATE_FAVORITE,
+  id,
+  payload,
+});
+
 // == ===================================
 // == PROJECT CONNECTORS - ACTIONS CREATORS PART
 
@@ -60,9 +78,9 @@ export const searchProject = () => ({
 });
 
 // uploading a project
-export const createProject = (project) => ({
+export const createProject = (payload) => ({
   type: PROJECT_CREATE,
-  payload: project,
+  payload,
 });
 
 // editing a project
@@ -92,27 +110,19 @@ export const getProjectByGeo = (payload) => ({
   payload,
 });
 
-// send a project to geocoding API
-export const sendProjectApi = () => ({
-  type: SEND_PROJECT,
-});
-
 export const updateProjectNeed = (payload) => ({
   type: PROJECT_NEED_UPDATE_BY_ID,
   payload,
 });
-// send a project to back-end API
-export const sendProjectCreated = (payload) => ({
-  type: SEND_CREATED_PROJECT,
-  payload,
-});
 
-// get all projects by author
-export const getProjectsByAuthor = () => ({
-  type: GET_PROJECTS_BY_AUTHOR,
-});
+// == ==================
+// == FAVORITE SUB PART
 
-// get all projects by favorites
-export const getProjectsByFavorites = () => ({
-  type: GET_PROJECTS_BY_FAVORITES,
+export const projectAddToFavoriteById = (id) => ({
+  type: PROJECT_ADD_FAVORITE_BY_ID,
+  id,
+});
+export const projectRemoveToFavoriteById = (id) => ({
+  type: PROJECT_REMOVE_FAVORITE_BY_ID,
+  id,
 });

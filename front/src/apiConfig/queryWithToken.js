@@ -31,6 +31,11 @@ export default (config, dataLabel, dispatch) => new Promise((resolve, reject) =>
         return;
       }
     }
+    else if (response.data.errors) {
+      const { errors } = response.data.data[dataLabel];
+      reject(new Error(errors[0].message));
+      return;
+    }
     resolve(response);
   }).catch((error) => {
     reject(error);

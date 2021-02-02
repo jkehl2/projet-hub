@@ -1,47 +1,38 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 // == IMPORT NPM
 import axios from 'axios';
 import { goBack, push } from 'connected-react-router';
 
-// == import utilitary date formater HTML to ISO STRING
-import dateApiFormater from 'src/utils/dateHTMLFormater';
-
 // graphql queries
 import configGraphQl, {
-  queryByProjectsByAuthor,
-  queryByProjectsByFavorites,
+  queryByAuthor,
   queryCreateProject,
   queryEditProject,
   queryProjectById,
   queryDeleteProject,
   queryGetProjectsByGeo,
   queryArchivedProject,
+  queryInsertFavorite,
+  queryDeleteFavorite,
 } from 'src/apiConfig/';
-
-// == import utils to allow perimeter conversion
-import perimetersValue from 'src/utils/perimeters.json';
 
 import connector from 'src/apiConfig/queryWithToken';
 
-import querystring from 'query-string';
-
 // actions from store
 import {
-  GET_PROJECTS_BY_AUTHOR,
-  GET_PROJECTS_BY_FAVORITES,
+  GET_MY_PROJECTS,
+  GET_MY_FAVORITES,
   PROJECT_CREATE,
   PROJECT_EDIT,
   PROJECT_DELETE_CURRENT,
   PROJECT_ARCHIVED_CURRENT,
   GET_PROJECT_BY_ID,
   GET_PROJECT_BY_GEO,
-  SEND_PROJECT,
-  SEND_CREATED_PROJECT,
+  PROJECT_ADD_FAVORITE_BY_ID,
+  PROJECT_REMOVE_FAVORITE_BY_ID,
   updateProjectStore,
   cleanProject,
-  cleanProjects,
-  sendProjectCreated,
-  getProjectById,
+  updateProjectFavorite,
 } from 'src/store/actions/project';
 
 import {
@@ -51,9 +42,6 @@ import {
   appErrorUpdate,
   appMsgClean,
   appErrorClean,
-  cleanCreateProject,
-  appEditProjectOff,
-  appGetGeoCoding,
 } from 'src/store/actions/app';
 
 // == PARSE DATE UTIL FUNCTION :
@@ -98,7 +86,9 @@ const projectMiddleware = (store) => (next) => (action) => {
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
             )),
-          }));
+          })).sort((proj1, proj2) => (
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+          ));
           store.dispatch(updateProjectStore({ projects }));
           store.dispatch(push('/projets'));
         })
@@ -164,19 +154,10 @@ const projectMiddleware = (store) => (next) => (action) => {
       return;
     }
     case PROJECT_CREATE: {
-      const {
-        title, description, expirationDate, location, lat, long, author,
-      } = action.payload;
       const data = JSON.stringify({
         ...queryCreateProject,
         variables: {
-          title,
-          description,
-          expirationDate: dateApiFormater(expirationDate),
-          location,
-          lat,
-          long,
-          author,
+          ...action.payload,
         },
       });
       const config = {
@@ -185,7 +166,9 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       connector(config, 'insertProject', store.dispatch)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          const { data: { data: { insertProject: { id } } } } = response;
+          store.dispatch(push(`/projet/${id}`));
+          store.dispatch(appMsgUpdate('Vous avez créé une nouvelle fiche projet.'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -220,6 +203,8 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appLoadingOff());
         });
       store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
       return;
     }
     case PROJECT_DELETE_CURRENT: {
@@ -235,8 +220,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       connector(config, 'deleteProject', store.dispatch)
         .then(() => {
           store.dispatch(goBack());
-          store.dispatch(appMsgUpdate('Votre projet à été supprimmé définitivement.'));
           store.dispatch(cleanProject());
+          store.dispatch(appMsgUpdate('Votre projet à été supprimmé définitivement.'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -262,8 +247,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       connector(config, 'archiveProject', store.dispatch)
         .then(() => {
           store.dispatch(goBack());
-          store.dispatch(appMsgUpdate('Votre projet à été archivé.'));
           store.dispatch(cleanProject());
+          store.dispatch(appMsgUpdate('Votre projet à été archivé.'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -276,62 +261,9 @@ const projectMiddleware = (store) => (next) => (action) => {
       store.dispatch(appErrorClean());
       return;
     }
-    case SEND_PROJECT: {
-      // call API geocoding => generate long & lat of location
-      const {
-        app: {
-          createProject: {
-            title, expiration_date, description, location,
-          },
-        },
-      } = store.getState();
-
-      const payload = {
-        title, expiration_date, description, location,
-      };
-
-      store.dispatch(appGetGeoCoding(location, sendProjectCreated, payload));
-
-      return;
-    }
-    case SEND_CREATED_PROJECT: {
-      // get the result of geocoding API + payload
-      const {
-        long, lat, title, expiration_date, description, location,
-      } = action.payload;
-
+    case GET_MY_PROJECTS: {
       const data = JSON.stringify({
-        ...queryCreateProject,
-        variables: {
-          long, lat, title, expiration_date, description, location,
-        },
-      });
-      const config = {
-        ...configGraphQl,
-        data,
-      };
-      // send values
-      connector(config, 'insertProject', store.dispatch)
-        .then((response) => {
-          store.dispatch(appMsgUpdate('Projet crée ! '));
-          // redirect to projects page
-          store.dispatch(push('/utilisateur/projets'));
-        })
-        .catch((error) => {
-          store.dispatch(appErrorUpdate(error.message));
-        })
-        .finally(() => {
-          store.dispatch(appLoadingOff());
-          store.dispatch(cleanCreateProject());
-        });
-      store.dispatch(appMsgClean());
-      store.dispatch(appErrorClean());
-      return;
-    }
-    case GET_PROJECTS_BY_AUTHOR: {
-      { /* requête à l'API */ }
-      const data = JSON.stringify({
-        ...queryByProjectsByAuthor,
+        ...queryByAuthor,
       });
       const config = {
         ...configGraphQl,
@@ -339,8 +271,33 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       connector(config, 'myInfos', store.dispatch)
         .then((response) => {
-          store.dispatch(appLoadingOn());
-          store.dispatch(updateProjectStore(response.data.data.myInfos.projectsCreated));
+          const projects = response.data.data.myInfos.projectsCreated.map((project) => ({
+            id: project.id,
+            isFavorite: project.isFollowed,
+            isArchived: project.archived,
+            isAuthor: project.userIsAuthor,
+            title: project.title,
+            followers: project.followers.sort((follower1, follower2) => (
+              parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
+            )),
+            location: project.location,
+            description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
+            expiration_date: parseDate(project.expiration_date),
+            creation_date: parseDate(project.created_at),
+            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            author: {
+              id: project.author.id,
+              name: project.author.name,
+              email: project.author.email,
+              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+            },
+            needs: project.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
+          })).sort((proj1, proj2) => (
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+          ));
+          store.dispatch(updateProjectStore({ projects }));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -348,14 +305,14 @@ const projectMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
+      store.dispatch(appLoadingOn());
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       return;
     }
-    case GET_PROJECTS_BY_FAVORITES: {
-      { /* requête à l'API */ }
+    case GET_MY_FAVORITES: {
       const data = JSON.stringify({
-        ...queryByProjectsByFavorites,
+        ...queryByAuthor,
       });
       const config = {
         ...configGraphQl,
@@ -363,8 +320,33 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       connector(config, 'myInfos', store.dispatch)
         .then((response) => {
-          store.dispatch(appLoadingOn());
-          store.dispatch(updateProjectStore(response.data.data.myInfos.projectsFollowed));
+          const projects = response.data.data.myInfos.projectsFollowed.map((project) => ({
+            id: project.id,
+            isFavorite: project.isFollowed,
+            isArchived: project.archived,
+            isAuthor: project.userIsAuthor,
+            title: project.title,
+            followers: project.followers.sort((follower1, follower2) => (
+              parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
+            )),
+            location: project.location,
+            description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
+            expiration_date: parseDate(project.expiration_date),
+            creation_date: parseDate(project.created_at),
+            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            author: {
+              id: project.author.id,
+              name: project.author.name,
+              email: project.author.email,
+              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+            },
+            needs: project.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
+          })).sort((proj1, proj2) => (
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+          ));
+          store.dispatch(updateProjectStore({ projects }));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -372,6 +354,57 @@ const projectMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_ADD_FAVORITE_BY_ID: {
+      const { id } = action;
+      const data = JSON.stringify({
+        ...queryInsertFavorite,
+        variables: { id },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'insertFavorite', store.dispatch)
+        .then(() => {
+          store.dispatch(updateProjectFavorite(id, { isFavorite: true }));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_REMOVE_FAVORITE_BY_ID: {
+      const { id } = action;
+      const data = JSON.stringify({
+        ...queryDeleteFavorite,
+        variables: { id },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'deleteFavorite', store.dispatch)
+        .then(() => {
+          store.dispatch(updateProjectFavorite(id, { isFavorite: false }));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       return;

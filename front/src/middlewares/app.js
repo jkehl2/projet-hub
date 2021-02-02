@@ -20,8 +20,8 @@ import {
   APP_CONFIRM_PASSWORD,
   APP_PROFIL_CONFIRM,
   APP_PROJECT_CONFIRM,
-  APP_PROJECT_CREATE_VERIF,
   APP_PROJECT_EDIT,
+  APP_PROJECT_CREATE,
   APP_CREATE_USER_VERIF,
   APP_GET_GEOCODING,
   APP_REFRESH_NEEDS_ARRAY,
@@ -38,11 +38,11 @@ import {
 } from 'src/store/actions/app';
 
 import {
-  sendProjectApi,
   PROJECT_SEARCH,
   getProjectByGeo,
   cleanProjectStore,
   editProject,
+  createProject,
 } from 'src/store/actions/project';
 
 import {
@@ -86,13 +86,13 @@ const userMiddleware = (store) => (next) => (action) => {
       return;
     }
     case APP_PROJECT_EDIT: {
-      const { app: { project: { location } } } = store.getState();
       const {
         app: {
           project: {
             title,
             expiration_date,
             description,
+            location,
           },
         },
         project: {
@@ -111,6 +111,26 @@ const userMiddleware = (store) => (next) => (action) => {
         image,
       };
       store.dispatch(appGetGeoCoding(location, editProject, payload));
+      return;
+    }
+    case APP_PROJECT_CREATE: {
+      const {
+        app: {
+          project: {
+            title,
+            expiration_date,
+            description,
+            location,
+          },
+        },
+      } = store.getState();
+      const payload = {
+        title,
+        expiration_date: dateApiFormater(expiration_date),
+        description,
+        location,
+      };
+      store.dispatch(appGetGeoCoding(location, createProject, payload));
       return;
     }
     case APP_GET_GEOCODING: {
@@ -190,6 +210,7 @@ const userMiddleware = (store) => (next) => (action) => {
       else {
         store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider la suppression."));
       }
+      store.dispatch(appUpdateProfil({ confirm: '' }));
       return; }
     case APP_PROJECT_CONFIRM: {
       const { app: { project: { confirm } } } = store.getState();
@@ -199,6 +220,7 @@ const userMiddleware = (store) => (next) => (action) => {
       else {
         store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider la suppression."));
       }
+      store.dispatch(appUpdateProject({ confirm: '' }));
       return; }
     case APP_CONFIRM_PASSWORD: {
       const { app: { profil: { password, passwordConfirm } } } = store.getState();
@@ -228,23 +250,6 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appGetGeoCoding(localite, getProjectByGeo, payload));
       return;
     }
-    case APP_PROJECT_CREATE_VERIF: {
-      // gather values stored in app mw after creation form submitted
-      const {
-        app: {
-          createProject: {
-            title, date,
-          },
-        },
-      } = store.getState();
-      if (title.length === 0 && date.length === 0) {
-        store.dispatch(appMsgUpdate('Veuillez remplir les champs titre et date'));
-      }
-      else {
-        // if successfull send to geocoding API to get coordinates through location
-        store.dispatch(sendProjectApi());
-      }
-      return; }
     case APP_REFRESH_NEEDS_ARRAY: {
       const { project: { project: { needs } } } = store.getState();
       const payload = { needs };

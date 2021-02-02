@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 // == IMPORTS CONTAINERS
+import ProjectMenu from 'src/containers/ProjectMenu';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -15,12 +16,20 @@ import './project.scss';
 
 // == Composant
 const Project = ({
-  projectId, project, logged, isEditMode, getProjectById, updateNeedIdCompleted,
+  project,
+  logged,
+  isEditMode,
+  setEditModeOff,
+  getProjectById,
+  updateNeedIdCompleted,
+  addToFavorite,
+  removeFromFavorite,
 }) => {
   // Au montage du composant on charge les données du projet depuis l'API
   // Au démontage on clean le store.
   useEffect(() => {
-    getProjectById(projectId);
+    setEditModeOff();
+    getProjectById();
   }, []);
   return (
     <Container className="project">
@@ -31,13 +40,22 @@ const Project = ({
         dividing
         subheader="Ici on vous dit tout sur ce projet"
       />
+      {/* Menu projet - modifier / supprimer / archiver */}
+      <ProjectMenu />
       {(isEditMode && logged)
-        ? <ProjectEdit project={project} />
+        ? (
+          <ProjectEdit
+            getProjectById={getProjectById}
+          />
+        )
         : (
           <ProjectView
+            getProjectById={getProjectById}
             logged={logged}
             project={project}
             updateNeedIdCompleted={updateNeedIdCompleted}
+            addToFavorite={addToFavorite}
+            removeFromFavorite={removeFromFavorite}
           />
         )}
     </Container>
@@ -46,16 +64,18 @@ const Project = ({
 
 // == PROP TYPES
 Project.propTypes = {
-  projectId: PropTypes.string.isRequired,
   project: PropTypes.shape({
     isAuthor: PropTypes.bool.isRequired,
     isArchived: PropTypes.bool.isRequired,
     isFavorite: PropTypes.bool.isRequired,
   }).isRequired,
   logged: PropTypes.bool.isRequired,
+  setEditModeOff: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   getProjectById: PropTypes.func.isRequired,
   updateNeedIdCompleted: PropTypes.func.isRequired,
+  addToFavorite: PropTypes.func.isRequired,
+  removeFromFavorite: PropTypes.func.isRequired,
 };
 
 // == Export

@@ -135,66 +135,74 @@ export const queryUserDelete = {
   }   `,
 };
 
-//= = PROJECT QUERIES
-export const queryByProjectsByFavorites = {
-  query: `
-  {
-    myInfos{
+export const queryByAuthor = {
+  query: `{myInfos{
       ... on User{
         id
-        created_at
-        name
-        email
-        avatar
-        activated
+        projectsCreated{
+          id
+          title
+          description
+          created_at
+          expiration_date
+          location
+          image
+          archived
+          isFollowed
+          userIsAuthor
+          author{
+            id
+            name
+            email
+            avatar
+          }
+          needs{
+            id
+            title
+            description
+            completed
+          }
+          followers{
+            id
+            name
+          }
+        }
         projectsFollowed{
           id
           title
+          description
+          created_at
+          expiration_date
+          location
+          image
+          archived
           isFollowed
           userIsAuthor
-          description
-        location
-        archived
-        expiration_date
+          author{
+            id
+            name
+            email
+            avatar
+          }
+          needs{
+            id
+            title
+            description
+            completed
+          }
+          followers{
+            id
+            name
+          }
         }
       }
-        ... on Error{
+      ... on Error{
         error{
           msg
           code
         }
       }
-    }
-  } `,
-};
-
-export const queryByProjectsByAuthor = {
-  query: `{
-    myInfos{
-    ... on User{
-      id
-      created_at
-      name
-      email
-      avatar
-      activated
-      projectsCreated{
-        id
-        title
-        userIsAuthor
-        description
-        location
-        archived
-        expiration_date
-      }
-    }
-      ... on Error{
-      error{
-        msg
-        code
-      }
-    }
-  }`,
+    }}`,
 };
 // == QUERY - Get project by ID
 export const queryProjectById = {
@@ -265,6 +273,7 @@ export const queryGetProjectsByGeo = {
           email
           avatar
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 isFollowed
@@ -366,6 +375,62 @@ export const queryEditProject = {
     }
     }
     `,
+=======
+        isFollowed
+        userIsAuthor
+        needs{
+          id
+          completed
+        }
+        followers{
+          id
+          name
+        }
+    }
+  }`,
+};
+export const queryCreateProject = {
+  query: `mutation CreateProject($title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String) {
+    insertProject(title: $title, description: $description, expiration_date: $expiration_date, location: $location, lat: $lat, long: $long, image: $image, file: $file) {
+      __typename
+      ... on Project{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
+    }
+}`,
+};
+export const queryEditProject = {
+  query: `mutation EditProject($id: ID!, $title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String) {
+      editProject(
+          id: $id,
+          title: $title,
+          description: $description,
+          expiration_date: $expiration_date,
+          location: $location,
+          lat: $lat,
+          long: $long,
+          image: $image,
+          file: $file
+      ) {
+      ... on Project{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }
+    }
+}
+`,
+>>>>>>> 2aef277c82309ab15c6cbb25d7d0f49b37eb4f44
 };
 
 export const queryArchivedProject = {
@@ -486,4 +551,38 @@ export const queryDeleteNeedById = {
     }
   }`,
 >>>>>>> 7891ea350b90fee53d306517793e3947e0ba2871
+};
+
+// == ============================
+// == FAVORITES SECTION
+
+export const queryInsertFavorite = {
+  query: `mutation insertFavorite($id: ID!) {
+    insertFavorite(projectId: $id) {
+      ... on Favorite{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }      
+    }
+  }`,
+};
+export const queryDeleteFavorite = {
+  query: `mutation deleteFavorite($id: ID!) {
+    deleteFavorite(projectId: $id) {
+      ... on Favorite{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }      
+    }
+  }`,
 };

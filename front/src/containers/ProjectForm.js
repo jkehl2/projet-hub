@@ -5,8 +5,6 @@ import ProjectForm from 'src/components/Project/ProjectEdit/ProjectForm';
 import {
   appUpdateProject,
   appRefreshProject,
-  appCleanProject,
-  appEditProjectOff,
   appProjectEdit,
 } from 'src/store/actions/app';
 
@@ -27,11 +25,6 @@ const mapDispatchToProps = (dispatch) => ({
   handleSubmit: (event) => {
     event.preventDefault();
     dispatch(appProjectEdit());
-  },
-  handleCancel: (event) => {
-    event.preventDefault();
-    dispatch(appCleanProject());
-    dispatch(appEditProjectOff());
   },
 });
 

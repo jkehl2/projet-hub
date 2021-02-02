@@ -16,15 +16,13 @@ const ProtectedRoute = ({
     path={path}
     sensitive={sensitive}
     strict={strict}
-    render={() => (
-      <>{isAllowed
-        ? <Component />
-        : (
-          <Redirect to={{ pathname: redirectTo, state: { isRedirect: true } }} />
-        )}
-      </>
-    )}
-  />
+  >
+    {isAllowed
+      ? <Component />
+      : (
+        <Redirect to={{ pathname: redirectTo, state: { isRedirect: true } }} />
+      )}
+  </Route>
 );
 
 ProtectedRoute.propTypes = {

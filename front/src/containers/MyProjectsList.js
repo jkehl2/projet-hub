@@ -2,9 +2,7 @@ import { connect } from 'react-redux';
 
 import List from 'src/components/Projects/List';
 import {
-  searchProject,
-  projectAddToFavoriteById,
-  projectRemoveToFavoriteById,
+  getProjectsByAuthor,
 } from 'src/store/actions/project';
 
 const mapStateToProps = (state) => ({
@@ -14,13 +12,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateList: () => {
-    dispatch(searchProject());
+    dispatch(getProjectsByAuthor());
   },
-  addToFavorite: (id) => {
-    dispatch(projectAddToFavoriteById(id));
+  addToFavorite: () => {
+    // MY PROJECT CAN't BE IN FAVORITE
   },
-  removeFromFavorite: (id) => {
-    dispatch(projectRemoveToFavoriteById(id));
+  removeFromFavorite: () => {
+    // MY PROJECT CAN't BE IN FAVORITE
   },
 });
 

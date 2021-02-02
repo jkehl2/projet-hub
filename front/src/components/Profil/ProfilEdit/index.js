@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Button, Form, Image, Segment,
+  Button, Form, Segment,
 } from 'semantic-ui-react';
 // == IMPORTS CONTAINERS
 

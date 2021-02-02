@@ -10,37 +10,35 @@ import {
   PROJECT_CLEAN_PROJECTS,
   PROJECT_CLEAN_PROJECT,
   PROJECT_NEED_UPDATE_BY_ID,
-  GET_PROJECT_BY_ID,
+  PROJECT_UPDATE_FAVORITE,
 } from 'src/store/actions/project';
 
 // ==  INITIAL STATE : a project object empty
 export const projectInitialState = {
-  project: {
+  id: 0,
+  isFavorite: false,
+  isArchived: false,
+  isAuthor: false,
+  title: '',
+  location: '',
+  description: '',
+  expiration_date: new Date().toLocaleDateString('fr-FR'),
+  creation_date: new Date().toLocaleDateString('fr-FR'),
+  image: '',
+  author: {
     id: 0,
-    isFavorite: false,
-    isArchived: false,
-    isAuthor: false,
-    title: '',
-    location: '',
-    description: '',
-    expiration_date: new Date().toLocaleDateString('fr-FR'),
-    creation_date: new Date().toLocaleDateString('fr-FR'),
-    image: '',
-    author: {
-      id: 0,
-      name: '',
-      email: '',
-      avatar: '',
-    },
-    needs: [],
-    followers: [],
+    name: '',
+    email: '',
+    avatar: '',
   },
+  needs: [],
+  followers: [],
 };
 
 // ==  INITIAL STATE : a project object containing an array
 export const initialState = {
   projects: [],
-  ...projectInitialState,
+  project: { ...projectInitialState },
 };
 
 // == USER REDUCER - Gestion du store projet
@@ -63,7 +61,7 @@ const reducer = (oldState = initialState, action = {}) => {
     case PROJECT_CLEAN_PROJECT:
       return {
         ...oldState,
-        ...projectInitialState,
+        project: { ...projectInitialState },
       };
     case PROJECT_NEED_UPDATE_BY_ID: {
       const [updatedNeed] = [oldState.project.needs
@@ -84,7 +82,28 @@ const reducer = (oldState = initialState, action = {}) => {
         },
       };
     }
-
+    case PROJECT_UPDATE_FAVORITE: {
+      let projectsCopy = [...oldState.projects.filter((project) => project.id !== action.id)];
+      let [projectUpdate] = [oldState.projects.find((project) => project.id === action.id)];
+      if (projectUpdate) {
+        projectUpdate = {
+          ...projectUpdate,
+          ...action.payload,
+        };
+        projectsCopy.push(projectUpdate);
+        projectsCopy = projectsCopy.sort((proj1, proj2) => (
+          parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+        ));
+      }
+      return {
+        ...oldState,
+        projects: projectsCopy,
+        project: {
+          ...oldState.project,
+          ...action.payload,
+        },
+      };
+    }
     default:
       return { ...oldState };
   }

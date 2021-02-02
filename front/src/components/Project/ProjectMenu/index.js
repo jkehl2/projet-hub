@@ -1,5 +1,6 @@
+/* eslint-disable no-nested-ternary */
 // == Import npm
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // == IMPORTS CONTAINERS
@@ -17,75 +18,129 @@ import './projectMenu.scss';
 // == Composant
 const ProjectMenu = ({
   confirm,
+  isEditMode,
+  isAuthor,
+  isArchived,
   setEditModeOn,
   setConfirmation,
-  archiveProject,
-  deleteProject,
-}) => {
-  const [state, setState] = useState({ activeItem: '' });
-  const handleItemClick = (e, { name }) => {
-    setState({ activeItem: name });
-  };
-  return (
-    <>
-      <Menu compact icon secondary attached="bottom">
+  handleArchiveProject,
+  handleDeleteProject,
+  handleBackToView,
+  handleBackToPrevius,
+}) => (
+  <Menu compact icon secondary attached="bottom" borderless size="mini">
+    {isEditMode
+      ? (
         <Menu.Item
-          name="Editer"
-          active={state.activeItem === 'edit'}
-          onClick={handleItemClick}
+          name="backView"
           fitted="horizontally"
         >
           <Button
             type="button"
-            icon="edit"
+            icon="arrow alternate circle left"
             color="blue"
-            title="Editer"
-            onClick={(event) => {
-              event.preventDefault();
-              setEditModeOn();
-            }}
+            title="Revenir à la consultation"
+            content="Retour"
+            labelPosition="left"
+            compact
+            onClick={handleBackToView}
           />
         </Menu.Item>
+      )
+      : (!isArchived && isAuthor) && (
+        <>
+          <Menu.Item
+            name="Editer"
+            fitted="horizontally"
+          >
+            <Button
+              type="button"
+              icon="edit"
+              color="blue"
+              title="Editer"
+              compact
+              onClick={(event) => {
+                event.preventDefault();
+                setEditModeOn();
+              }}
+            />
+          </Menu.Item>
+          <Menu.Item
+            name="Archiver"
+            fitted="horizontally"
+          >
+            <ModalConfirm
+              title="Confirmer l'archivage de votre projet"
+              trigger={(
+                <Button
+                  icon="archive"
+                  color="brown"
+                  title="Archiver"
+                  compact
+                />
+              )}
+              confirm={confirm}
+              setConfirmation={setConfirmation}
+              handleAction={handleArchiveProject}
+            />
+          </Menu.Item>
+          <Menu.Item
+            name="Supprimer"
+            fitted="horizontally"
+          >
+            <ModalConfirm
+              title="Confirmer la suppression de votre projet"
+              trigger={(
+                <Button
+                  icon="trash"
+                  color="red"
+                  title="Supprimer"
+                  compact
+                />
+              )}
+              confirm={confirm}
+              setConfirmation={setConfirmation}
+              handleAction={handleDeleteProject}
+            />
+          </Menu.Item>
+        </>
+      )}
+    <>
+      {(!isEditMode
 
-        <Menu.Item
-          name="Archiver"
-          active={state.activeItem === 'archive'}
-          onClick={handleItemClick}
-          fitted="horizontally"
-        >
-          <ModalConfirm
-            title="Confirmer l'archivage de votre projet"
-            trigger={<Button icon="archive" color="brown" title="Archiver" />}
-            confirm={confirm}
-            setConfirmation={setConfirmation}
-            handleDelete={archiveProject}
-          />
-        </Menu.Item>
+            && (
+            <Menu.Item
+              name="backPrevius"
+              fitted="horizontally"
+            >
+              <Button
+                type="button"
+                icon="arrow alternate circle left"
+                color="blue"
+                title="Revenir à la page précédente"
+                content="Retour"
+                labelPosition="left"
+                compact
+                onClick={handleBackToPrevius}
+              />
+            </Menu.Item>
+            )
 
-        <Menu.Item
-          name="Supprimer"
-          active={state.activeItem === 'delete'}
-          onClick={handleItemClick}
-          fitted="horizontally"
-        >
-          <ModalConfirm
-            title="Confirmer la suppression de votre projet"
-            trigger={<Button icon="trash" color="red" title="Supprimer" />}
-            confirm={confirm}
-            setConfirmation={setConfirmation}
-            handleDelete={deleteProject}
-          />
-        </Menu.Item>
-      </Menu>
+        )}
     </>
-  );
-};
+  </Menu>
+);
 ProjectMenu.propTypes = {
   confirm: PropTypes.string.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
+  isAuthor: PropTypes.bool.isRequired,
+  isArchived: PropTypes.bool.isRequired,
   setEditModeOn: PropTypes.func.isRequired,
   setConfirmation: PropTypes.func.isRequired,
-  archiveProject: PropTypes.func.isRequired,
-  deleteProject: PropTypes.func.isRequired,
+  handleArchiveProject: PropTypes.func.isRequired,
+  handleDeleteProject: PropTypes.func.isRequired,
+  handleBackToView: PropTypes.func.isRequired,
+  handleBackToPrevius: PropTypes.func.isRequired,
 };
 
 // == Export

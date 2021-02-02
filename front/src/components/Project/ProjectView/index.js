@@ -1,9 +1,6 @@
 // == Import npm
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-// == IMPORTS CONTAINERS
-import ProjectMenu from 'src/containers/ProjectMenu';
 
 // == IMPORTS COMPOSANTS
 import {
@@ -17,12 +14,18 @@ import './projectView.scss';
 
 // == Composant
 const ProjectView = (props) => {
-  const { project, logged, updateNeedIdCompleted } = props;
+  const {
+    project,
+    logged,
+    updateNeedIdCompleted,
+    getProjectById,
+  } = props;
+  useEffect(() => {
+    getProjectById();
+  }, []);
   const isVisible = (logged && project.isAuthor && !project.isArchived);
   return (
     <>
-      {/* Menu projet - modifier / supprimer / archiver */}
-      {(isVisible) && <ProjectMenu />}
       <Segment compact attached="top">
         {/* Description du projet */}
         <Description {...props} />
@@ -45,6 +48,9 @@ ProjectView.propTypes = {
     needs: PropTypes.array.isRequired,
   }).isRequired,
   updateNeedIdCompleted: PropTypes.func.isRequired,
+  getProjectById: PropTypes.func.isRequired,
+  addToFavorite: PropTypes.func.isRequired,
+  removeFromFavorite: PropTypes.func.isRequired,
 };
 
 // == Export
