@@ -1,25 +1,34 @@
 // == Import npm
-import React from 'react';
-import PropTypes from 'prop-types';
-
-// == IMPORTS COMPOSANTS
-import ProjectCard from 'src/components/Projects/ProjectCard';
-
+import React, { useEffect } from 'react';
+import PropTypes, { shape } from 'prop-types';
 // == IMPORTS CONTAINERS
 
 // == IMPORTS COMPOSANTS
+import ProjectCard from 'src/components/Projects/ProjectCard';
+import { Segment } from 'semantic-ui-react';
 
 // == STYLES
 import './list.scss';
 
 // == Composant
-const List = ({ logged, projects }) => (
-  <>
-    {projects.map((project) => (
-      <ProjectCard key={project.id} logged={logged} project={project} />
-    ))}
-  </>
-);
+const List = ({ logged, projects, updateList, addToFavorite, removeFromFavorite }) => {
+  useEffect(() => {
+    updateList();
+  }, []);
+  return (
+    <Segment className="list--no-marged" basic compact>
+      {projects.map((project) => (
+        <ProjectCard
+          key={project.id}
+          logged={logged}
+          project={project}
+          addToFavorite={addToFavorite}
+          removeFromFavorite={removeFromFavorite}
+        />
+      ))}
+    </Segment>
+  );
+};
 
 // == PROP TYPES
 List.propTypes = {
@@ -29,7 +38,14 @@ List.propTypes = {
     isArchived: PropTypes.bool.isRequired,
     isAuthor: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
+    followers: PropTypes.arrayOf(
+      shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
     location: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     expiration_date: PropTypes.string.isRequired,
     creation_date: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
@@ -39,6 +55,9 @@ List.propTypes = {
       avatar: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired).isRequired,
+  updateList: PropTypes.func.isRequired,
+  addToFavorite: PropTypes.func.isRequired,
+  removeFromFavorite: PropTypes.func.isRequired,
 };
 // == Export
 export default List;

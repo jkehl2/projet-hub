@@ -1,7 +1,10 @@
 @use 'src/styles/vars';
 
-.ui.teal .card,
-.ui.cards>.card {
-  background-color: #D9499A;
+.header-home{
+  &--row-computer-padded{
+    padding: 5rem !important;
+  }
+  &--row-mobile-padded{
+    padding: 1.5rem 1rem !important;
+  }
 }
-

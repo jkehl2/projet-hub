@@ -1,0 +1,8 @@
+@use 'src/styles/vars';
+
+.need-form {
+  &--align-right{
+    margin-left: auto !important;
+  }
+}
+

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Form, Icon, Button, Segment, Grid,
+  Form, Icon, Button, Segment, Grid, Label,
 } from 'semantic-ui-react';
 
 // == IMPORTS CONTAINERS
@@ -29,18 +29,24 @@ const SearchProjects = ({
           <Segment>
             <Form.Group>
               <Form.Input
+                type="text"
+                className="search-project--marged-top"
                 label="Localité"
+                title="Localité"
                 placeholder="adresse, code postale, ville"
                 width={10}
+                required
                 value={localite}
                 onChange={(event) => {
                   setSearch({ localite: event.target.value });
                 }}
               />
               <Form.Input
-                width={4}
                 type="range"
+                className="search-project--marged-top"
                 label="Périmètre"
+                title="Périmètre"
+                width={4}
                 min={0}
                 max={4}
                 step={1}
@@ -49,11 +55,15 @@ const SearchProjects = ({
                   setSearch({ perimeter: parseInt(event.target.value, 10) });
                 }}
               />
-              <Form.Input width={2} label="(km)" value={`${utils.perimeters[perimeter].value} km`} disabled />
+              <div className="two wide field search-project__perimeter-label">
+                <Label size="big" basic content={`${utils.perimeters[perimeter].value} km`} horizontal />
+              </div>
             </Form.Group>
             <Form.Radio
               toggle
+              className="search-project--marged-top"
               label="Inclure les projets archivés ?"
+              title="Inclure les projets archivés ?"
               checked={archived}
               onChange={(_) => {
                 setSearch({ archived: !archived });
@@ -63,7 +73,7 @@ const SearchProjects = ({
         </Grid.Row>
         <Grid.Row>
           <Segment basic textAlign="center">
-            <Button basic circular icon size="massive">
+            <Button basic circular icon size="massive" type="submit">
               <Icon name="search" color="orange" size="large" />
             </Button>
           </Segment>

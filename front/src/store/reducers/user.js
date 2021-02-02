@@ -15,6 +15,7 @@ export const initialState = {
   name: '',
   email: '',
   avatar: 'https://react.semantic-ui.com/images/avatar/large/matt.jpg',
+  confirmation: '',
 };
 
 // == USER REDUCER - Gestion du store utlisateur
@@ -25,10 +26,12 @@ const reducer = (oldState = initialState, action = {}) => {
         ...oldState,
         ...action.payload,
       };
-    case USER_STORE_CLEAN:
+    case USER_STORE_CLEAN: {
+      localStorage.setItem('token', '');
       return {
         ...initialState,
       };
+    }
     default:
       return { ...oldState };
   }

@@ -1,20 +1,38 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 // == IMPORT NPM
 import axios from 'axios';
-import { push } from 'connected-react-router';
+import { goBack, push } from 'connected-react-router';
+
+// graphql queries
+import configGraphQl, {
+  queryByAuthor,
+  queryCreateProject,
+  queryEditProject,
+  queryProjectById,
+  queryDeleteProject,
+  queryGetProjectsByGeo,
+  queryArchivedProject,
+  queryInsertFavorite,
+  queryDeleteFavorite,
+} from 'src/apiConfig/';
+
+import connector from 'src/apiConfig/queryWithToken';
 
 // actions from store
 import {
-  PROJECT_SEARCH,
+  GET_MY_PROJECTS,
+  GET_MY_FAVORITES,
   PROJECT_CREATE,
   PROJECT_EDIT,
-  PROJECT_DELETE,
+  PROJECT_DELETE_CURRENT,
+  PROJECT_ARCHIVED_CURRENT,
   GET_PROJECT_BY_ID,
   GET_PROJECT_BY_GEO,
-  getProjectByGeo,
-  cleanProjectStore,
+  PROJECT_ADD_FAVORITE_BY_ID,
+  PROJECT_REMOVE_FAVORITE_BY_ID,
   updateProjectStore,
   cleanProject,
+  updateProjectFavorite,
 } from 'src/store/actions/project';
 
 import {
@@ -25,64 +43,15 @@ import {
   appMsgClean,
   appErrorClean,
 } from 'src/store/actions/app';
-// graphql queries
-import configGraphQl, {
-  queryCreateProject, queryEditProject, queryProjectById, queryDeleteProject, queryGetProjectsByGeo,
-} from 'src/apiConfig/';
 
-// == import utils to allow perimeter conversion
-import perimetersValue from 'src/utils/perimeters.json';
-import { useReducer } from 'react';
+// == PARSE DATE UTIL FUNCTION :
+const parseDate = (dateApiString) => (
+  new Date(dateApiString).toLocaleDateString('fr-FR')
+);
 
 // mw
 const projectMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
-    case PROJECT_SEARCH: {
-      // gathering values needed for geocoding
-      const {
-        app: {
-          search: {
-            localite,
-            perimeter,
-            archived,
-          },
-        },
-      } = store.getState();
-      const params = {
-        access_key: 'dc7156f13f34218aa5540fe1ef67fb52',
-        query: localite,
-      };
-      axios.get('http://api.positionstack.com/v1/forward', { params })
-        .then((response) => {
-          const geolocArr = response.data.data;
-          if (geolocArr.length > 0) {
-            const searchValue = {
-              lat: geolocArr[0].latitude,
-              long: geolocArr[0].longitude,
-              // lat: 2,
-              // long: 1.9,
-              scope: parseInt(perimetersValue.perimeters[perimeter].apiValue, 10),
-              // scope: 20000,
-              // archived: false,
-              archived,
-            };
-            store.dispatch(getProjectByGeo(searchValue));
-          }
-          else {
-            store.dispatch(appMsgUpdate('Localité inconnue merci de préciser.'));
-          }
-        })
-        .catch((error) => {
-          store.dispatch(appErrorUpdate(error.message));
-          store.dispatch(appLoadingOff());
-        });
-      store.dispatch(appErrorClean());
-      store.dispatch(appMsgClean());
-      store.dispatch(cleanProjectStore());
-      store.dispatch(appLoadingOn());
-      return;
-    }
-
     case GET_PROJECT_BY_GEO: {
       const data = JSON.stringify({
         ...queryGetProjectsByGeo,
@@ -94,16 +63,19 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       axios(config)
         .then((response) => {
-          const { user } = store.getState();
           const projects = response.data.data.projectsByGeo.map((project) => ({
             id: project.id,
-            isFavorite: false,
+            isFavorite: project.isFollowed,
             isArchived: project.archived,
-            isAuthor: user.id === project.author.id,
+            isAuthor: project.userIsAuthor,
             title: project.title,
+            followers: project.followers.sort((follower1, follower2) => (
+              parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
+            )),
             location: project.location,
-            expiration_date: new Date(project.expiration_date).toLocaleDateString('fr-FR'),
-            creation_date: new Date(project.created_at).toLocaleDateString('fr-FR'),
+            description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
+            expiration_date: parseDate(project.expiration_date),
+            creation_date: parseDate(project.created_at),
             image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
             author: {
               id: project.author.id,
@@ -111,7 +83,12 @@ const projectMiddleware = (store) => (next) => (action) => {
               email: project.author.email,
               avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
             },
-          }));
+            needs: project.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
+          })).sort((proj1, proj2) => (
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+          ));
           store.dispatch(updateProjectStore({ projects }));
           store.dispatch(push('/projets'));
         })
@@ -121,97 +98,11 @@ const projectMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
       return;
     }
-    // CREATION
-    case PROJECT_CREATE: {
-      const {
-        title, description, expirationDate, location, lat, long, author,
-      } = action.payload;
-
-      const data = JSON.stringify({
-        ...queryCreateProject,
-        variables: {
-          title, description, expirationDate, location, lat, long, author,
-        },
-      });
-
-      const config = {
-        ...configGraphQl,
-        data,
-      };
-
-      console.log('loader on');
-      axios(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          console.log('loader off');
-        });
-
-      return;
-    }
-    // EDITING
-    case PROJECT_EDIT: {
-      const {
-        id, title, description, expirationDate, location, lat, long, author,
-      } = action.payload;
-      const data = JSON.stringify({
-        ...queryEditProject,
-        variables: {
-          id, title, description, expirationDate, location, lat, long, author,
-        },
-      });
-
-      const config = {
-        ...configGraphQl,
-        data,
-      };
-
-      console.log('loader on');
-      axios(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          console.log('loader off');
-        });
-      return;
-    }
-    // DELETING
-    case PROJECT_DELETE: {
-      const { id } = action.payload;
-      const data = JSON.stringify({
-        ...queryDeleteProject,
-        variables: { id },
-      });
-
-      const config = {
-        ...configGraphQl,
-        data,
-      };
-
-      console.log('loader on');
-      axios(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          console.log('loader off');
-        });
-      return;
-    }
-    // GET BY ID == OK
     case GET_PROJECT_BY_ID: {
       const data = JSON.stringify({
         ...queryProjectById,
@@ -223,18 +114,20 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       axios(config)
         .then((response) => {
-          const { user } = store.getState();
           const apiData = response.data.data.project;
           const project = {
             id: apiData.id,
-            isFavorite: false,
+            isFavorite: apiData.isFollowed,
             isArchived: apiData.archived,
-            isAuthor: (user.id === apiData.author.id),
+            isAuthor: apiData.userIsAuthor,
             title: apiData.title,
+            followers: apiData.followers.sort((follower1, follower2) => (
+              parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
+            )),
             description: apiData.description,
             location: apiData.location,
-            expiration_date: new Date(apiData.expiration_date).toLocaleDateString('fr-FR'),
-            creation_date: new Date(apiData.created_at).toLocaleDateString('fr-FR'),
+            expiration_date: parseDate(apiData.expiration_date),
+            creation_date: parseDate(apiData.created_at),
             image: apiData.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : apiData.image,
             author: {
               id: apiData.author.id,
@@ -242,7 +135,9 @@ const projectMiddleware = (store) => (next) => (action) => {
               email: apiData.author.email,
               avatar: apiData.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : apiData.author.avatar,
             },
-            needs: apiData.needs,
+            needs: apiData.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
           };
           store.dispatch(updateProjectStore({ project }));
         })
@@ -254,6 +149,290 @@ const projectMiddleware = (store) => (next) => (action) => {
         });
       store.dispatch(cleanProject());
       store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_CREATE: {
+      const data = JSON.stringify({
+        ...queryCreateProject,
+        variables: {
+          ...action.payload,
+        },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'insertProject', store.dispatch)
+        .then((response) => {
+          const { data: { data: { insertProject: { id } } } } = response;
+          store.dispatch(push(`/projet/${id}`));
+          store.dispatch(appMsgUpdate('Vous avez créé une nouvelle fiche projet.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_EDIT: {
+      const data = JSON.stringify({
+        ...queryEditProject,
+        variables: {
+          ...action.payload,
+        },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'editProject', store.dispatch)
+        .then(() => {
+          store.dispatch(appMsgUpdate('Votre projet à été modifié.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_DELETE_CURRENT: {
+      const { project: { project: { id } } } = store.getState();
+      const data = JSON.stringify({
+        ...queryDeleteProject,
+        variables: { id },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'deleteProject', store.dispatch)
+        .then(() => {
+          store.dispatch(goBack());
+          store.dispatch(cleanProject());
+          store.dispatch(appMsgUpdate('Votre projet à été supprimmé définitivement.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_ARCHIVED_CURRENT: {
+      const { project: { project: { id } } } = store.getState();
+      const data = JSON.stringify({
+        ...queryArchivedProject,
+        variables: { id },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'archiveProject', store.dispatch)
+        .then(() => {
+          store.dispatch(goBack());
+          store.dispatch(cleanProject());
+          store.dispatch(appMsgUpdate('Votre projet à été archivé.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case GET_MY_PROJECTS: {
+      const data = JSON.stringify({
+        ...queryByAuthor,
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'myInfos', store.dispatch)
+        .then((response) => {
+          const projects = response.data.data.myInfos.projectsCreated.map((project) => ({
+            id: project.id,
+            isFavorite: project.isFollowed,
+            isArchived: project.archived,
+            isAuthor: project.userIsAuthor,
+            title: project.title,
+            followers: project.followers.sort((follower1, follower2) => (
+              parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
+            )),
+            location: project.location,
+            description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
+            expiration_date: parseDate(project.expiration_date),
+            creation_date: parseDate(project.created_at),
+            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            author: {
+              id: project.author.id,
+              name: project.author.name,
+              email: project.author.email,
+              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+            },
+            needs: project.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
+          })).sort((proj1, proj2) => (
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+          ));
+          store.dispatch(updateProjectStore({ projects }));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case GET_MY_FAVORITES: {
+      const data = JSON.stringify({
+        ...queryByAuthor,
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'myInfos', store.dispatch)
+        .then((response) => {
+          const projects = response.data.data.myInfos.projectsFollowed.map((project) => ({
+            id: project.id,
+            isFavorite: project.isFollowed,
+            isArchived: project.archived,
+            isAuthor: project.userIsAuthor,
+            title: project.title,
+            followers: project.followers.sort((follower1, follower2) => (
+              parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
+            )),
+            location: project.location,
+            description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
+            expiration_date: parseDate(project.expiration_date),
+            creation_date: parseDate(project.created_at),
+            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            author: {
+              id: project.author.id,
+              name: project.author.name,
+              email: project.author.email,
+              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+            },
+            needs: project.needs.sort((need1, need2) => (
+              parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
+            )),
+          })).sort((proj1, proj2) => (
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+          ));
+          store.dispatch(updateProjectStore({ projects }));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_ADD_FAVORITE_BY_ID: {
+      const { id } = action;
+      const data = JSON.stringify({
+        ...queryInsertFavorite,
+        variables: { id },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'insertFavorite', store.dispatch)
+        .then((response) => {
+          const {
+            data: {
+              data: {
+                insertFavorite: {
+                  project: {
+                    id: idProject,
+                    isFollowed: isFavorite,
+                    followers,
+                  },
+                },
+              },
+            },
+          } = response;
+          store.dispatch(updateProjectFavorite(idProject, { isFavorite, followers }));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_REMOVE_FAVORITE_BY_ID: {
+      const { id } = action;
+      const data = JSON.stringify({
+        ...queryDeleteFavorite,
+        variables: { id },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'deleteFavorite', store.dispatch)
+        .then((response) => {
+          const {
+            data: {
+              data: {
+                deleteFavorite: {
+                  project: {
+                    id: idProject,
+                    isFollowed: isFavorite,
+                    followers,
+                  },
+                },
+              },
+            },
+          } = response;
+          store.dispatch(updateProjectFavorite(idProject, { isFavorite, followers }));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
       return;
     }
     default:

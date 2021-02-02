@@ -2,9 +2,11 @@ import { connect } from 'react-redux';
 
 import SignIn from 'src/components/SignIn';
 
-import { appClean, appSignInUpdate } from 'src/store/actions/app';
-import { execSignIn } from 'src/store/actions/user';
 import { push } from 'connected-react-router';
+import {
+  appSignInUpdate, appMsgClean, appErrorClean, appSignInClean,
+} from 'src/store/actions/app';
+import { userSignIn } from 'src/store/actions/user';
 
 const mapStateToProps = (state) => ({
   email: state.app.signIn.email,
@@ -17,14 +19,18 @@ const mapDispatchToProps = (dispatch) => ({
   },
   handleSubmit: (event) => {
     event.preventDefault();
-    dispatch(execSignIn());
+    dispatch(userSignIn());
   },
   redirectSignUp: (event) => {
     event.preventDefault();
     dispatch(push('/utilisateur/enregistrement'));
   },
   cleanAppParams: () => {
-    dispatch(appClean());
+    dispatch(appMsgClean());
+    dispatch(appSignInClean());
+  },
+  cleanSignIn: () => {
+    dispatch(appSignInClean());
   },
 });
 

@@ -4,98 +4,48 @@ import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Card, Icon, Segment,
+  Card, Icon, Segment, Grid, Step,
 } from 'semantic-ui-react';
 
 // == IMPORTS CONTAINERS
 
 // == STYLES
 import './headerHome.scss';
+import { Link } from 'react-router-dom';
 
 // == Composant
 const HeaderHome = () => (
-  <Segment padded="very" basic>
-    <Card.Group itemsPerRow="3">
-      <Card color="teal">
-        <Card.Content
-          style={{
-            background: 'rgb(2,0,36)',
-            background: 'radial-gradient(circle, rgba(2,0,36,1) 9%, rgba(109,160,177,1) 49%, rgba(0,212,255,1) 76%)',
-          }}
-        >
-          <Card.Header
-            as="h1"
-            textAlign="center"
-            style={{
-              border: '1px solid teal',
-              width: '2em',
-              height: '2em',
-              borderRadius: '50%',
-              boxShadow: '.2em .1em .1em teal',
-              color: 'teal',
-            }}
-          >1.
-          </Card.Header>
-          <Card.Header as="h2" textAlign="center" style={{ color: '#00CED1' }}>
-            <Icon name="write" />
-            Poster
-          </Card.Header>
-        </Card.Content>
-      </Card>
-      <Card color="teal">
-        <Card.Content
-          style={{
-            background: 'rgb(2,0,36)',
-            background: 'radial-gradient(circle, rgba(2,0,36,1) 9%, rgba(109,160,177,1) 49%, rgba(0,212,255,1) 76%)',
-          }}
-        >
-          <Card.Header
-            as="h1"
-            textAlign="center"
-            style={{
-              border: '1px solid teal',
-              width: '2em',
-              height: '2em',
-              borderRadius: '50%',
-              boxShadow: '.2em .1em .1em teal',
-              color: 'teal',
-            }}
-          >2.
-          </Card.Header>
-          <Card.Header as="h2" textAlign="center" style={{ color: '#00CED1' }}>
-            <Icon name="comments" />
-            Echanger
-          </Card.Header>
-        </Card.Content>
-      </Card>
-      <Card color="teal">
-        <Card.Content
-          style={{
-            background: 'rgb(2,0,36)',
-            background: 'radial-gradient(circle, rgba(2,0,36,1) 9%, rgba(109,160,177,1) 49%, rgba(0,212,255,1) 76%)',
-          }}
-        >
-          <Card.Header
-            as="h1"
-            textAlign="center"
-            style={{
-              border: '1px solid teal',
-              width: '2em',
-              height: '2em',
-              borderRadius: '50%',
-              boxShadow: '.2em .1em .1em teal',
-              color: 'teal',
-            }}
-          >3.
-          </Card.Header>
-          <Card.Header as="h2" textAlign="center" style={{ color: '#00CED1' }}>
-            <Icon name="handshake" />
-            Collaborer
-          </Card.Header>
-        </Card.Content>
-      </Card>
-    </Card.Group>
-  </Segment>
+  <Grid textAlign="center" padded="horizontally" className="header-home">
+    <Grid.Row only="computer" className="header-home--row-computer-padded">
+      <Step.Group widths={3} size="large">
+        <Link to="/utilisateur/create" className="step" title="Poster">
+          <Icon name="write" />
+          <Step.Content title="Poster" />
+        </Link>
+        <Link to="/utilisateur/projets" className="step" title="Echanger">
+          <Icon name="comments" />
+          <Step.Content title="Echanger" />
+        </Link>
+        <Link to="/projets" className="step" title="Collaborer">
+          <Icon name="handshake" />
+          <Step.Content title="Collaborer" />
+        </Link>
+      </Step.Group>
+    </Grid.Row>
+    <Grid.Row only="mobile" className="header-home--row-mobile-padded">
+      <Step.Group widths={3} size="tiny" unstackable>
+        <Link to="/utilisateur/create" className="step" title="Poster">
+          <Icon name="write" />
+        </Link>
+        <Link to="/utilisateur/projets" className="step" title="Echanger">
+          <Icon name="comments" />
+        </Link>
+        <Link to="/projets" className="step" title="Collaborer">
+          <Icon name="handshake" />
+        </Link>
+      </Step.Group>
+    </Grid.Row>
+  </Grid>
 );
 
 // == Export

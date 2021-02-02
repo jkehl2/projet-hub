@@ -5,56 +5,77 @@
 
 /* eslint-disable no-case-declarations */
 import axios from 'axios';
-import { push } from 'connected-react-router';
+import { push, goBack } from 'connected-react-router';
 
 // == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTEUR AXIOS
 import configGraphQl, {
-  queryUserCreate, queryUserById, queryUserEdit, queryUserDelete, signInConfig,
+  queryUserCreate,
+  queryUserEdit,
+  queryUserEditPassword,
+  queryUserDelete,
+  signInConfig,
 } from 'src/apiConfig/';
+
+import connector from 'src/apiConfig/queryWithToken';
 
 // == IMPORT ACTIONS SUR PROFIL UTILISATEUR
 import {
-  USER_CREATE, USER_BY_ID, USER_EDIT, USER_DELETE, USER_SIGNIN, updateUserStore,
+  USER_CREATE,
+  USER_EDIT,
+  USER_EDIT_PASSWORD,
+  USER_DELETE,
+  USER_SIGNIN,
+  updateUserStore,
+  cleanUserStore,
 } from 'src/store/actions/user';
 
 // == IMPORT ACTIONS SUR PARAMETRES APPLICATIF TECHNIQUE
 import {
-  appLoadingOn, appLoadingOff, appErrorUpdate, appMsgUpdate, appClean,
+  appLoadingOn,
+  appLoadingOff,
+  appErrorUpdate,
+  appMsgUpdate,
+  appMsgClean,
+  appErrorClean,
+  appSignInClean,
+  appSignUpClean,
+  appEditProfilOff,
+  appProfilClean,
 } from 'src/store/actions/app';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case USER_SIGNIN: {
-      const { app } = store.getState();
-      const data = JSON.stringify({ email: app.signIn.email, password: app.signIn.password });
+      const { app: { signIn: { email, password } } } = store.getState();
+      const data = JSON.stringify({ email, password });
       const config = {
         ...signInConfig,
         data,
       };
-
       axios(config)
         .then((response) => {
-          // En cas de retour négatif à la demande de signin
-          // On affiche le message server à l'utlisateur
           if (response.data.error) {
             store.dispatch(appErrorUpdate(response.data.error));
           }
+          else if (response.data.errors) {
+            response.data.errors.forEach((error) => {
+              store.dispatch(appErrorUpdate(error));
+            });
+          }
           else {
-            // Sinon on récupère les infos utlisateur
+            localStorage.setItem('token', response.data.token);
             const userdata = {
-              ...response.data,
+              ...response.data.user,
               logged: true,
             };
-            // Si null dans avatar alors on ne garde pas ce paramètre pour la maj du store
             if (userdata.avatar === null) {
               delete userdata.avatar;
             }
             store.dispatch(updateUserStore(userdata));
-            // On redirecte vers la page d'accueil
-            store.dispatch(push('/'));
-            const { user } = store.getState();
-            store.dispatch(appMsgUpdate(`Bienvenue ${user.name}.`));
+            store.dispatch(goBack());
+            const { user: { name } } = store.getState();
+            store.dispatch(appMsgUpdate(`Bienvenue ${name}.`));
           }
         })
         .catch((error) => {
@@ -63,109 +84,136 @@ const userMiddleware = (store) => (next) => (action) => {
         .finally(() => {
           store.dispatch(appLoadingOff());
         });
-      store.dispatch(appClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appSignInClean());
       store.dispatch(appLoadingOn());
       return;
     }
     case USER_CREATE: {
-      const { name, email, password } = action.payload;
+      const {
+        app: {
+          signUp: {
+            email, password, name,
+          },
+        },
+      } = store.getState();
       const data = JSON.stringify({
         ...queryUserCreate,
-        variables: { name, email, password },
+        variables: { email, password, name },
       });
-
       const config = {
         ...configGraphQl,
         data,
       };
-
-      console.log('loader on');
       axios(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          // TODO tester la réponse pour vérifier si il n'y a pas d'erreur
+          // avant de renvoyer vers la page de login.
+
+          // On redirige vers la page de login
+          store.dispatch(push('/utilisateur/connexion'));
+          store.dispatch(appMsgUpdate('Votre compte a été créé. Merci de vous connecter.'));
         })
         .catch((error) => {
-          console.log(error);
+          // en cas d'erreur remontée de l'api, renvoi d'un msg erreur
+          store.dispatch(appErrorUpdate(error));
         })
         .finally(() => {
-          console.log('loader off');
+          // on clean le store app
+          store.dispatch(appErrorClean());
+          store.dispatch(appSignUpClean());
+          store.dispatch(appLoadingOff());
         });
-
       return;
     }
-    case USER_BY_ID: {
-      const { id } = action.payload;
+    case USER_EDIT_PASSWORD: {
+      const { app: { profil: { password } } } = store.getState();
       const data = JSON.stringify({
-        ...queryUserById,
-        variables: { id },
+        ...queryUserEditPassword,
+        variables: { password },
       });
-
       const config = {
         ...configGraphQl,
         data,
       };
-
-      console.log('loader on');
-      axios(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
+      connector(config, 'editUserPassword', store.dispatch)
+        .then(() => {
+          store.dispatch(push('/utilisateur/profil'));
+          store.dispatch(appMsgUpdate('Votre mot de passe utlisateur a été modifié avec succès.'));
         })
         .catch((error) => {
-          console.log(error);
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
-          console.log('loader off');
+          store.dispatch(appLoadingOff());
         });
+      store.dispatch(appProfilClean());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
       return;
     }
     case USER_EDIT: {
-      const { id, name, email } = action.payload;
+      const { app: { profil: { name, email } } } = store.getState();
       const data = JSON.stringify({
         ...queryUserEdit,
-        variables: { id, name, email },
+        variables: { name, email },
       });
 
       const config = {
         ...configGraphQl,
         data,
       };
-
-      console.log('loader on');
-      axios(config)
+      connector(config, 'editUserInfos', store.dispatch)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          store.dispatch(appMsgUpdate('Votre profil utilisateur à été mis à jour.'));
+          const userdata = response.data.data.editUserInfos;
+          // Si null dans avatar alors on ne garde pas ce paramètre pour la maj du store
+          if (userdata.avatar === null) {
+            delete userdata.avatar;
+          }
+          store.dispatch(updateUserStore(userdata));
+          store.dispatch(appEditProfilOff());
         })
         .catch((error) => {
-          console.log(error);
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
-          console.log('loader off');
+          store.dispatch(appLoadingOff());
         });
-      return; }
+
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
+      return;
+    }
     case USER_DELETE: {
-      const { id } = action.payload;
       const data = JSON.stringify({
         ...queryUserDelete,
-        variables: { id },
       });
-
       const config = {
         ...configGraphQl,
         data,
       };
-
-      console.log('loader on');
-      axios(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
+      connector(config, 'deleteUser', store.dispatch)
+        .then(() => {
+          store.dispatch(cleanUserStore());
+          store.dispatch(push('/'));
+          store.dispatch(appMsgUpdate('Nous sommes désolés de vous voir partir, à bientôt ! '));
         })
         .catch((error) => {
-          console.log(error);
+          store.dispatch(appErrorUpdate(error.message));
         })
         .finally(() => {
-          console.log('loader off');
+          store.dispatch(appLoadingOff());
         });
-      return; }
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+
     default:
       next(action);
       break;
