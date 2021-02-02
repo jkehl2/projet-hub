@@ -14,7 +14,7 @@ export default {
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  withCredentials: false,
 };
 
 // == CONFIGURATION CONNECTEUR AXIOS SIGNIN - END POINT + ENTÊTE
@@ -24,7 +24,7 @@ export const signInConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  withCredentials: false,
 };
 
 // == CONFIGURATION CONNECTEUR AXIOS SIGNOUT - END POINT + ENTÊTE
@@ -34,7 +34,7 @@ export const signOutConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  withCredentials: false,
 };
 
 // == QUERY - Créer le profil utlisateur

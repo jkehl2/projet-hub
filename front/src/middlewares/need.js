@@ -33,6 +33,7 @@ import {
   appErrorClean,
   appAddNeedToArray,
   appDeleteNeedInArrayById,
+  appCleanNeedFields,
 } from 'src/store/actions/app';
 
 // == NEED MIDDLEWARE SWITCH ACTION TYPE CASE
@@ -111,6 +112,7 @@ const needMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           const { data: { data: { insertNeed } } } = response;
           store.dispatch(appAddNeedToArray(insertNeed));
+          store.dispatch(appCleanNeedFields());
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
