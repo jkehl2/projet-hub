@@ -2,7 +2,6 @@
  * @module config-graphql
  * Configuration et requête d'accès à DB utilisateurs et projets
  */
-
 // == URL SERVER BACK
 import CONFIG from './parameters.json';
 
@@ -14,7 +13,7 @@ export default {
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  withCredentials: false,
 };
 
 // == CONFIGURATION CONNECTEUR AXIOS SIGNIN - END POINT + ENTÊTE
@@ -24,7 +23,7 @@ export const signInConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  withCredentials: false,
 };
 
 // == CONFIGURATION CONNECTEUR AXIOS SIGNOUT - END POINT + ENTÊTE
@@ -34,17 +33,17 @@ export const signOutConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  withCredentials: false,
 };
 
 // == QUERY - Créer le profil utlisateur
 export const queryUserCreate = {
-  query: `mutation createUser($name: String!, $email: String!,$password: String! ) {
-    insertUser(name: $name, email: $email,password: $password) {
+  query: `mutation createUser($name: String!, $email: String!, $password: String! ) {
+    insertUser(name: $name, email: $email, password: $password) {
       ... on User{
-      id
-      name
-      email
+        id
+        name
+        email
       }
       ... on Error{
         error{
@@ -60,19 +59,11 @@ export const queryUserCreate = {
 export const queryUserById = {
   query: `query GetUserByID($id: ID!) {
     user(id: $id){
-      ... on User{
       id
       name
       email
       avatar
       activated
-      }
-      ... on Error{
-        error{
-          msg
-          code
-        }
-      }
     }
   }`,
 };
@@ -82,10 +73,10 @@ export const queryUserEdit = {
   query: `mutation editUser($name: String!, $email: String!) {
     editUserInfos(name: $name, email: $email) {
       ... on User{
-      id
-      name
-      email
-      avatar
+        id
+        name
+        email
+        avatar
       }
       ... on Error{
         error{
@@ -102,10 +93,10 @@ export const queryUserEditPassword = {
   query: `mutation editUserPassword($password: String!) {
     editUserPassword(password: $password) {
       ... on User{
-      id
-      name
-      email
-      avatar
+        id
+        name
+        email
+        avatar
       }
       ... on Error{
         error{
@@ -122,8 +113,7 @@ export const queryUserDelete = {
   query: ` mutation{
     deleteUser{
       ... on User{
-        infos
-        errors
+        id
       }
       ... on Error{
         error{
@@ -146,6 +136,8 @@ export const queryByAuthor = {
           created_at
           expiration_date
           location
+          lat
+          long
           image
           archived
           isFollowed
@@ -208,15 +200,18 @@ export const queryByAuthor = {
 export const queryProjectById = {
   query: `query GetProjectByID($id: ID!) {
     project(id: $id) {
-      ... on Project{
         id
         title
         description
         created_at
         expiration_date
         location
+        lat
+        long
         image
         archived
+        isFollowed
+        userIsAuthor
         author{
           id
           name
@@ -229,13 +224,10 @@ export const queryProjectById = {
           description
           completed
         }
-      }
-      ... on Error{
-        error{
-          msg
-          code
+        followers{
+          id
+          name
         }
-      }
     }
   }`,
 };
@@ -244,7 +236,7 @@ export const queryDeleteProject = {
   query: `mutation deleteProject($id: ID!) {
     deleteProject(id: $id) {
       ... on Project{
-      
+        id
       }
       ... on Error{
         error{
@@ -263,6 +255,8 @@ export const queryGetProjectsByGeo = {
         title
         image
         location
+        lat 
+        long
         created_at
         expiration_date
         archived
@@ -273,109 +267,6 @@ export const queryGetProjectsByGeo = {
           email
           avatar
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-isFollowed
-userIsAuthor
-needs{
-  id
-  completed
-}
-followers{
-  id
-  name
-}
-}
-}`,
-};
-export const queryCreateProject = {
-  query: `mutation CreateProject(
-    $title: String!,
-    $description: String!,
-    $expiration_date: String!,
-    $location: String!,
-    $lat: Float!,
-    $long: Float!,
-    $image: String,
-    $file: String
-) {
-  insertProject(
-    title: $title,
-    description: $description,
-    expiration_date: $expiration_date,
-    location: $location,
-    lat: $lat,
-    long: $long,
-    image: $image,
-    file: $file
-) {
-  __typename
-  ... on Project{
-    id
-    title
-    description
-    expiration_date
-    location
-    lat
-    long
-  }
-  ... on Error{
-    error{
-      msg
-      code
-    }
-  }
-  }
-  }`,
-};
-export const queryEditProject = {
-  query: `mutation EditProject(
-      $id: ID!,
-      $title: String!,
-      $description: String!,
-      $expiration_date: String!,
-      $location: String!,
-      $lat: Float!,
-      $long: Float!,
-      $image: String,
-      $file: String
-  ) {
-    editProject(
-      id: $id,
-      title: $title,
-      description: $description,
-      expiration_date: $expiration_date,
-      location: $location,
-      lat: $lat,
-      long: $long,
-      image: $image,
-      file: $file
-  ) {
-    ... on Project{
-      id
-      title
-      description
-      expiration_date
-      location
-      lat
-      long
-      archived
-      needs{
-        id
-        title
-      }
-    }
-    ... on Error{
-      error{
-        msg
-        code
-      }
-    }
-    }
-    }
-    `,
-=======
         isFollowed
         userIsAuthor
         needs{
@@ -407,30 +298,29 @@ export const queryCreateProject = {
 };
 export const queryEditProject = {
   query: `mutation EditProject($id: ID!, $title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String) {
-      editProject(
-          id: $id,
-          title: $title,
-          description: $description,
-          expiration_date: $expiration_date,
-          location: $location,
-          lat: $lat,
-          long: $long,
-          image: $image,
-          file: $file
-      ) {
-      ... on Project{
-        id
-      }
-      ... on Error{
-        error{
-          msg
-          code
-        }
+    editProject(
+      id: $id,
+      title: $title,
+      description: $description,
+      expiration_date: $expiration_date,
+      location: $location,
+      lat: $lat,
+      long: $long,
+      image: $image,
+      file: $file
+  ) {
+    ... on Project{
+      id
+    }
+    ... on Error{
+      error{
+        msg
+        code
       }
     }
+  }
 }
 `,
->>>>>>> 2aef277c82309ab15c6cbb25d7d0f49b37eb4f44
 };
 
 export const queryArchivedProject = {
@@ -454,53 +344,37 @@ export const queryArchivedProject = {
 
 export const queryCompletedNeed = {
   query: `mutation completeNeed($id: ID!) {
-        completeNeed(id: $id) {
-          ... on Need{
-            id
-            completed
-          }
-          ... on Error{
-            error{
-              msg
-              code
-            }
-          }
+    completeNeed(id: $id) {
+      ... on Need{
+        id
+        completed
+      }
+      ... on Error{
+        error{
+          msg
+          code
         }
-      }`,
+      }      
+    }
+  }`,
 };
 
 export const queryUnCompletedNeed = {
   query: `mutation uncompleteNeed($id: ID!) {
-        uncompleteNeed(id: $id) {
-          ... on Need{
-            id
-            completed
-          }
-          ... on Error{
-            error{
-              msg
-              code
-            }
-          }
+    uncompleteNeed(id: $id) {
+      ... on Need{
+        id
+        completed
+      }
+      ... on Error{
+        error{
+          msg
+          code
         }
-      }`,
+      }      
+    }
+  }`,
 };
-<<<<<<< HEAD
-export const queryArchivedProject = {
-  query: `mutation archiveProject($id: ID!) {
-        archiveProject(id: $id) {
-          ... on Project{
-            id
-          }
-          ... on Error{
-            error{
-              msg
-              code
-            }
-          }
-        }
-      }`,
-=======
 
 export const queryAddNeedToProject = {
   query: `mutation insertNeed($title: String!, $description: String!, $projectId: ID!) {
@@ -550,7 +424,6 @@ export const queryDeleteNeedById = {
       }      
     }
   }`,
->>>>>>> 7891ea350b90fee53d306517793e3947e0ba2871
 };
 
 // == ============================
