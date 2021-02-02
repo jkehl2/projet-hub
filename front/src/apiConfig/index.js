@@ -428,7 +428,14 @@ export const queryInsertFavorite = {
   query: `mutation insertFavorite($id: ID!) {
     insertFavorite(projectId: $id) {
       ... on Favorite{
-        id
+        project{
+          id
+          isFollowed
+          followers{
+            id
+            name
+          }
+        }
       }
       ... on Error{
         error{
@@ -443,7 +450,14 @@ export const queryDeleteFavorite = {
   query: `mutation deleteFavorite($id: ID!) {
     deleteFavorite(projectId: $id) {
       ... on Favorite{
-        id
+        project{
+          id
+          isFollowed
+          followers{
+            id
+            name
+          }
+        }
       }
       ... on Error{
         error{

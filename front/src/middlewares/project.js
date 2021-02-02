@@ -370,8 +370,21 @@ const projectMiddleware = (store) => (next) => (action) => {
         data,
       };
       connector(config, 'insertFavorite', store.dispatch)
-        .then(() => {
-          store.dispatch(updateProjectFavorite(id, { isFavorite: true }));
+        .then((response) => {
+          const {
+            data: {
+              data: {
+                insertFavorite: {
+                  project: {
+                    id: idProject,
+                    isFollowed: isFavorite,
+                    followers,
+                  },
+                },
+              },
+            },
+          } = response;
+          store.dispatch(updateProjectFavorite(idProject, { isFavorite, followers }));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -395,8 +408,21 @@ const projectMiddleware = (store) => (next) => (action) => {
         data,
       };
       connector(config, 'deleteFavorite', store.dispatch)
-        .then(() => {
-          store.dispatch(updateProjectFavorite(id, { isFavorite: false }));
+        .then((response) => {
+          const {
+            data: {
+              data: {
+                deleteFavorite: {
+                  project: {
+                    id: idProject,
+                    isFollowed: isFavorite,
+                    followers,
+                  },
+                },
+              },
+            },
+          } = response;
+          store.dispatch(updateProjectFavorite(idProject, { isFavorite, followers }));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
