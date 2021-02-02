@@ -1,6 +1,10 @@
 @use 'src/styles/vars';
 
-.project {}
+.project {
+  &--map{
+    height: 200px !important;
+  }
+}
 
 .content>.header {
   font-size: 2rem !important;

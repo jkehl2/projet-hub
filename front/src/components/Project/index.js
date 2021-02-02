@@ -6,8 +6,9 @@ import ProjectMenu from 'src/containers/ProjectMenu';
 
 // == IMPORTS COMPOSANTS
 import {
-  Container, Header,
+  Container, Header, Segment,
 } from 'semantic-ui-react';
+
 import ProjectView from './ProjectView';
 import ProjectEdit from './ProjectEdit';
 
@@ -68,6 +69,8 @@ Project.propTypes = {
     isAuthor: PropTypes.bool.isRequired,
     isArchived: PropTypes.bool.isRequired,
     isFavorite: PropTypes.bool.isRequired,
+    lat: PropTypes.number.isRequired,
+    long: PropTypes.number.isRequired,
   }).isRequired,
   logged: PropTypes.bool.isRequired,
   setEditModeOff: PropTypes.func.isRequired,

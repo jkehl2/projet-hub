@@ -5,7 +5,6 @@ import PropTypes, { shape } from 'prop-types';
 // == IMPORTS COMPOSANTS
 import {
   Button,
-  Divider,
   Form,
   Grid,
   Header,
