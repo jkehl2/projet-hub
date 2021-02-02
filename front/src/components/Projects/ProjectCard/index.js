@@ -19,7 +19,7 @@ const HeaderStar = ({
     <Header as="h3" size={`${size}`}>
       <Header.Content><Link to={`/projet/${project.id}`}>{`${project.title} `}</Link></Header.Content>
     </Header>
-    { (!project.isAuthor && logged)
+    { (!project.isAuthor && logged && !project.isArchived)
       && (project.isFavorite
         ? (
           <Button
@@ -99,7 +99,7 @@ const ProjectCard = ({
                 <Grid.Column only="computer" width={16}>
                   <HeaderStar
                     project={project}
-                    size="medium"
+                    size="small"
                     logged={logged}
                     addToFavorite={addToFavorite}
                     removeFromFavorite={removeFromFavorite}

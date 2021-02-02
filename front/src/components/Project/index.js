@@ -16,7 +16,14 @@ import './project.scss';
 
 // == Composant
 const Project = ({
-  project, logged, isEditMode, setEditModeOff, getProjectById, updateNeedIdCompleted,
+  project,
+  logged,
+  isEditMode,
+  setEditModeOff,
+  getProjectById,
+  updateNeedIdCompleted,
+  addToFavorite,
+  removeFromFavorite,
 }) => {
   // Au montage du composant on charge les données du projet depuis l'API
   // Au démontage on clean le store.
@@ -47,6 +54,8 @@ const Project = ({
             logged={logged}
             project={project}
             updateNeedIdCompleted={updateNeedIdCompleted}
+            addToFavorite={addToFavorite}
+            removeFromFavorite={removeFromFavorite}
           />
         )}
     </Container>
@@ -65,6 +74,8 @@ Project.propTypes = {
   isEditMode: PropTypes.bool.isRequired,
   getProjectById: PropTypes.func.isRequired,
   updateNeedIdCompleted: PropTypes.func.isRequired,
+  addToFavorite: PropTypes.func.isRequired,
+  removeFromFavorite: PropTypes.func.isRequired,
 };
 
 // == Export

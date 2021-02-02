@@ -49,6 +49,8 @@ ProjectView.propTypes = {
   }).isRequired,
   updateNeedIdCompleted: PropTypes.func.isRequired,
   getProjectById: PropTypes.func.isRequired,
+  addToFavorite: PropTypes.func.isRequired,
+  removeFromFavorite: PropTypes.func.isRequired,
 };
 
 // == Export

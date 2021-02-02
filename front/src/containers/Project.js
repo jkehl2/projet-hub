@@ -3,7 +3,12 @@ import { withRouter } from 'react-router-dom';
 
 import Project from 'src/components/Project/';
 
-import { getProjectById, projectNeedIsCompleted } from 'src/store/actions/project';
+import {
+  getProjectById,
+  projectNeedIsCompleted,
+  projectAddToFavoriteById,
+  projectRemoveToFavoriteById,
+} from 'src/store/actions/project';
 import { appEditProjectOff } from 'src/store/actions/app';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -24,6 +29,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(
       projectNeedIsCompleted({ id, completed }),
     );
+  },
+  addToFavorite: (id) => {
+    dispatch(projectAddToFavoriteById(id));
+  },
+  removeFromFavorite: (id) => {
+    dispatch(projectRemoveToFavoriteById(id));
   },
 });
 
