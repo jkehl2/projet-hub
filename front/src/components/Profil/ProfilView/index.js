@@ -85,6 +85,7 @@ const ProfilView = ({
       {/* bouton mes supprimer le compte */}
       <ModalConfirm
         title="Confirmer la suppression définitive de votre compte utilisateur"
+        content="Attention, la suppression de votre compte entrainera la suppression de toutes les fiches projets (en cours, archivées) dont vous êtes l'auteur."
         trigger={<Button className="profil-view--marged" negative>Supprimer votre compte</Button>}
         confirm={confirm}
         setConfirmation={setConfirmation}

@@ -95,7 +95,7 @@ const reducer = (oldState = initialState, action = {}) => {
         projectsCopy.push(projectUpdate);
         if (projectUpdate.distance) {
           projectsCopy = projectsCopy.sort((proj1, proj2) => (
-            parseInt(proj1.distance, 10) > parseInt(proj2.distance, 10) ? 1 : -1
+            proj1.distance > proj2.distance ? 1 : -1
           ));
         }
         else {

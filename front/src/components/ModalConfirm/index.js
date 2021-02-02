@@ -11,11 +11,13 @@ import {
   Form,
   Segment,
   Message,
+  Header,
 } from 'semantic-ui-react';
 
 // == Composant Profil
-const ModalConfirmDelete = ({
+const ModalConfirm = ({
   title,
+  content,
   trigger,
   confirm,
   isError,
@@ -47,6 +49,7 @@ const ModalConfirmDelete = ({
           {isMessage
         && (<Message header="Information" content={`${message}`} icon="idea" size="small" />)}
 
+          <p>{`${content}`}</p>
           <Form onSubmit={handleAction}>
             <Form.Input
               type="text"
@@ -88,8 +91,9 @@ const ModalConfirmDelete = ({
   );
 };
 
-ModalConfirmDelete.propTypes = {
+ModalConfirm.propTypes = {
   title: PropTypes.string.isRequired,
+  content: PropTypes.string,
   trigger: PropTypes.object.isRequired,
   confirm: PropTypes.string.isRequired,
   isError: PropTypes.bool.isRequired,
@@ -99,6 +103,8 @@ ModalConfirmDelete.propTypes = {
   setConfirmation: PropTypes.func.isRequired,
   handleAction: PropTypes.func.isRequired,
 };
-
+ModalConfirm.defaultProps = {
+  content: 'Attention cette action est définitive.',
+};
 // == Export
-export default ModalConfirmDelete;
+export default ModalConfirm;

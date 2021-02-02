@@ -6,9 +6,10 @@
     padding: 0 !important;
   }
   &--map {
-    z-index: 1 !important;
+    z-index: 0 !important;
     height: 30vh !important;
     width: 100% !important;
+    margin-bottom: 0.5rem !important;
   }
   &--fullwidth {
     width: 100% !important;

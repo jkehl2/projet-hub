@@ -73,6 +73,7 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
+            distance: parseFloat(project.distance),
             lat: parseFloat(project.lat),
             long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
@@ -89,7 +90,7 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
             )),
           })).sort((proj1, proj2) => (
-            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+            proj1.distance > proj2.distance ? 1 : -1
           ));
           store.dispatch(updateProjectStore({ projects }));
           store.dispatch(push('/projets'));
@@ -334,7 +335,6 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
-            distance: project.distance,
             lat: parseFloat(project.lat),
             long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
@@ -351,7 +351,7 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
             )),
           })).sort((proj1, proj2) => (
-            parseInt(proj1.distance, 10) > parseInt(proj2.distance, 10) ? 1 : -1
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
           ));
           store.dispatch(updateProjectStore({ projects }));
         })
