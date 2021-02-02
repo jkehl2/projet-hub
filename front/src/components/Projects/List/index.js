@@ -11,14 +11,20 @@ import { Segment } from 'semantic-ui-react';
 import './list.scss';
 
 // == Composant
-const List = ({ logged, projects, updateList }) => {
+const List = ({ logged, projects, updateList, addToFavorite, removeFromFavorite }) => {
   useEffect(() => {
     updateList();
   }, []);
   return (
     <Segment className="list--no-marged" basic compact>
       {projects.map((project) => (
-        <ProjectCard key={project.id} logged={logged} project={project} />
+        <ProjectCard
+          key={project.id}
+          logged={logged}
+          project={project}
+          addToFavorite={addToFavorite}
+          removeFromFavorite={removeFromFavorite}
+        />
       ))}
     </Segment>
   );
@@ -50,6 +56,8 @@ List.propTypes = {
     }).isRequired,
   }).isRequired).isRequired,
   updateList: PropTypes.func.isRequired,
+  addToFavorite: PropTypes.func.isRequired,
+  removeFromFavorite: PropTypes.func.isRequired,
 };
 // == Export
 export default List;

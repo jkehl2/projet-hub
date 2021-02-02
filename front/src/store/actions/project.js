@@ -14,9 +14,13 @@ export const GET_PROJECT_BY_ID = 'GET_PROJECT_BY_ID';
 export const GET_PROJECT_BY_GEO = 'GET_PROJECT_BY_GEO';
 export const PROJECT_NEED_ISCOMPLETED = 'PROJECT_NEED_ISCOMPLETED';
 
+export const PROJECT_ADD_FAVORITE_BY_ID = 'PROJECT_ADD_FAVORITE_BY_ID';
+export const PROJECT_REMOVE_FAVORITE_BY_ID = 'PROJECT_REMOVE_FAVORITE_BY_ID';
+
 // == [CLE-VALEURS] - ACTIONS sur le store projets(Reducer user)
 
 export const PROJECT_STORE_UPDATE = 'PROJECT_STORE_UPDATE';
+export const PROJECT_UPDATE_FAVORITE = 'PROJECT_UPDATE_FAVORITE';
 export const PROJECT_STORE_CLEAN = 'PROJECT_STORE_CLEAN';
 export const PROJECT_CLEAN_PROJECTS = 'PROJECT_CLEAN_PROJECTS';
 export const PROJECT_CLEAN_PROJECT = 'PROJECT_CLEAN_PROJECT';
@@ -57,6 +61,12 @@ export const getProjectsByAuthor = () => ({
 // get all projects by favorites
 export const getProjectsByFavorites = () => ({
   type: GET_MY_FAVORITES,
+});
+
+export const updateProjectFavorite = (id, payload) => ({
+  type: PROJECT_UPDATE_FAVORITE,
+  id,
+  payload,
 });
 
 // == ===================================
@@ -103,4 +113,16 @@ export const getProjectByGeo = (payload) => ({
 export const updateProjectNeed = (payload) => ({
   type: PROJECT_NEED_UPDATE_BY_ID,
   payload,
+});
+
+// == ==================
+// == FAVORITE SUB PART
+
+export const projectAddToFavoriteById = (id) => ({
+  type: PROJECT_ADD_FAVORITE_BY_ID,
+  id,
+});
+export const projectRemoveToFavoriteById = (id) => ({
+  type: PROJECT_REMOVE_FAVORITE_BY_ID,
+  id,
 });

@@ -420,3 +420,37 @@ export const queryDeleteNeedById = {
     }
   }`,
 };
+
+// == ============================
+// == FAVORITES SECTION
+
+export const queryInsertFavorite = {
+  query: `mutation insertFavorite($id: ID!) {
+    insertFavorite(projectId: $id) {
+      ... on Favorite{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }      
+    }
+  }`,
+};
+export const queryDeleteFavorite = {
+  query: `mutation deleteFavorite($id: ID!) {
+    deleteFavorite(projectId: $id) {
+      ... on Favorite{
+        id
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+      }      
+    }
+  }`,
+};

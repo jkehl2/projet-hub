@@ -1,18 +1,76 @@
+/* eslint-disable no-nested-ternary */
 // == Import npm
 import React from 'react';
 import PropTypes, { shape } from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Grid, Header, Segment, Image, Label, Icon, Divider, Progress,
+  Grid, Header, Segment, Image, Label, Icon, Divider, Progress, Button,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 // == IMPORT STYLES
 import './projectCard.scss';
 
+const HeaderStar = ({
+  project, size, logged, addToFavorite, removeFromFavorite,
+}) => (
+  <>
+    <Header as="h3" size={`${size}`}>
+      <Header.Content><Link to={`/projet/${project.id}`}>{`${project.title} `}</Link></Header.Content>
+    </Header>
+    { (!project.isAuthor && logged)
+      && (project.isFavorite
+        ? (
+          <Button
+            icon={{
+              name: 'star',
+              color: 'yellow',
+            }}
+            size="mini"
+            onClick={() => {
+              removeFromFavorite(project.id);
+            }}
+            content="Retirer des favoris"
+            labelPosition="left"
+            basic
+            compact
+          />
+        )
+        : (
+          <Button
+            icon={{
+              name: 'star outline',
+              color: 'yellow',
+            }}
+            size="mini"
+            onClick={() => {
+              addToFavorite(project.id);
+            }}
+            content="Ajouter aux favoris"
+            labelPosition="left"
+            basic
+            compact
+          />
+        )
+      )}
+  </>
+);
+HeaderStar.propTypes = {
+  project: PropTypes.object.isRequired,
+  size: PropTypes.string.isRequired,
+  logged: PropTypes.bool.isRequired,
+  addToFavorite: PropTypes.func.isRequired,
+  removeFromFavorite: PropTypes.func.isRequired,
+};
+
 // == Composant
-const ProjectCard = ({ logged, project }) => {
+const ProjectCard = ({
+  logged,
+  project,
+  addToFavorite,
+  removeFromFavorite,
+}) => {
   const checkArr = project.needs.map((need) => (need.completed ? 1 : 0));
   const checkCount = checkArr.reduce((a, b) => a + b, 0);
   return (
@@ -24,27 +82,31 @@ const ProjectCard = ({ logged, project }) => {
             <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded /></Link>
           </Grid.Column>
           <Grid.Column computer={12} mobile={16}>
-            <Link to={`/projet/${project.id}`}>
-              <Grid centered>
-                <Grid.Row>
-                  <Grid.Column only="mobile" width={4} className="project-card--padding-mobile">
-                    <Image src={`${project.image}`} centered spaced rounded />
-                  </Grid.Column>
-                  <Grid.Column only="mobile" width={12} className="project-card--padding-mobile">
-                    <Header as="h3" size="small">
-                      {(!project.isAuthor && logged) && (project.isFavorite ? <Icon name="star" color="yellow" /> : <Icon name="star outline" color="yellow" />)}
-                      <Header.Content>{`${project.title} `}</Header.Content>
-                    </Header>
-                  </Grid.Column>
-                  <Grid.Column only="computer" width={16}>
-                    <Header as="h3">
-                      {(!project.isAuthor && logged) && (project.isFavorite ? <Icon name="star" color="yellow" /> : <Icon name="star outline" color="yellow" />)}
-                      <Header.Content>{`${project.title} `}</Header.Content>
-                    </Header>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Link>
+            <Grid centered>
+              <Grid.Row>
+                <Grid.Column only="mobile" width={4} className="project-card--padding-mobile">
+                  <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded /></Link>
+                </Grid.Column>
+                <Grid.Column only="mobile" width={12} className="project-card--padding-mobile">
+                  <HeaderStar
+                    project={project}
+                    size="small"
+                    logged={logged}
+                    addToFavorite={addToFavorite}
+                    removeFromFavorite={removeFromFavorite}
+                  />
+                </Grid.Column>
+                <Grid.Column only="computer" width={16}>
+                  <HeaderStar
+                    project={project}
+                    size="medium"
+                    logged={logged}
+                    addToFavorite={addToFavorite}
+                    removeFromFavorite={removeFromFavorite}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
             <p className="project-card--marged-top"><Image avatar spaced="right" src={`${project.author.avatar}`} />{`${project.author.name}`}</p>
             <Segment basic compact>{`${project.description}`}</Segment>
             <p><Icon name="target" />{`${project.location}`}</p>
@@ -95,6 +157,8 @@ ProjectCard.propTypes = {
       avatar: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  addToFavorite: PropTypes.func.isRequired,
+  removeFromFavorite: PropTypes.func.isRequired,
 };
 // == Export
 export default ProjectCard;

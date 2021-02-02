@@ -12,6 +12,8 @@ import configGraphQl, {
   queryDeleteProject,
   queryGetProjectsByGeo,
   queryArchivedProject,
+  queryInsertFavorite,
+  queryDeleteFavorite,
 } from 'src/apiConfig/';
 
 import connector from 'src/apiConfig/queryWithToken';
@@ -26,8 +28,11 @@ import {
   PROJECT_ARCHIVED_CURRENT,
   GET_PROJECT_BY_ID,
   GET_PROJECT_BY_GEO,
+  PROJECT_ADD_FAVORITE_BY_ID,
+  PROJECT_REMOVE_FAVORITE_BY_ID,
   updateProjectStore,
   cleanProject,
+  updateProjectFavorite,
 } from 'src/store/actions/project';
 
 import {
@@ -81,7 +86,9 @@ const projectMiddleware = (store) => (next) => (action) => {
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
             )),
-          }));
+          })).sort((proj1, proj2) => (
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+          ));
           store.dispatch(updateProjectStore({ projects }));
           store.dispatch(push('/projets'));
         })
@@ -287,7 +294,9 @@ const projectMiddleware = (store) => (next) => (action) => {
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
             )),
-          }));
+          })).sort((proj1, proj2) => (
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+          ));
           store.dispatch(updateProjectStore({ projects }));
         })
         .catch((error) => {
@@ -334,8 +343,60 @@ const projectMiddleware = (store) => (next) => (action) => {
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
             )),
-          }));
+          })).sort((proj1, proj2) => (
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+          ));
           store.dispatch(updateProjectStore({ projects }));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_ADD_FAVORITE_BY_ID: {
+      const { id } = action;
+      const data = JSON.stringify({
+        ...queryInsertFavorite,
+        variables: { id },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'insertFavorite', store.dispatch)
+        .then(() => {
+          store.dispatch(updateProjectFavorite(id, { isFavorite: true }));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appLoadingOn());
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_REMOVE_FAVORITE_BY_ID: {
+      const { id } = action;
+      const data = JSON.stringify({
+        ...queryDeleteFavorite,
+        variables: { id },
+      });
+      const config = {
+        ...configGraphQl,
+        data,
+      };
+      connector(config, 'deleteFavorite', store.dispatch)
+        .then(() => {
+          store.dispatch(updateProjectFavorite(id, { isFavorite: false }));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));

@@ -1,7 +1,11 @@
 import { connect } from 'react-redux';
 
 import List from 'src/components/Projects/List';
-import { getProjectsByFavorites } from 'src/store/actions/project';
+import {
+  getProjectsByFavorites,
+  projectAddToFavoriteById,
+  projectRemoveToFavoriteById,
+} from 'src/store/actions/project';
 
 const mapStateToProps = (state) => ({
   logged: state.user.logged,
@@ -11,6 +15,12 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateList: () => {
     dispatch(getProjectsByFavorites());
+  },
+  addToFavorite: (id) => {
+    dispatch(projectAddToFavoriteById(id));
+  },
+  removeFromFavorite: (id) => {
+    dispatch(projectRemoveToFavoriteById(id));
   },
 });
 
