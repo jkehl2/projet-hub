@@ -257,6 +257,7 @@ export const queryGetProjectsByGeo = {
         title
         image
         location
+        distance
         lat 
         long
         created_at
