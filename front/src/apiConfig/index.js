@@ -137,6 +137,8 @@ export const queryByAuthor = {
           created_at
           expiration_date
           location
+          lat
+          long
           image
           archived
           isFollowed
@@ -205,6 +207,8 @@ export const queryProjectById = {
         created_at
         expiration_date
         location
+        lat
+        long
         image
         archived
         isFollowed
@@ -252,6 +256,8 @@ export const queryGetProjectsByGeo = {
         title
         image
         location
+        lat 
+        long
         created_at
         expiration_date
         archived

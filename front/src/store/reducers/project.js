@@ -21,6 +21,8 @@ export const projectInitialState = {
   isAuthor: false,
   title: '',
   location: '',
+  lat: 0,
+  long: 0,
   description: '',
   expiration_date: new Date().toLocaleDateString('fr-FR'),
   creation_date: new Date().toLocaleDateString('fr-FR'),

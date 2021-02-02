@@ -73,6 +73,8 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
+            lat: parseFloat(project.lat),
+            long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
@@ -126,6 +128,8 @@ const projectMiddleware = (store) => (next) => (action) => {
             )),
             description: apiData.description,
             location: apiData.location,
+            lat: parseFloat(apiData.lat),
+            long: parseFloat(apiData.long),
             expiration_date: parseDate(apiData.expiration_date),
             creation_date: parseDate(apiData.created_at),
             image: apiData.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : apiData.image,
@@ -281,6 +285,8 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
+            lat: parseFloat(project.lat),
+            long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
@@ -330,6 +336,8 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
+            lat: parseFloat(project.lat),
+            long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
