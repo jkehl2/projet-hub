@@ -30,7 +30,7 @@ ProtectedRoute.propTypes = {
   exact: PropTypes.bool,
   sensitive: PropTypes.bool,
   strict: PropTypes.bool,
-  component: PropTypes.func.isRequired,
+  component: PropTypes.any.isRequired,
   isAllowed: PropTypes.bool.isRequired,
   redirectTo: PropTypes.string,
 };

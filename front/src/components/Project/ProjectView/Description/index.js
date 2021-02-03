@@ -81,13 +81,13 @@ const Description = ({
     { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
     <Grid divided stretched stackable verticalAlign="middle">
       <Grid.Row only="mobile">
-        <Segment basic computer textAlign="center">
+        <Segment basic textAlign="center">
           <Image src={`${project.image}`} centered spaced rounded />
         </Segment>
       </Grid.Row>
       <Grid.Row>
         <Grid.Column computer={6} only="computer">
-          <Segment basic computer>
+          <Segment basic>
             <Image src={`${project.image}`} centered spaced rounded />
           </Segment>
         </Grid.Column>

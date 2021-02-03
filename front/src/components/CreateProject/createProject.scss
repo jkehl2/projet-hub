@@ -1,5 +1,12 @@
 @use 'src/styles/vars';
 
 .create-project {
-
+  &--align-right{
+    display: flex;
+    justify-content: flex-end;
+  }
+  &--compact{
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }

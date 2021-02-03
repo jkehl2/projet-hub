@@ -2,7 +2,6 @@
  * @module config-graphql
  * Configuration et requête d'accès à DB utilisateurs et projets
  */
-
 // == URL SERVER BACK
 import CONFIG from './parameters.json';
 
@@ -137,6 +136,8 @@ export const queryByAuthor = {
           created_at
           expiration_date
           location
+          lat
+          long
           image
           archived
           isFollowed
@@ -165,6 +166,8 @@ export const queryByAuthor = {
           created_at
           expiration_date
           location
+          lat
+          long
           image
           archived
           isFollowed
@@ -205,6 +208,8 @@ export const queryProjectById = {
         created_at
         expiration_date
         location
+        lat
+        long
         image
         archived
         isFollowed
@@ -252,6 +257,9 @@ export const queryGetProjectsByGeo = {
         title
         image
         location
+        distance
+        lat 
+        long
         created_at
         expiration_date
         archived
@@ -293,27 +301,27 @@ export const queryCreateProject = {
 };
 export const queryEditProject = {
   query: `mutation EditProject($id: ID!, $title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String) {
-      editProject(
-          id: $id,
-          title: $title,
-          description: $description,
-          expiration_date: $expiration_date,
-          location: $location,
-          lat: $lat,
-          long: $long,
-          image: $image,
-          file: $file
-      ) {
-      ... on Project{
-        id
-      }
-      ... on Error{
-        error{
-          msg
-          code
-        }
+    editProject(
+      id: $id,
+      title: $title,
+      description: $description,
+      expiration_date: $expiration_date,
+      location: $location,
+      lat: $lat,
+      long: $long,
+      image: $image,
+      file: $file
+  ) {
+    ... on Project{
+      id
+    }
+    ... on Error{
+      error{
+        msg
+        code
       }
     }
+  }
 }
 `,
 };

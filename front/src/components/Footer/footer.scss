@@ -5,7 +5,13 @@
     flex-shrink: 0!important;
     flex-basis: content;
     padding: 0.25rem !important;
+<<<<<<< HEAD
     background-color: #6B8E23!important;
+=======
+    &--padded{
+      padding: 0 1rem !important;
+    }
+>>>>>>> 9c17f3f152256a3df7170c45222bcf47a20ba0bb
 }
 
 .icon-team {
