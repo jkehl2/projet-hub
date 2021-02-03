@@ -7,12 +7,11 @@
     padding: 0.25rem !important;
     background-color: vars.$color-alt !important;
     border-color: none !important;
+    background-color: vars.$color !important;
     &--padded{
       padding: 0 1rem !important;
     }
-   
-}
-
-.icon-team {
-
+    &--link-white{
+      color: white;
+    }
 }
