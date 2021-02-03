@@ -54,11 +54,7 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
         icon={null}
         position="right"
       >
-<<<<<<< HEAD
         <Dropdown.Menu className="Menu-Dropdown">
-=======
-        <Dropdown.Menu className="dropped-menu">
->>>>>>> b9cea2c0b827666c62cdd79c3db72f75960f1db9
           <Link className="item" role="option" to="/projets">Rechercher</Link>
           {logged && (
           <>
