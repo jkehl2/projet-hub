@@ -17,12 +17,10 @@ const DropDownTrigger = ({ logged, userName }) => (
     {logged && (
       <Grid padded="horizontally">
         <Grid.Row only="computer" stretched>
-
-          <Label className="user"><Icon name="circle" size="small" className="user-label" />{`${userName}`}</Label>
-
+          <Label className="menu--connect-label"><Icon className="menu--connect-label--icon" name="circle" size="small" />{`${userName}`}</Label>
         </Grid.Row>
         <Grid.Row only="mobile" stretched>
-          <Icon name="circle" color="green" size="small" />
+          <Icon className="menu--connect-label--icon" name="circle" color="green" size="small" />
         </Grid.Row>
       </Grid>
     )}
@@ -35,7 +33,7 @@ DropDownTrigger.propTypes = {
 };
 
 const Menu = ({ logged, userName, handleDisconnect }) => (
-  <MenuUi className="menu-top menu--shadow" attached="top" borderless compact inverted>
+  <MenuUi className="menu menu--shadow" attached="top" borderless compact inverted>
     <MenuUi.Menu position="left">
       <Link className="item" to="/">
         <Grid padded="horizontally">
