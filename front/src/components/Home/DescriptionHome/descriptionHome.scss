@@ -1,6 +1,5 @@
 @use 'src/styles/vars';
 
 .description-home {
-    background-color: rgb(154,205,50, 0.5)!important;
-    box-shadow: 5px 5px 5px 2px rgba(61,82,43,1)!important;
+    background-color: vars.$color-alt!important;
 }

@@ -26,7 +26,7 @@ const SearchProjects = ({
     <Grid >
       <Grid.Column width={16}>
         <Grid.Row>
-          <Segment className="search-project-form">
+          <Segment>
             <Form.Group >
               <Form.Input
                 type="text"
@@ -74,7 +74,7 @@ const SearchProjects = ({
         <Grid.Row>
           <Segment basic textAlign="center">
             <Button basic circular icon size="massive" type="submit">
-              <Icon name="search" color="orange" size="large" />
+              <Icon name="search" size="large" />
             </Button>
           </Segment>
         </Grid.Row>

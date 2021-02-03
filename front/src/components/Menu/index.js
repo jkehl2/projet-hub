@@ -33,6 +33,7 @@ DropDownTrigger.propTypes = {
 };
 
 const Menu = ({ logged, userName, handleDisconnect }) => (
+  <container className="container-menu"attached="top" >
   <MenuUi attached="top" borderless compact inverted>
     <MenuUi.Menu position="left">
       <Link className="item" to="/">
@@ -77,6 +78,7 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
       </Dropdown>
     </MenuUi.Menu>
   </MenuUi>
+  </container>
 );
 
 Menu.propTypes = {

@@ -1,7 +1,8 @@
 @use 'src/styles/vars';
 
 .menu {
-    background-color:#6B8E23!important;
+    background-color:vars.$color!important;
+   
     flex-grow: 0 !important;
     flex-shrink: 0!important;
     flex-basis: content;
@@ -10,6 +11,10 @@
     }
 }
 .Menu-Dropdown {
-  background-color: rgb(154,205,50, 0.5)!important;
+  background-color: vars.$color-menu-dropped!important;
+  box-shadow: vars.$box-shadow!important;
   z-index:0;
+}
+.container-menu {
+  box-shadow: vars.$box-shadow!important;
 }
