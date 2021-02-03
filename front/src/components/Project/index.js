@@ -9,9 +9,17 @@ import dot from 'src/assets/images/dot.svg';
 import ProjectMenu from 'src/containers/ProjectMenu';
 
 // == IMPORTS COMPOSANTS
-import { Container, Header, Label } from 'semantic-ui-react';
 import {
-  MapContainer, TileLayer, ImageOverlay, Popup,
+  Container,
+  Header,
+  Label,
+} from 'semantic-ui-react';
+
+import {
+  MapContainer,
+  TileLayer,
+  ImageOverlay,
+  Popup,
 } from 'react-leaflet';
 
 import ProjectView from './ProjectView';
@@ -46,6 +54,7 @@ const Project = ({
       />
       {/* Menu projet - modifier / supprimer / archiver */}
       <ProjectMenu />
+
       {project.lat !== 0 && (
       <MapContainer
         className="project--map"
@@ -71,9 +80,9 @@ const Project = ({
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-
       </MapContainer>
       )}
+
       {(isEditMode && logged)
         ? (
           <ProjectEdit

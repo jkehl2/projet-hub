@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import ProfilEdit from 'src/components/Profil/ProfilEdit';
 
-import { appUpdateProfil, appRefreshProfil, appEditProfilOff } from 'src/store/actions/app';
+import { appUpdateProfil, appRefreshProfil, appProfilClean } from 'src/store/actions/app';
 import { editUser } from 'src/store/actions/user';
 
 const mapStateToProps = (state) => ({
@@ -17,13 +17,16 @@ const mapDispatchToProps = (dispatch) => ({
   setProfilValue: (payload) => {
     dispatch(appUpdateProfil(payload));
   },
-  abortEditProfil: (event) => {
-    event.preventDefault();
-    dispatch(appEditProfilOff());
+  cleanProfil: () => {
+    dispatch(appProfilClean());
   },
   handleSubmit: (event) => {
     event.preventDefault();
     dispatch(editUser());
+  },
+  handleCancel: (event) => {
+    event.preventDefault();
+    dispatch(appProfilClean());
   },
 });
 
