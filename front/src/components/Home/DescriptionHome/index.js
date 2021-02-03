@@ -7,7 +7,7 @@ import { Segment } from 'semantic-ui-react';
 // == Composant
 const DescriptionHome = () => (
   <>
-    <Segment inverted padded="very">
+    <Segment className="description-home" inverted color='blue' padded="very" textAlign='center'>
       <p><strong>Local-Hub</strong> s'adresse aux particuliers, aux associations et aux entreprises.</p>
       <p>Il vise à favoriser le lien social, mutualiser les moyens et les savoir-faire, mais aussi entreprendre des actions collectives
         à l'échelle locale.

@@ -17,7 +17,7 @@ const DropDownTrigger = ({ logged, userName }) => (
     {logged && (
       <Grid padded="horizontally">
         <Grid.Row only="computer" stretched>
-          <Label color="black"><Icon name="circle" color="green" size="small" />{`${userName}`}</Label>
+          <Label><Icon name="circle" color="green" size="small" />{`${userName}`}</Label>
         </Grid.Row>
         <Grid.Row only="mobile" stretched>
           <Icon name="circle" color="green" size="small" />
@@ -42,14 +42,14 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
         </Grid>
       </Link>
     </MenuUi.Menu>
-    <MenuUi.Menu position="right" size="large">
-      <Dropdown
+    <MenuUi.Menu position="right" size="large" >
+      <Dropdown 
         item
         trigger={DropDownTrigger({ logged, userName })}
         icon={null}
         position="right"
       >
-        <Dropdown.Menu>
+        <Dropdown.Menu className="Menu-Dropdown">
           <Link className="item" role="option" to="/projets">Rechercher</Link>
           {logged && (
           <>

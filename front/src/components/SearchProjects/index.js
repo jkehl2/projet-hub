@@ -23,11 +23,11 @@ const SearchProjects = ({
     className="search-project"
     onSubmit={handleSubmit()}
   >
-    <Grid>
+    <Grid >
       <Grid.Column width={16}>
         <Grid.Row>
-          <Segment>
-            <Form.Group>
+          <Segment className="search-project-form">
+            <Form.Group >
               <Form.Input
                 type="text"
                 className="search-project--marged-top"
