@@ -29,7 +29,7 @@ const Home = ({ cleanAppParams }) => {
 
       {/** Search Bar */}
       <Divider horizontal>Rechercher</Divider>
-      <SearchProjects className="Search-bar" isHome />
+      <SearchProjects isHome />
 
       {/** Page header with Local Hub presentation */}
       <DescriptionHome />
