@@ -5,4 +5,18 @@
     margin-top: 0.5rem !important;
   }
 
+  &--container{
+    box-sizing: border-box !important;
+    width: fit-content !important;
+    height: fit-content !important;
+    padding: 1rem !important;
+    margin: 1rem auto !important;
+  }
+  &--no-margin-top{
+    margin-top: 0 !important;
+  }
+  &--centered-content{
+    width: fit-content !important;
+    margin: 1rem auto !important;
+  }
 }
