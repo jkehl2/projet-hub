@@ -13,8 +13,14 @@ import './footer.scss';
 const Footer = () => (
   <Segment className="footer" attached="bottom" compact textAlign="center">
     <Grid centered className="footer--icon">
-      <Grid.Row only="computer"><Link to="/equipe" title="L'équipe Local-Hub"><Icon name="code" size="large" inverted /></Link></Grid.Row>
-      <Grid.Row only="mobile"><Link to="/equipe" title="L'équipe Local-Hub"><Icon name="code" size="small" inverted /></Link></Grid.Row>
+      <Grid.Row only="computer">
+        <Link to="/equipe" title="L'équipe Local-Hub"><Icon name="code" size="large" inverted /></Link>
+        <Link to="/mentionsLegales" title="mentions légales"><span className="footer--padded">mentions légales</span></Link>
+      </Grid.Row>
+      <Grid.Row only="mobile">
+        <Link to="/equipe" title="L'équipe Local-Hub"><Icon name="code" size="small" inverted /></Link>
+        <Link to="/mentionsLegales" title="mentions légales"><span className="footer--padded">mentions légales</span></Link>
+      </Grid.Row>
     </Grid>
   </Segment>
 );

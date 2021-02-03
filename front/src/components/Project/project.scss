@@ -1,6 +1,12 @@
 @use 'src/styles/vars';
 
-.project {}
+.project {
+  &--map {
+    height: 200px !important;
+    width: 100% !important;
+    margin: 0 0 !important;
+  }
+}
 
 .content>.header {
   font-size: 2rem !important;
@@ -12,4 +18,7 @@
 
 .container{
   margin-top: 0.5rem !important;
+}
+.leaflet-popup-content{
+  margin: 0.25rem !important;
 }

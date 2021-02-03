@@ -31,7 +31,7 @@ const CreateProject = ({
     };
   }, []);
   return (
-    <Container className="createProject">
+    <Container className="create-project">
       <Segment textAlign="left">
         {/* Titre */}
         <Header
@@ -90,21 +90,23 @@ const CreateProject = ({
               setProjectField({ expiration_date: event.target.value });
             }}
           />
-          <Segment basic compact textAlign="right">
-            <Button
-              positive
-              type="submit"
-              title="Créer votre projet"
-              content="Créer"
-              onClick={handleSubmit}
-            />
-            <Button.Or text="ou" />
-            <Button
-              type="button"
-              title="Annuler"
-              content="Annuler"
-              onClick={handleCancel}
-            />
+          <Segment basic compact textAlign="right" className="create-project--compact create-project--align-right">
+            <Button.Group>
+              <Button
+                positive
+                type="submit"
+                title="Créer votre projet"
+                content="Créer"
+                onClick={handleSubmit}
+              />
+              <Button.Or text="ou" />
+              <Button
+                type="button"
+                title="Annuler"
+                content="Annuler"
+                onClick={handleCancel}
+              />
+            </Button.Group>
           </Segment>
         </Form>
       </Segment>

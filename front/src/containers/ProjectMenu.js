@@ -20,6 +20,10 @@ const mapStateToProps = (state) => ({
   isEditMode: state.app.project.isEditMode,
   isAuthor: state.project.project.isAuthor,
   isArchived: state.project.project.isArchived,
+  isError: state.app.error.isError,
+  error: state.app.error.error,
+  isMessage: state.app.message.isMessage,
+  message: state.app.message.message,
 });
 
 const mapDispatchToProps = (dispatch) => ({

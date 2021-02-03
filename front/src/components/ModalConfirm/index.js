@@ -10,13 +10,20 @@ import {
   Button,
   Form,
   Segment,
+  Message,
+  Header,
 } from 'semantic-ui-react';
 
 // == Composant Profil
-const ModalConfirmDelete = ({
+const ModalConfirm = ({
   title,
+  content,
   trigger,
   confirm,
+  isError,
+  error,
+  isMessage,
+  message,
   setConfirmation,
   handleAction,
 }) => {
@@ -34,6 +41,15 @@ const ModalConfirmDelete = ({
       >
         <Modal.Header>{`${title}`}</Modal.Header>
         <Modal.Content>
+          {/* Affiche message d'erreur si il y en a */}
+          {isError
+        && (<Message negative header="Une erreur s'est produite" content={`${error}`} icon="thumbs down outline" size="small" />)}
+
+          {/* Affiche message d'information si il y en a */}
+          {isMessage
+        && (<Message header="Information" content={`${message}`} icon="idea" size="small" />)}
+
+          <p>{`${content}`}</p>
           <Form onSubmit={handleAction}>
             <Form.Input
               type="text"
@@ -75,13 +91,20 @@ const ModalConfirmDelete = ({
   );
 };
 
-ModalConfirmDelete.propTypes = {
+ModalConfirm.propTypes = {
   title: PropTypes.string.isRequired,
+  content: PropTypes.string,
   trigger: PropTypes.object.isRequired,
   confirm: PropTypes.string.isRequired,
+  isError: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  isMessage: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
   setConfirmation: PropTypes.func.isRequired,
   handleAction: PropTypes.func.isRequired,
 };
-
+ModalConfirm.defaultProps = {
+  content: 'Attention cette action est définitive.',
+};
 // == Export
-export default ModalConfirmDelete;
+export default ModalConfirm;

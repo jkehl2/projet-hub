@@ -61,7 +61,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      axios(config)
+      connector(config, 'projectsByGeo', store.dispatch)
         .then((response) => {
           const projects = response.data.data.projectsByGeo.map((project) => ({
             id: project.id,
@@ -73,6 +73,9 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
+            distance: parseFloat(project.distance),
+            lat: parseFloat(project.lat),
+            long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
@@ -87,7 +90,7 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
             )),
           })).sort((proj1, proj2) => (
-            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+            proj1.distance > proj2.distance ? 1 : -1
           ));
           store.dispatch(updateProjectStore({ projects }));
           store.dispatch(push('/projets'));
@@ -99,7 +102,6 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appLoadingOff());
         });
       store.dispatch(appLoadingOn());
-      store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       return;
     }
@@ -112,7 +114,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      axios(config)
+      connector(config, 'project', store.dispatch)
         .then((response) => {
           const apiData = response.data.data.project;
           const project = {
@@ -126,6 +128,8 @@ const projectMiddleware = (store) => (next) => (action) => {
             )),
             description: apiData.description,
             location: apiData.location,
+            lat: parseFloat(apiData.lat),
+            long: parseFloat(apiData.long),
             expiration_date: parseDate(apiData.expiration_date),
             creation_date: parseDate(apiData.created_at),
             image: apiData.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : apiData.image,
@@ -246,8 +250,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       connector(config, 'archiveProject', store.dispatch)
         .then(() => {
-          store.dispatch(goBack());
           store.dispatch(cleanProject());
+          store.dispatch(goBack());
           store.dispatch(appMsgUpdate('Votre projet à été archivé.'));
         })
         .catch((error) => {
@@ -281,6 +285,8 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
+            lat: parseFloat(project.lat),
+            long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
@@ -306,7 +312,6 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appLoadingOff());
         });
       store.dispatch(appLoadingOn());
-      store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       return;
     }
@@ -330,6 +335,8 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
+            lat: parseFloat(project.lat),
+            long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
@@ -355,7 +362,6 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appLoadingOff());
         });
       store.dispatch(appLoadingOn());
-      store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       return;
     }

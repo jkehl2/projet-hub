@@ -1,22 +1,78 @@
 // == Import npm
 import React, { useEffect } from 'react';
 import PropTypes, { shape } from 'prop-types';
-// == IMPORTS CONTAINERS
+
+// IMPORT IMAGE DOT MAP
+import dot from 'src/assets/images/dot.svg';
 
 // == IMPORTS COMPOSANTS
 import ProjectCard from 'src/components/Projects/ProjectCard';
-import { Segment } from 'semantic-ui-react';
-
+import {
+  Grid, Header, Image, Segment,
+} from 'semantic-ui-react';
+import {
+  MapContainer, TileLayer, ImageOverlay, Popup,
+} from 'react-leaflet';
 // == STYLES
 import './list.scss';
 
 // == Composant
-const List = ({ logged, projects, updateList, addToFavorite, removeFromFavorite }) => {
+const List = ({
+  logged, projects, updateList, addToFavorite, removeFromFavorite,
+}) => {
   useEffect(() => {
     updateList();
   }, []);
   return (
-    <Segment className="list--no-marged" basic compact>
+    <Segment className="list--no-marged list--fullwidth" basic compact>
+      { projects.length > 0 && (
+      <MapContainer
+        className="list--map"
+        center={[projects[0].lat, projects[0].long]}
+        zoom={10}
+        dragging
+        doubleClickZoom={false}
+        scrollWheelZoom={false}
+        attributionControl={false}
+        zoomControl
+      >
+        {projects.map((project) => (
+          <ImageOverlay
+            key={project.id}
+            bounds={[
+              [project.lat, project.long],
+              [project.lat + 0.03, project.long + 0.03],
+            ]}
+            url={dot}
+            interactive
+            opacity={0.9}
+            zIndex={1}
+          >
+            <Popup>
+              <Grid>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Image size="mini" src={`${project.image}`} circular />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Header size="small" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} />
+                    <p>
+                      <Image size="mini" src={`${project.author.avatar}`} avatar />
+                      <span>{`${project.author.name}`}</span>
+                    </p>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </Popup>
+          </ImageOverlay>
+        ))}
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+
+      </MapContainer>
+      )}
       {projects.map((project) => (
         <ProjectCard
           key={project.id}
@@ -45,6 +101,8 @@ List.propTypes = {
       }),
     ).isRequired,
     location: PropTypes.string.isRequired,
+    lat: PropTypes.number.isRequired,
+    long: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     expiration_date: PropTypes.string.isRequired,
     creation_date: PropTypes.string.isRequired,

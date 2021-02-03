@@ -35,7 +35,6 @@ export const updateProjectStore = (payload) => ({
   type: PROJECT_STORE_UPDATE,
   payload,
 });
-
 export const cleanProjectStore = () => ({
   type: PROJECT_STORE_CLEAN,
 });
