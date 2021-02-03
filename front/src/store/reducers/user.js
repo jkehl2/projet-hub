@@ -28,6 +28,7 @@ const reducer = (oldState = initialState, action = {}) => {
       };
     case USER_STORE_CLEAN: {
       localStorage.setItem('token', '');
+      localStorage.setItem('refreshToken', '');
       return {
         ...initialState,
       };

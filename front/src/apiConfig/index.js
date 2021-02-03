@@ -19,7 +19,7 @@ export default {
 // == CONFIGURATION CONNECTEUR AXIOS SIGNIN - END POINT + ENTÊTE
 export const signInConfig = {
   method: 'post',
-  url: `${CONFIG.URL_BACK}/login`,
+  url: `${CONFIG.URL_BACK}/login-refresh`,
   headers: {
     'Content-Type': 'application/json',
   },

@@ -7,7 +7,9 @@ import dot from 'src/assets/images/dot.svg';
 
 // == IMPORTS COMPOSANTS
 import ProjectCard from 'src/components/Projects/ProjectCard';
-import { Label, Segment } from 'semantic-ui-react';
+import {
+  Grid, Header, Image, Segment,
+} from 'semantic-ui-react';
 import {
   MapContainer, TileLayer, ImageOverlay, Popup,
 } from 'react-leaflet';
@@ -47,7 +49,20 @@ const List = ({
             zIndex={1}
           >
             <Popup>
-              <Label basic icon={project.isArchived ? 'archive' : null} content={`${project.title}`} detail={`${project.author.name}`} />
+              <Grid>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Image size="mini" src={`${project.image}`} circular />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Header size="small" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} />
+                    <p>
+                      <Image size="mini" src={`${project.author.avatar}`} avatar />
+                      <span>{`${project.author.name}`}</span>
+                    </p>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
             </Popup>
           </ImageOverlay>
         ))}
