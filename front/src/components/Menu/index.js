@@ -17,7 +17,9 @@ const DropDownTrigger = ({ logged, userName }) => (
     {logged && (
       <Grid padded="horizontally">
         <Grid.Row only="computer" stretched>
-          <Label basic className="menu--connect-label"><Icon name="circle" color="green" size="small" />{`${userName}`}</Label>
+
+          <Label className="user"><Icon name="circle" size="small" className="user-label" />{`${userName}`}</Label>
+
         </Grid.Row>
         <Grid.Row only="mobile" stretched>
           <Icon name="circle" color="green" size="small" />

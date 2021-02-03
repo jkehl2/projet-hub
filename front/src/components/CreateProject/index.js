@@ -108,7 +108,7 @@ const CreateProject = ({
           <Segment basic textAlign="right">
             <Button.Group>
               <Button
-                positive
+                className="create-button"
                 type="submit"
                 title="Créer votre projet"
                 content="Créer"

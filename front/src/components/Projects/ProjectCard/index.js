@@ -17,7 +17,7 @@ const HeaderStar = ({
 }) => (
   <>
     <Header as="h3" size={`${size}`}>
-      <Header.Content><Link to={`/projet/${project.id}`}>{`${project.title} `}</Link></Header.Content>
+      <Header.Content><Link className="header-project-title" to={`/projet/${project.id}`}>{`${project.title} `}</Link></Header.Content>
     </Header>
     { (!project.isAuthor && logged && !project.isArchived)
       && (project.isFavorite
@@ -79,13 +79,13 @@ const ProjectCard = ({
       <Grid divided stackable verticalAlign="middle">
         <Grid.Row>
           <Grid.Column computer={4} only="computer">
-            <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded /></Link>
+            <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded className="project-card--picture" /></Link>
           </Grid.Column>
           <Grid.Column computer={12} mobile={16}>
             <Grid centered>
               <Grid.Row>
                 <Grid.Column only="mobile" width={4} className="project-card--padding-mobile">
-                  <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded /></Link>
+                  <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded className="project-card--picture" /></Link>
                 </Grid.Column>
                 <Grid.Column only="mobile" width={12} className="project-card--padding-mobile">
                   <HeaderStar

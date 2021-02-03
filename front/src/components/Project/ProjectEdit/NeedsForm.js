@@ -65,7 +65,7 @@ const NeedsForm = ({
         />
         <Segment className="need-form--alignRight" basic compact textAlign="right">
           <Button
-            positive
+            className="add-button"
             type="submit"
             title="Ajouter un besoin"
             content="Ajouter"

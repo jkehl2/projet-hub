@@ -10,6 +10,15 @@
  
 }
 
+.steps-group{
+  &-computer{
+    box-shadow: .5rem .5rem .3rem vars.$color-alt !important;
+  }
+  &-mobile{
+    box-shadow: .5rem .5rem .3rem vars.$color-alt !important;
+  }
+}
+
 .icon-colors {
   color : vars.$color !important;
 }
