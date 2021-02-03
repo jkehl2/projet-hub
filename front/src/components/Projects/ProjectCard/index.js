@@ -75,7 +75,7 @@ const ProjectCard = ({
   const checkCount = checkArr.reduce((a, b) => a + b, 0);
   return (
     <Segment compact className="project-card--fullwidth">
-      { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
+      { project.isArchived && <Label color="grey" corner="right" icon="archive" title="archivé" size="big" /> }
       <Grid divided stackable verticalAlign="middle">
         <Grid.Row>
           <Grid.Column computer={4} only="computer">

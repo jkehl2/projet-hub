@@ -78,7 +78,7 @@ const ProjectMenu = ({
               trigger={(
                 <Button
                   icon="archive"
-                  color="brown"
+                  color="grey"
                   title="Archiver"
                   compact
                 />

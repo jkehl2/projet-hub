@@ -8,11 +8,14 @@ import {
   Grid, Segment, Container, Header, Image, Label, Icon,
 } from 'semantic-ui-react';
 
+// == STYLES
+import './whoarewe.scss';
+
 // == Composant
 const WhoAreWe = () => (
   <Container>
     <Header as="h1" content="La fine équipe Local-Hub" textAlign="center" dividing subheader="Une équipe de choc !" />
-    <Segment padded="very">
+    <Segment className="team" padded="very">
       <Grid verticalAlign="middle" textAlign="center" stackable columns="equal">
         <Grid.Row>
           <Grid.Column>

@@ -2,12 +2,17 @@
 
 .footer {
     flex-grow: 0 !important;
-    flex-shrink: 0!important;
-    flex-basis: content;
+    flex-shrink: 0 !important;
+    flex-basis: content !important;
     padding: 0.25rem !important;
     background-color: vars.$color-alt !important;
     border-color: none !important;
     &--padded{
       padding: 0 1rem !important;
     }
+   
+}
+
+.icon-team {
+
 }

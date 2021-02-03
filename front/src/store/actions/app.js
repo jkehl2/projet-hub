@@ -49,6 +49,10 @@ export const appRefreshProfil = () => ({
   type: APP_REFRESH_PROFIL,
 });
 
+/**
+ * Action middleware - confirmation du mot de passe
+ * @param {Object} dispatch
+ */
 export const appConfirmPassword = (dispatch) => ({
   type: APP_CONFIRM_PASSWORD,
   dispatch,

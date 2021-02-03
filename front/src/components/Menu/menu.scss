@@ -1,8 +1,10 @@
 @use 'src/styles/vars';
 
 .menu {
+    
+   
     flex-grow: 0 !important;
-    flex-shrink: 0!important;
+    flex-shrink: 0 !important;
     flex-basis: content;
     &__header{
       padding-left: 0 !important;
@@ -27,3 +29,12 @@
   color: #32CD32 !important;
 }
 }
+/* .Menu-Dropdown {
+  background-color: vars.$color-menu-dropped !important;
+  box-shadow: vars.$box-shadow !important;
+  z-index:0;
+}
+.container-menu {
+  box-shadow: vars.$box-shadow !important;
+}
+ */
