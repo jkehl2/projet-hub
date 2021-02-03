@@ -33,8 +33,12 @@ DropDownTrigger.propTypes = {
 };
 
 const Menu = ({ logged, userName, handleDisconnect }) => (
+<<<<<<< HEAD
   <container className="container-menu"attached="top" >
   <MenuUi attached="top" borderless compact inverted>
+=======
+  <MenuUi attached="top" borderless compact inverted className="menu-top">
+>>>>>>> b9cea2c0b827666c62cdd79c3db72f75960f1db9
     <MenuUi.Menu position="left">
       <Link className="item" to="/">
         <Grid padded="horizontally">
@@ -50,7 +54,11 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
         icon={null}
         position="right"
       >
+<<<<<<< HEAD
         <Dropdown.Menu className="Menu-Dropdown">
+=======
+        <Dropdown.Menu className="dropped-menu">
+>>>>>>> b9cea2c0b827666c62cdd79c3db72f75960f1db9
           <Link className="item" role="option" to="/projets">Rechercher</Link>
           {logged && (
           <>

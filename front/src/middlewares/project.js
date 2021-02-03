@@ -61,7 +61,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      axios(config)
+      connector(config, 'projectsByGeo', store.dispatch)
         .then((response) => {
           const projects = response.data.data.projectsByGeo.map((project) => ({
             id: project.id,
@@ -114,7 +114,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      axios(config)
+      connector(config, 'project', store.dispatch)
         .then((response) => {
           const apiData = response.data.data.project;
           const project = {

@@ -10,6 +10,7 @@
       padding-left: 0 !important;
     }
 }
+<<<<<<< HEAD
 .Menu-Dropdown {
   background-color: vars.$color-menu-dropped!important;
   box-shadow: vars.$box-shadow!important;
@@ -18,3 +19,16 @@
 .container-menu {
   box-shadow: vars.$box-shadow!important;
 }
+=======
+
+.menu-top {
+  background-color: vars.$color-alt !important;
+  box-shadow: .3em .3em vars.$color !important;
+}
+
+.dropped-menu {
+  background-color: vars.$color-light !important;
+}
+
+
+>>>>>>> b9cea2c0b827666c62cdd79c3db72f75960f1db9

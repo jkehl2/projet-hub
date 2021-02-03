@@ -1,12 +1,14 @@
 @use 'reset';
 @use 'vars';
 
+
 body {
   font-family: sans-serif;
   height: 100vh;
   overflow: hidden;
   margin:0;
   padding: 0;
+ background-color: vars.$color-light !important; 
 }
 
 #root{

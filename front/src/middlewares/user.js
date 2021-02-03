@@ -5,10 +5,12 @@
 
 /* eslint-disable no-case-declarations */
 import axios from 'axios';
+
 import { push, goBack } from 'connected-react-router';
 
 // == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTEUR AXIOS
 import configGraphQl, {
+  apiUrl,
   queryUserCreate,
   queryUserEdit,
   queryUserEditPassword,
@@ -25,6 +27,7 @@ import {
   USER_EDIT_PASSWORD,
   USER_DELETE,
   USER_SIGNIN,
+  USER_SIGNOUT,
   updateUserStore,
   cleanUserStore,
 } from 'src/store/actions/user';
@@ -46,7 +49,8 @@ import {
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
-    case USER_SIGNIN: {
+    case USER_SIGNIN:
+    {
       const { app: { signIn: { email, password } } } = store.getState();
       const data = JSON.stringify({ email, password });
       const config = {
@@ -65,6 +69,7 @@ const userMiddleware = (store) => (next) => (action) => {
           }
           else {
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
             const userdata = {
               ...response.data.user,
               logged: true,
@@ -90,11 +95,40 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-    case USER_CREATE: {
+    case USER_SIGNOUT: {
+      const config = {
+        method: 'post',
+        url: `${apiUrl}/logout`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: false,
+        data: JSON.stringify({ refreshToken: localStorage.getItem('refreshToken') }),
+      };
+      axios(config)
+        .then(() => {
+          store.dispatch(cleanUserStore());
+          store.dispatch(push('/'));
+          store.dispatch(appMsgUpdate('Vous êtes déconnecté. A bientôt.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
+      return;
+    }
+    case USER_CREATE:
+    {
       const {
         app: {
           signUp: {
-            email, password, name,
+            email,
+            password,
+            name,
           },
         },
       } = store.getState();
@@ -107,11 +141,7 @@ const userMiddleware = (store) => (next) => (action) => {
         data,
       };
       axios(config)
-        .then((response) => {
-          // TODO tester la réponse pour vérifier si il n'y a pas d'erreur
-          // avant de renvoyer vers la page de login.
-
-          // On redirige vers la page de login
+        .then(() => {
           store.dispatch(push('/utilisateur/connexion'));
           store.dispatch(appMsgUpdate('Votre compte a été créé. Merci de vous connecter.'));
         })
@@ -127,7 +157,8 @@ const userMiddleware = (store) => (next) => (action) => {
         });
       return;
     }
-    case USER_EDIT_PASSWORD: {
+    case USER_EDIT_PASSWORD:
+    {
       const { app: { profil: { password } } } = store.getState();
       const data = JSON.stringify({
         ...queryUserEditPassword,
@@ -154,7 +185,8 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-    case USER_EDIT: {
+    case USER_EDIT:
+    {
       const { app: { profil: { name, email } } } = store.getState();
       const data = JSON.stringify({
         ...queryUserEdit,
@@ -188,7 +220,8 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-    case USER_DELETE: {
+    case USER_DELETE:
+    {
       const data = JSON.stringify({
         ...queryUserDelete,
       });

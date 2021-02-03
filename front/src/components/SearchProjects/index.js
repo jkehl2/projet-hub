@@ -74,7 +74,7 @@ const SearchProjects = ({
         <Grid.Row>
           <Segment basic textAlign="center">
             <Button basic circular icon size="massive" type="submit">
-              <Icon name="search" size="large" />
+              <Icon name="search" className="search-icon-color" size="large" />
             </Button>
           </Segment>
         </Grid.Row>

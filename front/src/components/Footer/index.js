@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import './footer.scss';
 
 const Footer = () => (
-  <Segment className="footer" attached="bottom" compact inverted textAlign="center">
+  <Segment className="footer" attached="bottom" compact textAlign="center">
     <Grid centered className="footer--icon">
       <Grid.Row only="computer">
         <Link to="/equipe" title="L'équipe Local-Hub"><Icon name="code" size="large" inverted /></Link>
