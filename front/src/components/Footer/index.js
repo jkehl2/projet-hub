@@ -15,11 +15,11 @@ const Footer = () => (
     <Grid centered className="footer--icon">
       <Grid.Row only="computer">
         <Link to="/equipe" title="L'équipe Local-Hub"><Icon name="code" size="large" inverted /></Link>
-        <Link to="/mentionsLegales" title="mentions légales"><span className="footer--padded">mentions légales</span></Link>
+        <Link className="footer--link-white" to="/mentionsLegales" title="mentions légales"><span className="footer--padded">mentions légales</span></Link>
       </Grid.Row>
       <Grid.Row only="mobile">
         <Link to="/equipe" title="L'équipe Local-Hub"><Icon name="code" size="small" inverted /></Link>
-        <Link to="/mentionsLegales" title="mentions légales"><span className="footer--padded">mentions légales</span></Link>
+        <Link className="footer--link-white" to="/mentionsLegales" title="mentions légales"><span className="footer--padded">mentions légales</span></Link>
       </Grid.Row>
     </Grid>
   </Segment>
