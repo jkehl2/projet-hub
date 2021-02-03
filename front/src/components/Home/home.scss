@@ -1,6 +1,10 @@
 @use 'src/styles/vars';
 
 .home {
+
+&-search {
+  color: vars.$color-alt !important;
+}
   width: 70%;
   margin: auto;
   &--map {
@@ -11,4 +15,8 @@
 
 .slider {
   padding: 0.3rem;
+}
+
+.header-title {
+  color:vars.$color-alt !important;
 }

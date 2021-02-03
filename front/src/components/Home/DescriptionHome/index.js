@@ -4,10 +4,13 @@ import React from 'react';
 // == IMPORTS COMPOSANTS
 import { Segment } from 'semantic-ui-react';
 
+// STYLE
+import './descriptionHome.scss';
+
 // == Composant
 const DescriptionHome = () => (
   <>
-    <Segment inverted padded="very">
+    <Segment inverted padded="very" className="description-home">
       <p><strong>Local-Hub</strong> s'adresse aux particuliers, aux associations et aux entreprises.</p>
       <p>Il vise à favoriser le lien social, mutualiser les moyens et les savoir-faire, mais aussi entreprendre des actions collectives
         à l'échelle locale.

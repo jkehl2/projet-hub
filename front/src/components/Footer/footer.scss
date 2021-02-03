@@ -5,6 +5,8 @@
     flex-shrink: 0!important;
     flex-basis: content;
     padding: 0.25rem !important;
+    background-color: vars.$color-alt !important;
+    border-color: none !important;
     &--padded{
       padding: 0 1rem !important;
     }

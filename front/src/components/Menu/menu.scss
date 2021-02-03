@@ -8,3 +8,14 @@
       padding-left: 0 !important;
     }
 }
+
+.menu-top {
+  background-color: vars.$color-alt !important;
+  box-shadow: .3em .3em vars.$color !important;
+}
+
+.dropped-menu {
+  background-color: vars.$color-light !important;
+}
+
+
