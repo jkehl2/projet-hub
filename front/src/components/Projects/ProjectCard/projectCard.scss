@@ -14,4 +14,13 @@
     margin-right: 0 !important;
     width: 100% !important;
   }
+  &--picture:hover{
+    box-shadow: 0px 0px 2px 2px vars.$color-alt !important;
+  }
+}
+
+.header-project-title {
+  &:hover {
+    color: vars.$color-alt !important;
+  }
 }

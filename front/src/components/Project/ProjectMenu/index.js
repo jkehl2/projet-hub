@@ -42,7 +42,7 @@ const ProjectMenu = ({
           <Button
             type="button"
             icon="arrow alternate circle left"
-            color="blue"
+            className="go-back-button"
             title="Revenir à la consultation"
             content="Retour"
             labelPosition="left"
@@ -60,7 +60,7 @@ const ProjectMenu = ({
             <Button
               type="button"
               icon="edit"
-              color="blue"
+              className="edit-button"
               title="Editer"
               compact
               onClick={(event) => {
@@ -128,7 +128,7 @@ const ProjectMenu = ({
               <Button
                 type="button"
                 icon="arrow alternate circle left"
-                color="blue"
+                className="go-back-button"
                 title="Revenir à la page précédente"
                 content="Retour"
                 labelPosition="left"

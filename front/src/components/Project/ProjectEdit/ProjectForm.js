@@ -84,7 +84,7 @@ const ProjectForm = ({
         />
         <Segment className="projectForm--align-right" basic compact textAlign="right">
           <Button
-            positive
+            className="modify-button"
             type="submit"
             title="Modifier votre projet"
             content="Modifier"

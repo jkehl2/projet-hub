@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 const HeaderHome = () => (
   <Grid textAlign="center" padded="horizontally" className="header-home">
     <Grid.Row only="computer" className="header-home--row-computer-padded">
-      <Step.Group widths={3} size="large">
+      <Step.Group widths={3} size="large" className="steps-group-computer">
         <Link to="/utilisateur/create" className="step" title="Poster">
           <Icon name="write" className="icon-colors" />
           <Step.Content title="Poster" />
@@ -33,7 +33,7 @@ const HeaderHome = () => (
       </Step.Group>
     </Grid.Row>
     <Grid.Row only="mobile" className="header-home--row-mobile-padded">
-      <Step.Group widths={3} size="tiny" unstackable>
+      <Step.Group widths={3} size="tiny" unstackable className="steps-group-mobile">
         <Link to="/utilisateur/create" className="step" title="Poster">
           <Icon name="write" className="icon-colors" />
         </Link>

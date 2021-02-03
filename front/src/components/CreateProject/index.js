@@ -37,6 +37,7 @@ const CreateProject = ({
         <Header
           as="h1"
           content="Poposer un nouveau projet"
+          className="header-project"
           textAlign="center"
           dividing
           subheader="Ici vous pouvez tout imaginer puis proposer"
@@ -93,7 +94,7 @@ const CreateProject = ({
           <Segment basic compact textAlign="right" className="create-project--compact create-project--align-right">
             <Button.Group>
               <Button
-                positive
+                className="create-button"
                 type="submit"
                 title="Créer votre projet"
                 content="Créer"

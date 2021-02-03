@@ -68,6 +68,7 @@ const ProfilView = ({
       <Button
         basic
         color="blue"
+        className="modify-button"
         onClick={() => {
           switchToEditProFile();
         }}

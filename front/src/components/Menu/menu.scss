@@ -11,11 +11,19 @@
 
 .menu-top {
   background-color: vars.$color-alt !important;
-  box-shadow: .3em .3em vars.$color !important;
 }
 
 .dropped-menu {
-  background-color: vars.$color-light !important;
+  background-color: vars.$color-alt !important;
+  overflow-y: visible !important;
 }
 
 
+.user{
+  background-color: vars.$color-alt !important;
+  color: #fff !important;
+  font-size: large !important;
+  &-label {
+  color: #32CD32 !important;
+}
+}
