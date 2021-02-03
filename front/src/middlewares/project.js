@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 // == IMPORT NPM
-import axios from 'axios';
 import { goBack, push } from 'connected-react-router';
 
 // graphql queries

@@ -1,29 +1,35 @@
-// == Import npm
+// == IMPORTS PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
-  Button, Form, Segment,
+  Button,
+  Form,
+  Segment,
 } from 'semantic-ui-react';
-// == IMPORTS CONTAINERS
 
-// == Composant Profil mode consultation
+// == PRIMARY COMPONENT
 const ProfilEdit = ({
   name,
   email,
   refreshAppProfil,
   setProfilValue,
-  abortEditProfil,
+  cleanProfil,
+  handleCancel,
   handleSubmit,
 }) => {
   useEffect(() => {
     refreshAppProfil();
+    return () => {
+      cleanProfil();
+    };
   }, []);
   return (
     <Segment textAlign="left">
       <Form onSubmit={handleSubmit}>
-        {/** modifier le name */}
+
+        {/** Input user name */}
         <Form.Input
           type="text"
           label="Nom d'utilisateur"
@@ -35,7 +41,8 @@ const ProfilEdit = ({
             setProfilValue({ name: event.target.value });
           }}
         />
-        {/** modifier l'email */}
+
+        {/** Input user email */}
         <Form.Input
           type="email"
           label="Email utilisateur"
@@ -48,18 +55,26 @@ const ProfilEdit = ({
             setProfilValue({ email: event.target.value });
           }}
         />
-        {/** bouton valider / annuler l'édition du profil */}
+
         <Segment basic textAlign="right">
           <Button.Group>
-            <Button positive type="submit">Valider</Button>
+            <Button
+              positive
+              type="submit"
+              title="Valider"
+              content="Valider"
+            />
             <Button.Or text="ou" />
+
             <Button
               type="button"
-              onClick={abortEditProfil}
-            >Annuler
-            </Button>
+              title="Annuler"
+              content="Annuler"
+              onClick={handleCancel}
+            />
           </Button.Group>
         </Segment>
+
       </Form>
     </Segment>
   );
@@ -70,7 +85,8 @@ ProfilEdit.propTypes = {
   email: PropTypes.string.isRequired,
   refreshAppProfil: PropTypes.func.isRequired,
   setProfilValue: PropTypes.func.isRequired,
-  abortEditProfil: PropTypes.func.isRequired,
+  cleanProfil: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

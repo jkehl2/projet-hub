@@ -17,7 +17,11 @@ const DropDownTrigger = ({ logged, userName }) => (
     {logged && (
       <Grid padded="horizontally">
         <Grid.Row only="computer" stretched>
+<<<<<<< HEAD
           <Label Color="black"><Icon name="circle" color="green" size="small" />{`${userName}`}</Label>
+=======
+          <Label><Icon name="circle" color="green" size="small" />{`${userName}`}</Label>
+>>>>>>> ca4581a02af9d32a79c97ed2d1e5a4ce0353eb95
         </Grid.Row>
         <Grid.Row only="mobile" stretched>
           <Icon name="circle" color="green" size="small" />
@@ -33,7 +37,12 @@ DropDownTrigger.propTypes = {
 };
 
 const Menu = ({ logged, userName, handleDisconnect }) => (
+<<<<<<< HEAD
+  <container className="container-menu"attached="top" >
+  <MenuUi attached="top" borderless compact inverted>
+=======
   <MenuUi attached="top" borderless compact inverted className="menu-top">
+>>>>>>> b9cea2c0b827666c62cdd79c3db72f75960f1db9
     <MenuUi.Menu position="left">
       <Link className="item" to="/">
         <Grid padded="horizontally">
@@ -42,14 +51,14 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
         </Grid>
       </Link>
     </MenuUi.Menu>
-    <MenuUi.Menu position="right" size="large">
-      <Dropdown
+    <MenuUi.Menu position="right" size="large" >
+      <Dropdown 
         item
         trigger={DropDownTrigger({ logged, userName })}
         icon={null}
         position="right"
       >
-        <Dropdown.Menu className="dropped-menu">
+        <Dropdown.Menu className="Menu-Dropdown">
           <Link className="item" role="option" to="/projets">Rechercher</Link>
           {logged && (
           <>
@@ -77,6 +86,7 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
       </Dropdown>
     </MenuUi.Menu>
   </MenuUi>
+  </container>
 );
 
 Menu.propTypes = {

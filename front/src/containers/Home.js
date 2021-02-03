@@ -4,8 +4,6 @@ import Home from 'src/components/Home';
 
 import { appErrorClean, appMsgClean } from 'src/store/actions/app';
 
-const mapStateToProps = (state) => ({});
-
 const mapDispatchToProps = (dispatch) => ({
   cleanAppParams: () => {
     dispatch(appErrorClean());
@@ -13,4 +11,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Home);

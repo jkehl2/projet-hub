@@ -1,6 +1,8 @@
 @use 'src/styles/vars';
 
 .menu {
+    background-color:vars.$color!important;
+   
     flex-grow: 0 !important;
     flex-shrink: 0!important;
     flex-basis: content;
@@ -8,12 +10,11 @@
       padding-left: 0 !important;
     }
 }
-
-.menu-top {
-  background-color: vars.$color-alt !important;
-  box-shadow: .3em .3em vars.$color !important;
+.Menu-Dropdown {
+  background-color: vars.$color-menu-dropped!important;
+  box-shadow: vars.$box-shadow!important;
+  z-index:0;
 }
-
-.dropped-menu {
-  background-color: vars.$color-light !important;
+.container-menu {
+  box-shadow: vars.$box-shadow!important;
 }
