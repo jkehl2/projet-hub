@@ -1,19 +1,18 @@
 // == Import npm
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // == IMPORTS COMPOSANTS
 import {
-  Card, Icon, Segment, Grid, Step,
+  Icon,
+  Grid,
+  Step,
 } from 'semantic-ui-react';
 
-// == IMPORTS CONTAINERS
-
-// == STYLES
+// == IMPORTS STYLES
 import './headerHome.scss';
 import { Link } from 'react-router-dom';
 
-// == Composant
+// == PRIMARY COMPONENT
 const HeaderHome = () => (
   <Grid textAlign="center" padded="horizontally" className="header-home">
     <Grid.Row only="computer" className="header-home--row-computer-padded">
