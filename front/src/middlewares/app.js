@@ -208,7 +208,7 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(action.dispatch());
       }
       else {
-        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider la suppression."));
+        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider votre action."));
       }
       store.dispatch(appUpdateProfil({ confirm: '' }));
       return; }
@@ -218,7 +218,7 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(action.dispatch());
       }
       else {
-        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider la suppression."));
+        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider votre action."));
       }
       store.dispatch(appUpdateProject({ confirm: '' }));
       return; }
@@ -228,7 +228,7 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(action.dispatch());
       }
       else {
-        store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas égale au nouveau mot de passe. Veuillez ressaisir votre confirmation de mot de passe.'));
+        store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas correct. Veuillez recommencer.'));
       }
       return; }
 
