@@ -17,6 +17,9 @@
   &--picture:hover{
     box-shadow: 0px 0px 2px 2px vars.$color-alt !important;
   }
+  &--fullwidth{
+    font-size: 20px !important;
+  }
 }
 
 .header-project-title {

@@ -9,12 +9,15 @@
     margin: 0 !important;
     padding: 0 !important;
   }
+  &--HeaderStar{
+    font-size: 20px !important;
+  }
 }
 
-.content>.header {
+.content.header {
   font-size: 2rem !important;
 
-  >.icon {
+  .icon {
     margin-left: 1rem !important;
   }
 }
