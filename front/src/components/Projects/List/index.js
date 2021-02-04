@@ -15,6 +15,7 @@ import {
 } from 'react-leaflet';
 // == STYLES
 import './list.scss';
+import { Link } from 'react-router-dom';
 
 // == Composant
 const List = ({
@@ -52,14 +53,15 @@ const List = ({
               <Grid className="list--map--card" verticalAlign="middle" textAlign="left">
                 <Grid.Row divided>
                   <Grid.Column className="list--map--card--cell" width={4}>
-                    <Image src={`${project.image}`} size="medium" rounded centered />
+                    <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} size="medium" rounded centered /></Link>
                   </Grid.Column>
                   <Grid.Column className="list--map--card--cell" width={12}>
-                    <Header size="medium" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} />
-                    <Segment basic>
-                      <Image size="mini" src={`${project.author.avatar}`} avatar />
-                      <strong>{`${project.author.name}`}</strong>
-                    </Segment>
+                    <Link to={`/projet/${project.id}`}><Header size="medium" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} />
+                      <Segment basic>
+                        <Image size="mini" src={`${project.author.avatar}`} avatar />
+                        <strong>{`${project.author.name}`}</strong>
+                      </Segment>
+                    </Link>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

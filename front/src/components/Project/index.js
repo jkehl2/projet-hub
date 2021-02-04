@@ -11,8 +11,10 @@ import ProjectMenu from 'src/containers/ProjectMenu';
 // == IMPORTS COMPOSANTS
 import {
   Container,
+  Grid,
   Header,
-  Label,
+  Image,
+  Segment,
 } from 'semantic-ui-react';
 
 import {
@@ -73,8 +75,21 @@ const Project = ({
           opacity={0.9}
           zIndex={1}
         >
-          <Popup>
-            <Label basic content={`${project.title}`} detail={`${project.author.name}`} />
+          <Popup className="project--map--popup">
+            <Grid className="project--map--card" verticalAlign="middle" textAlign="left">
+              <Grid.Row divided>
+                <Grid.Column className="project--map--card--cell" width={4}>
+                  <Image src={`${project.image}`} size="medium" rounded centered />
+                </Grid.Column>
+                <Grid.Column className="project--map--card--cell" width={12}>
+                  <Header size="medium" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} />
+                  <Segment basic>
+                    <Image size="mini" src={`${project.author.avatar}`} avatar />
+                    <strong>{`${project.author.name}`}</strong>
+                  </Segment>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </Popup>
         </ImageOverlay>
         <TileLayer
@@ -116,6 +131,7 @@ Project.propTypes = {
       email: PropTypes.string.isRequired,
       avatar: PropTypes.string.isRequired,
     }).isRequired,
+    image: PropTypes.string.isRequired,
     lat: PropTypes.number.isRequired,
     long: PropTypes.number.isRequired,
   }).isRequired,
