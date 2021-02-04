@@ -2,4 +2,7 @@
 
 .legal-mentions {
     background-color:vars.$color-light !important;
+    &--header{
+      color: vars.$color !important;
+    }
 }

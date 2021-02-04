@@ -1,6 +1,8 @@
 @use 'src/styles/vars';
 
-.SignIn {
-/* style ici **/
+.Signin {
+&--title{
+  color: vars.$color !important;
+}
 
 }

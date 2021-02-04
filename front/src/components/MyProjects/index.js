@@ -15,7 +15,7 @@ import './myProjects.scss';
 // == Composant
 const MyProjects = () => (
   <Container className="my-projects">
-    <Header as="h1" content="Mes projets" textAlign="center" dividing subheader="Tous mes projet en un seul endroit" />
+    <Header className="my-projects--title" as="h1" content="Mes projets" textAlign="center" dividing subheader="Tous mes projets en un seul endroit" />
     <List />
   </Container>
 );

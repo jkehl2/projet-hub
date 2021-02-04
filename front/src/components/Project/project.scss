@@ -7,6 +7,9 @@
     margin: 0 0 !important;
     z-index: 1 !important;
   }
+  &-header {
+    color : vars.$color !important;
+  }
 }
 
 .content>.header {
