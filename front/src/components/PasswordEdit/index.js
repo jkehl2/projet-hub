@@ -80,7 +80,9 @@ const PasswordEdit = ({
 
           <Segment basic textAlign="right">
             <Button.Group>
-              <Button positive type="submit">Valider</Button>
+              <Button
+              className="modify-button"
+              positive type="submit">Valider</Button>
 
               <Button.Or text="ou" />
 
