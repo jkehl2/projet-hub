@@ -1,9 +1,11 @@
 /* eslint-disable camelcase */
 // == IMPORT NPM
 import { goBack, push } from 'connected-react-router';
+import FormData from 'form-data';
 
 // graphql queries
 import configGraphQl, {
+  apiUrl,
   queryByAuthor,
   queryCreateProject,
   queryEditProject,
@@ -13,6 +15,7 @@ import configGraphQl, {
   queryArchivedProject,
   queryInsertFavorite,
   queryDeleteFavorite,
+  uploadProjectImageConfig,
 } from 'src/apiConfig/';
 
 import connector from 'src/apiConfig/queryWithToken';
@@ -29,6 +32,7 @@ import {
   GET_PROJECT_BY_GEO,
   PROJECT_ADD_FAVORITE_BY_ID,
   PROJECT_REMOVE_FAVORITE_BY_ID,
+  PROJECT_UPLOAD_IMAGE,
   updateProjectStore,
   cleanProject,
   updateProjectFavorite,
@@ -41,6 +45,7 @@ import {
   appErrorUpdate,
   appMsgClean,
   appErrorClean,
+  appUpdateProject,
 } from 'src/store/actions/app';
 
 // == PARSE DATE UTIL FUNCTION :
@@ -78,12 +83,12 @@ const projectMiddleware = (store) => (next) => (action) => {
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            image: project.image === null || project.image === '' ? 'https://react.semantic-ui.com/images/wireframe/image.png' : `${apiUrl}/${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
               email: project.author.email,
-              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${project.author.avatar}`,
             },
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
@@ -102,6 +107,34 @@ const projectMiddleware = (store) => (next) => (action) => {
         });
       store.dispatch(appLoadingOn());
       store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_UPLOAD_IMAGE: {
+      const data = new FormData();
+      data.append('image', action.fileSrc);
+      const { project: { project: { id: project_id } } } = store.getState();
+      data.append('project_id', project_id);
+      const config = {
+        ...uploadProjectImageConfig,
+        data,
+      };
+      connector(config, 'data', store.dispatch)
+        .then((response) => {
+          const { data: { data: { path } } } = response;
+          const image = `${apiUrl}/${path}`;
+          store.dispatch(appUpdateProject({ image }));
+          store.dispatch(appMsgUpdate('Upload de l\'avatar terminé.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
+
       return;
     }
     case GET_PROJECT_BY_ID: {
@@ -131,12 +164,12 @@ const projectMiddleware = (store) => (next) => (action) => {
             long: parseFloat(apiData.long),
             expiration_date: parseDate(apiData.expiration_date),
             creation_date: parseDate(apiData.created_at),
-            image: apiData.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : apiData.image,
+            image: apiData.image === null || apiData.image === '' ? 'https://react.semantic-ui.com/images/wireframe/image.png' : `${apiUrl}/${apiData.image}`,
             author: {
               id: apiData.author.id,
               name: apiData.author.name,
               email: apiData.author.email,
-              avatar: apiData.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : apiData.author.avatar,
+              avatar: apiData.author.avatar === null || apiData.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${apiData.author.avatar}`,
             },
             needs: apiData.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
@@ -289,12 +322,12 @@ const projectMiddleware = (store) => (next) => (action) => {
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            image: project.image === null || project.image === '' ? 'https://react.semantic-ui.com/images/wireframe/image.png' : `${apiUrl}/${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
               email: project.author.email,
-              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${project.author.avatar}`,
             },
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
@@ -339,12 +372,12 @@ const projectMiddleware = (store) => (next) => (action) => {
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            image: project.image === null || project.image === '' ? 'https://react.semantic-ui.com/images/wireframe/image.png' : `${apiUrl}/${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
               email: project.author.email,
-              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${project.author.avatar}`,
             },
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1

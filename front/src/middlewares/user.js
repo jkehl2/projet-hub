@@ -4,6 +4,7 @@
  */
 
 import axios from 'axios';
+import FormData from 'form-data';
 
 import { push, goBack } from 'connected-react-router';
 
@@ -15,6 +16,7 @@ import configGraphQl, {
   queryUserEditPassword,
   queryUserDelete,
   signInConfig,
+  uploadAvatarConfig,
 } from 'src/apiConfig/';
 
 import connector from 'src/apiConfig/queryWithToken';
@@ -27,6 +29,7 @@ import {
   USER_DELETE,
   USER_SIGNIN,
   USER_SIGNOUT,
+  USER_UPLOAD_AVATAR,
   updateUserStore,
   cleanUserStore,
 } from 'src/store/actions/user';
@@ -43,6 +46,7 @@ import {
   appSignUpClean,
   appEditProfilOff,
   appProfilClean,
+  appUpdateProfil,
 } from 'src/store/actions/app';
 
 // MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
@@ -69,8 +73,11 @@ const userMiddleware = (store) => (next) => (action) => {
           else {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('refreshToken', response.data.refreshToken);
+            const apiAvatar = response.data.user.avatar;
+            const avatar = apiAvatar ? `${apiUrl}/${apiAvatar}` : null;
             const userdata = {
               ...response.data.user,
+              avatar,
               logged: true,
             };
             if (userdata.avatar === null) {
@@ -92,6 +99,33 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appErrorClean());
       store.dispatch(appSignInClean());
       store.dispatch(appLoadingOn());
+      return;
+    }
+    case USER_UPLOAD_AVATAR: {
+      const data = new FormData();
+      data.append('avatar', action.fileSrc);
+      const config = {
+        ...uploadAvatarConfig,
+        data,
+      };
+      connector(config, 'data', store.dispatch)
+        .then((response) => {
+          const { data: { data: { path } } } = response;
+          const avatar = `${apiUrl}/${path}`;
+          store.dispatch(updateUserStore({ avatar }));
+          store.dispatch(appUpdateProfil({ avatar }));
+          store.dispatch(appMsgUpdate('Upload de l\'avatar terminé.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
+
       return;
     }
     case USER_SIGNOUT: {

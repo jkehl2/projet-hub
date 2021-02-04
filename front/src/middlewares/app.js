@@ -73,6 +73,7 @@ const userMiddleware = (store) => (next) => (action) => {
             expiration_date,
             description,
             location,
+            image,
           },
         },
       } = store.getState();
@@ -81,6 +82,7 @@ const userMiddleware = (store) => (next) => (action) => {
         expiration_date,
         description,
         location,
+        image,
       };
       store.dispatch(appUpdateProject(payload));
       return;

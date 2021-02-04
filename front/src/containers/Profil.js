@@ -6,7 +6,7 @@ const mapStateToProps = (state) => ({
   isEditMode: state.app.profil.isEditMode,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = () => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profil);
