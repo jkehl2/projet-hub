@@ -81,7 +81,7 @@ const SignUp = ({
       <Segment basic textAlign="right">
         <Button.Group>
           <Form.Button
-            positive
+            id="button-submit"
             type="submit"
             title="Annuler"
             content="S'enregistrer"
@@ -90,7 +90,7 @@ const SignUp = ({
           <Button.Or text="ou" />
           {/** SUBSCRIBE */}
           <Form.Button
-            color="blue"
+            color="grey"
             type="button"
             content="Annuler"
             title="Annuler"

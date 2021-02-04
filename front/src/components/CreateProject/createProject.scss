@@ -9,15 +9,16 @@
     margin: 0 !important;
     padding: 0 !important;
   }
-  &-title{
+  &--title{
     color: vars.$color !important;
+  }
+  &--button{
+    background-color: vars.$color-alt !important;
+    color: #fff !important;
   }
 }
 
-.create-button{
-  background-color: vars.$color-alt !important;
-  color: #fff !important;
-}
+
 
 .header-project{
   color: vars.$color !important;
