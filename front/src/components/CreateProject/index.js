@@ -43,6 +43,7 @@ const CreateProject = ({
         {/* PAGE TITLE */}
         <Header
           as="h1"
+          className="create-project-title"
           content="Proposer un nouveau projet"
           textAlign="center"
           dividing
@@ -81,8 +82,8 @@ const CreateProject = ({
             label="Description du projet"
             title="Description du projet"
             placeholder="Les potagers urbains se définissent simplement comme la culture de légumes ..."
-            maxlength={700}
-            spellcheck
+            maxLength={700}
+            spellCheck
             cols={100}
             wrap="soft"
             value={description}

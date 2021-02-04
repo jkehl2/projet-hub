@@ -11,7 +11,7 @@ import './legalmentions.scss';
 // == Composant
 const LegalMentions = ({ props }) => (
   <Container className="legal-mentions">
-    <Header as="h1" content="Mentions légales" textAlign="center" dividing />
+    <Header className="legal-mentions--header" as="h1" content="Mentions légales" textAlign="center" dividing />
     <Header content="Éditeur du Site :" />
     <Segment>
       <Header as="h2" content="Site web appartenant à la team Local-HUB." textAlign="left" dividing />

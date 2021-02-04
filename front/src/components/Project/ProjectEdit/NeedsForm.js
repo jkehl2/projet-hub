@@ -53,8 +53,8 @@ const NeedsForm = ({
           label="Description du besoin"
           title="Description du besion"
           placeholder="Description de votre besoin"
-          maxlength={150}
-          spellcheck
+          maxLength={150}
+          spellCheck
           cols={50}
           wrap="soft"
           required
