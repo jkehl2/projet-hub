@@ -7,17 +7,21 @@
   }
   &--map {
     z-index: 0 !important;
-    height: 30vh !important;
+    height: 35vh !important;
     width: 100% !important;
     margin-bottom: 0.5rem !important;
     &--popup{
       box-sizing: border-box !important;
-      width:20rem !important;
+      width:18rem !important;
     }
     &--card{
       box-sizing: border-box !important;
       width: auto !important;
       margin: 0.25rem !important;
+      &--title{
+        padding-top: 0.75rem !important;
+        font-weight: bold !important;
+      }
       &--cell{
         box-sizing: border-box !important;
         padding: 0rem 0.5rem !important;

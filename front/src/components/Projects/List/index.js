@@ -52,16 +52,9 @@ const List = ({
             <Popup className="list--map--popup">
               <Grid className="list--map--card" verticalAlign="middle" textAlign="left">
                 <Grid.Row divided>
-                  <Grid.Column className="list--map--card--cell" width={4}>
+                  <Grid.Column className="list--map--card--cell" width={16} textAlign="center">
                     <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} size="medium" rounded centered /></Link>
-                  </Grid.Column>
-                  <Grid.Column className="list--map--card--cell" width={12}>
-                    <Link to={`/projet/${project.id}`}><Header size="medium" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} />
-                      <Segment basic>
-                        <Image size="mini" src={`${project.author.avatar}`} avatar />
-                        <strong>{`${project.author.name}`}</strong>
-                      </Segment>
-                    </Link>
+                    <Link to={`/projet/${project.id}`}><Header className="list--map--card--title" size="medium" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} /></Link>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

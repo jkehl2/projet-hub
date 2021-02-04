@@ -2,6 +2,12 @@
  * @module app-Reducer
  * Gestion du store des paramètres applicatifs techniques (loader,..)
  */
+
+// graphql queries
+import {
+  apiUrl,
+} from 'src/apiConfig/';
+
 // == IMPORT ACTIONS sur le store des paramètres applicatifs techniques
 import {
   APP_LOADING_ON,
@@ -78,7 +84,7 @@ export const projectInitialState = {
   isEditMode: false,
   confirm: '',
   title: '',
-  image: 'https://react.semantic-ui.com/images/wireframe/image.png',
+  image: `${apiUrl}/project-images/logo.PNG`,
   expiration_date: new Date().toLocaleDateString('fr-FR'),
   description: '',
   location: '',

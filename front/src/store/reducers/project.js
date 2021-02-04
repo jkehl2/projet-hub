@@ -3,6 +3,11 @@
  * Gestion du store projet
  */
 
+// graphql queries
+import {
+  apiUrl,
+} from 'src/apiConfig/';
+
 // == IMPORT ACTIONS SUR STORE
 import {
   PROJECT_STORE_UPDATE,
@@ -26,7 +31,7 @@ export const projectInitialState = {
   description: '',
   expiration_date: new Date().toLocaleDateString('fr-FR'),
   creation_date: new Date().toLocaleDateString('fr-FR'),
-  image: '',
+  image: `${apiUrl}/project-images/logo.PNG`,
   author: {
     id: 0,
     name: '',

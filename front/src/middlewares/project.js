@@ -83,7 +83,7 @@ const projectMiddleware = (store) => (next) => (action) => {
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null || project.image === '' ? 'https://react.semantic-ui.com/images/wireframe/image.png' : `${apiUrl}/${project.image}`,
+            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
@@ -164,7 +164,7 @@ const projectMiddleware = (store) => (next) => (action) => {
             long: parseFloat(apiData.long),
             expiration_date: parseDate(apiData.expiration_date),
             creation_date: parseDate(apiData.created_at),
-            image: apiData.image === null || apiData.image === '' ? 'https://react.semantic-ui.com/images/wireframe/image.png' : `${apiUrl}/${apiData.image}`,
+            image: apiData.image === null || apiData.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${apiData.image}`,
             author: {
               id: apiData.author.id,
               name: apiData.author.name,
@@ -322,7 +322,7 @@ const projectMiddleware = (store) => (next) => (action) => {
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null || project.image === '' ? 'https://react.semantic-ui.com/images/wireframe/image.png' : `${apiUrl}/${project.image}`,
+            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
@@ -372,7 +372,7 @@ const projectMiddleware = (store) => (next) => (action) => {
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null || project.image === '' ? 'https://react.semantic-ui.com/images/wireframe/image.png' : `${apiUrl}/${project.image}`,
+            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
