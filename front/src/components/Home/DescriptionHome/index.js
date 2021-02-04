@@ -11,8 +11,11 @@ import './descriptionHome.scss';
 const DescriptionHome = () => (
   <>
     <Segment inverted padded="very" className="description-home">
-      <p><strong>Local-Hub</strong> s'adresse aux particuliers, aux associations et aux entreprises.</p>
-      <p>Il vise à favoriser le lien social, mutualiser les moyens et les savoir-faire, mais aussi entreprendre des actions collectives
+      <p><strong>Local-Hub</strong> s'adresse aux particuliers,
+        aux associations et aux entreprises.
+      </p>
+      <p>Il vise à favoriser le lien social, mutualiser
+        les moyens et les savoir-faire, mais aussi entreprendre des actions collectives
         à l'échelle locale.
       </p>
       <p>Notre but est de faire connaître vos idées de projets ainsi que leurs besoins.

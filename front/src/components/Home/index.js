@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 import SearchProjects from 'src/containers/SearchProjects';
 // == IMPORTS COMPOSANTS
 import {
-  Container, Header, Divider,
+  Container,
+  Header,
+  Divider,
 } from 'semantic-ui-react';
 
 import HeaderHome from './HeaderHome';
@@ -24,15 +26,28 @@ const Home = ({ cleanAppParams }) => {
   return (
 
     <Container className="home bgc-pictures">
-      <Divider horizontal><Header as="h1" content="Local Hub" textAlign="center" className="header-title" /></Divider>
-      {/** Page top with pictures */}
+      <Divider horizontal>
+        <Header
+          as="h1"
+          content="Local Hub"
+          textAlign="center"
+          className="header-title"
+        />
+      </Divider>
+      {/* PAGE TOP WITH PICTURES */}
       <HeaderHome />
-      
-      {/** Search Bar */}
-      <Header as="h2" className="home-search" textAlign="center">Rechercher</Header>
+
+      {/* SEARCH BAR */}
+      <Header
+        as="h2"
+        className="home-search"
+        textAlign="center"
+      >
+        Rechercher
+      </Header>
       <SearchProjects isHome />
 
-      {/** Page header with Local Hub presentation */}
+      {/* PAGE HEADER WITH LOCAL HUB PRESENTATION */}
       <DescriptionHome />
     </Container>
 
