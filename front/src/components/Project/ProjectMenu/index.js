@@ -1,21 +1,20 @@
 /* eslint-disable no-nested-ternary */
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS CONTAINERS
-
-// == IMPORTS COMPOSANTS
+// == IMPORT COMPONENTS
 import {
   Button,
   Menu,
 } from 'semantic-ui-react';
+
 import ModalConfirm from 'src/components/ModalConfirm';
 
 // == STYLES
 import './projectMenu.scss';
 
-// == Composant
+// == COMPONENT
 const ProjectMenu = ({
   confirm,
   isEditMode,
@@ -42,7 +41,7 @@ const ProjectMenu = ({
           <Button
             type="button"
             icon="arrow alternate circle left"
-            className="go-back-button"
+            className="menu--go-back-button"
             title="Revenir à la consultation"
             content="Retour"
             labelPosition="left"
@@ -60,7 +59,7 @@ const ProjectMenu = ({
             <Button
               type="button"
               icon="edit"
-              className="edit-button"
+              className="menu--edit-button"
               title="Editer"
               compact
               onClick={(event) => {
@@ -128,7 +127,7 @@ const ProjectMenu = ({
               <Button
                 type="button"
                 icon="arrow alternate circle left"
-                className="go-back-button"
+                className="menu--go-back-button"
                 title="Revenir à la page précédente"
                 content="Retour"
                 labelPosition="left"

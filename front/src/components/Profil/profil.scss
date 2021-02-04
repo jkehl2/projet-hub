@@ -1,5 +1,8 @@
 @use 'src/styles/vars';
 
-.profil-header {
-  color: vars.$color !important;
+.profil {
+  &--header{
+    color: vars.$color !important;
+  }
+  
 }

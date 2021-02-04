@@ -1,20 +1,17 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS CONTAINERS
-
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENT
 import {
   Modal,
   Button,
   Form,
   Segment,
   Message,
-  Header,
 } from 'semantic-ui-react';
 
-// == Composant Profil
+// == COMPONENT
 const ModalConfirm = ({
   title,
   content,
@@ -41,11 +38,11 @@ const ModalConfirm = ({
       >
         <Modal.Header>{`${title}`}</Modal.Header>
         <Modal.Content>
-          {/* Affiche message d'erreur si il y en a */}
+          {/* ERROR MESSAGE */}
           {isError
         && (<Message negative header="Une erreur s'est produite" content={`${error}`} icon="thumbs down outline" size="small" />)}
 
-          {/* Affiche message d'information si il y en a */}
+          {/* INFO MESSAGE */}
           {isMessage
         && (<Message header="Information" content={`${message}`} icon="idea" size="small" />)}
 

@@ -34,13 +34,13 @@ const PasswordEdit = ({
   return (
     <Container className="password-edit">
 
-      {/* titre de page */}
-      <Header as="h1" content="Modification du mot de passe" textAlign="center" dividing subheader="On est jamais trop prudent" />
+      {/* PAGE TITLE */}
+      <Header as="h1" content="Modification du mot de passe" textAlign="center" dividing subheader="On n'est jamais trop prudent" />
 
       <Segment>
         <Form onSubmit={handleSubmit}>
 
-          {/* Field Hidden for Accessibility user name */}
+          {/* USER NAME */}
           <Input
             type="email"
             title="Email utilisateur"
@@ -50,7 +50,7 @@ const PasswordEdit = ({
             style={{ display: 'none' }}
           />
 
-          {/* Input password */}
+          {/* PASSWORD */}
           <Form.Input
             type="password"
             label="Nouveau mot de passe utilisateur"
@@ -64,7 +64,7 @@ const PasswordEdit = ({
             }}
           />
 
-          {/* Input password confirm */}
+          {/* PASSWORD CONFIRM */}
           <Form.Input
             type="password"
             label="Confirmer nouveau mot de passe utilisateur"
@@ -81,8 +81,11 @@ const PasswordEdit = ({
           <Segment basic textAlign="right">
             <Button.Group>
               <Button
-              className="modify-button"
-              positive type="submit">Valider</Button>
+                className="password-edit--modify-button"
+                positive
+                type="submit"
+              >Valider
+              </Button>
 
               <Button.Or text="ou" />
 

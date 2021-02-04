@@ -1,9 +1,7 @@
-// == Import npm
+// == IMPORTS PACKAGES
 import React from 'react';
 
-// == IMPORTS CONTAINERS
-
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Grid, Segment, Container, Header, Image, Label, Icon,
 } from 'semantic-ui-react';
@@ -11,7 +9,7 @@ import {
 // == STYLES
 import './whoarewe.scss';
 
-// == Composant
+// == COMPONENT
 const WhoAreWe = () => (
   <Container>
     <Header as="h1" content="La fine équipe Local-Hub" textAlign="center" dividing subheader="Une équipe de choc !" />

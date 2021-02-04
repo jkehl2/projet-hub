@@ -1,21 +1,22 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
 
 // == IMPORTS CONTAINERS
 import List from 'src/containers/MyFavoritesList';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
-  Container, Header,
+  Container,
+  Header,
 } from 'semantic-ui-react';
 
 // == STYLES
 import './myFavorites.scss';
 
-// == Composant
+// == COMPONENT
 const MyFavorites = () => (
   <Container className="my-favorites">
-    <Header className="my-favorites--title" as="h1" content="Mes favoris" textAlign="center" dividing subheader="Tous ce que j'aime en un seul endroit" />
+    <Header className="my-favorites--title" as="h1" content="Mes favoris" textAlign="center" dividing subheader="Tout ce que j'aime en un seul endroit" />
     <List />
   </Container>
 );

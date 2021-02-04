@@ -1,4 +1,4 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,7 @@ import dot from 'src/assets/images/dot.svg';
 // == IMPORTS CONTAINERS
 import ProjectMenu from 'src/containers/ProjectMenu';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Container,
   Grid,
@@ -30,7 +30,7 @@ import ProjectEdit from './ProjectEdit';
 // == STYLES
 import './project.scss';
 
-// == Composant
+// == COMPONENT
 const Project = ({
   project,
   logged,
@@ -55,9 +55,10 @@ const Project = ({
         dividing
         subheader="Ici on vous dit tout sur ce projet"
       />
-      {/* Menu projet - modifier / supprimer / archiver */}
+      {/* PROJECT MENU - MODIFY / DELETE / ARCHIVE */}
       <ProjectMenu />
 
+      {/* PROJECTS MAP */}
       {project.lat !== 0 && (
       <MapContainer
         className="project--map"
@@ -98,7 +99,7 @@ const Project = ({
         />
       </MapContainer>
       )}
-
+      {/* RENDER ON EDITION OR VIEW */}
       {(isEditMode && logged)
         ? (
           <ProjectEdit
