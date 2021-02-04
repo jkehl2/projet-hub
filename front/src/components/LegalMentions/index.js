@@ -3,7 +3,11 @@ import React from 'react';
 // == IMPORTS CONTAINERS
 
 // == IMPORTS COMPOSANTS
-import { Container, Header, Segment } from 'semantic-ui-react';
+import {
+  Container,
+  Header,
+  Segment,
+} from 'semantic-ui-react';
 
 // == STYLES
 import './legalmentions.scss';
@@ -11,10 +15,21 @@ import './legalmentions.scss';
 // == Composant
 const LegalMentions = ({ props }) => (
   <Container className="legal-mentions">
-    <Header className="legal-mentions--header" as="h1" content="Mentions légales" textAlign="center" dividing />
+    <Header
+      className="legal-mentions--header"
+      as="h1"
+      content="Mentions légales"
+      textAlign="center"
+      dividing
+    />
     <Header content="Éditeur du Site :" />
     <Segment>
-      <Header as="h2" content="Site web appartenant à la team Local-HUB." textAlign="left" dividing />
+      <Header
+        as="h2"
+        content="Site web appartenant à la team Local-HUB."
+        textAlign="left"
+        dividing
+      />
       <p>Nom : Local-HUB</p>
       <p>Prénom : Michel</p>
       <p>Adresse email : michel@michel.com</p>
