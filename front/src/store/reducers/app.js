@@ -78,6 +78,7 @@ export const projectInitialState = {
   isEditMode: false,
   confirm: '',
   title: '',
+  image: 'https://react.semantic-ui.com/images/wireframe/image.png',
   expiration_date: new Date().toLocaleDateString('fr-FR'),
   description: '',
   location: '',

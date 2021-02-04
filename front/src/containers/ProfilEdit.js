@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import ProfilEdit from 'src/components/Profil/ProfilEdit';
 
 import { appUpdateProfil, appRefreshProfil, appProfilClean } from 'src/store/actions/app';
-import { editUser } from 'src/store/actions/user';
+import { editUser, userUploadAvatar } from 'src/store/actions/user';
 
 const mapStateToProps = (state) => ({
   name: state.app.profil.name,
   email: state.app.profil.email,
+  avatar: state.app.profil.avatar,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -19,6 +20,10 @@ const mapDispatchToProps = (dispatch) => ({
   },
   cleanProfil: () => {
     dispatch(appProfilClean());
+  },
+  handleFileChange: (event) => {
+    event.preventDefault();
+    dispatch(userUploadAvatar(event.target.files[0]));
   },
   handleSubmit: (event) => {
     event.preventDefault();
