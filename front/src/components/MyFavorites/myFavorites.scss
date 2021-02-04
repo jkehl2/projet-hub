@@ -1,5 +1,7 @@
 @use 'src/styles/vars';
 
 .my-favorites {
-
+&--title{
+  color: vars.$color !important;
+}
 }

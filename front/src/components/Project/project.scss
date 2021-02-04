@@ -6,6 +6,9 @@
     width: 100% !important;
     margin: 0 0 !important;
   }
+  &-header {
+    color : vars.$color !important;
+  }
 }
 
 .content>.header {

@@ -43,6 +43,7 @@ const CreateProject = ({
         {/* PAGE TITLE */}
         <Header
           as="h1"
+          className="create-project-title"
           content="Proposer un nouveau projet"
           textAlign="center"
           dividing

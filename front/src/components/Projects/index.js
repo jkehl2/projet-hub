@@ -16,7 +16,7 @@ import './projects.scss';
 // == Composant
 const Projects = () => (
   <Container className="projects">
-    <Header as="h1" content="Rechercher" textAlign="center" dividing subheader="Trouver un projet ? C'est ici" />
+    <Header className="projects--title" as="h1" content="Rechercher" textAlign="center" dividing subheader="Trouver un projet ? C'est ici" />
     {/** Search Bar */}
     <SearchProjects />
     <List />

@@ -24,7 +24,7 @@ const SignUp = ({
 }) => (
   <Container className="signUp">
     {/* titre */}
-    <Header as="h1" content="Enregistrement" textAlign="center" dividing subheader="Pas de compte utilisateur ? Enregistrez-vous ici" />
+    <Header className="signUp--title" as="h1" content="Enregistrement" textAlign="center" dividing subheader="Pas de compte utilisateur ? Enregistrez-vous ici" />
     <Form onSubmit={handleSubmit}>
       {/* pseudo */}
       <Form.Input

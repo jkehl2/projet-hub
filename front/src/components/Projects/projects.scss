@@ -1,5 +1,7 @@
 @use 'src/styles/vars';
 
 .projects {
-
+&--title{
+  color: vars.$color !important;
+}
 }

@@ -47,6 +47,7 @@ const Project = ({
     <Container className="project">
       <Header
         as="h1"
+        className="project-header"
         content="Détail du projet"
         textAlign="center"
         dividing
