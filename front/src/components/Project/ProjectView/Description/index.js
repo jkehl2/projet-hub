@@ -97,27 +97,25 @@ const Description = ({
 
   return (
     <>
-      <Segment basic>
-        <Grid verticalAlign="middle">
-          <Grid.Row only="mobile">
-            <Accordion className="project-description" styled exclusive={false} fluid>
-              <Accordion.Title
-                active={state.activeIndex === 0}
-                index={0}
-                onClick={handleClick}
-                as="h2"
-              >
-                <Icon name="dropdown" />
-                Carte
-              </Accordion.Title>
-              <Accordion.Content className="project-description--dropdown-map" active={state.activeIndex === 0}>
-                {project.lat !== 0
+      <Grid className="project-description--map-grid" verticalAlign="middle">
+        <Grid.Row only="mobile">
+          <Accordion className="project-description" styled exclusive={false} fluid>
+            <Accordion.Title
+              active={state.activeIndex === 0}
+              index={0}
+              onClick={handleClick}
+              as="h2"
+            >
+              <Icon name="dropdown" />
+              Carte
+            </Accordion.Title>
+            <Accordion.Content className="project-description--dropdown-map" active={state.activeIndex === 0}>
+              {project.lat !== 0
                    && <ProjectMap project={project} />}
-              </Accordion.Content>
-            </Accordion>
-          </Grid.Row>
-        </Grid>
-      </Segment>
+            </Accordion.Content>
+          </Accordion>
+        </Grid.Row>
+      </Grid>
       <Segment className="project-description" basic>
         { project.isArchived && <Label color="grey" corner="right" icon="archive" size="big" /> }
         <Grid divided="vertically">
