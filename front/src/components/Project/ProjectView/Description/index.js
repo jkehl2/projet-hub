@@ -21,7 +21,7 @@ const HeaderStar = ({
 }) => (
   <>
     <Header as="h3" size={`${size}`}>
-      <Header.Content>{`${project.title} `}</Header.Content>
+      <Header.Content className="header--title">{`${project.title} `}</Header.Content>
     </Header>
     <Segment compact basic className="description--marged-none">
       { (!project.isAuthor && logged && !project.isArchived)
