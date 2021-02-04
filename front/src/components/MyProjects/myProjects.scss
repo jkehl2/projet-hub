@@ -1,10 +1,11 @@
 @use 'src/styles/vars';
 
-.my-projects--header--project--title {
-font-size: 50px;
 .my-projects {
-&--title{
-  color: vars.$color !important;
-}
+  &--header--project--title {
+    font-size: 50px;
+  }
+  &--title{
+    color: vars.$color !important;
+  }
 }
 }
