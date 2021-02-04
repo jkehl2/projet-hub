@@ -70,7 +70,7 @@ const Project = ({
           url={dot}
           interactive
           opacity={0.9}
-          zIndex={20}
+          zIndex={1}
         >
           <Popup>
             <Label basic content={`${project.title}`} detail={`${project.author.name}`} />
