@@ -16,9 +16,6 @@ const DropDownTrigger = ({ logged, userName }) => (
   <>
     {logged && (
       <Grid padded="horizontally">
-        <Grid.Row only="computer" stretched>
-          <Label className="menu--connect-label"><Icon className="menu--connect-label--icon" name="circle" size="small" />{`${userName}`}</Label>
-        </Grid.Row>
         <Grid.Row only="mobile" stretched>
           <Icon className="menu--connect-label--icon" name="circle" color="green" size="small" />
         </Grid.Row>
@@ -43,6 +40,15 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
       </Link>
     </MenuUi.Menu>
     <MenuUi.Menu position="right" size="large">
+      <MenuUi.Item>
+        {logged && (
+          <Grid padded="horizontally">
+            <Grid.Row only="computer" stretched>
+              <Link to="/utilisateur/profil"><Label className="menu--connect-label"><Icon className="menu--connect-label--icon" name="circle" size="small" />{`${userName}`}</Label></Link>
+            </Grid.Row>
+          </Grid>
+        )}
+      </MenuUi.Item>
       <Dropdown
         item
         trigger={DropDownTrigger({ logged, userName })}
