@@ -1,9 +1,10 @@
 // == IMPORT PACKAGES
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
 
 // == IMPORTS COMPONENTS
 import {
+  Accordion,
   Button,
   Divider,
   Grid,
@@ -14,6 +15,8 @@ import {
   Progress,
   Segment,
 } from 'semantic-ui-react';
+
+import ProjectMap from '../../ProjectMap';
 
 // == STYLES
 import './description.scss';
@@ -82,45 +85,87 @@ const Description = ({
   removeFromFavorite,
 }) => {
   const checkArr = needs.map((need) => (need.completed ? 1 : 0));
-  const checkCount = checkArr.reduce((a, b) => a + b, 0); return (
-    <Segment className="description" basic compact>
-      { project.isArchived && <Label color="grey" corner="right" icon="archive" size="big" /> }
-      <Grid divided stretched stackable verticalAlign="middle">
-        <Grid.Row only="mobile">
-          <Segment basic textAlign="center">
-            <Image src={`${project.image}`} centered spaced rounded />
-          </Segment>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column computer={6} only="computer">
-            <Segment basic>
-              <Image src={`${project.image}`} centered spaced rounded />
+  const checkCount = checkArr.reduce((a, b) => a + b, 0);
+
+  const [state, setState] = useState({ activeIndex: 0 });
+
+  const handleClick = (e, itemProps) => {
+    const { index } = itemProps;
+    const newIndex = state.activeIndex === index ? -1 : index;
+    setState({ activeIndex: newIndex });
+  };
+
+  return (
+    <>
+      <Segment basic>
+        <Grid verticalAlign="middle">
+          <Grid.Row only="mobile">
+            <Accordion className="description" styled exclusive={false} fluid>
+              <Accordion.Title
+                active={state.activeIndex === 0}
+                index={0}
+                onClick={handleClick}
+                as="h2"
+              >
+                <Icon name="dropdown" />
+                Carte
+              </Accordion.Title>
+              <Accordion.Content className="description--dropdown-map" active={state.activeIndex === 0}>
+                {project.lat !== 0
+                   && <ProjectMap project={project} />}
+              </Accordion.Content>
+            </Accordion>
+          </Grid.Row>
+        </Grid>
+      </Segment>
+      <Segment className="description" basic>
+        { project.isArchived && <Label color="grey" corner="right" icon="archive" size="big" /> }
+        <Grid divided="vertically">
+          <Grid.Column only="computer" computer={7}>
+            <Segment className="description--segment-map" basic textAlign="center">
+              {project.lat !== 0
+            && <ProjectMap project={project} />}
             </Segment>
           </Grid.Column>
-          <Grid.Column computer={10} mobile={16}>
-            <HeaderStar
-              project={project}
-              size="large"
-              logged={logged}
-              addToFavorite={addToFavorite}
-              removeFromFavorite={removeFromFavorite}
-            />
-            <p className="description--marged-top"><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
-            <p className="description--marged-top"><Icon name="target" />{`${project.location}`}</p>
-            <Divider horizontal>Description</Divider>
-            <Segment basic>{`${project.description}`}</Segment>
-            <Divider />
-            <Label.Group>
-              <Label basic icon="star" content={`${project.followers.length}`} />
-              <Label basic content="Créé le" detail={`${project.creation_date}`} />
-              <Label basic content="Expire le" detail={`${project.expiration_date}`} />
-              <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
-            </Label.Group>
+          <Grid.Column computer={9} mobile={16}>
+            <Grid verticalAlign="middle">
+              <Grid.Row>
+                <Segment className="description--segment-image" basic>
+                  <Image className="description--image" src={`${project.image}`} centered spaced rounded />
+                </Segment>
+              </Grid.Row>
+              <Grid.Row className="description--row-padding-less">
+                <Segment className="description--marged-no-vertically" basic>
+                  <HeaderStar
+                    project={project}
+                    size="large"
+                    logged={logged}
+                    addToFavorite={addToFavorite}
+                    removeFromFavorite={removeFromFavorite}
+                  />
+                  <p className="description--marged-top"><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
+                  <p className="description--marged-top"><Icon name="target" />{`${project.location}`}</p>
+                </Segment>
+                <Segment className="description--marged-no-vertically" basic>
+                  <Divider horizontal>Description</Divider>
+                  {`${project.description}`}
+                  <Divider />
+                </Segment>
+                <Segment className="description--marged-no-vertically" basic>
+                  <Label.Group>
+                    <Label basic icon="star" content={`${project.followers.length}`} />
+                    <Label basic content="Créé le" detail={`${project.creation_date}`} />
+                    <Label basic content="Expire le" detail={`${project.expiration_date}`} />
+                    <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
+                  </Label.Group>
+                </Segment>
+              </Grid.Row>
+            </Grid>
           </Grid.Column>
-        </Grid.Row>
-      </Grid>
-      <Progress value={checkCount} total={needs.length} progress="ratio" size="medium" indicating>Couverture des besoins</Progress>
-    </Segment>
+        </Grid>
+        <Progress value={checkCount} total={needs.length} progress="ratio" size="medium" indicating>Couverture des besoins</Progress>
+      </Segment>
+    </>
   );
 };
 // == PROP TYPES
@@ -139,6 +184,8 @@ Description.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
+    lat: PropTypes.number.isRequired,
+    long: PropTypes.number.isRequired,
     expiration_date: PropTypes.string.isRequired,
     creation_date: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,

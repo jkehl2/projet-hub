@@ -30,7 +30,9 @@ const ProjectMap = ({
     className="project-map"
     center={[project.lat, project.long]}
     zoom={11}
-    scrollWheelZoom
+    dragging={false}
+    scrollWheelZoom={false}
+    zoomControl={false}
   >
     <ImageOverlay
       bounds={[
@@ -38,21 +40,9 @@ const ProjectMap = ({
         [project.lat + 0.02, project.long + 0.02],
       ]}
       url={dot}
-      interactive
       opacity={0.9}
       zIndex={1}
-    >
-      <Popup className="project-map--popup">
-        <Grid className="project-map--card" verticalAlign="middle" textAlign="left">
-          <Grid.Row divided>
-            <Grid.Column className="project-map--card--cell" width={16} textAlign="center">
-              <Image src={`${project.image}`} size="medium" rounded centered />
-              <Header className="project-map--card--title" size="medium" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Popup>
-    </ImageOverlay>
+    />
     <TileLayer
       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -1,10 +1,15 @@
 @use 'src/styles/vars';
 
 .project-map {
+    box-sizing: border-box !important;
     z-index: 0 !important;
     height: 35vh !important;
     width: 100% !important;
-    margin-bottom: 0.5rem !important;
+    margin: 0rem !important;
+    padding: 0 !important;
+
+    border-radius: 0.5rem !important;
+
     &--popup{
       box-sizing: border-box !important;
       width:20rem !important;
