@@ -100,7 +100,7 @@ const Description = ({
       <Segment basic>
         <Grid verticalAlign="middle">
           <Grid.Row only="mobile">
-            <Accordion className="description" styled exclusive={false} fluid>
+            <Accordion className="project-description" styled exclusive={false} fluid>
               <Accordion.Title
                 active={state.activeIndex === 0}
                 index={0}
@@ -110,7 +110,7 @@ const Description = ({
                 <Icon name="dropdown" />
                 Carte
               </Accordion.Title>
-              <Accordion.Content className="description--dropdown-map" active={state.activeIndex === 0}>
+              <Accordion.Content className="project-description--dropdown-map" active={state.activeIndex === 0}>
                 {project.lat !== 0
                    && <ProjectMap project={project} />}
               </Accordion.Content>
@@ -118,11 +118,11 @@ const Description = ({
           </Grid.Row>
         </Grid>
       </Segment>
-      <Segment className="description" basic>
+      <Segment className="project-description" basic>
         { project.isArchived && <Label color="grey" corner="right" icon="archive" size="big" /> }
         <Grid divided="vertically">
           <Grid.Column only="computer" computer={7}>
-            <Segment className="description--segment-map" basic textAlign="center">
+            <Segment className="project-description--segment-map" basic textAlign="center">
               {project.lat !== 0
             && <ProjectMap project={project} />}
             </Segment>
@@ -130,12 +130,12 @@ const Description = ({
           <Grid.Column computer={9} mobile={16}>
             <Grid verticalAlign="middle">
               <Grid.Row>
-                <Segment className="description--segment-image" basic>
-                  <Image className="description--image" src={`${project.image}`} centered spaced rounded />
+                <Segment className="project-description--segment-image" basic>
+                  <Image className="project-description--image" src={`${project.image}`} centered spaced rounded />
                 </Segment>
               </Grid.Row>
-              <Grid.Row className="description--row-padding-less">
-                <Segment className="description--marged-no-vertically" basic>
+              <Grid.Row className="project-description--row-padding-less">
+                <Segment className="project-description--marged-no-vertically" basic>
                   <HeaderStar
                     project={project}
                     size="large"
@@ -143,15 +143,15 @@ const Description = ({
                     addToFavorite={addToFavorite}
                     removeFromFavorite={removeFromFavorite}
                   />
-                  <p className="description--marged-top"><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
-                  <p className="description--marged-top"><Icon name="target" />{`${project.location}`}</p>
+                  <p className="project-description--marged-top"><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
+                  <p className="project-description--marged-top"><Icon name="target" />{`${project.location}`}</p>
                 </Segment>
-                <Segment className="description--marged-no-vertically" basic>
+                <Segment className="project-description--marged-no-vertically" basic>
                   <Divider horizontal>Description</Divider>
                   {`${project.description}`}
                   <Divider />
                 </Segment>
-                <Segment className="description--marged-no-vertically" basic>
+                <Segment className="project-description--marged-no-vertically" basic>
                   <Label.Group>
                     <Label basic icon="star" content={`${project.followers.length}`} />
                     <Label basic content="Créé le" detail={`${project.creation_date}`} />
