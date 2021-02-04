@@ -59,15 +59,18 @@ const Project = ({
       <ProjectMenu />
 
       {/* PROJECTS MAP */}
-      {project.lat !== 0 && (
-      <ProjectMap project={project} />
-      )}
+
       {/* RENDER ON EDITION OR VIEW */}
       {(isEditMode && logged)
         ? (
-          <ProjectEdit
-            getProjectById={getProjectById}
-          />
+          <>
+            {project.lat !== 0 && (
+            <ProjectMap project={project} />
+            )}
+            <ProjectEdit
+              getProjectById={getProjectById}
+            />
+          </>
         )
         : (
           <ProjectView

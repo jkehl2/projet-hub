@@ -26,10 +26,9 @@ const ProjectView = (props) => {
   const isVisible = (logged && project.isAuthor && !project.isArchived);
   return (
     <>
-      <Segment compact attached="top">
-        {/* DESCRIPTION */}
-        <Description {...props} />
-      </Segment>
+      {/* DESCRIPTION */}
+      <Description {...props} needs={project.needs} />
+
       {/* NEEDS */}
       <Needs
         isCheckEnable={isVisible}

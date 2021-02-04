@@ -6,14 +6,13 @@ import PropTypes from 'prop-types';
 import {
   Accordion,
   Checkbox,
-  Grid, Header, Icon, Progress,
+  Grid,
+  Header,
+  Icon,
 } from 'semantic-ui-react';
 
 // == COMPONENTS
 const Needs = ({ isCheckEnable, needs, updateNeedIdCompleted }) => {
-  const checkArr = needs.map((need) => (need.completed ? 1 : 0));
-  const checkCount = checkArr.reduce((a, b) => a + b, 0);
-
   const [state, setState] = useState({ activeIndex: -1 });
 
   const handleClick = (e, itemProps) => {
@@ -24,7 +23,6 @@ const Needs = ({ isCheckEnable, needs, updateNeedIdCompleted }) => {
 
   return (
     <>
-      <Progress value={checkCount} total={needs.length} progress="ratio" size="medium" indicating>Couverture des besoins</Progress>
       <Accordion styled exclusive={false} fluid>
         <Accordion.Title
           active={state.activeIndex === 0}

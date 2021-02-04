@@ -11,6 +11,7 @@ import {
   Icon,
   Image,
   Label,
+  Progress,
   Segment,
 } from 'semantic-ui-react';
 
@@ -76,47 +77,52 @@ HeaderStar.propTypes = {
 const Description = ({
   logged,
   project,
+  needs,
   addToFavorite,
   removeFromFavorite,
-}) => (
-  <>
-    { project.isArchived && <Label color="grey" corner="right" icon="archive" size="big" /> }
-    <Grid divided stretched stackable verticalAlign="middle">
-      <Grid.Row only="mobile">
-        <Segment basic textAlign="center">
-          <Image src={`${project.image}`} centered spaced rounded />
-        </Segment>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column computer={6} only="computer">
-          <Segment basic>
+}) => {
+  const checkArr = needs.map((need) => (need.completed ? 1 : 0));
+  const checkCount = checkArr.reduce((a, b) => a + b, 0); return (
+    <Segment className="description" basic compact>
+      { project.isArchived && <Label color="grey" corner="right" icon="archive" size="big" /> }
+      <Grid divided stretched stackable verticalAlign="middle">
+        <Grid.Row only="mobile">
+          <Segment basic textAlign="center">
             <Image src={`${project.image}`} centered spaced rounded />
           </Segment>
-        </Grid.Column>
-        <Grid.Column computer={10} mobile={16}>
-          <HeaderStar
-            project={project}
-            size="large"
-            logged={logged}
-            addToFavorite={addToFavorite}
-            removeFromFavorite={removeFromFavorite}
-          />
-          <p className="description--marged-top"><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
-          <p className="description--marged-top"><Icon name="target" />{`${project.location}`}</p>
-          <Divider horizontal>Description</Divider>
-          <Segment basic>{`${project.description}`}</Segment>
-          <Divider />
-          <Label.Group>
-            <Label basic icon="star" content={`${project.followers.length}`} />
-            <Label basic content="Créé le" detail={`${project.creation_date}`} />
-            <Label basic content="Expire le" detail={`${project.expiration_date}`} />
-            <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
-          </Label.Group>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
-  </>
-);
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column computer={6} only="computer">
+            <Segment basic>
+              <Image src={`${project.image}`} centered spaced rounded />
+            </Segment>
+          </Grid.Column>
+          <Grid.Column computer={10} mobile={16}>
+            <HeaderStar
+              project={project}
+              size="large"
+              logged={logged}
+              addToFavorite={addToFavorite}
+              removeFromFavorite={removeFromFavorite}
+            />
+            <p className="description--marged-top"><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
+            <p className="description--marged-top"><Icon name="target" />{`${project.location}`}</p>
+            <Divider horizontal>Description</Divider>
+            <Segment basic>{`${project.description}`}</Segment>
+            <Divider />
+            <Label.Group>
+              <Label basic icon="star" content={`${project.followers.length}`} />
+              <Label basic content="Créé le" detail={`${project.creation_date}`} />
+              <Label basic content="Expire le" detail={`${project.expiration_date}`} />
+              <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
+            </Label.Group>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+      <Progress value={checkCount} total={needs.length} progress="ratio" size="medium" indicating>Couverture des besoins</Progress>
+    </Segment>
+  );
+};
 // == PROP TYPES
 Description.propTypes = {
   logged: PropTypes.bool.isRequired,
@@ -142,6 +148,12 @@ Description.propTypes = {
       avatar: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  needs: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+  }).isRequired).isRequired,
   addToFavorite: PropTypes.func.isRequired,
   removeFromFavorite: PropTypes.func.isRequired,
 };
