@@ -43,7 +43,7 @@ const CreateProject = ({
         {/* PAGE TITLE */}
         <Header
           as="h1"
-          className="create-project-title"
+          className="create-project--title"
           content="Proposer un nouveau projet"
           textAlign="center"
           dividing
@@ -109,7 +109,7 @@ const CreateProject = ({
           <Segment basic textAlign="right">
             <Button.Group>
               <Button
-                className="create-button"
+                className="create-project--button"
                 type="submit"
                 title="Créer votre projet"
                 content="Créer"

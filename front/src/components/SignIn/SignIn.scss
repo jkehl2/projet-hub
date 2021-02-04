@@ -4,5 +4,14 @@
 &--title{
   color: vars.$color !important;
 }
+}
 
+#button-subscribe{
+  background-color: vars.$color !important;
+  color: #fff !important;
+}
+
+#button-submit{
+  background-color: vars.$color-alt !important;
+  color: #fff !important;
 }

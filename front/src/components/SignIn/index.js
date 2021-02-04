@@ -81,15 +81,15 @@ const SignIn = (
         <Segment basic textAlign="right">
           <Button.Group>
             <Form.Button
-              positive
+              id="button-submit"
               type="submit"
               content="Connexion"
               title="Connexion"
             />
             <Button.Or text="ou" />
-            {/** SUSCRIBE */}
+            {/** SUBSCRIBE */}
             <Form.Button
-              color="blue"
+              id="button-subscribe"
               type="button"
               content="Inscription"
               title="Inscription"
