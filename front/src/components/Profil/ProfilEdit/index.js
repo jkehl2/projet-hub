@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {
   Button,
   Form,
+  Image,
   Segment,
 } from 'semantic-ui-react';
 
@@ -16,12 +17,15 @@ import './profilEdit.scss';
 const ProfilEdit = ({
   name,
   email,
+  avatar,
   refreshAppProfil,
   setProfilValue,
   cleanProfil,
+  handleFileChange,
   handleCancel,
   handleSubmit,
 }) => {
+  const fileInputRef = React.createRef();
   useEffect(() => {
     refreshAppProfil();
     return () => {
@@ -59,10 +63,29 @@ const ProfilEdit = ({
           }}
         />
 
+        <Form.Field>
+          <Image src={`${avatar}`} spaced="right" size="small" title="Avatar utilisateur" />
+          <Button
+            className="modify-button"
+            type="button"
+            icon="file"
+            labelPosition="left"
+            content="Choisir une illustration"
+            title="Choisir une illustration"
+            onClick={() => fileInputRef.current.click()}
+          />
+          <input
+            ref={fileInputRef}
+            type="file"
+            hidden
+            onChange={handleFileChange}
+          />
+        </Form.Field>
+
         <Segment basic textAlign="right">
           <Button.Group>
             <Button
-            className="modify-button"
+              className="modify-button"
               positive
               type="submit"
               title="Valider"
@@ -71,7 +94,6 @@ const ProfilEdit = ({
             <Button.Or text="ou" />
 
             <Button
-              
               type="button"
               title="Annuler"
               content="Annuler"
@@ -88,9 +110,11 @@ const ProfilEdit = ({
 ProfilEdit.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
   refreshAppProfil: PropTypes.func.isRequired,
   setProfilValue: PropTypes.func.isRequired,
   cleanProfil: PropTypes.func.isRequired,
+  handleFileChange: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };

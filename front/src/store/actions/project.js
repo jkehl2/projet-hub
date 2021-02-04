@@ -17,6 +17,8 @@ export const PROJECT_NEED_ISCOMPLETED = 'PROJECT_NEED_ISCOMPLETED';
 export const PROJECT_ADD_FAVORITE_BY_ID = 'PROJECT_ADD_FAVORITE_BY_ID';
 export const PROJECT_REMOVE_FAVORITE_BY_ID = 'PROJECT_REMOVE_FAVORITE_BY_ID';
 
+export const PROJECT_UPLOAD_IMAGE = 'PROJECT_UPLOAD_IMAGE';
+
 // == [CLE-VALEURS] - ACTIONS sur le store projets(Reducer user)
 
 export const PROJECT_STORE_UPDATE = 'PROJECT_STORE_UPDATE';
@@ -86,6 +88,12 @@ export const createProject = (payload) => ({
 export const editProject = (payload) => ({
   type: PROJECT_EDIT,
   payload,
+});
+
+// UPLOAD FILE IMAGE FOR CURRENT PROJECT
+export const projectUploadImage = (fileSrc) => ({
+  type: PROJECT_UPLOAD_IMAGE,
+  fileSrc,
 });
 
 // deleting a project

@@ -36,6 +36,26 @@ export const signOutConfig = {
   withCredentials: false,
 };
 
+// == CONFIGURATION CONNECTEUR AXIOS UPLOAD AVATAR - END POINT + ENTÊTE
+export const uploadAvatarConfig = {
+  method: 'post',
+  url: `${CONFIG.URL_BACK}/upload-avatar`,
+  headers: {
+    'Content-type': 'multipart/form-data',
+  },
+  withCredentials: false,
+};
+
+// == CONFIGURATION CONNECTEUR AXIOS UPLOAD IMAGE PROJECT - END POINT + ENTÊTE
+export const uploadProjectImageConfig = {
+  method: 'post',
+  url: `${CONFIG.URL_BACK}/upload-image`,
+  headers: {
+    'Content-type': 'multipart/form-data',
+  },
+  withCredentials: false,
+};
+
 // == QUERY - Créer le profil utlisateur
 export const queryUserCreate = {
   query: `mutation createUser($name: String!, $email: String!, $password: String! ) {
