@@ -122,10 +122,10 @@ const NeedsForm = ({
                 <Grid.Column width={4} verticalAlign="middle" textAlign="center">
                   <Button.Group>
                     <Button
+                    className="modify-button"
                       type="submit"
                       title="Editer"
                       content="Editer"
-                      color="blue"
                       onClick={(event) => {
                         event.preventDefault();
                         EditNeedById(need.id);

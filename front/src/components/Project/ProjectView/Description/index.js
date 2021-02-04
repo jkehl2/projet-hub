@@ -21,7 +21,7 @@ const HeaderStar = ({
 }) => (
   <>
     <Header as="h3" size={`${size}`}>
-      <Header.Content><Link to={`/projet/${project.id}`}>{`${project.title} `}</Link></Header.Content>
+      <Header.Content>{`${project.title} `}</Header.Content>
     </Header>
     <Segment compact basic className="description--marged-none">
       { (!project.isAuthor && logged && !project.isArchived)
@@ -94,7 +94,7 @@ const Description = ({
         <Grid.Column computer={10} mobile={16}>
           <HeaderStar
             project={project}
-            size="small"
+            size="large"
             logged={logged}
             addToFavorite={addToFavorite}
             removeFromFavorite={removeFromFavorite}

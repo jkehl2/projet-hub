@@ -9,6 +9,9 @@ import {
   Segment,
 } from 'semantic-ui-react';
 
+// == IMPORT STYLES
+import './profilEdit.scss';
+
 // == PRIMARY COMPONENT
 const ProfilEdit = ({
   name,
@@ -59,6 +62,7 @@ const ProfilEdit = ({
         <Segment basic textAlign="right">
           <Button.Group>
             <Button
+            className="modify-button"
               positive
               type="submit"
               title="Valider"
@@ -67,6 +71,7 @@ const ProfilEdit = ({
             <Button.Or text="ou" />
 
             <Button
+              
               type="button"
               title="Annuler"
               content="Annuler"
