@@ -27,9 +27,10 @@
   }
 
   &--image{
-    display: block;
-    border-radius: 0.5rem !important;  
-    width: 100% !important; 
+    max-height: 35vh !important;
+    margin: 0 auto !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0 1px vars.$color !important;  
   }
 
   &--segment-image{
@@ -39,10 +40,12 @@
     padding: 0 !important;   
     margin-right: 1rem !important;
     margin-left: 1rem !important;
+    text-align: center !important;
   }
 
   &--row-padding-less{
     padding-top: 0rem !important;
+    display: block !important;
   }
 
   &--marged-top{
