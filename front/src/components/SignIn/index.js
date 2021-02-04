@@ -46,7 +46,7 @@ const SignIn = (
     <Container className="Signin">
       {isRedirected()}
       {/** titre de la page */}
-      <Header as="h1" content="Connexion" textAlign="center" dividing subheader="Déjà un compte utilisateur ? Connectez-vous ici" />
+      <Header as="h1" className="Signin--title" content="Connexion" textAlign="center" dividing subheader="Déjà un compte utilisateur ? Connectez-vous ici" />
       {/** formulaire d'identification */}
       <Form onSubmit={handleSubmit}>
         {/** email */}

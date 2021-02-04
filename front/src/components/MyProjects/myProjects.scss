@@ -2,4 +2,8 @@
 
 .my-projects--header--project--title {
 font-size: 50px;
+.my-projects {
+&--title{
+  color: vars.$color !important;
+}
 }

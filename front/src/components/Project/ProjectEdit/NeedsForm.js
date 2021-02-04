@@ -53,8 +53,8 @@ const NeedsForm = ({
           label="Description du besoin"
           title="Description du besion"
           placeholder="Description de votre besoin"
-          maxlength={150}
-          spellcheck
+          maxLength={150}
+          spellCheck
           cols={50}
           wrap="soft"
           required
@@ -122,10 +122,10 @@ const NeedsForm = ({
                 <Grid.Column width={4} verticalAlign="middle" textAlign="center">
                   <Button.Group>
                     <Button
+                    className="modify-button"
                       type="submit"
                       title="Editer"
                       content="Editer"
-                      color="blue"
                       onClick={(event) => {
                         event.preventDefault();
                         EditNeedById(need.id);

@@ -9,6 +9,8 @@ import ProfilEdit from 'src/containers/ProfilEdit';
 // == IMPORTS COMPOSANTS
 import { Container, Header } from 'semantic-ui-react';
 
+import './profil.scss';
+
 // == Composant Profil
 const Profil = ({ isEditMode }) => (
   <Container className="profil">

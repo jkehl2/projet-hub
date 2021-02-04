@@ -32,7 +32,7 @@ const ProjectMenu = ({
   handleBackToView,
   handleBackToPrevius,
 }) => (
-  <Menu compact icon secondary attached="bottom" borderless size="mini">
+  <Menu id="project-menu" compact icon secondary attached="bottom" borderless size="mini">
     {isEditMode
       ? (
         <Menu.Item
