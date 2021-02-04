@@ -32,7 +32,7 @@ const ProfilEdit = ({
     <Segment textAlign="left">
       <Form onSubmit={handleSubmit}>
 
-        {/** Input user name */}
+        {/** USER NAME */}
         <Form.Input
           type="text"
           label="Nom d'utilisateur"
@@ -45,7 +45,7 @@ const ProfilEdit = ({
           }}
         />
 
-        {/** Input user email */}
+        {/** USER EMAIL */}
         <Form.Input
           type="email"
           label="Email utilisateur"
@@ -62,7 +62,7 @@ const ProfilEdit = ({
         <Segment basic textAlign="right">
           <Button.Group>
             <Button
-            className="modify-button"
+              className="profile-edit--modify-button"
               positive
               type="submit"
               title="Valider"
@@ -71,7 +71,6 @@ const ProfilEdit = ({
             <Button.Or text="ou" />
 
             <Button
-              
               type="button"
               title="Annuler"
               content="Annuler"

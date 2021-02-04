@@ -1,18 +1,20 @@
-// == Import npm
+// == IMPORTS PACKAGES
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS CONTAINERS
-
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
-  Form, Header, Segment, Button, Container,
+  Form,
+  Header,
+  Segment,
+  Button,
+  Container,
 } from 'semantic-ui-react';
 
 // == STYLES
 import './signUp.scss';
 
-// == Composant
+// == COMPONENT
 const SignUp = ({
   name,
   email,
@@ -22,11 +24,11 @@ const SignUp = ({
   setSignUp,
   redirectHome,
 }) => (
-  <Container className="signUp">
-    {/* titre */}
-    <Header className="signUp--title" as="h1" content="Enregistrement" textAlign="center" dividing subheader="Pas de compte utilisateur ? Enregistrez-vous ici" />
+  <Container className="sign-up">
+    {/* TITLE */}
+    <Header className="sign-up--title" as="h1" content="Enregistrement" textAlign="center" dividing subheader="Pas de compte utilisateur ? Enregistrez-vous ici" />
     <Form onSubmit={handleSubmit}>
-      {/* pseudo */}
+      {/* PSEUDO */}
       <Form.Input
         type="text"
         placeholder="Nom d'utilisateur"
@@ -37,7 +39,7 @@ const SignUp = ({
           setSignUp({ name: event.target.value });
         }}
       />
-      {/* email */}
+      {/* EMAIL */}
       <Form.Input
         type="email"
         label="Email utilisateur"
@@ -50,7 +52,7 @@ const SignUp = ({
           setSignUp({ email: event.target.value });
         }}
       />
-      {/* mot de passe */}
+      {/* PASSWORD */}
       <Form.Input
         type="password"
         label="Mot de passe utilisateur"
@@ -63,7 +65,7 @@ const SignUp = ({
           setSignUp({ password: event.target.value });
         }}
       />
-      {/* confirm de mot passe */}
+      {/* PASSWORD CONFIRMATION */}
       <Form.Input
         type="password"
         label="Confirmer mot de passe utilisateur"
@@ -86,7 +88,7 @@ const SignUp = ({
             onClick={handleSubmit}
           />
           <Button.Or text="ou" />
-          {/** bouton inscription */}
+          {/** SUBSCRIBE */}
           <Form.Button
             color="blue"
             type="button"

@@ -1,8 +1,8 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Segment,
 } from 'semantic-ui-react';
@@ -12,7 +12,7 @@ import Needs from './Needs';
 // == STYLES
 import './projectView.scss';
 
-// == Composant
+// == COMPONENT
 const ProjectView = (props) => {
   const {
     project,
@@ -27,10 +27,10 @@ const ProjectView = (props) => {
   return (
     <>
       <Segment compact attached="top">
-        {/* Description du projet */}
+        {/* DESCRIPTION */}
         <Description {...props} />
       </Segment>
-      {/* Liste des besoins du projet */}
+      {/* NEEDS */}
       <Needs
         isCheckEnable={isVisible}
         needs={project.needs}

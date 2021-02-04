@@ -13,12 +13,9 @@
   &--marged-top{
     margin-top: 1rem !important;
   }
+  &--icon-color{
+    color : vars.$color !important;
+  }
 }
 
-.search-icon-color {
-  color : vars.$color !important;
-}
 
-.search-input {
-  color: vars.$color !important;
-}

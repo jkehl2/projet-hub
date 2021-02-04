@@ -1,17 +1,23 @@
-// == IMPORT NPM
+// == IMPORT PACKAGES
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORT COMPOSANTS
+// == IMPORT COMPONENTS
 import {
-  Dropdown, Grid, Header, Icon, Label, Menu as MenuUi,
+  Dropdown,
+  Grid,
+  Header,
+  Icon,
+  Label,
+  Menu as MenuUi,
 } from 'semantic-ui-react';
+
 import { Link } from 'react-router-dom';
 
 // == IMPORT STYLES
 import './menu.scss';
 
-// DROPDOWN TRIGGER - SHOW USER CONNECTED INMODE WHIDE SCREEN, HIDE OVERWISE
+// DROPDOWN TRIGGER - SHOW USER CONNECTED WIDE SCREEN MODE, HIDE OTHERWISE
 const DropDownTrigger = ({ logged, userName }) => (
   <>
     {logged && (
@@ -29,6 +35,7 @@ DropDownTrigger.propTypes = {
   userName: PropTypes.string.isRequired,
 };
 
+// MENU COMPONENT
 const Menu = ({ logged, userName, handleDisconnect }) => (
   <MenuUi className="menu menu--shadow" attached="top" borderless compact inverted>
     <MenuUi.Menu position="left">

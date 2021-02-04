@@ -4,14 +4,15 @@
   &--align-right{
     margin-left: auto !important;
   }
+  &--add-button {
+    background-color: vars.$color-alt !important;
+    color: #fff !important;
+  }
+  &--modify-button {
+    background-color: vars.$color-alt !important;
+    color: #fff !important;
+  }
+  
 }
 
-.add-button {
-  background-color: vars.$color-alt !important;
-  color: #fff !important;
-}
 
-.modify-button {
-  background-color: vars.$color-alt !important;
-  color: #fff !important;
-}

@@ -1,13 +1,9 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-// == IMPORTS COMPOSANTS
-
-// == IMPORTS CONTAINERS
-
-// == Composant
+// == COMPONENT CONTROLLING ON LOGGED
 const ProtectedRoute = ({
   path, exact, sensitive, strict, component: Component, isAllowed, redirectTo,
 }) => (

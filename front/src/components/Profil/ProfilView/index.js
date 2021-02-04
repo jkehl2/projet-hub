@@ -1,13 +1,14 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS COMPONENT
+// == IMPORTS COMPONENTS
 import {
   Button,
   Item,
   Segment,
 } from 'semantic-ui-react';
+
 import ModalConfirm from 'src/components/ModalConfirm';
 
 // == IMPORT STYLES

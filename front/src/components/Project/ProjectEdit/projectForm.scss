@@ -4,9 +4,9 @@
   &--align-right{
     margin-left: auto !important;
   }
+  &--modify-button {
+    background-color: vars.$color-alt !important;
+    color: #fff !important;
+  }
 }
 
-.modify-button {
-  background-color: vars.$color-alt !important;
-  color: #fff !important;
-}

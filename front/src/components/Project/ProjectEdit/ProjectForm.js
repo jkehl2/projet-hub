@@ -1,23 +1,21 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // IMPORT DATE UTIL
 import dateFormater from 'src/utils/dateHTMLFormater';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Button,
   Form,
   Segment,
 } from 'semantic-ui-react';
 
-// == IMPORTS CONTAINERS
-
 // == STYLES
 import './projectForm.scss';
 
-// == Composant
+// == COMPONENT
 const ProjectForm = ({
   title,
   // eslint-disable-next-line camelcase
@@ -84,7 +82,7 @@ const ProjectForm = ({
         />
         <Segment className="projectForm--align-right" basic compact textAlign="right">
           <Button
-            className="modify-button"
+            className="projectForm--modify-button"
             type="submit"
             title="Modifier votre projet"
             content="Modifier"

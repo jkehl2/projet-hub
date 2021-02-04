@@ -1,13 +1,16 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
-  Form, Icon, Button, Segment, Grid, Label,
+  Form,
+  Icon,
+  Button,
+  Segment,
+  Grid,
+  Label,
 } from 'semantic-ui-react';
-
-// == IMPORTS CONTAINERS
 
 // == IMPORTS UTILS
 import utils from 'src/utils/perimeters.json';
@@ -15,7 +18,7 @@ import utils from 'src/utils/perimeters.json';
 // == STYLES
 import './searchProjects.scss';
 
-// == Composant
+// == COMPONENT
 const SearchProjects = ({
   localite, perimeter, archived, setSearch, handleSubmit,
 }) => (
@@ -23,11 +26,12 @@ const SearchProjects = ({
     className="search-project"
     onSubmit={handleSubmit()}
   >
-    <Grid >
+    <Grid>
       <Grid.Column width={16}>
         <Grid.Row>
           <Segment>
-            <Form.Group >
+            <Form.Group>
+              {/** LOCATION */}
               <Form.Input
                 type="text"
                 className="search-project--marged-top"
@@ -41,6 +45,7 @@ const SearchProjects = ({
                   setSearch({ localite: event.target.value });
                 }}
               />
+              {/** RANGE */}
               <Form.Input
                 type="range"
                 className="search-project--marged-top"
@@ -59,6 +64,7 @@ const SearchProjects = ({
                 <Label size="big" basic content={`${utils.perimeters[perimeter].value} km`} horizontal />
               </div>
             </Form.Group>
+            {/** ARCHIVE TOGGLE */}
             <Form.Radio
               toggle
               className="search-project--marged-top"
@@ -73,8 +79,9 @@ const SearchProjects = ({
         </Grid.Row>
         <Grid.Row>
           <Segment basic textAlign="center">
+            {/** SUBMIT */}
             <Button basic circular icon size="massive" type="submit">
-              <Icon name="search" className="search-icon-color" size="large" />
+              <Icon name="search" className="search-project--icon-color" size="large" />
             </Button>
           </Segment>
         </Grid.Row>

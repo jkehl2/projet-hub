@@ -1,8 +1,12 @@
 /* eslint-disable import/no-unresolved */
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 
 // == IMPORTS CONTAINERS
 import SignIn from 'src/containers/SignIn';
@@ -14,7 +18,7 @@ import SignUp from 'src/containers/SignUp';
 import PasswordEdit from 'src/containers/PasswordEdit';
 import CreateProject from 'src/containers/CreateProject';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Container,
   Message,
@@ -33,21 +37,21 @@ import ProtectedRoute from './ProtectedRoute';
 // == IMPORT STYLES
 import './app.scss';
 
-// == Composant
+// == COMPONENT
 const App = ({
   isError, error, isMessage, message, logged, loading, setError,
 }) => (
   <>
-    {/* Menu de l'application */}
+    {/* MENU */}
     <Menu />
     <div className="app">
       <Container>
 
-        {/* Affiche message d'erreur si il y en a */}
+        {/* SHOW ERROR IF ANY */}
         {isError
         && (<Message negative header="Une erreur s'est produite" content={`${error}`} icon="thumbs down outline" size="small" />)}
 
-        {/* Affiche message d'information si il y en a */}
+        {/* SHOW INFO IF ANY */}
         {isMessage
         && (<Message header="Information" content={`${message}`} icon="idea" size="small" />)}
 
@@ -56,39 +60,37 @@ const App = ({
         </Dimmer>
 
         <Switch>
-          {/* Sprint 1 - Page d'accueil */}
+          {/* HOME PAGE */}
           <Route exact path="/" component={Home} />
 
-          {/* Sprint 1 - Page de rechercher */}
+          {/* SEARCH PAGE */}
           <Route exact path="/projets" component={Projects} />
 
-          {/* Sprint 1 - Page d'étail d'un projet */}
+          {/* DETAIL PROJECT PAGE */}
           <Route exact path="/projet/:slug" component={Project} />
 
-          {/* Sprint 1 - Page de connexion utlisateur */}
+          {/* USER CONNEXION */}
           <ProtectedRoute exact path="/utilisateur/connexion" isAllowed={!logged} component={SignIn} redirectTo="/" />
-          {/* Sprint 1 - Page d'enregistrement utlisateur' */}
+          {/* USER SUSCRIBE' */}
           <ProtectedRoute exact path="/utilisateur/enregistrement" isAllowed={!logged} component={SignUp} redirectTo="/" />
 
-          {/* Sprint 2 - Mentions légales */}
+          {/* LEGAL MENTIONS PAGE */}
           <Route exact path="/mentionsLegales" component={LegalMentions} />
-          {/* Sprint 2 - Présentation équipe */}
+          {/* TEAM PAGE */}
           <Route exact path="/equipe" component={WhoAreWe} />
-          {/* Routes ateignable uniquement si utilisateur logged */}
-          {/* Sprint 1 - Page de profil */}
+          {/* ROUTES REACHABLE ONLY IF LOGGED */}
+          {/* PROFILE PAGE */}
           <ProtectedRoute exact path="/utilisateur/profil" isAllowed={logged} component={Profil} />
-          {/* Sprint 2 - Pages Création de projet + page création de besoins */}
+          {/* PROJECT CREATION PAGE */}
           <ProtectedRoute exact path="/utilisateur/create" isAllowed={logged} component={CreateProject} />
-          {/* Sprint 2 - Page mes favoris' */}
-          {/* <Route exact path="/utilisateur/favoris" component={MyFavorites} /> */}
+          {/* FAVORITES PAGE */}
           <ProtectedRoute exact path="/utilisateur/favoris" isAllowed={logged} component={MyFavorites} />
-          {/* Sprint 2 - Page mes projets' */}
-          {/* <Route exact path="/utilisateur/projets" component={MyProjects} /> */}
+          {/* MY PROJECTS PAGE */}
           <ProtectedRoute exact path="/utilisateur/projets" isAllowed={logged} component={MyProjects} />
-          {/* Sprint 2 - Page mes projets' */}
+          {/* EDIT PASSWORD */}
           <ProtectedRoute exact path="/utilisateur/motdepasse-edit" isAllowed={logged} component={PasswordEdit} />
 
-          {/* MESSAGE POUR 404 ET REDIRECT VERS Accueil */}
+          {/* 404 & REDIRECT TOWARDS HOMEPAGE */}
           <Route
             path="*"
             exact

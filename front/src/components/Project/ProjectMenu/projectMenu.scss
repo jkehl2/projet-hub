@@ -5,11 +5,13 @@
   border: none !important;
 }
 
-.go-back-button {
-  color : vars.$color !important;
-}
-
-.edit-button {
-  background-color: vars.$color-alt !important;
-  color: #fff !important;
+.menu{
+  &--go-back-button {
+    color : vars.$color !important;
+  }
+  &--edit-button {
+    background-color: vars.$color-alt !important;
+    color: #fff !important;
+  }
+  
 }

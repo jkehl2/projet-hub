@@ -1,23 +1,33 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes, { shape } from 'prop-types';
 
 // IMPORT IMAGE DOT MAP
 import dot from 'src/assets/images/dot.svg';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import ProjectCard from 'src/components/Projects/ProjectCard';
+
 import {
-  Grid, Header, Image, Segment,
+  Grid,
+  Header,
+  Image,
+  Segment,
 } from 'semantic-ui-react';
-import {
-  MapContainer, TileLayer, ImageOverlay, Popup,
-} from 'react-leaflet';
-// == STYLES
-import './list.scss';
+
 import { Link } from 'react-router-dom';
 
-// == Composant
+import {
+  MapContainer,
+  TileLayer,
+  ImageOverlay,
+  Popup,
+} from 'react-leaflet';
+
+// == STYLES
+import './list.scss';
+
+// == COMPONENT
 const List = ({
   logged, projects, updateList, addToFavorite, removeFromFavorite,
 }) => {

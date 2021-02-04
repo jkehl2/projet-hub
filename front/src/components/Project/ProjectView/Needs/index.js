@@ -1,22 +1,15 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Accordion,
   Checkbox,
   Grid, Header, Icon, Progress,
 } from 'semantic-ui-react';
 
-// == IMPORTS CONTAINERS
-
-// == STYLES
-import './needs.scss';
-
-// == Functions
-
-// == Composant
+// == COMPONENTS
 const Needs = ({ isCheckEnable, needs, updateNeedIdCompleted }) => {
   const checkArr = needs.map((need) => (need.completed ? 1 : 0));
   const checkCount = checkArr.reduce((a, b) => a + b, 0);

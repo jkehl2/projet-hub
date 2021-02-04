@@ -1,18 +1,19 @@
 /* eslint-disable import/no-unresolved */
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
 // == IMPORTS CONTAINERS
 import List from 'src/containers/MyProjectsList';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENT
 import {
-  Container, Header,
+  Container,
+  Header,
 } from 'semantic-ui-react';
 
 // == STYLES
 import './myProjects.scss';
 
-// == Composant
+// == COMPONENT
 const MyProjects = () => (
   <Container className="my-projects">
     <Header className="my-projects--title" as="h1" content="Mes projets" textAlign="center" dividing subheader="Tous mes projets en un seul endroit" />

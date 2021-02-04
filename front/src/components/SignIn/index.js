@@ -1,19 +1,22 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS CONTAINERS
-
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
-  Container, Header, Form, Button, Segment, Message,
+  Container,
+  Header,
+  Form,
+  Button,
+  Segment,
+  Message,
 } from 'semantic-ui-react';
 
 // == STYLES
 import './SignIn.scss';
 import { useHistory } from 'react-router-dom';
 
-// == Composant
+// == COMPONENT
 const SignIn = (
   {
     email,
@@ -43,13 +46,12 @@ const SignIn = (
     };
   }, []);
   return (
-    <Container className="Signin">
+    <Container className="sign-in">
       {isRedirected()}
-      {/** titre de la page */}
-      <Header as="h1" className="Signin--title" content="Connexion" textAlign="center" dividing subheader="Déjà un compte utilisateur ? Connectez-vous ici" />
-      {/** formulaire d'identification */}
+      <Header as="h1" className="sign-in--title" content="Connexion" textAlign="center" dividing subheader="Déjà un compte utilisateur ? Connectez-vous ici" />
+      {/** FORM */}
       <Form onSubmit={handleSubmit}>
-        {/** email */}
+        {/** EMAIL */}
         <Form.Input
           type="email"
           label="Email utilisateur"
@@ -62,7 +64,7 @@ const SignIn = (
             setSignInValue({ email: event.target.value });
           }}
         />
-        {/** mot de passe */}
+        {/** PASSWORD */}
         <Form.Input
           type="password"
           label="Mot de passe utilisateur"
@@ -75,7 +77,7 @@ const SignIn = (
             setSignInValue({ password: event.target.value });
           }}
         />
-        {/** bouton connexion */}
+        {/** CONNEXION */}
         <Segment basic textAlign="right">
           <Button.Group>
             <Form.Button
@@ -85,7 +87,7 @@ const SignIn = (
               title="Connexion"
             />
             <Button.Or text="ou" />
-            {/** bouton inscription */}
+            {/** SUSCRIBE */}
             <Form.Button
               color="blue"
               type="button"

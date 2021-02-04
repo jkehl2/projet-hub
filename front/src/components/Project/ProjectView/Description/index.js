@@ -1,21 +1,23 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
 import PropTypes, { shape } from 'prop-types';
-import { Link } from 'react-router-dom';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Button,
   Divider,
   Grid,
   Header,
-  Icon, Image, Label, Segment,
+  Icon,
+  Image,
+  Label,
+  Segment,
 } from 'semantic-ui-react';
 
 // == STYLES
 import './description.scss';
 
-// SUB COMPONENT
+// SUB COMPONENT - FAVORITES
 const HeaderStar = ({
   project, size, logged, addToFavorite, removeFromFavorite,
 }) => (
@@ -70,7 +72,7 @@ HeaderStar.propTypes = {
   removeFromFavorite: PropTypes.func.isRequired,
 };
 
-// == Composant
+// == COMPONENT
 const Description = ({
   logged,
   project,

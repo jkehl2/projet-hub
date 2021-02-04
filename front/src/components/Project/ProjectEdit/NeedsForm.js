@@ -1,8 +1,8 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useEffect, useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Button,
   Form,
@@ -16,7 +16,7 @@ import {
 // == STYLES
 import './needForm.scss';
 
-// == Composant
+// == COMPONENT
 const NeedsForm = ({
   needs,
   title,
@@ -65,7 +65,7 @@ const NeedsForm = ({
         />
         <Segment className="need-form--alignRight" basic compact textAlign="right">
           <Button
-            className="add-button"
+            className="need-form--add-button"
             type="submit"
             title="Ajouter un besoin"
             content="Ajouter"
@@ -122,7 +122,7 @@ const NeedsForm = ({
                 <Grid.Column width={4} verticalAlign="middle" textAlign="center">
                   <Button.Group>
                     <Button
-                    className="modify-button"
+                      className="need-form--modify-button"
                       type="submit"
                       title="Editer"
                       content="Editer"

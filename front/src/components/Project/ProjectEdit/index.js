@@ -1,4 +1,4 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -6,12 +6,10 @@ import PropTypes from 'prop-types';
 import ProjectForm from 'src/containers/ProjectForm';
 import NeedsForm from 'src/containers/NeedsForm';
 
-// == IMPORTS COMPOSANTS
-
 // == STYLES
 import './projectEdit.scss';
 
-// == Composant
+// == COMPONENT
 const ProjectEdit = ({ getProjectById }) => {
   useEffect(() => {
     getProjectById();
