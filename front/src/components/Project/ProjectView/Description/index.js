@@ -94,7 +94,7 @@ const Description = ({
         <Grid.Column computer={10} mobile={16}>
           <HeaderStar
             project={project}
-            size="small"
+            size="large"
             logged={logged}
             addToFavorite={addToFavorite}
             removeFromFavorite={removeFromFavorite}
