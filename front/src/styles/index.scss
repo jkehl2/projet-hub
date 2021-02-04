@@ -1,14 +1,13 @@
 @use 'reset';
 @use 'vars';
 
-
 body {
   font-family: sans-serif;
   height: 100vh;
   overflow: hidden;
   margin:0;
   padding: 0;
- background-color: vars.$color-light !important; 
+  
 }
 
 #root{
@@ -19,7 +18,10 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
-  background-color:vars.$color-light;
+  background: url('../assets/images/fond.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 /* 

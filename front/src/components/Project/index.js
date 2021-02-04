@@ -14,7 +14,6 @@ import {
   Grid,
   Header,
   Image,
-  Segment,
 } from 'semantic-ui-react';
 
 import {
@@ -26,6 +25,7 @@ import {
 
 import ProjectView from './ProjectView';
 import ProjectEdit from './ProjectEdit';
+import ProjectMap from './ProjectMap';
 
 // == STYLES
 import './project.scss';
@@ -60,44 +60,7 @@ const Project = ({
 
       {/* PROJECTS MAP */}
       {project.lat !== 0 && (
-      <MapContainer
-        className="project--map"
-        center={[project.lat, project.long]}
-        zoom={11}
-        scrollWheelZoom
-      >
-        <ImageOverlay
-          bounds={[
-            [project.lat, project.long],
-            [project.lat + 0.02, project.long + 0.02],
-          ]}
-          url={dot}
-          interactive
-          opacity={0.9}
-          zIndex={1}
-        >
-          <Popup className="project--map--popup">
-            <Grid className="project--map--card" verticalAlign="middle" textAlign="left">
-              <Grid.Row divided>
-                <Grid.Column className="project--map--card--cell" width={4}>
-                  <Image src={`${project.image}`} size="medium" rounded centered />
-                </Grid.Column>
-                <Grid.Column className="project--map--card--cell" width={12}>
-                  <Header size="medium" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} />
-                  <Segment basic>
-                    <Image size="mini" src={`${project.author.avatar}`} avatar />
-                    <strong>{`${project.author.name}`}</strong>
-                  </Segment>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Popup>
-        </ImageOverlay>
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-      </MapContainer>
+      <ProjectMap project={project} />
       )}
       {/* RENDER ON EDITION OR VIEW */}
       {(isEditMode && logged)

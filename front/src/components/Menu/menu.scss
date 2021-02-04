@@ -16,7 +16,8 @@
     }
 
     &--dropdown {
-      background-color: vars.$color-menu-dropped !important;
+      /* background-color: vars.$color-menu-dropped !important; */
+      background-color: rgba(255, 255, 255, 0.75) !important;
       box-shadow: vars.$box-shadow !important;
       z-index: inherit !important;
     }

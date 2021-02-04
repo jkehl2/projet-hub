@@ -80,7 +80,7 @@ const SearchProjects = ({
         <Grid.Row>
           <Segment basic textAlign="center">
             {/** SUBMIT */}
-            <Button basic circular icon size="massive" type="submit">
+            <Button className="search-project--button-color" circular icon size="massive" type="submit">
               <Icon name="search" className="search-project--icon-color" size="large" />
             </Button>
           </Segment>

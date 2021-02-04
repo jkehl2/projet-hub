@@ -1,7 +1,6 @@
 @use 'src/styles/vars';
 
-.project {
-  &--map {
+.project-map {
     z-index: 0 !important;
     height: 35vh !important;
     width: 100% !important;
@@ -20,23 +19,8 @@
         margin: 0 !important;
       }
     }
-  }
-  &-header {
-    color : vars.$color !important;
-  }
-}
-
-.content>.header {
-  font-size: 2rem !important;
-
-  >.icon {
-    margin-left: 1rem !important;
-  }
-}
-
-.container{
-  margin-top: 0.5rem !important;
 }
 .leaflet-popup-content{
   margin: 0.25rem !important;
 }
+
