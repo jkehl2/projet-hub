@@ -9,6 +9,7 @@ import dateFormater from 'src/utils/dateHTMLFormater';
 import {
   Button,
   Form,
+  Image,
   Segment,
 } from 'semantic-ui-react';
 
@@ -21,11 +22,14 @@ const ProjectForm = ({
   // eslint-disable-next-line camelcase
   expiration_date,
   description,
+  image,
   location,
   syncProjectFields,
   setProjectField,
+  handleFileChange,
   handleSubmit,
 }) => {
+  const fileInputRef = React.createRef();
   useEffect(() => {
     syncProjectFields();
   }, []);
@@ -58,8 +62,8 @@ const ProjectForm = ({
           label="Description du projet"
           title="Description du projet"
           placeholder="Les potagers urbains se définissent simplement comme la culture de légumes ..."
-          maxlength={700}
-          spellcheck
+          maxLength={700}
+          spellCheck
           cols={100}
           wrap="soft"
           value={description}
@@ -80,9 +84,27 @@ const ProjectForm = ({
             setProjectField({ expiration_date: event.target.value });
           }}
         />
+        <Form.Field>
+          <Image src={`${image}`} spaced="right" size="small" title="Illustration projet" />
+          <Button
+            className="project-form--button-color"
+            type="button"
+            icon="file"
+            labelPosition="left"
+            content="Choisir une illustration"
+            title="Choisir une illustration"
+            onClick={() => fileInputRef.current.click()}
+          />
+          <input
+            ref={fileInputRef}
+            type="file"
+            hidden
+            onChange={handleFileChange}
+          />
+        </Form.Field>
         <Segment className="projectForm--align-right" basic compact textAlign="right">
           <Button
-            className="projectForm--modify-button"
+            className="project-form--modify-button"
             type="submit"
             title="Modifier votre projet"
             content="Modifier"
@@ -98,9 +120,11 @@ ProjectForm.propTypes = {
   title: PropTypes.string.isRequired,
   expiration_date: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   syncProjectFields: PropTypes.func.isRequired,
   setProjectField: PropTypes.func.isRequired,
+  handleFileChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

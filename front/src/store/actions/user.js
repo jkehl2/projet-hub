@@ -13,6 +13,7 @@ export const USER_DELETE = 'USER_DELETE';
 export const CONFIRM_DELETE = 'CONFIRM_DELETE';
 export const CONFIRM_DELETE_SUBMIT = 'CONFIRM_DELETE_SUBMIT';
 export const USER_CREATE = 'USER_CREATE';
+export const USER_UPLOAD_AVATAR = 'USER_UPLOAD_AVATAR';
 // == [CLE-VALEURS] - ACTIONS sur le store utilisateur (Reducer user)
 // === En cas de connexion on sauvegarde dans le store utlisateur
 export const USER_STORE_UPDATE = 'USER_STORE_UPDATE';
@@ -25,6 +26,10 @@ export const USER_STORE_CLEAN = 'USER_STORE_CLEAN';
 export const getUserById = (payload) => ({
   type: USER_BY_ID,
   payload,
+});
+export const userUploadAvatar = (fileSrc) => ({
+  type: USER_UPLOAD_AVATAR,
+  fileSrc,
 });
 export const editUser = () => ({
   type: USER_EDIT,

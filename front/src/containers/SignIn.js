@@ -4,7 +4,7 @@ import SignIn from 'src/components/SignIn';
 
 import { push } from 'connected-react-router';
 import {
-  appSignInUpdate, appMsgClean, appErrorClean, appSignInClean,
+  appSignInUpdate, appMsgClean, appSignInClean,
 } from 'src/store/actions/app';
 import { userSignIn } from 'src/store/actions/user';
 
