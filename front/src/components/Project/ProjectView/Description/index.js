@@ -78,7 +78,7 @@ const Description = ({
   removeFromFavorite,
 }) => (
   <>
-    { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
+    { project.isArchived && <Label color="grey" corner="right" icon="archive" size="big" /> }
     <Grid divided stretched stackable verticalAlign="middle">
       <Grid.Row only="mobile">
         <Segment basic textAlign="center">
