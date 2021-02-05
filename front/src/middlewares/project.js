@@ -96,7 +96,12 @@ const projectMiddleware = (store) => (next) => (action) => {
           })).sort((proj1, proj2) => (
             proj1.distance > proj2.distance ? 1 : -1
           ));
-          store.dispatch(updateProjectStore({ projects }));
+          if (projects.length > 0) {
+            store.dispatch(updateProjectStore({ projects }));
+          }
+          else {
+            store.dispatch(appMsgUpdate('Aucun projet trouvé sur ce périmètre géographique.'));
+          }
           store.dispatch(push('/projets'));
         })
         .catch((error) => {
