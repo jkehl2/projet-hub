@@ -23,6 +23,7 @@ const manageRefreshToken = (response, dispatch) => {
   const originalRequest = response.config;
   if (!originalRequest._retry) {
     originalRequest._retry = true;
+    localStorage.setItem('token', '');
     const configToken = {
       method: 'post',
       url: `${apiUrl}/token`,

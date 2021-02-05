@@ -50,54 +50,56 @@ const SignIn = (
       {isRedirected()}
       <Header as="h1" className="sign-in--title" content="Connexion" textAlign="center" dividing subheader="Déjà un compte utilisateur ? Connectez-vous ici" />
       {/** FORM */}
-      <Form onSubmit={handleSubmit}>
-        {/** EMAIL */}
-        <Form.Input
-          type="email"
-          label="Email utilisateur"
-          title="Email utilisateur"
-          placeholder="albert.dupont@project-hub.fr"
-          autoComplete="current-user"
-          required
-          value={email}
-          onChange={(event) => {
-            setSignInValue({ email: event.target.value });
-          }}
-        />
-        {/** PASSWORD */}
-        <Form.Input
-          type="password"
-          label="Mot de passe utilisateur"
-          title="Mot de passe utilisateur"
-          placeholder="******"
-          autoComplete="current-password"
-          required
-          value={password}
-          onChange={(event) => {
-            setSignInValue({ password: event.target.value });
-          }}
-        />
-        {/** CONNEXION */}
-        <Segment basic textAlign="right">
-          <Button.Group>
-            <Form.Button
-              id="button-submit"
-              type="submit"
-              content="Connexion"
-              title="Connexion"
-            />
-            <Button.Or text="ou" />
-            {/** SUBSCRIBE */}
-            <Form.Button
-              id="button-subscribe"
-              type="button"
-              content="Inscription"
-              title="Inscription"
-              onClick={redirectSignUp}
-            />
-          </Button.Group>
-        </Segment>
-      </Form>
+      <Segment>
+        <Form onSubmit={handleSubmit}>
+          {/** EMAIL */}
+          <Form.Input
+            type="email"
+            label="Email utilisateur"
+            title="Email utilisateur"
+            placeholder="albert.dupont@project-hub.fr"
+            autoComplete="current-user"
+            required
+            value={email}
+            onChange={(event) => {
+              setSignInValue({ email: event.target.value });
+            }}
+          />
+          {/** PASSWORD */}
+          <Form.Input
+            type="password"
+            label="Mot de passe utilisateur"
+            title="Mot de passe utilisateur"
+            placeholder="******"
+            autoComplete="current-password"
+            required
+            value={password}
+            onChange={(event) => {
+              setSignInValue({ password: event.target.value });
+            }}
+          />
+          {/** CONNEXION */}
+          <Segment basic textAlign="right">
+            <Button.Group>
+              <Form.Button
+                id="button-submit"
+                type="submit"
+                content="Connexion"
+                title="Connexion"
+              />
+              <Button.Or text="ou" />
+              {/** SUBSCRIBE */}
+              <Form.Button
+                id="button-subscribe"
+                type="button"
+                content="Inscription"
+                title="Inscription"
+                onClick={redirectSignUp}
+              />
+            </Button.Group>
+          </Segment>
+        </Form>
+      </Segment>
     </Container>
   );
 };

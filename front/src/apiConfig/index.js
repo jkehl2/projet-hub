@@ -309,8 +309,8 @@ export const queryGetProjectsByGeo = {
 
 // == QUERY - CREATE PROJECT
 export const queryCreateProject = {
-  query: `mutation CreateProject($title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String) {
-    insertProject(title: $title, description: $description, expiration_date: $expiration_date, location: $location, lat: $lat, long: $long, image: $image, file: $file) {
+  query: `mutation CreateProject($title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!) {
+    insertProject(title: $title, description: $description, expiration_date: $expiration_date, location: $location, lat: $lat, long: $long) {
       __typename
       ... on Project{
         id
@@ -326,7 +326,7 @@ export const queryCreateProject = {
 };
 // == QUERY - EDIT PROJECT
 export const queryEditProject = {
-  query: `mutation EditProject($id: ID!, $title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String) {
+  query: `mutation EditProject($id: ID!, $title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!) {
     editProject(
       id: $id,
       title: $title,
@@ -335,8 +335,6 @@ export const queryEditProject = {
       location: $location,
       lat: $lat,
       long: $long,
-      image: $image,
-      file: $file
   ) {
     ... on Project{
       id

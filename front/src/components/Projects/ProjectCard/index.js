@@ -29,7 +29,7 @@ const HeaderStar = ({
     <Header as="h3" size={`${size}`}>
       <Header.Content><Link className="project-card--title" to={`/projet/${project.id}`}>{`${project.title} `}</Link></Header.Content>
     </Header>
-    { (!project.isAuthor && logged && !project.isArchived)
+    { (!project.isAuthor && logged)
       && (project.isFavorite
         ? (
           <Button
