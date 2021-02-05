@@ -200,7 +200,6 @@ NeedsForm.propTypes = {
   needs: PropTypes.arrayOf(shape({
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
   })).isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

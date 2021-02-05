@@ -85,6 +85,7 @@ const CreateProject = ({
             maxLength={700}
             spellCheck
             cols={100}
+            required
             wrap="soft"
             value={description}
             onChange={(event) => {
