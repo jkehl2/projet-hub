@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="700"
+   height="700"
+   viewBox="0 0 185.20833 185.20833"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="local-hub.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     id="namedview848"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="1.6982864"
+     inkscape:cx="410.93627"
+     inkscape:cy="691.07666"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <defs
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath865">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:0.264583"
+         id="rect867"
+         width="215.11984"
+         height="299.95541"
+         x="0.01046051"
+         y="-0.75591302" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath869">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:0.264583"
+         id="rect871"
+         width="215.11984"
+         height="299.95541"
+         x="0.01046051"
+         y="-0.75591302" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath875">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:0.246534"
+         id="rect877"
+         width="179.3873"
+         height="312.30319"
+         x="0.010460509"
+         y="-25.504202" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath879">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke-width:0.264583"
+         id="rect881"
+         width="215.11984"
+         height="299.95541"
+         x="0.01046051"
+         y="-0.75591302" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath857">
+      <rect
+         style="fill:#000000;stroke-width:0.199866"
+         id="rect859"
+         width="110.2602"
+         height="178.29279"
+         x="17.865179"
+         y="100.83586" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath861">
+      <rect
+         style="fill:#000000;stroke-width:0.362102"
+         id="rect863"
+         width="215.11986"
+         height="299.95541"
+         x="0.01046051"
+         y="-0.75591302" />
+    </clipPath>
+  </defs>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <rect
+     style="fill:#fdfde4;fill-opacity:1;stroke-width:0.223394"
+     id="rect845"
+     width="215.11984"
+     height="299.95544"
+     x="0.01046051"
+     y="-0.75591302"
+     clip-path="url(#clipPath861)"
+     transform="matrix(0.86275679,0,0,0.61883387,0.00143563,0.61847667)" />
+  <path
+     style="fill:#06659c;fill-opacity:1;stroke:none;stroke-width:0.223394px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M -1.2662161,205.38368 C 79.164353,179.85556 30.012338,265.37477 146.82817,234.74101 263.64398,204.10727 299.3909,243.67585 299.3909,243.67585 L 135.33809,322.81304 -12.117958,298.56133 Z"
+     id="path20"
+     clip-path="url(#clipPath857)"
+     transform="matrix(1.6832557,0,0,0.50856169,-30.061194,43.819113)" />
+</svg>
