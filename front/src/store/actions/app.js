@@ -1,10 +1,10 @@
 /**
  * @module app-actions
- * Configuration des actions sur le store applicatif technique
+ * Configuration des actions sur le store applicatif technique(?)
  */
 
 // == ===================================
-// == [CLE-VALEURS] - ACTIONS MIDDLEWARE applicatif technique
+// == [CLE-VALEURS] - ACTIONS MIDDLEWARE applicatif technique(?)
 export const APP_REFRESH_PROFIL = 'APP_REFRESH_PROFIL';
 export const APP_PROFIL_CONFIRM = 'APP_PROFIL_CONFIRM';
 export const APP_CREATE_USER_VERIF = 'USER_CREATION_VERIF';
@@ -19,7 +19,7 @@ export const APP_CONFIRM_PASSWORD = 'APP_CONFIRM_PASSWORD';
 export const APP_GET_GEOCODING = 'APP_GET_GEOCODING';
 
 // == ===================================
-// == [CLE-VALEURS] - ACTIONS sur le store applicatif technique
+// == [CLE-VALEURS] - ACTIONS sur le store applicatif technique(?)
 export const APP_CLEAN = 'APP_CLEAN';
 export const APP_LOADING_ON = 'APP_LOADING_ON';
 export const APP_LOADING_OFF = 'APP_LOADING_OFF';
@@ -50,7 +50,7 @@ export const appRefreshProfil = () => ({
 });
 
 /**
- * Action middleware - confirmation du mot de passe
+ * MIDDLEWARE ACTION - CONFIRM PASSWORD
  * @param {Object} dispatch
  */
 export const appConfirmPassword = (dispatch) => ({
@@ -210,7 +210,7 @@ export const appEditProjectOff = () => (
   }
 );
 
-// Create Needs
+// CREATE NEEDS
 export const appCreateNeeds = (payload) => ({
   type: APP_CREATE_NEEDS,
   payload,

@@ -18,7 +18,6 @@ import { routerMiddleware } from 'connected-react-router';
 
 export const history = createBrowserHistory();
 
-// on crée le store et on l'export as default
 export default function configureStore(preloadedState) {
   const store = createStore(
     createRootReducer(history), // root reducer with router state
