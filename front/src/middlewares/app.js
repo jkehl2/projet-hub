@@ -100,7 +100,6 @@ const userMiddleware = (store) => (next) => (action) => {
         project: {
           project: {
             id,
-            image,
           },
         },
       } = store.getState();
@@ -110,7 +109,6 @@ const userMiddleware = (store) => (next) => (action) => {
         expiration_date: dateApiFormater(expiration_date),
         description,
         location,
-        image,
       };
       store.dispatch(appGetGeoCoding(location, editProject, payload));
       return;
