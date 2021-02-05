@@ -50,7 +50,7 @@ const Needs = ({ isCheckEnable, needs, updateNeedIdCompleted }) => {
                       }}
                     />
                   )
-                  : <Label><Icon name="caret right" className="needs--label" />{need.completed}</Label>}
+                  : <Icon name="chevron right" className="needs--label">{need.completed}</Icon>}
               </Grid.Column>
               <Grid.Column width={14}>
                 <Header as="h3">{`${need.title}`}</Header>
