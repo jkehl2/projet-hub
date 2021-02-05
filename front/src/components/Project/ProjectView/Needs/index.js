@@ -9,6 +9,7 @@ import {
   Grid,
   Header,
   Icon,
+  Label,
 } from 'semantic-ui-react';
 
 // == IMPOTS STYLES
@@ -49,7 +50,7 @@ const Needs = ({ isCheckEnable, needs, updateNeedIdCompleted }) => {
                       }}
                     />
                   )
-                  : <Checkbox readOnly checked={need.completed} />}
+                  : <Label><Icon name="caret right" className="needs--label" />{need.completed}</Label>}
               </Grid.Column>
               <Grid.Column width={14}>
                 <Header as="h3">{`${need.title}`}</Header>
