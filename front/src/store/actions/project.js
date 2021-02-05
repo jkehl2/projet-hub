@@ -129,7 +129,8 @@ export const projectAddToFavoriteById = (id) => ({
   type: PROJECT_ADD_FAVORITE_BY_ID,
   id,
 });
-export const projectRemoveToFavoriteById = (id) => ({
+export const projectRemoveToFavoriteById = (id, refreshFavoriteLst = false) => ({
   type: PROJECT_REMOVE_FAVORITE_BY_ID,
   id,
+  refreshFavoriteLst,
 });

@@ -35,6 +35,7 @@ import {
   PROJECT_UPLOAD_IMAGE,
   updateProjectStore,
   cleanProject,
+  getProjectsByFavorites,
   updateProjectFavorite,
 } from 'src/store/actions/project';
 
@@ -465,7 +466,13 @@ const projectMiddleware = (store) => (next) => (action) => {
               },
             },
           } = response;
-          store.dispatch(updateProjectFavorite(idProject, { isFavorite, followers }));
+
+          if (action.refreshFavoriteLst) {
+            store.dispatch(getProjectsByFavorites());
+          }
+          else {
+            store.dispatch(updateProjectFavorite(idProject, { isFavorite, followers }));
+          }
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
