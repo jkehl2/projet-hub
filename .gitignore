@@ -1,5 +1,7 @@
 back/node_modules
 back/.env
+back/public/avatars
+back/public/project-files
 
 front/node_modules/
 front/dist/
