@@ -5,6 +5,9 @@
   border-radius: 0.5rem !important;
   border: 2px solid vars.$color !important;
   &--label{
-    color: vars.$color !important;
+    color: vars.$color-alt !important;
+  }
+  &--label-unfulfilled{
+    color: gray !important;
   }
 }

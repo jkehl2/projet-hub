@@ -12,8 +12,8 @@ import './whoarewe.scss';
 // == COMPONENT
 const WhoAreWe = () => (
   <Container>
-    <Header as="h1" content="La fine équipe Local-Hub" textAlign="center" dividing subheader="Une équipe de choc !" />
-    <Segment className="team" padded="very">
+    <Header className="who-are-we--header" as="h1" content="La fine équipe Local-Hub" textAlign="center" dividing subheader="Une équipe de choc !" />
+    <Segment className="who-are-we" padded="very">
       <Grid verticalAlign="middle" textAlign="center" stackable columns="equal">
         <Grid.Row>
           <Grid.Column>

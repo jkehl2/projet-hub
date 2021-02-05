@@ -21,6 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   removeFromFavorite: (id) => {
     dispatch(projectRemoveToFavoriteById(id));
+    dispatch(getProjectsByFavorites());
   },
 });
 
