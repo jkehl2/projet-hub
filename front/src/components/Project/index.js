@@ -64,9 +64,6 @@ const Project = ({
       {(isEditMode && logged)
         ? (
           <>
-            {project.lat !== 0 && (
-            <ProjectMap project={project} />
-            )}
             <ProjectEdit
               getProjectById={getProjectById}
             />
