@@ -34,7 +34,7 @@ const ProjectForm = ({
     syncProjectFields();
   }, []);
   return (
-    <>
+    <Segment>
       <Form onSubmit={handleSubmit}>
         <Form.Input
           type="text"
@@ -102,9 +102,9 @@ const ProjectForm = ({
             onChange={handleFileChange}
           />
         </Form.Field>
-        <Segment className="projectForm--align-right" basic compact textAlign="right">
+        <Segment className="project-form--align-right" basic compact textAlign="right">
           <Button
-            className="project-form--modify-button"
+            className="project-form--modify-color"
             type="submit"
             title="Modifier votre projet"
             content="Modifier"
@@ -112,7 +112,7 @@ const ProjectForm = ({
           />
         </Segment>
       </Form>
-    </>
+    </Segment>
   );
 };
 // == PROP TYPES
