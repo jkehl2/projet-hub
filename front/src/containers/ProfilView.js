@@ -11,6 +11,11 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   avatar: state.user.avatar,
   confirm: state.app.profil.confirm,
+  isArchived: state.project.project.isArchived,
+  isError: state.app.error.isError,
+  error: state.app.error.error,
+  isMessage: state.app.message.isMessage,
+  message: state.app.message.message,
 });
 
 const mapDispatchToProps = (dispatch) => ({

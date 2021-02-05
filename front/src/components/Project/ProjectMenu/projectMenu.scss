@@ -1,3 +1,17 @@
 @use 'src/styles/vars';
 
-.projectMenu {}
+#project-menu {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.menu{
+  &--go-back-button {
+    color : vars.$color !important;
+  }
+  &--edit-button {
+    background-color: vars.$color-alt !important;
+    color: #fff !important;
+  }
+  
+}

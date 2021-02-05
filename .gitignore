@@ -6,3 +6,4 @@ front/dist/
 front/.DS_Store
 front/Thumbs.db
 front/yarn-error.log
+.vscode

@@ -2,9 +2,42 @@
 
 .menu {
     flex-grow: 0 !important;
-    flex-shrink: 0!important;
+    flex-shrink: 0 !important;
     flex-basis: content;
+    background-color: vars.$color-alt !important;
+    z-index:100 !important;
+
     &__header{
       padding-left: 0 !important;
+    }
+
+    &--shadow {
+      box-shadow: vars.$box-menu-shadow !important;
+    }
+
+    &--dropdown {
+      /* background-color: vars.$color-menu-dropped !important; */
+      background-color: rgba(255, 255, 255, 0.75) !important;
+      box-shadow: vars.$box-shadow !important;
+      z-index: inherit !important;
+    }
+    &--dropdown--menu {
+      z-index:inherit !important;
+    }
+    &--connect-label{
+      background: transparent !important;
+      background-color: transparent !important;
+      border-radius: 0.5rem !important;
+      border: 2px solid white !important;
+      padding: 0.75rem 1rem !important;
+      color: white !important;
+      font-size: bold !important;
+      &--icon {
+        color: #32CD32 !important;
+        margin-right: 1rem !important;
+      }
+      &:hover{
+        border: 2px solid vars.$color !important;
+      }
     }
 }

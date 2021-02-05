@@ -1,9 +1,9 @@
 /**
  * @module project-actions
- * Configuration des actions sur le store projets
+ * CONFIGURATION ACTIONS ON THE STORE PROJETS
  */
 
-// == [CLE-VALEURS] - ACTIONS sur fiche projet (middleware project)
+// == [KEY-VALUES] - ACTIONS ON PROJECT CARD (MIDDLEWARE PROJECT)
 export const PROJECT_SEARCH = 'PROJECT_SEARCH';
 export const PROJECT_CREATE = 'PROJECT_CREATE';
 export const PROJECT_EDIT = 'PROJECT_EDIT';
@@ -17,7 +17,9 @@ export const PROJECT_NEED_ISCOMPLETED = 'PROJECT_NEED_ISCOMPLETED';
 export const PROJECT_ADD_FAVORITE_BY_ID = 'PROJECT_ADD_FAVORITE_BY_ID';
 export const PROJECT_REMOVE_FAVORITE_BY_ID = 'PROJECT_REMOVE_FAVORITE_BY_ID';
 
-// == [CLE-VALEURS] - ACTIONS sur le store projets(Reducer user)
+export const PROJECT_UPLOAD_IMAGE = 'PROJECT_UPLOAD_IMAGE';
+
+// == [KEY-VALUES] - ACTIONS ON THE PROJECT STORE (REDUCER USER)
 
 export const PROJECT_STORE_UPDATE = 'PROJECT_STORE_UPDATE';
 export const PROJECT_UPDATE_FAVORITE = 'PROJECT_UPDATE_FAVORITE';
@@ -35,7 +37,6 @@ export const updateProjectStore = (payload) => ({
   type: PROJECT_STORE_UPDATE,
   payload,
 });
-
 export const cleanProjectStore = () => ({
   type: PROJECT_STORE_CLEAN,
 });
@@ -53,12 +54,12 @@ export const projectNeedIsCompleted = (payload) => ({
   payload,
 });
 
-// get all projects by author
+// GET ALL PROJECTS BY AUTHOR
 export const getProjectsByAuthor = () => ({
   type: GET_MY_PROJECTS,
 });
 
-// get all projects by favorites
+// GET ALL PROJECTS BY FAVORITES
 export const getProjectsByFavorites = () => ({
   type: GET_MY_FAVORITES,
 });
@@ -72,34 +73,40 @@ export const updateProjectFavorite = (id, payload) => ({
 // == ===================================
 // == PROJECT CONNECTORS - ACTIONS CREATORS PART
 
-// Execute a project search
+// EXECUTE A PROJECT SEARCH
 export const searchProject = () => ({
   type: PROJECT_SEARCH,
 });
 
-// uploading a project
+// UPLOADING A PROJECT
 export const createProject = (payload) => ({
   type: PROJECT_CREATE,
   payload,
 });
 
-// editing a project
+// EDITING A PROJECT
 export const editProject = (payload) => ({
   type: PROJECT_EDIT,
   payload,
 });
 
-// deleting a project
+// UPLOAD FILE IMAGE FOR CURRENT PROJECT
+export const projectUploadImage = (fileSrc) => ({
+  type: PROJECT_UPLOAD_IMAGE,
+  fileSrc,
+});
+
+// DELETING A PROJECT
 export const deleteProjectById = () => ({
   type: PROJECT_DELETE_CURRENT,
 });
 
-// Archiving a project
+// ARCHIVING A PROJECT
 export const archiveProjectById = () => ({
   type: PROJECT_ARCHIVED_CURRENT,
 });
 
-// get a project by id
+// GET A PROJECT BI ID
 export const getProjectById = (id) => ({
   type: GET_PROJECT_BY_ID,
   payload: { id },
@@ -122,7 +129,8 @@ export const projectAddToFavoriteById = (id) => ({
   type: PROJECT_ADD_FAVORITE_BY_ID,
   id,
 });
-export const projectRemoveToFavoriteById = (id) => ({
+export const projectRemoveToFavoriteById = (id, refreshFavoriteLst = false) => ({
   type: PROJECT_REMOVE_FAVORITE_BY_ID,
   id,
+  refreshFavoriteLst,
 });

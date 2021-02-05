@@ -1,25 +1,35 @@
 /* eslint-disable no-nested-ternary */
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
 import PropTypes, { shape } from 'prop-types';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
-  Grid, Header, Segment, Image, Label, Icon, Divider, Progress, Button,
+  Grid,
+  Header,
+  Segment,
+  Image,
+  Label,
+  Icon,
+  Divider,
+  Progress,
+  Button,
 } from 'semantic-ui-react';
+
 import { Link } from 'react-router-dom';
 
 // == IMPORT STYLES
 import './projectCard.scss';
 
+// ==  SUB COMPONENT FAVORITES
 const HeaderStar = ({
   project, size, logged, addToFavorite, removeFromFavorite,
 }) => (
   <>
     <Header as="h3" size={`${size}`}>
-      <Header.Content><Link to={`/projet/${project.id}`}>{`${project.title} `}</Link></Header.Content>
+      <Header.Content><Link className="project-card--title" to={`/projet/${project.id}`}>{`${project.title} `}</Link></Header.Content>
     </Header>
-    { (!project.isAuthor && logged && !project.isArchived)
+    { (!project.isAuthor && logged)
       && (project.isFavorite
         ? (
           <Button
@@ -64,7 +74,7 @@ HeaderStar.propTypes = {
   removeFromFavorite: PropTypes.func.isRequired,
 };
 
-// == Composant
+// == CARD COMPONENT
 const ProjectCard = ({
   logged,
   project,
@@ -74,20 +84,20 @@ const ProjectCard = ({
   const checkArr = project.needs.map((need) => (need.completed ? 1 : 0));
   const checkCount = checkArr.reduce((a, b) => a + b, 0);
   return (
-    <Segment compact className="project-card--fullwidth">
-      { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
+    <Segment className="project-card--fullwidth" compact>
+      { project.isArchived && <Label color="grey" corner="right" icon="archive" title="archivé" size="big" /> }
       <Grid divided stackable verticalAlign="middle">
         <Grid.Row>
           <Grid.Column computer={4} only="computer">
-            <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded /></Link>
+            <Link to={`/projet/${project.id}`}><Image className="project-card--picture" src={`${project.image}`} centered spaced rounded /></Link>
           </Grid.Column>
           <Grid.Column computer={12} mobile={16}>
             <Grid centered>
               <Grid.Row>
-                <Grid.Column only="mobile" width={4} className="project-card--padding-mobile">
-                  <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded /></Link>
+                <Grid.Column className="project-card--padding-mobile" only="mobile" width={4}>
+                  <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded className="project-card--picture" /></Link>
                 </Grid.Column>
-                <Grid.Column only="mobile" width={12} className="project-card--padding-mobile">
+                <Grid.Column className="project-card--padding-mobile" only="mobile" width={12}>
                   <HeaderStar
                     project={project}
                     size="small"

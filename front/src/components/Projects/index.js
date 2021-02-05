@@ -1,23 +1,23 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
 
 // == IMPORTS CONTAINERS
 import List from 'src/containers/List';
 import SearchProjects from 'src/containers/SearchProjects';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
-  Container, Header,
+  Container,
+  Header,
 } from 'semantic-ui-react';
 
 // == STYLES
 import './projects.scss';
 
-// == Composant
+// == COMPONENT
 const Projects = () => (
   <Container className="projects">
-    <Header as="h1" content="Rechercher" textAlign="center" dividing subheader="Trouver un projet ? C'est ici" />
-    {/** Search Bar */}
+    <Header className="projects--title" as="h1" content="Rechercher" textAlign="center" dividing subheader="Trouver un projet ? C'est ici" />
     <SearchProjects />
     <List />
   </Container>

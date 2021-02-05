@@ -1,5 +1,25 @@
 @use 'src/styles/vars';
 
 .create-project {
+  &--align-right{
+    display: flex !important;
+    justify-content: flex-end !important;
+  }
+  &--compact{
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  &--title{
+    color: vars.$color !important;
+  }
+  &--button{
+    background-color: vars.$color-alt !important;
+    color: #fff !important;
+  }
+}
 
+
+
+.header-project{
+  color: vars.$color !important;
 }

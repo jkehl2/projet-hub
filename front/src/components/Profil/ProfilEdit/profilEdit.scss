@@ -1,0 +1,8 @@
+@use 'src/styles/vars';
+
+.profile-edit{
+  &--modify-button {
+    background-color: vars.$color-alt !important;
+    color: #fff !important;
+  }
+}

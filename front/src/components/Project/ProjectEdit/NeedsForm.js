@@ -1,23 +1,22 @@
-// == Import npm
-import React, { useEffect } from 'react';
+// == IMPORT PACKAGES
+import React, { useEffect, useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Button,
-  Divider,
   Form,
   Grid,
   Header,
+  Icon,
+  Modal,
   Segment,
 } from 'semantic-ui-react';
-
-// == IMPORTS CONTAINERS
 
 // == STYLES
 import './needForm.scss';
 
-// == Composant
+// == COMPONENT
 const NeedsForm = ({
   needs,
   title,
@@ -30,6 +29,7 @@ const NeedsForm = ({
   DeleteNeedById,
   EditNeedById,
 }) => {
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     syncNeedsArray();
     cleanNewNeedFields();
@@ -53,8 +53,8 @@ const NeedsForm = ({
           label="Description du besoin"
           title="Description du besion"
           placeholder="Description de votre besoin"
-          maxlength={150}
-          spellcheck
+          maxLength={250}
+          spellCheck
           cols={50}
           wrap="soft"
           required
@@ -65,7 +65,7 @@ const NeedsForm = ({
         />
         <Segment className="need-form--alignRight" basic compact textAlign="right">
           <Button
-            positive
+            className="need-form--add-button"
             type="submit"
             title="Ajouter un besoin"
             content="Ajouter"
@@ -103,8 +103,8 @@ const NeedsForm = ({
                     label="Description du besion"
                     title="Description du besion"
                     placeholder="Description de votre besoin"
-                    maxlength={150}
-                    spellcheck
+                    maxLength={250}
+                    spellCheck
                     cols={50}
                     wrap="soft"
                     required
@@ -122,26 +122,69 @@ const NeedsForm = ({
                 <Grid.Column width={4} verticalAlign="middle" textAlign="center">
                   <Button.Group>
                     <Button
+                      className="need-form--modify-button"
                       type="submit"
                       title="Editer"
                       content="Editer"
-                      color="blue"
                       onClick={(event) => {
                         event.preventDefault();
                         EditNeedById(need.id);
                       }}
                     />
                     <Button.Or text="ou" />
-                    <Button
-                      negative
-                      type="button"
-                      title="Supprimer"
-                      content="Supprimer"
-                      onClick={(event) => {
-                        event.preventDefault();
-                        DeleteNeedById(need.id);
+                    <Modal
+                      basic
+                      onClose={() => {
+                        setOpen(false);
                       }}
-                    />
+                      onOpen={() => setOpen(true)}
+                      size="small"
+                      open={open}
+                      trigger={(
+                        <Button
+                          negative
+                          type="button"
+                          title="Supprimer"
+                          content="Supprimer"
+                        />
+                      )}
+                    >
+                      <Header icon>
+                        <Icon name="trash" />
+                        Supprimer le besoin
+                      </Header>
+                      <Modal.Content>
+                        <p>
+                          Voules-vous vraiment supprimer ce besoin ?
+                        </p>
+                      </Modal.Content>
+                      <Modal.Actions>
+                        <Button.Group>
+                          <Button
+                            negative
+                            type="button"
+                            title="Confirmer"
+                            content="Confirmer"
+                            onClick={(event) => {
+                              event.preventDefault();
+                              setOpen(false);
+                              DeleteNeedById(need.id);
+                            }}
+                          />
+                          <Button.Or text="ou" />
+                          <Button
+                            type="button"
+                            title="Annuler"
+                            onClick={(event) => {
+                              event.preventDefault();
+                              setOpen(false);
+                            }}
+                            content="Annuler"
+                          />
+                        </Button.Group>
+                      </Modal.Actions>
+                    </Modal>
+
                   </Button.Group>
                 </Grid.Column>
               </Grid>
@@ -157,7 +200,6 @@ NeedsForm.propTypes = {
   needs: PropTypes.arrayOf(shape({
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
   })).isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

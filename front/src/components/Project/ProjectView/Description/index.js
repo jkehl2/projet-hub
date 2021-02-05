@@ -1,27 +1,33 @@
-// == Import npm
-import React from 'react';
+// == IMPORT PACKAGES
+import React, { useState } from 'react';
 import PropTypes, { shape } from 'prop-types';
-import { Link } from 'react-router-dom';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
+  Accordion,
   Button,
   Divider,
   Grid,
   Header,
-  Icon, Image, Label, Segment,
+  Icon,
+  Image,
+  Label,
+  Progress,
+  Segment,
 } from 'semantic-ui-react';
+
+import ProjectMap from '../../ProjectMap';
 
 // == STYLES
 import './description.scss';
 
-// SUB COMPONENT
+// SUB COMPONENT - FAVORITES
 const HeaderStar = ({
   project, size, logged, addToFavorite, removeFromFavorite,
 }) => (
   <>
     <Header as="h3" size={`${size}`}>
-      <Header.Content><Link to={`/projet/${project.id}`}>{`${project.title} `}</Link></Header.Content>
+      <Header.Content className="header--title">{`${project.title} `}</Header.Content>
     </Header>
     <Segment compact basic className="description--marged-none">
       { (!project.isAuthor && logged && !project.isArchived)
@@ -70,51 +76,103 @@ HeaderStar.propTypes = {
   removeFromFavorite: PropTypes.func.isRequired,
 };
 
-// == Composant
+// == COMPONENT
 const Description = ({
   logged,
   project,
+  needs,
   addToFavorite,
   removeFromFavorite,
-}) => (
-  <>
-    { project.isArchived && <Label color="blue" corner="right" icon="archive" size="big" /> }
-    <Grid divided stretched stackable verticalAlign="middle">
-      <Grid.Row only="mobile">
-        <Segment basic computer textAlign="center">
-          <Image src={`${project.image}`} centered spaced rounded />
-        </Segment>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column computer={6} only="computer">
-          <Segment basic computer>
-            <Image src={`${project.image}`} centered spaced rounded />
-          </Segment>
-        </Grid.Column>
-        <Grid.Column computer={10} mobile={16}>
-          <HeaderStar
-            project={project}
-            size="small"
-            logged={logged}
-            addToFavorite={addToFavorite}
-            removeFromFavorite={removeFromFavorite}
-          />
-          <p className="description--marged-top"><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
-          <p className="description--marged-top"><Icon name="target" />{`${project.location}`}</p>
-          <Divider horizontal>Description</Divider>
-          <Segment basic>{`${project.description}`}</Segment>
-          <Divider />
-          <Label.Group>
-            <Label basic icon="star" content={`${project.followers.length}`} />
-            <Label basic content="Créé le" detail={`${project.creation_date}`} />
-            <Label basic content="Expire le" detail={`${project.expiration_date}`} />
-            <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
-          </Label.Group>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
-  </>
-);
+}) => {
+  const checkArr = needs.map((need) => (need.completed ? 1 : 0));
+  const checkCount = checkArr.reduce((a, b) => a + b, 0);
+
+  const [state, setState] = useState({ activeIndex: 0 });
+
+  const handleClick = (e, itemProps) => {
+    const { index } = itemProps;
+    const newIndex = state.activeIndex === index ? -1 : index;
+    setState({ activeIndex: newIndex });
+  };
+
+  return (
+    <>
+      <Segment className="project-description" basic>
+        { project.isArchived && <Label color="grey" corner="right" icon="archive" size="big" /> }
+        <Grid divided="vertically">
+          <Grid.Row only="computer">
+            <Segment className="project-description--segment-image" basic>
+              <Image className="project-description--image" src={`${project.image}`} centered spaced rounded />
+            </Segment>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column only="computer" computer={7}>
+              <Segment className="project-description--segment-map" basic textAlign="center">
+                {project.lat !== 0
+                && <ProjectMap project={project} />}
+              </Segment>
+            </Grid.Column>
+            <Grid.Column computer={9} mobile={16}>
+              <Grid verticalAlign="middle">
+                <Grid.Row only="mobile">
+                  <Segment className="project-description--segment-image" basic>
+                    <Image className="project-description--image" src={`${project.image}`} centered spaced rounded />
+                  </Segment>
+                </Grid.Row>
+                <Grid.Row className="project-description--row-padding-less">
+                  <Segment className="project-description--marged-no-vertically" basic>
+                    <HeaderStar
+                      project={project}
+                      size="large"
+                      logged={logged}
+                      addToFavorite={addToFavorite}
+                      removeFromFavorite={removeFromFavorite}
+                    />
+                    <p className="project-description--marged-top"><Image avatar spaced="right" src={`${project.author.avatar}`} size="mini" />{`${project.author.name}`}</p>
+                    <p className="project-description--marged-top"><Icon name="target" />{`${project.location}`}</p>
+                  </Segment>
+                  <Segment className="project-description--marged-no-vertically" basic>
+                    <Divider horizontal>Description</Divider>
+                    {`${project.description}`}
+                    <Divider />
+                  </Segment>
+                  <Segment className="project-description--marged-no-vertically" basic>
+                    <Label.Group>
+                      <Label basic icon="star" content={`${project.followers.length}`} />
+                      <Label basic content="Créé le" detail={`${project.creation_date}`} />
+                      <Label basic content="Expire le" detail={`${project.expiration_date}`} />
+                      <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
+                    </Label.Group>
+                  </Segment>
+                </Grid.Row>
+              </Grid>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <Progress value={checkCount} total={needs.length} progress="ratio" size="medium" indicating>Couverture des besoins</Progress>
+      </Segment>
+      <Grid className="project-description--map-grid" verticalAlign="middle">
+        <Grid.Row only="mobile">
+          <Accordion className="project-description" styled exclusive={false} fluid>
+            <Accordion.Title
+              active={state.activeIndex === 0}
+              index={0}
+              onClick={handleClick}
+              as="h2"
+            >
+              <Icon name="dropdown" />
+              Carte
+            </Accordion.Title>
+            <Accordion.Content className="project-description--dropdown-map" active={state.activeIndex === 0}>
+              {project.lat !== 0
+                   && <ProjectMap project={project} />}
+            </Accordion.Content>
+          </Accordion>
+        </Grid.Row>
+      </Grid>
+    </>
+  );
+};
 // == PROP TYPES
 Description.propTypes = {
   logged: PropTypes.bool.isRequired,
@@ -131,6 +189,8 @@ Description.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
+    lat: PropTypes.number.isRequired,
+    long: PropTypes.number.isRequired,
     expiration_date: PropTypes.string.isRequired,
     creation_date: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
@@ -140,6 +200,12 @@ Description.propTypes = {
       avatar: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  needs: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+  }).isRequired).isRequired,
   addToFavorite: PropTypes.func.isRequired,
   removeFromFavorite: PropTypes.func.isRequired,
 };

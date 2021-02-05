@@ -1,5 +1,12 @@
 @use 'src/styles/vars';
 
 .sign-up {
+&--title{
+  color: vars.$color !important;
+}
+}
 
+#button-submit{
+  color: #fff !important;
+  background-color: vars.$color-alt !important;
 }

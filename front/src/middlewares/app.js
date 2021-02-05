@@ -7,7 +7,7 @@
 import axios from 'axios';
 import querystring from 'query-string';
 
-// == import utilitary date formater HTML to ISO STRING
+// == IMPORT UTILITARY DATE FORMATER HTML TO ISO STRING
 import dateApiFormater from 'src/utils/dateHTMLFormater';
 
 // ==  API CONFIGURATION URL
@@ -49,10 +49,10 @@ import {
   createUser,
 } from 'src/store/actions/user';
 
-// == import utils to allow perimeter conversion
+// == IMPORT UTILS PERIMETER CONVERSION
 import perimetersValue from 'src/utils/perimeters.json';
 
-// MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
+//= = MIDDLEWARE APP
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case APP_REFRESH_PROFIL: {
@@ -73,6 +73,7 @@ const userMiddleware = (store) => (next) => (action) => {
             expiration_date,
             description,
             location,
+            image,
           },
         },
       } = store.getState();
@@ -81,6 +82,7 @@ const userMiddleware = (store) => (next) => (action) => {
         expiration_date,
         description,
         location,
+        image,
       };
       store.dispatch(appUpdateProject(payload));
       return;
@@ -98,7 +100,6 @@ const userMiddleware = (store) => (next) => (action) => {
         project: {
           project: {
             id,
-            image,
           },
         },
       } = store.getState();
@@ -108,7 +109,6 @@ const userMiddleware = (store) => (next) => (action) => {
         expiration_date: dateApiFormater(expiration_date),
         description,
         location,
-        image,
       };
       store.dispatch(appGetGeoCoding(location, editProject, payload));
       return;
@@ -183,16 +183,12 @@ const userMiddleware = (store) => (next) => (action) => {
           },
         },
       } = store.getState();
-      // Déjà vérifier que email et pseudo corresp aux attentes
+
       if (email.includes('@') && name.length > 2) {
-      // vérifier si password === passwordVerification
-      // si c'est pas le cas
         if (password.length > 5 && password !== passwordVerification) {
-        // on envoie un msg d'erreur pour ressaisir
           store.dispatch(appMsgUpdate('Veuillez ressaisir votre mot de passe'));
         }
         else {
-        // si c'est le cas, on envoie les données à l'API localhub
           store.dispatch(createUser());
           store.dispatch(appLoadingOn());
         }
@@ -208,7 +204,7 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(action.dispatch());
       }
       else {
-        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider la suppression."));
+        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider votre action."));
       }
       store.dispatch(appUpdateProfil({ confirm: '' }));
       return; }
@@ -218,7 +214,7 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(action.dispatch());
       }
       else {
-        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider la suppression."));
+        store.dispatch(appMsgUpdate("Veuillez saisir 'CONFIRMER' pour valider votre action."));
       }
       store.dispatch(appUpdateProject({ confirm: '' }));
       return; }
@@ -228,7 +224,7 @@ const userMiddleware = (store) => (next) => (action) => {
         store.dispatch(action.dispatch());
       }
       else {
-        store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas égale au nouveau mot de passe. Veuillez ressaisir votre confirmation de mot de passe.'));
+        store.dispatch(appErrorUpdate('La confirmation du nouveau mot de passe n\'est pas correct. Veuillez recommencer.'));
       }
       return; }
 

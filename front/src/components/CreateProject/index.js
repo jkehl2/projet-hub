@@ -1,20 +1,25 @@
 /* eslint-disable camelcase */
-// == Import npm
+// == IMPORTS PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENT
 import {
-  Button, Container, Header, Segment, Form,
+  Button,
+  Container,
+  Header,
+  Segment,
+  Form,
 } from 'semantic-ui-react';
 
-// IMPORT DATE UTIL
+// == IMPORT UTILITARY
+// == - DATE FORMATER : ISO TO HTML DATE FORMAT
 import dateFormater from 'src/utils/dateHTMLFormater';
 
 // == STYLES
 import './createProject.scss';
 
-// == Composant
+// == PRIMARY COMPONENT
 const CreateProject = ({
   title,
   expiration_date,
@@ -26,21 +31,26 @@ const CreateProject = ({
   handleCancel,
 }) => {
   useEffect(() => {
-    cleanProjectFields(); return () => {
+    cleanProjectFields();
+    return () => {
       cleanProjectFields();
     };
   }, []);
   return (
-    <Container className="createProject">
+    <Container className="create-project">
       <Segment textAlign="left">
-        {/* Titre */}
+
+        {/* PAGE TITLE */}
         <Header
           as="h1"
-          content="Poposer un nouveau projet"
+          className="create-project--title"
+          content="Proposer un nouveau projet"
           textAlign="center"
           dividing
-          subheader="Ici vous pouvez tout imaginer puis proposer"
+          subheader="Décrivez votre projet en détail"
         />
+
+        {/* INPUT PROJECT TITLE */}
         <Form onSubmit={handleSubmit}>
           <Form.Input
             type="text"
@@ -53,6 +63,8 @@ const CreateProject = ({
               setProjectField({ title: event.target.value });
             }}
           />
+
+          {/* INPUT PROJECT TARGET LOCATION */}
           <Form.Input
             type="text"
             label="Localité du projet (adresse, ville, code postale)"
@@ -64,19 +76,23 @@ const CreateProject = ({
               setProjectField({ location: event.target.value });
             }}
           />
+
+          {/* INPUT PROJECT DESCRIPTION */}
           <Form.TextArea
             label="Description du projet"
             title="Description du projet"
             placeholder="Les potagers urbains se définissent simplement comme la culture de légumes ..."
-            maxlength={700}
-            spellcheck
+            maxLength={700}
+            spellCheck
             cols={100}
+            required
             wrap="soft"
             value={description}
             onChange={(event) => {
               setProjectField({ description: event.target.value });
             }}
           />
+
           <Form.Input
             type="date"
             label="Date d'échéance"
@@ -90,22 +106,28 @@ const CreateProject = ({
               setProjectField({ expiration_date: event.target.value });
             }}
           />
-          <Segment basic compact textAlign="right">
-            <Button
-              positive
-              type="submit"
-              title="Créer votre projet"
-              content="Créer"
-              onClick={handleSubmit}
-            />
-            <Button.Or text="ou" />
-            <Button
-              type="button"
-              title="Annuler"
-              content="Annuler"
-              onClick={handleCancel}
-            />
+
+          <Segment basic textAlign="right">
+            <Button.Group>
+              <Button
+                className="create-project--button"
+                type="submit"
+                title="Créer votre projet"
+                content="Créer"
+                onClick={handleSubmit}
+              />
+
+              <Button.Or text="ou" />
+
+              <Button
+                type="button"
+                title="Annuler"
+                content="Annuler"
+                onClick={handleCancel}
+              />
+            </Button.Group>
           </Segment>
+
         </Form>
       </Segment>
     </Container>

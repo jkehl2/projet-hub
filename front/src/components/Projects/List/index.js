@@ -1,22 +1,45 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes, { shape } from 'prop-types';
-// == IMPORTS CONTAINERS
 
-// == IMPORTS COMPOSANTS
+// IMPORT IMAGE DOT MAP
+import dot from 'src/assets/images/dot.svg';
+
+// == IMPORTS COMPONENTS
 import ProjectCard from 'src/components/Projects/ProjectCard';
-import { Segment } from 'semantic-ui-react';
+
+import {
+  Grid,
+  Header,
+  Image,
+  Segment,
+} from 'semantic-ui-react';
+
+import { Link } from 'react-router-dom';
+
+import {
+  MapContainer,
+  TileLayer,
+  ImageOverlay,
+  Popup,
+} from 'react-leaflet';
 
 // == STYLES
 import './list.scss';
+import ListMap from '../ListMap';
 
-// == Composant
-const List = ({ logged, projects, updateList, addToFavorite, removeFromFavorite }) => {
+// == COMPONENT
+const List = ({
+  logged, projects, updateList, addToFavorite, removeFromFavorite,
+}) => {
   useEffect(() => {
     updateList();
   }, []);
   return (
-    <Segment className="list--no-marged" basic compact>
+    <Segment className="list--no-marged list--fullwidth" basic compact>
+      { projects.length > 0 && (
+        <ListMap projects={projects} />
+      )}
       {projects.map((project) => (
         <ProjectCard
           key={project.id}
@@ -45,6 +68,8 @@ List.propTypes = {
       }),
     ).isRequired,
     location: PropTypes.string.isRequired,
+    lat: PropTypes.number.isRequired,
+    long: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     expiration_date: PropTypes.string.isRequired,
     creation_date: PropTypes.string.isRequired,

@@ -17,8 +17,7 @@ const mapDispatchToProps = (dispatch, OwnProps) => ({
   },
   handleSubmit: () => (event) => {
     event.preventDefault();
-    // eslint-disable-next-line no-extra-boolean-cast
-    if (!!OwnProps.isHome) {
+    if (OwnProps.isHome) {
       dispatch(push('/projets'));
     }
     else {

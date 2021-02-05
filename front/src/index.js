@@ -8,6 +8,8 @@ import configureStore, { history } from 'src/store';
 
 import { render } from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
+import 'leaflet/dist/leaflet.css';
+
 import { loadState } from 'src/store/localStorage';
 
 const store = configureStore(loadState());

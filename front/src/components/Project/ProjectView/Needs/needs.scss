@@ -1,4 +1,13 @@
 @use 'src/styles/vars';
 
-.needs {}
-
+.needs {
+  background-color: white !important;
+  border-radius: 0.5rem !important;
+  border: 2px solid vars.$color !important;
+  &--label{
+    color: vars.$color-alt !important;
+  }
+  &--label-unfulfilled{
+    color: gray !important;
+  }
+}

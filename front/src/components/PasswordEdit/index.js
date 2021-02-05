@@ -1,18 +1,21 @@
-// == Import npm
+// == IMPORTS PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS CONTAINERS
-
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENT
 import {
-  Container, Header, Form, Segment, Button, Input,
+  Container,
+  Header,
+  Form,
+  Segment,
+  Button,
+  Input,
 } from 'semantic-ui-react';
 
-// == STYLES
+// == IMPORT STYLES
 import './passwordEdit.scss';
 
-// == Composant
+// == PRIMARY COMPONENT
 const PasswordEdit = ({
   email,
   password,
@@ -30,61 +33,76 @@ const PasswordEdit = ({
   }, []);
   return (
     <Container className="password-edit">
-      {/* titre */}
-      <Header as="h1" content="Modification du mot de passe" textAlign="center" dividing subheader="On est jamais trop prudent" />
-      <Form onSubmit={handleSubmit}>
-        {/* Accessibility user name hidden field */}
-        <Input
-          type="email"
-          title="Email utilisateur"
-          autoComplete="current-user"
-          value={email}
-          disabled
-          style={{ display: 'none' }}
-        />
-        {/* mot de passe */}
-        <Form.Input
-          type="password"
-          label="Nouveau mot de passe utilisateur"
-          title="Nouveau mot de passe utilisateur"
-          placeholder="*******"
-          autoComplete="new-password"
-          required
-          value={password}
-          onChange={(event) => {
-            setProfilValue({ password: event.target.value });
-          }}
-        />
-        {/* confirm de mot passe */}
-        <Form.Input
-          type="password"
-          label="Confirmer nouveau mot de passe utilisateur"
-          title="Confirmer nouveau mot de passe utilisateur"
-          placeholder="*******"
-          autoComplete="new-password"
-          required
-          value={passwordConfirm}
-          onChange={(event) => {
-            setProfilValue({ passwordConfirm: event.target.value });
-          }}
-        />
-        <Segment basic textAlign="right">
-          <Button.Group>
-            {/* bouton valider */}
-            <Button positive type="submit">Valider</Button>
-            <Button.Or text="ou" />
-            {/* bouton annuler */}
-            <Button
-              type="button"
-              onClick={abortConfirmPassword}
-            >Annuler
-            </Button>
-          </Button.Group>
-        </Segment>
-      </Form>
+
+      {/* PAGE TITLE */}
+      <Header as="h1" content="Modification du mot de passe" textAlign="center" dividing subheader="On n'est jamais trop prudent" />
+
+      <Segment>
+        <Form onSubmit={handleSubmit}>
+
+          {/* USER NAME */}
+          <Input
+            type="email"
+            title="Email utilisateur"
+            autoComplete="current-user"
+            value={email}
+            disabled
+            style={{ display: 'none' }}
+          />
+
+          {/* PASSWORD */}
+          <Form.Input
+            type="password"
+            label="Nouveau mot de passe utilisateur"
+            title="Nouveau mot de passe utilisateur"
+            placeholder="*******"
+            autoComplete="new-password"
+            required
+            value={password}
+            onChange={(event) => {
+              setProfilValue({ password: event.target.value });
+            }}
+          />
+
+          {/* PASSWORD CONFIRM */}
+          <Form.Input
+            type="password"
+            label="Confirmer nouveau mot de passe utilisateur"
+            title="Confirmer nouveau mot de passe utilisateur"
+            placeholder="*******"
+            autoComplete="new-password"
+            required
+            value={passwordConfirm}
+            onChange={(event) => {
+              setProfilValue({ passwordConfirm: event.target.value });
+            }}
+          />
+
+          <Segment basic textAlign="right">
+            <Button.Group>
+              <Button
+                className="password-edit--modify-button"
+                positive
+                type="submit"
+              >Valider
+              </Button>
+
+              <Button.Or text="ou" />
+
+              <Button
+                type="button"
+                onClick={abortConfirmPassword}
+              >Annuler
+              </Button>
+            </Button.Group>
+          </Segment>
+
+        </Form>
+      </Segment>
     </Container>
   );
 };
+// == PROPTYPES
 PasswordEdit.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,

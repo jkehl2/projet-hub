@@ -1,10 +1,11 @@
 /* eslint-disable camelcase */
 // == IMPORT NPM
-import axios from 'axios';
 import { goBack, push } from 'connected-react-router';
+import FormData from 'form-data';
 
-// graphql queries
+// GRAPHQL QUERIES
 import configGraphQl, {
+  apiUrl,
   queryByAuthor,
   queryCreateProject,
   queryEditProject,
@@ -14,11 +15,12 @@ import configGraphQl, {
   queryArchivedProject,
   queryInsertFavorite,
   queryDeleteFavorite,
+  uploadProjectImageConfig,
 } from 'src/apiConfig/';
 
 import connector from 'src/apiConfig/queryWithToken';
 
-// actions from store
+// ACTIONS
 import {
   GET_MY_PROJECTS,
   GET_MY_FAVORITES,
@@ -30,8 +32,10 @@ import {
   GET_PROJECT_BY_GEO,
   PROJECT_ADD_FAVORITE_BY_ID,
   PROJECT_REMOVE_FAVORITE_BY_ID,
+  PROJECT_UPLOAD_IMAGE,
   updateProjectStore,
   cleanProject,
+  getProjectsByFavorites,
   updateProjectFavorite,
 } from 'src/store/actions/project';
 
@@ -42,6 +46,7 @@ import {
   appErrorUpdate,
   appMsgClean,
   appErrorClean,
+  appUpdateProject,
 } from 'src/store/actions/app';
 
 // == PARSE DATE UTIL FUNCTION :
@@ -61,7 +66,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      axios(config)
+      connector(config, 'projectsByGeo', store.dispatch)
         .then((response) => {
           const projects = response.data.data.projectsByGeo.map((project) => ({
             id: project.id,
@@ -73,23 +78,31 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
+            distance: parseFloat(project.distance),
+            lat: parseFloat(project.lat),
+            long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
               email: project.author.email,
-              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${project.author.avatar}`,
             },
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
             )),
           })).sort((proj1, proj2) => (
-            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+            proj1.distance > proj2.distance ? 1 : -1
           ));
-          store.dispatch(updateProjectStore({ projects }));
+          if (projects.length > 0) {
+            store.dispatch(updateProjectStore({ projects }));
+          }
+          else {
+            store.dispatch(appMsgUpdate('Aucun projet trouvé sur ce périmètre géographique.'));
+          }
           store.dispatch(push('/projets'));
         })
         .catch((error) => {
@@ -99,8 +112,35 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appLoadingOff());
         });
       store.dispatch(appLoadingOn());
+      store.dispatch(appErrorClean());
+      return;
+    }
+    case PROJECT_UPLOAD_IMAGE: {
+      const data = new FormData();
+      data.append('image', action.fileSrc);
+      const { project: { project: { id: project_id } } } = store.getState();
+      data.append('project_id', project_id);
+      const config = {
+        ...uploadProjectImageConfig,
+        data,
+      };
+      connector(config, 'data', store.dispatch)
+        .then((response) => {
+          const { data: { data: { path } } } = response;
+          const image = `${apiUrl}/${path}`;
+          store.dispatch(appUpdateProject({ image }));
+          store.dispatch(appMsgUpdate('Upload de l\'avatar terminé.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
       store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
+
       return;
     }
     case GET_PROJECT_BY_ID: {
@@ -112,7 +152,7 @@ const projectMiddleware = (store) => (next) => (action) => {
         ...configGraphQl,
         data,
       };
-      axios(config)
+      connector(config, 'project', store.dispatch)
         .then((response) => {
           const apiData = response.data.data.project;
           const project = {
@@ -126,14 +166,16 @@ const projectMiddleware = (store) => (next) => (action) => {
             )),
             description: apiData.description,
             location: apiData.location,
+            lat: parseFloat(apiData.lat),
+            long: parseFloat(apiData.long),
             expiration_date: parseDate(apiData.expiration_date),
             creation_date: parseDate(apiData.created_at),
-            image: apiData.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : apiData.image,
+            image: apiData.image === null || apiData.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${apiData.image}`,
             author: {
               id: apiData.author.id,
               name: apiData.author.name,
               email: apiData.author.email,
-              avatar: apiData.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : apiData.author.avatar,
+              avatar: apiData.author.avatar === null || apiData.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${apiData.author.avatar}`,
             },
             needs: apiData.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
@@ -246,8 +288,8 @@ const projectMiddleware = (store) => (next) => (action) => {
       };
       connector(config, 'archiveProject', store.dispatch)
         .then(() => {
-          store.dispatch(goBack());
           store.dispatch(cleanProject());
+          store.dispatch(goBack());
           store.dispatch(appMsgUpdate('Votre projet à été archivé.'));
         })
         .catch((error) => {
@@ -281,15 +323,17 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
+            lat: parseFloat(project.lat),
+            long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
               email: project.author.email,
-              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${project.author.avatar}`,
             },
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
@@ -306,7 +350,6 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appLoadingOff());
         });
       store.dispatch(appLoadingOn());
-      store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       return;
     }
@@ -330,15 +373,17 @@ const projectMiddleware = (store) => (next) => (action) => {
               parseInt(follower1.id, 10) > parseInt(follower2.id, 10) ? 1 : -1
             )),
             location: project.location,
+            lat: parseFloat(project.lat),
+            long: parseFloat(project.long),
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null ? 'https://react.semantic-ui.com/images/wireframe/image.png' : project.image,
+            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
               email: project.author.email,
-              avatar: project.author.avatar === null ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : project.author.avatar,
+              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${project.author.avatar}`,
             },
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
@@ -355,7 +400,6 @@ const projectMiddleware = (store) => (next) => (action) => {
           store.dispatch(appLoadingOff());
         });
       store.dispatch(appLoadingOn());
-      store.dispatch(appMsgClean());
       store.dispatch(appErrorClean());
       return;
     }
@@ -422,7 +466,13 @@ const projectMiddleware = (store) => (next) => (action) => {
               },
             },
           } = response;
-          store.dispatch(updateProjectFavorite(idProject, { isFavorite, followers }));
+
+          if (action.refreshFavoriteLst) {
+            store.dispatch(getProjectsByFavorites());
+          }
+          else {
+            store.dispatch(updateProjectFavorite(idProject, { isFavorite, followers }));
+          }
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));

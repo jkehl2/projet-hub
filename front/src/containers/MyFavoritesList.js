@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import List from 'src/components/Projects/List';
 import {
   getProjectsByFavorites,
-  projectAddToFavoriteById,
   projectRemoveToFavoriteById,
 } from 'src/store/actions/project';
 
@@ -16,11 +15,11 @@ const mapDispatchToProps = (dispatch) => ({
   updateList: () => {
     dispatch(getProjectsByFavorites());
   },
-  addToFavorite: (id) => {
-    dispatch(projectAddToFavoriteById(id));
+  addToFavorite: () => {
+    // NO ADD TO FAVORITE INNER FAVORTIES PAGE
   },
   removeFromFavorite: (id) => {
-    dispatch(projectRemoveToFavoriteById(id));
+    dispatch(projectRemoveToFavoriteById(id, true));
   },
 });
 

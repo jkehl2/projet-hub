@@ -1,26 +1,29 @@
 /* eslint-disable no-nested-ternary */
-// == Import npm
+// == IMPORT PACKAGES
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS CONTAINERS
-
-// == IMPORTS COMPOSANTS
+// == IMPORT COMPONENTS
 import {
   Button,
   Menu,
 } from 'semantic-ui-react';
+
 import ModalConfirm from 'src/components/ModalConfirm';
 
 // == STYLES
 import './projectMenu.scss';
 
-// == Composant
+// == COMPONENT
 const ProjectMenu = ({
   confirm,
   isEditMode,
   isAuthor,
   isArchived,
+  isError,
+  error,
+  isMessage,
+  message,
   setEditModeOn,
   setConfirmation,
   handleArchiveProject,
@@ -28,7 +31,7 @@ const ProjectMenu = ({
   handleBackToView,
   handleBackToPrevius,
 }) => (
-  <Menu compact icon secondary attached="bottom" borderless size="mini">
+  <Menu id="project-menu" compact icon secondary attached="bottom" borderless size="mini">
     {isEditMode
       ? (
         <Menu.Item
@@ -38,7 +41,7 @@ const ProjectMenu = ({
           <Button
             type="button"
             icon="arrow alternate circle left"
-            color="blue"
+            className="menu--go-back-button"
             title="Revenir à la consultation"
             content="Retour"
             labelPosition="left"
@@ -56,7 +59,7 @@ const ProjectMenu = ({
             <Button
               type="button"
               icon="edit"
-              color="blue"
+              className="menu--edit-button"
               title="Editer"
               compact
               onClick={(event) => {
@@ -70,11 +73,11 @@ const ProjectMenu = ({
             fitted="horizontally"
           >
             <ModalConfirm
-              title="Confirmer l'archivage de votre projet"
+              title="Confirmer l'archivage définitif de votre projet"
               trigger={(
                 <Button
                   icon="archive"
-                  color="brown"
+                  color="grey"
                   title="Archiver"
                   compact
                 />
@@ -82,6 +85,10 @@ const ProjectMenu = ({
               confirm={confirm}
               setConfirmation={setConfirmation}
               handleAction={handleArchiveProject}
+              isError={isError}
+              error={error}
+              isMessage={isMessage}
+              message={message}
             />
           </Menu.Item>
           <Menu.Item
@@ -89,7 +96,7 @@ const ProjectMenu = ({
             fitted="horizontally"
           >
             <ModalConfirm
-              title="Confirmer la suppression de votre projet"
+              title="Confirmer la suppression définitive de votre projet"
               trigger={(
                 <Button
                   icon="trash"
@@ -101,6 +108,10 @@ const ProjectMenu = ({
               confirm={confirm}
               setConfirmation={setConfirmation}
               handleAction={handleDeleteProject}
+              isError={isError}
+              error={error}
+              isMessage={isMessage}
+              message={message}
             />
           </Menu.Item>
         </>
@@ -116,7 +127,7 @@ const ProjectMenu = ({
               <Button
                 type="button"
                 icon="arrow alternate circle left"
-                color="blue"
+                className="menu--go-back-button"
                 title="Revenir à la page précédente"
                 content="Retour"
                 labelPosition="left"
@@ -135,6 +146,10 @@ ProjectMenu.propTypes = {
   isEditMode: PropTypes.bool.isRequired,
   isAuthor: PropTypes.bool.isRequired,
   isArchived: PropTypes.bool.isRequired,
+  isError: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  isMessage: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
   setEditModeOn: PropTypes.func.isRequired,
   setConfirmation: PropTypes.func.isRequired,
   handleArchiveProject: PropTypes.func.isRequired,

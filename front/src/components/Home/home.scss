@@ -1,10 +1,22 @@
 @use 'src/styles/vars';
 
 .home {
-width: 70%;
-margin: auto;
+
+&-search {
+  color:vars.$color !important;
+}
+  width: 70%  !important;
+  margin: auto !important;
+  &--map {
+    height: 200px !important;
+    width: 200px !important;  
+  }
 }
 
 .slider {
-  padding: .3rem;
+  padding: 0.3rem !important;
+}
+
+.header-title {
+  color:vars.$color !important;
 }

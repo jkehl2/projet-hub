@@ -1,22 +1,26 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS CONTAINERS
-
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENT
 import {
   Modal,
   Button,
   Form,
   Segment,
+  Message,
 } from 'semantic-ui-react';
 
-// == Composant Profil
-const ModalConfirmDelete = ({
+// == COMPONENT
+const ModalConfirm = ({
   title,
+  content,
   trigger,
   confirm,
+  isError,
+  error,
+  isMessage,
+  message,
   setConfirmation,
   handleAction,
 }) => {
@@ -34,6 +38,15 @@ const ModalConfirmDelete = ({
       >
         <Modal.Header>{`${title}`}</Modal.Header>
         <Modal.Content>
+          {/* ERROR MESSAGE */}
+          {isError
+        && (<Message negative header="Une erreur s'est produite" content={`${error}`} icon="thumbs down outline" size="small" />)}
+
+          {/* INFO MESSAGE */}
+          {isMessage
+        && (<Message header="Information" content={`${message}`} icon="idea" size="small" />)}
+
+          <p>{`${content}`}</p>
           <Form onSubmit={handleAction}>
             <Form.Input
               type="text"
@@ -75,13 +88,20 @@ const ModalConfirmDelete = ({
   );
 };
 
-ModalConfirmDelete.propTypes = {
+ModalConfirm.propTypes = {
   title: PropTypes.string.isRequired,
+  content: PropTypes.string,
   trigger: PropTypes.object.isRequired,
   confirm: PropTypes.string.isRequired,
+  isError: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  isMessage: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
   setConfirmation: PropTypes.func.isRequired,
   handleAction: PropTypes.func.isRequired,
 };
-
+ModalConfirm.defaultProps = {
+  content: 'Attention cette action est définitive.',
+};
 // == Export
-export default ModalConfirmDelete;
+export default ModalConfirm;

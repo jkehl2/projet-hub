@@ -7,4 +7,15 @@
   &--row-mobile-padded{
     padding: 1.5rem 1rem !important;
   }
+ }
+
+.steps-group{
+  &--shadow{
+    box-shadow: vars.$box-shadow !important;
+  }
 }
+
+.icon-colors {
+  color : vars.$color !important;
+}
+

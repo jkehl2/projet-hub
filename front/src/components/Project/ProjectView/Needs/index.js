@@ -1,26 +1,22 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Accordion,
   Checkbox,
-  Grid, Header, Icon, Progress,
+  Grid,
+  Header,
+  Icon,
+  Label,
 } from 'semantic-ui-react';
 
-// == IMPORTS CONTAINERS
-
-// == STYLES
+// == IMPOTS STYLES
 import './needs.scss';
 
-// == Functions
-
-// == Composant
+// == COMPONENTS
 const Needs = ({ isCheckEnable, needs, updateNeedIdCompleted }) => {
-  const checkArr = needs.map((need) => (need.completed ? 1 : 0));
-  const checkCount = checkArr.reduce((a, b) => a + b, 0);
-
   const [state, setState] = useState({ activeIndex: -1 });
 
   const handleClick = (e, itemProps) => {
@@ -30,44 +26,48 @@ const Needs = ({ isCheckEnable, needs, updateNeedIdCompleted }) => {
   };
 
   return (
-    <>
-      <Progress value={checkCount} total={needs.length} progress="ratio" size="medium" indicating>Couverture des besoins</Progress>
-      <Accordion styled exclusive={false} fluid>
-        <Accordion.Title
-          active={state.activeIndex === 0}
-          index={0}
-          onClick={handleClick}
-          as="h2"
-        >
-          <Icon name="dropdown" />
-          Liste des besoins
-        </Accordion.Title>
-        <Accordion.Content active={state.activeIndex === 0}>
-          <Grid columns={2} divided>
-            {needs.map((need) => (
-              <Grid.Row key={need.id}>
-                <Grid.Column width={2} verticalAlign="middle" textAlign="center">
-                  {isCheckEnable
-                    ? (
-                      <Checkbox
-                        checked={need.completed}
-                        onChange={() => {
-                          updateNeedIdCompleted(need.id, !need.completed);
-                        }}
-                      />
-                    )
-                    : <Checkbox readOnly checked={need.completed} />}
-                </Grid.Column>
-                <Grid.Column width={14}>
-                  <Header as="h3">{`${need.title}`}</Header>
-                  <p>{`${need.description}`}</p>
-                </Grid.Column>
-              </Grid.Row>
-            ))}
-          </Grid>
-        </Accordion.Content>
-      </Accordion>
-    </>
+    <Accordion className="needs" styled exclusive={false} fluid>
+      <Accordion.Title
+        active={state.activeIndex === 0}
+        index={0}
+        onClick={handleClick}
+        as="h2"
+      >
+        <Icon name="dropdown" />
+        Liste des besoins
+      </Accordion.Title>
+      <Accordion.Content active={state.activeIndex === 0}>
+        <Grid columns={2} divided>
+          {needs.map((need) => (
+            <Grid.Row key={need.id}>
+              <Grid.Column width={2} verticalAlign="middle" textAlign="center">
+                {isCheckEnable
+                  ? (
+                    <Checkbox
+                      checked={need.completed}
+                      onChange={() => {
+                        updateNeedIdCompleted(need.id, !need.completed);
+                      }}
+                    />
+                  )
+                  : (
+                    <Label>
+                      {need.completed
+                      && <Icon name="check" className="needs--label" />}
+                      {!need.completed
+                       && <Icon name="check" className="needs--label-unfulfilled" />}
+                    </Label>
+                  )}
+              </Grid.Column>
+              <Grid.Column width={14}>
+                <Header as="h3">{`${need.title}`}</Header>
+                <p>{`${need.description}`}</p>
+              </Grid.Column>
+            </Grid.Row>
+          ))}
+        </Grid>
+      </Accordion.Content>
+    </Accordion>
   );
 };
 // == PROP TYPES

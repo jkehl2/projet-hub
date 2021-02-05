@@ -1,0 +1,8 @@
+@use 'src/styles/vars';
+
+.who-are-we {
+  background-color: white !important;
+  &--header{
+    color: vars.$color !important;
+  }
+}

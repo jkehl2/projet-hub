@@ -1,38 +1,40 @@
-// == Import npm
+// == IMPORT PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // IMPORT DATE UTIL
 import dateFormater from 'src/utils/dateHTMLFormater';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
   Button,
   Form,
+  Image,
   Segment,
 } from 'semantic-ui-react';
-
-// == IMPORTS CONTAINERS
 
 // == STYLES
 import './projectForm.scss';
 
-// == Composant
+// == COMPONENT
 const ProjectForm = ({
   title,
   // eslint-disable-next-line camelcase
   expiration_date,
   description,
+  image,
   location,
   syncProjectFields,
   setProjectField,
+  handleFileChange,
   handleSubmit,
 }) => {
+  const fileInputRef = React.createRef();
   useEffect(() => {
     syncProjectFields();
   }, []);
   return (
-    <>
+    <Segment>
       <Form onSubmit={handleSubmit}>
         <Form.Input
           type="text"
@@ -60,8 +62,8 @@ const ProjectForm = ({
           label="Description du projet"
           title="Description du projet"
           placeholder="Les potagers urbains se définissent simplement comme la culture de légumes ..."
-          maxlength={700}
-          spellcheck
+          maxLength={700}
+          spellCheck
           cols={100}
           wrap="soft"
           value={description}
@@ -82,9 +84,27 @@ const ProjectForm = ({
             setProjectField({ expiration_date: event.target.value });
           }}
         />
-        <Segment className="projectForm--align-right" basic compact textAlign="right">
+        <Form.Field>
+          <Image src={`${image}`} spaced="right" size="small" title="Illustration projet" />
           <Button
-            positive
+            className="project-form--button-color"
+            type="button"
+            icon="file"
+            labelPosition="left"
+            content="Choisir une illustration"
+            title="Choisir une illustration"
+            onClick={() => fileInputRef.current.click()}
+          />
+          <input
+            ref={fileInputRef}
+            type="file"
+            hidden
+            onChange={handleFileChange}
+          />
+        </Form.Field>
+        <Segment className="project-form--align-right" basic compact textAlign="right">
+          <Button
+            className="project-form--modify-color"
             type="submit"
             title="Modifier votre projet"
             content="Modifier"
@@ -92,7 +112,7 @@ const ProjectForm = ({
           />
         </Segment>
       </Form>
-    </>
+    </Segment>
   );
 };
 // == PROP TYPES
@@ -100,9 +120,11 @@ ProjectForm.propTypes = {
   title: PropTypes.string.isRequired,
   expiration_date: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   syncProjectFields: PropTypes.func.isRequired,
   setProjectField: PropTypes.func.isRequired,
+  handleFileChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

@@ -3,6 +3,11 @@
  * Gestion du store projet
  */
 
+// graphql queries
+import {
+  apiUrl,
+} from 'src/apiConfig/';
+
 // == IMPORT ACTIONS SUR STORE
 import {
   PROJECT_STORE_UPDATE,
@@ -21,10 +26,12 @@ export const projectInitialState = {
   isAuthor: false,
   title: '',
   location: '',
+  lat: 0,
+  long: 0,
   description: '',
   expiration_date: new Date().toLocaleDateString('fr-FR'),
   creation_date: new Date().toLocaleDateString('fr-FR'),
-  image: '',
+  image: `${apiUrl}/project-images/logo.PNG`,
   author: {
     id: 0,
     name: '',
@@ -91,9 +98,16 @@ const reducer = (oldState = initialState, action = {}) => {
           ...action.payload,
         };
         projectsCopy.push(projectUpdate);
-        projectsCopy = projectsCopy.sort((proj1, proj2) => (
-          parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
-        ));
+        if (projectUpdate.distance) {
+          projectsCopy = projectsCopy.sort((proj1, proj2) => (
+            proj1.distance > proj2.distance ? 1 : -1
+          ));
+        }
+        else {
+          projectsCopy = projectsCopy.sort((proj1, proj2) => (
+            parseInt(proj1.id, 10) > parseInt(proj2.id, 10) ? 1 : -1
+          ));
+        }
       }
       return {
         ...oldState,

@@ -1,29 +1,42 @@
-// == Import npm
+// == IMPORTS PACKAGES
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-// == IMPORTS COMPOSANTS
+// == IMPORTS COMPONENTS
 import {
-  Button, Form, Segment,
+  Button,
+  Form,
+  Image,
+  Segment,
 } from 'semantic-ui-react';
-// == IMPORTS CONTAINERS
 
-// == Composant Profil mode consultation
+// == IMPORT STYLES
+import './profilEdit.scss';
+
+// == PRIMARY COMPONENT
 const ProfilEdit = ({
   name,
   email,
+  avatar,
   refreshAppProfil,
   setProfilValue,
-  abortEditProfil,
+  cleanProfil,
+  handleFileChange,
+  handleCancel,
   handleSubmit,
 }) => {
+  const fileInputRef = React.createRef();
   useEffect(() => {
     refreshAppProfil();
+    return () => {
+      cleanProfil();
+    };
   }, []);
   return (
     <Segment textAlign="left">
       <Form onSubmit={handleSubmit}>
-        {/** modifier le name */}
+
+        {/** USER NAME */}
         <Form.Input
           type="text"
           label="Nom d'utilisateur"
@@ -35,7 +48,8 @@ const ProfilEdit = ({
             setProfilValue({ name: event.target.value });
           }}
         />
-        {/** modifier l'email */}
+
+        {/** USER EMAIL */}
         <Form.Input
           type="email"
           label="Email utilisateur"
@@ -48,18 +62,46 @@ const ProfilEdit = ({
             setProfilValue({ email: event.target.value });
           }}
         />
-        {/** bouton valider / annuler l'édition du profil */}
+
+        <Form.Field>
+          <Image src={`${avatar}`} spaced="right" size="small" title="Avatar utilisateur" />
+          <Button
+            className="modify-button"
+            type="button"
+            icon="file"
+            labelPosition="left"
+            content="Choisir une illustration"
+            title="Choisir une illustration"
+            onClick={() => fileInputRef.current.click()}
+          />
+          <input
+            ref={fileInputRef}
+            type="file"
+            hidden
+            onChange={handleFileChange}
+          />
+        </Form.Field>
+
         <Segment basic textAlign="right">
           <Button.Group>
-            <Button positive type="submit">Valider</Button>
+            <Button
+              className="profile-edit--modify-button"
+              positive
+              type="submit"
+              title="Valider"
+              content="Valider"
+            />
             <Button.Or text="ou" />
+
             <Button
               type="button"
-              onClick={abortEditProfil}
-            >Annuler
-            </Button>
+              title="Annuler"
+              content="Annuler"
+              onClick={handleCancel}
+            />
           </Button.Group>
         </Segment>
+
       </Form>
     </Segment>
   );
@@ -68,9 +110,12 @@ const ProfilEdit = ({
 ProfilEdit.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
   refreshAppProfil: PropTypes.func.isRequired,
   setProfilValue: PropTypes.func.isRequired,
-  abortEditProfil: PropTypes.func.isRequired,
+  cleanProfil: PropTypes.func.isRequired,
+  handleFileChange: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

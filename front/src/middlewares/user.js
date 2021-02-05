@@ -3,28 +3,33 @@
  * Middleware de gestion des connecteurs à la BD Utilisteurs
  */
 
-/* eslint-disable no-case-declarations */
 import axios from 'axios';
+import FormData from 'form-data';
+
 import { push, goBack } from 'connected-react-router';
 
-// == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTEUR AXIOS
+// == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTOR AXIOS
 import configGraphQl, {
+  apiUrl,
   queryUserCreate,
   queryUserEdit,
   queryUserEditPassword,
   queryUserDelete,
   signInConfig,
+  uploadAvatarConfig,
 } from 'src/apiConfig/';
 
 import connector from 'src/apiConfig/queryWithToken';
 
-// == IMPORT ACTIONS SUR PROFIL UTILISATEUR
+// == IMPORT ACTIONS ON USER
 import {
   USER_CREATE,
   USER_EDIT,
   USER_EDIT_PASSWORD,
   USER_DELETE,
   USER_SIGNIN,
+  USER_SIGNOUT,
+  USER_UPLOAD_AVATAR,
   updateUserStore,
   cleanUserStore,
 } from 'src/store/actions/user';
@@ -41,12 +46,14 @@ import {
   appSignUpClean,
   appEditProfilOff,
   appProfilClean,
+  appUpdateProfil,
 } from 'src/store/actions/app';
 
-// MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
+// MIDDLEWARE USER
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
-    case USER_SIGNIN: {
+    case USER_SIGNIN:
+    {
       const { app: { signIn: { email, password } } } = store.getState();
       const data = JSON.stringify({ email, password });
       const config = {
@@ -65,8 +72,12 @@ const userMiddleware = (store) => (next) => (action) => {
           }
           else {
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
+            const apiAvatar = response.data.user.avatar;
+            const avatar = apiAvatar ? `${apiUrl}/${apiAvatar}` : null;
             const userdata = {
               ...response.data.user,
+              avatar,
               logged: true,
             };
             if (userdata.avatar === null) {
@@ -90,11 +101,67 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-    case USER_CREATE: {
+    case USER_UPLOAD_AVATAR: {
+      const data = new FormData();
+      data.append('avatar', action.fileSrc);
+      const config = {
+        ...uploadAvatarConfig,
+        data,
+      };
+      connector(config, 'data', store.dispatch)
+        .then((response) => {
+          const { data: { data: { path } } } = response;
+          const avatar = `${apiUrl}/${path}`;
+          store.dispatch(updateUserStore({ avatar }));
+          store.dispatch(appUpdateProfil({ avatar }));
+          store.dispatch(appMsgUpdate('Upload de l\'avatar terminé.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error.message));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appMsgClean());
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
+
+      return;
+    }
+    case USER_SIGNOUT: {
+      const config = {
+        method: 'post',
+        url: `${apiUrl}/logout`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: false,
+        data: JSON.stringify({ refreshToken: localStorage.getItem('refreshToken') }),
+      };
+      axios(config)
+        .then(() => {
+          store.dispatch(cleanUserStore());
+          store.dispatch(push('/'));
+          store.dispatch(appMsgUpdate('Vous êtes déconnecté. A bientôt.'));
+        })
+        .catch((error) => {
+          store.dispatch(appErrorUpdate(error));
+        })
+        .finally(() => {
+          store.dispatch(appLoadingOff());
+        });
+      store.dispatch(appErrorClean());
+      store.dispatch(appLoadingOn());
+      return;
+    }
+    case USER_CREATE:
+    {
       const {
         app: {
           signUp: {
-            email, password, name,
+            email,
+            password,
+            name,
           },
         },
       } = store.getState();
@@ -107,27 +174,22 @@ const userMiddleware = (store) => (next) => (action) => {
         data,
       };
       axios(config)
-        .then((response) => {
-          // TODO tester la réponse pour vérifier si il n'y a pas d'erreur
-          // avant de renvoyer vers la page de login.
-
-          // On redirige vers la page de login
+        .then(() => {
           store.dispatch(push('/utilisateur/connexion'));
           store.dispatch(appMsgUpdate('Votre compte a été créé. Merci de vous connecter.'));
         })
         .catch((error) => {
-          // en cas d'erreur remontée de l'api, renvoi d'un msg erreur
           store.dispatch(appErrorUpdate(error));
         })
         .finally(() => {
-          // on clean le store app
           store.dispatch(appErrorClean());
           store.dispatch(appSignUpClean());
           store.dispatch(appLoadingOff());
         });
       return;
     }
-    case USER_EDIT_PASSWORD: {
+    case USER_EDIT_PASSWORD:
+    {
       const { app: { profil: { password } } } = store.getState();
       const data = JSON.stringify({
         ...queryUserEditPassword,
@@ -154,7 +216,8 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-    case USER_EDIT: {
+    case USER_EDIT:
+    {
       const { app: { profil: { name, email } } } = store.getState();
       const data = JSON.stringify({
         ...queryUserEdit,
@@ -169,7 +232,7 @@ const userMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           store.dispatch(appMsgUpdate('Votre profil utilisateur à été mis à jour.'));
           const userdata = response.data.data.editUserInfos;
-          // Si null dans avatar alors on ne garde pas ce paramètre pour la maj du store
+
           if (userdata.avatar === null) {
             delete userdata.avatar;
           }
@@ -188,7 +251,8 @@ const userMiddleware = (store) => (next) => (action) => {
       store.dispatch(appLoadingOn());
       return;
     }
-    case USER_DELETE: {
+    case USER_DELETE:
+    {
       const data = JSON.stringify({
         ...queryUserDelete,
       });

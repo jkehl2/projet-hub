@@ -1,19 +1,81 @@
 @use 'src/styles/vars';
 
-.description {
+.header{
+  &--title{
+    color: vars.$color !important;
+  }
+}
+.project-description {
+  background-color: white !important;
+  border-radius: 0.5rem !important;
+  border: 2px solid vars.$color !important;
+  &--map-grid{
+    width: 100% !important;
+    margin: 0rem auto !important;
+  }
+  &--dropdown-map{
+    box-sizing: border-box;
+    width: 100% !important; 
+    margin: 0 !important;
+    padding: 0.25rem !important;   
+  }
+
+  &--segment-map{
+    width: 100% !important; 
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;   
+    border: 2px solid vars.$color !important;
+    border-radius: 0.5rem !important; 
+  }
+
+  &--image{
+    max-height: 35vh !important;
+    margin: 0 auto !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0 1px vars.$color !important;  
+  }
+
+  &--segment-image{
+    width: 100% !important; 
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;   
+    margin-right: 1rem !important;
+    margin-left: 1rem !important;
+    text-align: center !important;
+  }
+
+  &--row-padding-less{
+    padding-top: 0rem !important;
+    display: block !important;
+  }
+
   &--marged-top{
     margin-top: 0.5rem !important;
+    margin-bottom: 0 !important;
   }
+  &--marged-no-vertically{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+  
   &--marged-none{
     margin: 0 !important;
     padding: 0 !important;
   }
+  &--HeaderStar{
+    font-size: 20px !important;
+  }
 }
 
-.content>.header {
+.content.header {
   font-size: 2rem !important;
 
-  >.icon {
+  .icon {
     margin-left: 1rem !important;
   }
 }
+
