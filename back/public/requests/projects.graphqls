@@ -1,0 +1,394 @@
+
+#--------------------------PROJECTS---------------------------------------
+
+#OK Return all projects with all datas without filtering
+# ==> return an array of projects
+
+{
+  projects{
+      id
+      title
+      description
+      created_at
+      expiration_date
+      location
+      lat
+      long
+      image
+      archived
+      userIsAuthor
+      isFollowed
+      author{
+        name
+        email
+      }
+
+      comments{
+        content
+      }
+      followers{
+        name
+      }
+  }
+}
+# No query variables required
+ 
+#-------------------------------------------------
+
+#OK Query one project with all datas according one specified Id
+# ==> return a project object
+
+
+query GetProjectByID($id: ID!) {
+  project(id: $id) {
+      id
+      title
+      description
+      created_at
+      expiration_date
+      location
+      lat
+      long
+      image
+      archived
+      isFollowed
+      userIsAuthor
+      author{
+        id
+        name
+        email
+      }
+      needs{
+        title
+        description
+      }
+      comments{
+        content
+        author{
+          name
+          email
+          created_at
+        }
+      }
+      followers{
+        id
+        name
+      }
+      
+  }
+  
+}
+#query variables
+{
+	"id": 1
+}
+#-------------------------------------------------
+
+#OK query all projects related to Author Id
+# ==> return an array of projects
+
+
+query GetProjectsByAuthorID ($id: ID!){
+  user(id: $id){
+    projectsCreated{
+      id
+      title
+      description
+      created_at
+      expiration_date
+      location
+      lat
+      long
+      isFollowed
+      userIsAuthor
+      image
+      archived
+      author{
+        name
+        email
+      }
+    }
+  }
+}
+#query variables
+{
+	"id": 1
+}
+#-------------------------------------------------
+
+#OK Return projects related to geo position and scope (in meters)
+# Auth non required
+# ==> return an array of projects
+
+query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!, $archived: Boolean!) {
+  projectsByGeo(lat: $lat, long: $long, scope: $scope, archived: $archived) {
+    title
+    description
+    created_at
+    expiration_date
+    location
+    lat
+    long
+    isFollowed
+    userIsAuthor
+    distance
+    author{
+      name
+      email
+    }
+    needs{
+      id
+      title
+      completed
+    }
+
+    }
+  
+}
+#query variables
+{
+	"lat": 2,
+	"long": 1.9,
+	"scope": 20000,
+  "archived": false
+}
+#-------------------------------------------------
+
+#OK create new project
+# AUTHENTICATION REQUIRED
+# ==> return the created project object or an error object
+mutation CreateProject(
+        $title: String!,
+        $description: String!,
+        $expiration_date: String!,
+        $location: String!,
+        $lat: Float!,
+        $long: Float!,
+        $image: String,
+        $file: String,
+        $needs: [NeedInput]
+) {
+  insertProject(
+        title: $title,
+        description: $description,
+        expiration_date: $expiration_date,
+        location: $location,
+        lat: $lat,
+        long: $long,
+        image: $image,
+        file: $file,
+        needs: $needs
+  ) {
+    __typename
+    ... on Project{
+      id
+      title
+      description
+      expiration_date
+      location
+      lat
+      long
+      
+    }
+    ... on Error{
+      error{
+        msg
+        code
+      }
+    }
+  }
+}
+#query variables
+{
+	"title": "new project",
+	"description": "beautifull description",
+	"expiration_date": "2004-10-19 10:23:54+02",
+	"location": "address",
+	"lat": 1.0001,
+	"long": 1.0001,
+	"image": "",
+	"file": "",
+	"needs": [
+		{
+			"title": "new need",
+			"description": "new need description"
+		},
+		{
+			"title": "new need 2",
+			"description": "new need description"
+		}
+	]
+}
+#-------------------------------------------------
+
+
+#OK Update Project with specified Id 
+# AUTHENTICATION REQUIRED via author profile
+# ==> return the updated project object or an error object
+
+mutation EditProject(
+        $id: ID!,
+        $title: String!,
+        $description: String!,
+        $expiration_date: String!,
+        $location: String!,
+        $lat: Float!,
+        $long: Float!,
+        $image: String,
+        $file: String
+) {
+  editProject(
+        id: $id,
+        title: $title,
+        description: $description,
+        expiration_date: $expiration_date,
+        location: $location,
+        lat: $lat,
+        long: $long,
+        image: $image,
+        file: $file
+  ) {
+    ... on Project{
+      id
+      title
+      description
+      expiration_date
+      location
+      lat
+      long
+      archived
+      needs{
+        id
+        title
+      }
+      
+    }
+    ... on Error{
+      error{
+        msg
+        code
+      }
+    }
+  }
+}
+
+#query variables
+{
+	"id": 3,
+	"title": "new project updated",
+	"description": "beautifull description",
+	"expiration_date": "2004-10-19 10:23:54+02",
+	"location": "address",
+	"lat": 1.0001,
+	"long": 1.0001,
+	"image": "",
+	"file": ""
+}
+#-------------------------------------------------
+
+#OK Archive Project with specified Id
+# AUTHENTICATION REQUIRED via author profile
+# ==> return the archived project object or an error object
+mutation ArchiveProject(
+        $id: ID!
+) {
+  archiveProject(
+        id: $id
+  ) {
+    ... on Project{
+      id
+      title
+      description
+      expiration_date
+      location
+      lat
+      long
+      archived
+      needs{
+        id
+        title
+      }
+      
+    }
+    ... on Error{
+      error{
+        msg
+        code
+      }
+    }
+  }
+}
+#query variables
+{
+	"id": 2
+}
+#-------------------------------------------------
+
+#OK Delete project with specified ID 
+# AUTHENTICATION REQUIRED via author profile
+# ==> return the deleted project object or an error object
+
+mutation deleteProject($id: ID!) {
+     ... on Project{
+        id
+        title
+        description
+
+      }
+      ... on Error{
+        error{
+          msg
+          code
+        }
+    
+  }   
+}
+
+#query variables
+{
+	"id": 4
+}
+#-------------------------------------------------
+
+
+
+#-------------------------------------------------
+#-------------------------------------------------
+#-------------------------------------------------
+
+
+             # NOT OK
+
+
+
+
+
+# Return all favorite projects related to specified user id (as follower)
+
+query GetFavoritesByUserID ($id: ID!){
+  user(id: $id){
+    favourite_projects{
+      id
+      title
+      description
+      created_at
+      expiration_date
+      location
+      lat
+      long
+      scope
+      west
+      east
+      north
+      south
+      image
+      archived
+      author{
+        name
+        email
+      }
+    }
+  }
+}
+
+
