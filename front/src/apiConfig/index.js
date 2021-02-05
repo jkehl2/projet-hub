@@ -1,12 +1,12 @@
 /**
  * @module config-graphql
- * Configuration et requête d'accès à DB utilisateurs et projets
+ * Configuration & queries to DB
  */
 // == URL SERVER BACK
 import CONFIG from './parameters.json';
 
 export const apiUrl = CONFIG.URL_BACK;
-// == CONFIGURATION CONNECTEUR AXIOS GRAPHQL - END POINT + ENTÊTE
+// == CONFIGURATION CONNECTOR AXIOS GRAPHQL - END POINT + HEADERS
 export default {
   method: 'post',
   url: `${CONFIG.URL_BACK}/graphql`,
@@ -16,7 +16,7 @@ export default {
   withCredentials: false,
 };
 
-// == CONFIGURATION CONNECTEUR AXIOS SIGNIN - END POINT + ENTÊTE
+// == CONFIGURATION CONNECTOR AXIOS SIGNIN - END POINT + HEADERS
 export const signInConfig = {
   method: 'post',
   url: `${CONFIG.URL_BACK}/login-refresh`,
@@ -26,7 +26,7 @@ export const signInConfig = {
   withCredentials: false,
 };
 
-// == CONFIGURATION CONNECTEUR AXIOS SIGNOUT - END POINT + ENTÊTE
+// == CONFIGURATION CONNECTOR AXIOS SIGNOUT - END POINT + HEADERS
 export const signOutConfig = {
   method: 'post',
   url: `${CONFIG.URL_BACK}/logout`,
@@ -36,7 +36,7 @@ export const signOutConfig = {
   withCredentials: false,
 };
 
-// == CONFIGURATION CONNECTEUR AXIOS UPLOAD AVATAR - END POINT + ENTÊTE
+// == CONFIGURATION CONNECTOR AXIOS UPLOAD AVATAR - END POINT + HEADERS
 export const uploadAvatarConfig = {
   method: 'post',
   url: `${CONFIG.URL_BACK}/upload-avatar`,
@@ -46,7 +46,7 @@ export const uploadAvatarConfig = {
   withCredentials: false,
 };
 
-// == CONFIGURATION CONNECTEUR AXIOS UPLOAD IMAGE PROJECT - END POINT + ENTÊTE
+// == CONFIGURATION CONNECTOR AXIOS UPLOAD IMAGE PROJECT - END POINT + HEADERS
 export const uploadProjectImageConfig = {
   method: 'post',
   url: `${CONFIG.URL_BACK}/upload-image`,
@@ -56,7 +56,7 @@ export const uploadProjectImageConfig = {
   withCredentials: false,
 };
 
-// == QUERY - Créer le profil utlisateur
+// == QUERY - CREATE USER PROFILE
 export const queryUserCreate = {
   query: `mutation createUser($name: String!, $email: String!, $password: String! ) {
     insertUser(name: $name, email: $email, password: $password) {
@@ -75,7 +75,7 @@ export const queryUserCreate = {
   }`,
 };
 
-// == QUERY - Obtenir le détail d'un profil utlisateur par id
+// == QUERY - GET USER DETAILS BY ID
 export const queryUserById = {
   query: `query GetUserByID($id: ID!) {
     user(id: $id){
@@ -88,7 +88,7 @@ export const queryUserById = {
   }`,
 };
 
-// == QUERY - Modifier le profil utlisateur
+// == QUERY - EDIT USER
 export const queryUserEdit = {
   query: `mutation editUser($name: String!, $email: String!) {
     editUserInfos(name: $name, email: $email) {
@@ -108,7 +108,7 @@ export const queryUserEdit = {
   }`,
 };
 
-// == QUERY - Modifier le mot de passe du profil utlisateur
+// == QUERY - EDIT USER PASSWORD
 export const queryUserEditPassword = {
   query: `mutation editUserPassword($password: String!) {
     editUserPassword(password: $password) {
@@ -128,7 +128,7 @@ export const queryUserEditPassword = {
   } `,
 };
 
-// == QUERY - Supprimer le profil utlisateur
+// == QUERY - DELETE USER PROFILE
 export const queryUserDelete = {
   query: ` mutation{
     deleteUser{
@@ -218,7 +218,8 @@ export const queryByAuthor = {
       }
     }}`,
 };
-// == QUERY - Get project by ID
+
+// == QUERY - GET PROJECT BY ID
 export const queryProjectById = {
   query: `query GetProjectByID($id: ID!) {
     project(id: $id) {
@@ -253,7 +254,7 @@ export const queryProjectById = {
     }
   }`,
 };
-
+// == QUERY - DELETE PROJECT
 export const queryDeleteProject = {
   query: `mutation deleteProject($id: ID!) {
     deleteProject(id: $id) {
@@ -269,6 +270,8 @@ export const queryDeleteProject = {
     }
   }`,
 };
+
+// == QUERY - GET PROJECT BY GEOLOCATION
 
 export const queryGetProjectsByGeo = {
   query: `query GetProjectsByGeo($lat: Float!, $long: Float!, $scope: Float!, $archived: Boolean!) {
@@ -303,6 +306,8 @@ export const queryGetProjectsByGeo = {
     }
   }`,
 };
+
+// == QUERY - CREATE PROJECT
 export const queryCreateProject = {
   query: `mutation CreateProject($title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String) {
     insertProject(title: $title, description: $description, expiration_date: $expiration_date, location: $location, lat: $lat, long: $long, image: $image, file: $file) {
@@ -319,6 +324,7 @@ export const queryCreateProject = {
     }
 }`,
 };
+// == QUERY - EDIT PROJECT
 export const queryEditProject = {
   query: `mutation EditProject($id: ID!, $title: String!, $description: String!, $expiration_date: String!, $location: String!, $lat: Float!, $long: Float!, $image: String, $file: String) {
     editProject(
@@ -345,7 +351,7 @@ export const queryEditProject = {
 }
 `,
 };
-
+// == QUERY - GET ARCHIVED PROJECT
 export const queryArchivedProject = {
   query: `mutation archiveProject($id: ID!) {
     archiveProject(id: $id) {
@@ -364,7 +370,7 @@ export const queryArchivedProject = {
 
 // == ==========================================
 // == NEEDS PART
-
+// == QUERY - GET COMPLETED
 export const queryCompletedNeed = {
   query: `mutation completeNeed($id: ID!) {
     completeNeed(id: $id) {
@@ -381,7 +387,7 @@ export const queryCompletedNeed = {
     }
   }`,
 };
-
+// == QUERY - GET UNCOMPLETED
 export const queryUnCompletedNeed = {
   query: `mutation uncompleteNeed($id: ID!) {
     uncompleteNeed(id: $id) {
@@ -398,7 +404,7 @@ export const queryUnCompletedNeed = {
     }
   }`,
 };
-
+// == QUERY - ADD NEED
 export const queryAddNeedToProject = {
   query: `mutation insertNeed($title: String!, $description: String!, $projectId: ID!) {
     insertNeed(title: $title, description: $description, project_id: $projectId) {
@@ -416,7 +422,7 @@ export const queryAddNeedToProject = {
     }
   }`,
 };
-
+// == QUERY - EDIT NEED
 export const queryEditNeedById = {
   query: `mutation editNeed($id: ID!, $title: String!, $description: String!) {
     editNeed(id: $id, title: $title, description: $description) {
@@ -432,7 +438,7 @@ export const queryEditNeedById = {
     }
   }`,
 };
-
+// == QUERY - DELETE NEED
 export const queryDeleteNeedById = {
   query: `mutation deleteNeed($id: ID!) {
     deleteNeed(id: $id) {
@@ -452,6 +458,7 @@ export const queryDeleteNeedById = {
 // == ============================
 // == FAVORITES SECTION
 
+// == QUERY - CREATE FAVORITE
 export const queryInsertFavorite = {
   query: `mutation insertFavorite($id: ID!) {
     insertFavorite(projectId: $id) {
@@ -474,6 +481,7 @@ export const queryInsertFavorite = {
     }
   }`,
 };
+// == QUERY - DELETE FAVORITE
 export const queryDeleteFavorite = {
   query: `mutation deleteFavorite($id: ID!) {
     deleteFavorite(projectId: $id) {
