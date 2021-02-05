@@ -8,7 +8,7 @@ import FormData from 'form-data';
 
 import { push, goBack } from 'connected-react-router';
 
-// == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTEUR AXIOS
+// == IMPORT CONFIGURATION & QUERY - GRAPHQL CONNECTOR AXIOS
 import configGraphQl, {
   apiUrl,
   queryUserCreate,
@@ -21,7 +21,7 @@ import configGraphQl, {
 
 import connector from 'src/apiConfig/queryWithToken';
 
-// == IMPORT ACTIONS SUR PROFIL UTILISATEUR
+// == IMPORT ACTIONS ON USER
 import {
   USER_CREATE,
   USER_EDIT,
@@ -49,7 +49,7 @@ import {
   appUpdateProfil,
 } from 'src/store/actions/app';
 
-// MIDDLEWARE USER - Middleware de gestion des connecteurs à la BD Utilisteurs
+// MIDDLEWARE USER
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case USER_SIGNIN:
@@ -179,11 +179,9 @@ const userMiddleware = (store) => (next) => (action) => {
           store.dispatch(appMsgUpdate('Votre compte a été créé. Merci de vous connecter.'));
         })
         .catch((error) => {
-          // en cas d'erreur remontée de l'api, renvoi d'un msg erreur
           store.dispatch(appErrorUpdate(error));
         })
         .finally(() => {
-          // on clean le store app
           store.dispatch(appErrorClean());
           store.dispatch(appSignUpClean());
           store.dispatch(appLoadingOff());
@@ -234,7 +232,7 @@ const userMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           store.dispatch(appMsgUpdate('Votre profil utilisateur à été mis à jour.'));
           const userdata = response.data.data.editUserInfos;
-          // Si null dans avatar alors on ne garde pas ce paramètre pour la maj du store
+
           if (userdata.avatar === null) {
             delete userdata.avatar;
           }

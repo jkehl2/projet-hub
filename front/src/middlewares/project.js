@@ -3,7 +3,7 @@
 import { goBack, push } from 'connected-react-router';
 import FormData from 'form-data';
 
-// graphql queries
+// GRAPHQL QUERIES
 import configGraphQl, {
   apiUrl,
   queryByAuthor,
@@ -20,7 +20,7 @@ import configGraphQl, {
 
 import connector from 'src/apiConfig/queryWithToken';
 
-// actions from store
+// ACTIONS
 import {
   GET_MY_PROJECTS,
   GET_MY_FAVORITES,

@@ -36,5 +36,8 @@
         color: #32CD32 !important;
         margin-right: 1rem !important;
       }
+      &:hover{
+        border: 2px solid vars.$color !important;
+      }
     }
 }

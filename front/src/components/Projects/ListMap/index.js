@@ -10,6 +10,7 @@ import {
   Grid,
   Header,
   Image,
+  Segment,
 } from 'semantic-ui-react';
 
 import {
@@ -28,41 +29,43 @@ import './listMap.scss';
 const ListMap = ({
   projects,
 }) => (
-  <MapContainer
-    className="list-map"
-    center={[projects[0].lat, projects[0].long]}
-    zoom={11}
-    scrollWheelZoom
-  >
-    {projects.map((project) => (
-      <ImageOverlay
-        key={project.id}
-        bounds={[
-          [project.lat, project.long],
-          [project.lat + 0.02, project.long + 0.02],
-        ]}
-        url={dot}
-        interactive
-        opacity={0.9}
-        zIndex={1}
-      >
-        <Popup className="list-map--popup">
-          <Grid className="list-map--card" verticalAlign="middle" textAlign="left">
-            <Grid.Row divided>
-              <Grid.Column className="list-map--card--cell" width={16} textAlign="center">
-                <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} size="medium" rounded centered /></Link>
-                <Link to={`/projet/${project.id}`}><Header className="list--map--card--title" size="medium" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} /></Link>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Popup>
-      </ImageOverlay>
-    ))}
-    <TileLayer
-      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-  </MapContainer>
+  <Segment className="list-map--white-background" basic>
+    <MapContainer
+      className="list-map"
+      center={[projects[0].lat, projects[0].long]}
+      zoom={11}
+      scrollWheelZoom
+    >
+      {projects.map((project) => (
+        <ImageOverlay
+          key={project.id}
+          bounds={[
+            [project.lat, project.long],
+            [project.lat + 0.02, project.long + 0.02],
+          ]}
+          url={dot}
+          interactive
+          opacity={0.9}
+          zIndex={1}
+        >
+          <Popup className="list-map--popup">
+            <Grid className="list-map--card" verticalAlign="middle" textAlign="left">
+              <Grid.Row divided>
+                <Grid.Column className="list-map--card--cell" width={16} textAlign="center">
+                  <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} size="medium" rounded centered /></Link>
+                  <Link to={`/projet/${project.id}`}><Header className="list--map--card--title" size="medium" icon={project.isArchived ? 'archive' : null} content={`${project.title}`} /></Link>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Popup>
+        </ImageOverlay>
+      ))}
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+    </MapContainer>
+  </Segment>
 );
 
 // == PROP TYPES
