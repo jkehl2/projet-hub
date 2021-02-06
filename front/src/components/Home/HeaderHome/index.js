@@ -31,18 +31,18 @@ const HeaderHome = () => (
         <Link
           to="/utilisateur/create"
           className="step"
-          title="Poster"
+          title="Proposer un nouveau projet"
         >
           <Icon
             name="write"
             className="icon-colors"
           />
-          <Step.Content title="Poster" />
+          <Step.Content title="Proposer" />
         </Link>
         <Link
           to="/utilisateur/projets"
           className="step"
-          title="Echanger"
+          title="Echanger sur mes projets"
         >
           <Icon
             name="comments"
@@ -53,7 +53,7 @@ const HeaderHome = () => (
         <Link
           to="/projets"
           className="step"
-          title="Collaborer"
+          title="Collaborer sur de nouveaux projets"
         >
           <Icon
             name="handshake"
@@ -76,7 +76,7 @@ const HeaderHome = () => (
         <Link
           to="/utilisateur/create"
           className="step"
-          title="Poster"
+          title="Proposer un nouveau projet"
         >
           <Icon
             name="write"
@@ -86,7 +86,7 @@ const HeaderHome = () => (
         <Link
           to="/utilisateur/projets"
           className="step"
-          title="Echanger"
+          title="Echanger sur mes projets"
         >
           <Icon
             name="comments"
@@ -96,7 +96,7 @@ const HeaderHome = () => (
         <Link
           to="/projets"
           className="step"
-          title="Collaborer"
+          title="Collaborer sur de nouveaux projets"
         >
           <Icon
             name="handshake"
