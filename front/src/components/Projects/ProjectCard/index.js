@@ -23,7 +23,11 @@ import './projectCard.scss';
 
 // ==  SUB COMPONENT FAVORITES
 const HeaderStar = ({
-  project, size, logged, addToFavorite, removeFromFavorite,
+  project,
+  size,
+  logged,
+  addToFavorite,
+  removeFromFavorite,
 }) => (
   <>
     <Header as="h3" size={`${size}`}>
@@ -88,13 +92,13 @@ const ProjectCard = ({
       { project.isArchived && <Label color="grey" corner="right" icon="archive" title="archivé" size="big" /> }
       <Grid divided stackable verticalAlign="middle">
         <Grid.Row>
-          <Grid.Column computer={4} only="computer">
+          <Grid.Column computer={4} only="computer" textAlign="center">
             <Link to={`/projet/${project.id}`}><Image className="project-card--picture" src={`${project.image}`} centered spaced rounded /></Link>
           </Grid.Column>
           <Grid.Column computer={12} mobile={16}>
             <Grid centered>
               <Grid.Row>
-                <Grid.Column className="project-card--padding-mobile" only="mobile" width={4}>
+                <Grid.Column className="project-card--padding-mobile" only="mobile" width={4} textAlign="center">
                   <Link to={`/projet/${project.id}`}><Image src={`${project.image}`} centered spaced rounded className="project-card--picture" /></Link>
                 </Grid.Column>
                 <Grid.Column className="project-card--padding-mobile" only="mobile" width={12}>

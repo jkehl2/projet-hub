@@ -24,7 +24,6 @@ const SignIn = (
     setSignInValue,
     handleSubmit,
     redirectSignUp,
-    cleanAppParams,
     cleanSignIn,
   },
 ) => {
@@ -40,7 +39,7 @@ const SignIn = (
   };
 
   useEffect(() => {
-    cleanAppParams();
+    cleanSignIn();
     return () => {
       cleanSignIn();
     };
@@ -110,7 +109,6 @@ SignIn.propTypes = {
   setSignInValue: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   redirectSignUp: PropTypes.func.isRequired,
-  cleanAppParams: PropTypes.func.isRequired,
   cleanSignIn: PropTypes.func.isRequired,
 };
 

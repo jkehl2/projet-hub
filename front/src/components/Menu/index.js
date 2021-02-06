@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 import './menu.scss';
 
 // DROPDOWN TRIGGER - SHOW USER CONNECTED WIDE SCREEN MODE, HIDE OTHERWISE
-const DropDownTrigger = ({ logged, userName }) => (
+const DropDownTrigger = ({ logged }) => (
   <>
     {logged && (
       <Grid padded="horizontally">
@@ -37,12 +37,11 @@ const DropDownTrigger = ({ logged, userName }) => (
 );
 DropDownTrigger.propTypes = {
   logged: PropTypes.bool.isRequired,
-  userName: PropTypes.string.isRequired,
 };
 
 // MENU COMPONENT
 const Menu = ({ logged, userName, handleDisconnect }) => (
-  <MenuUi className="menu menu--shadow" attached="top" borderless compact inverted>
+  <MenuUi className="app-menu app-menu--shadow" attached="top" borderless compact inverted>
     <MenuUi.Menu position="left">
       <Link className="item" to="/">
         <Grid padded="horizontally">
@@ -75,9 +74,9 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
           <Grid padded="horizontally">
             <Grid.Row only="computer" stretched>
               <Link to="/utilisateur/profil">
-                <Label className="menu--connect-label">
+                <Label className="app-menu--connect-label">
                   <Icon
-                    className="menu--connect-label--icon"
+                    className="app-menu--connect-label--icon"
                     name="circle"
                     size="small"
                   />
@@ -90,11 +89,11 @@ const Menu = ({ logged, userName, handleDisconnect }) => (
       </MenuUi.Item>
       <Dropdown
         item
-        trigger={DropDownTrigger({ logged, userName })}
+        trigger={DropDownTrigger({ logged })}
         icon={null}
         position="right"
       >
-        <Dropdown.Menu className="menu--dropdown">
+        <Dropdown.Menu className="app-menu--dropdown">
           <Link
             className="item"
             role="option"

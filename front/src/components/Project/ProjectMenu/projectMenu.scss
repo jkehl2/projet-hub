@@ -1,11 +1,12 @@
 @use 'src/styles/vars';
 
-#project-menu {
+.project-menu {
+  background: transparent !important;
   background-color: transparent !important;
   border: none !important;
-}
-
-.menu{
+  border-radius: none !important;
+  padding: 0rem 0rem !important;
+  width: fit-content !important;
   &--go-back-button {
     color : vars.$color !important;
   }
@@ -13,5 +14,7 @@
     background-color: vars.$color-alt !important;
     color: #fff !important;
   }
-  
+  &--item {
+    padding: 0 0 !important;
+  }
 }

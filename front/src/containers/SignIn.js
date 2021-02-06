@@ -25,10 +25,6 @@ const mapDispatchToProps = (dispatch) => ({
     event.preventDefault();
     dispatch(push('/utilisateur/enregistrement'));
   },
-  cleanAppParams: () => {
-    dispatch(appMsgClean());
-    dispatch(appSignInClean());
-  },
   cleanSignIn: () => {
     dispatch(appSignInClean());
   },

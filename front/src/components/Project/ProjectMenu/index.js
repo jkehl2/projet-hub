@@ -31,17 +31,18 @@ const ProjectMenu = ({
   handleBackToView,
   handleBackToPrevius,
 }) => (
-  <Menu id="project-menu" compact icon secondary attached="bottom" borderless size="mini">
+  <Menu className="project-menu" compact icon secondary attached="bottom" borderless size="mini">
     {isEditMode
       ? (
         <Menu.Item
+          className="project-menu--item"
           name="backView"
           fitted="horizontally"
         >
           <Button
+            className="project-menu--go-back-button"
             type="button"
             icon="arrow alternate circle left"
-            className="menu--go-back-button"
             title="Revenir à la consultation"
             content="Retour"
             labelPosition="left"
@@ -53,13 +54,14 @@ const ProjectMenu = ({
       : (!isArchived && isAuthor) && (
         <>
           <Menu.Item
+            className="project-menu--item"
             name="Editer"
             fitted="horizontally"
           >
             <Button
+              className="project-menu--edit-button"
               type="button"
               icon="edit"
-              className="menu--edit-button"
               title="Editer"
               compact
               onClick={(event) => {
@@ -69,6 +71,7 @@ const ProjectMenu = ({
             />
           </Menu.Item>
           <Menu.Item
+            className="project-menu--item"
             name="Archiver"
             fitted="horizontally"
           >
@@ -92,6 +95,7 @@ const ProjectMenu = ({
             />
           </Menu.Item>
           <Menu.Item
+            className="project-menu--item"
             name="Supprimer"
             fitted="horizontally"
           >
@@ -121,13 +125,14 @@ const ProjectMenu = ({
 
             && (
             <Menu.Item
+              className="project-menu--item"
               name="backPrevius"
               fitted="horizontally"
             >
               <Button
+                className="menu--go-back-button"
                 type="button"
                 icon="arrow alternate circle left"
-                className="menu--go-back-button"
                 title="Revenir à la page précédente"
                 content="Retour"
                 labelPosition="left"

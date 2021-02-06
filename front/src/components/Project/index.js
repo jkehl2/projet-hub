@@ -2,30 +2,16 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-// IMPORT IMAGE DOT MAP
-import dot from 'src/assets/images/dot.svg';
-
 // == IMPORTS CONTAINERS
 import ProjectMenu from 'src/containers/ProjectMenu';
 
 // == IMPORTS COMPONENTS
 import {
   Container,
-  Grid,
-  Header,
-  Image,
 } from 'semantic-ui-react';
-
-import {
-  MapContainer,
-  TileLayer,
-  ImageOverlay,
-  Popup,
-} from 'react-leaflet';
 
 import ProjectView from './ProjectView';
 import ProjectEdit from './ProjectEdit';
-import ProjectMap from './ProjectMap';
 
 // == STYLES
 import './project.scss';
@@ -47,19 +33,6 @@ const Project = ({
   }, []);
   return (
     <Container className="project">
-      {/* <Header
-        as="h1"
-        className="project-header"
-        content="Détail du projet"
-        textAlign="center"
-        dividing
-        subheader="Ici on vous dit tout sur ce projet"
-      /> */}
-      {/* PROJECT MENU - MODIFY / DELETE / ARCHIVE */}
-      <ProjectMenu />
-
-      {/* PROJECTS MAP */}
-
       {/* RENDER ON EDITION OR VIEW */}
       {(isEditMode && logged)
         ? (
