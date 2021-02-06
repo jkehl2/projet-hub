@@ -45,6 +45,7 @@ const HeaderStar = ({
             onClick={() => {
               removeFromFavorite(project.id);
             }}
+            title="Retirer des favoris"
             content="Retirer des favoris"
             labelPosition="left"
             basic
@@ -61,6 +62,7 @@ const HeaderStar = ({
             onClick={() => {
               addToFavorite(project.id);
             }}
+            title="Ajouer aux favoris"
             content="Ajouter aux favoris"
             labelPosition="left"
             basic
@@ -89,7 +91,7 @@ const ProjectCard = ({
   const checkCount = checkArr.reduce((a, b) => a + b, 0);
   return (
     <Segment className="project-card--fullwidth" compact>
-      { project.isArchived && <Label color="grey" corner="right" icon="archive" title="archivé" size="big" /> }
+      { project.isArchived && <Label color="grey" corner="right" icon="archive" title="Projet archivé" size="big" /> }
       <Grid divided stackable verticalAlign="middle">
         <Grid.Row>
           <Grid.Column computer={4} only="computer" textAlign="center">
@@ -126,9 +128,9 @@ const ProjectCard = ({
             <p><Icon name="target" />{`${project.location}`}</p>
             <Divider />
             <Label.Group>
-              <Label basic icon="star" content={`${project.followers.length}`} />
-              <Label basic content="Créé le" detail={`${project.creation_date}`} />
-              <Label basic content="Expire le" detail={`${project.expiration_date}`} />
+              <Label basic title="Nombre de followers" icon="star" content={`${project.followers.length}`} />
+              <Label basic title="Date de création du projet" content="Créé le" detail={`${project.creation_date}`} />
+              <Label basic title="Date d'expiration du projet" content="Expire le" detail={`${project.expiration_date}`} />
               <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
             </Label.Group>
             <Progress value={checkCount} total={project.needs.length} size="small" indicating content="Couverture des besoins" />

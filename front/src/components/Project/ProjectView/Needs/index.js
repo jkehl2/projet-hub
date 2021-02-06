@@ -44,6 +44,7 @@ const Needs = ({ isCheckEnable, needs, updateNeedIdCompleted }) => {
                 {isCheckEnable
                   ? (
                     <Checkbox
+                      className="needs--checkbox--big-size"
                       checked={need.completed}
                       onChange={() => {
                         updateNeedIdCompleted(need.id, !need.completed);

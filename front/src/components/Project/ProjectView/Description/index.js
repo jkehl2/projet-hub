@@ -30,7 +30,7 @@ const HeaderStar = ({
       <Header.Content className="header--title">{`${project.title} `}</Header.Content>
     </Header>
     <Segment compact basic className="description--marged-none">
-      { (!project.isAuthor && logged && !project.isArchived)
+      { (!project.isAuthor && logged)
       && (project.isFavorite
         ? (
           <Button
@@ -98,7 +98,7 @@ const Description = ({
   return (
     <>
       <Segment className="project-description" basic>
-        { project.isArchived && <Label color="grey" corner="right" icon="archive" size="big" /> }
+        { project.isArchived && <Label color="grey" title="Projet archivé" corner="right" icon="archive" size="big" /> }
         <Grid divided="vertically">
           <Grid.Row only="computer">
             <Segment className="project-description--segment-image" basic>
@@ -138,9 +138,9 @@ const Description = ({
                   </Segment>
                   <Segment className="project-description--marged-no-vertically" basic>
                     <Label.Group>
-                      <Label basic icon="star" content={`${project.followers.length}`} />
-                      <Label basic content="Créé le" detail={`${project.creation_date}`} />
-                      <Label basic content="Expire le" detail={`${project.expiration_date}`} />
+                      <Label basic title="Nombre de followers" icon="star" content={`${project.followers.length}`} />
+                      <Label basic title="Date de création du projet" content="Créé le" detail={`${project.creation_date}`} />
+                      <Label basic title="Date d'expiration du projet" content="Expire le" detail={`${project.expiration_date}`} />
                       <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
                     </Label.Group>
                   </Segment>

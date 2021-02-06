@@ -11,5 +11,8 @@
     &--filled{
       color: vars.$color-alt !important;
     }
+  }
+  &--checkbox--big-size{
+    transform: scale(1.5) !important;
   }  
 }
