@@ -34,7 +34,7 @@ const ListMap = ({
       className="list-map"
       center={[projects[0].lat, projects[0].long]}
       zoom={11}
-      scrollWheelZoom
+      scrollWheelZoom={false}
     >
       {projects.map((project) => (
         <ImageOverlay
