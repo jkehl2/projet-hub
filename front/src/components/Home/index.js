@@ -38,13 +38,6 @@ const Home = ({ cleanAppParams }) => {
       <HeaderHome />
 
       {/* SEARCH BAR */}
-      <Header
-        as="h2"
-        className="home-search"
-        textAlign="center"
-      >
-        Rechercher
-      </Header>
       <SearchProjects isHome />
 
       {/* PAGE HEADER WITH LOCAL HUB PRESENTATION */}

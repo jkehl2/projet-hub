@@ -133,7 +133,7 @@ const ProjectCard = ({
               <Label basic title="Date d'expiration du projet" content="Expire le" detail={`${project.expiration_date}`} />
               <Label as="a" basic href={`mailto:${project.author.email}`} content={`${project.author.email}`} icon="mail" />
             </Label.Group>
-            <Progress value={checkCount} total={project.needs.length} size="small" indicating content="Couverture des besoins" />
+            <Progress value={checkCount} total={project.needs.length} progress="ratio" size="small" indicating content="Couverture des besoins" />
           </Grid.Column>
         </Grid.Row>
       </Grid>

@@ -100,8 +100,8 @@ const NeedsForm = ({
                     }}
                   />
                   <Form.TextArea
-                    label="Description du besion"
-                    title="Description du besion"
+                    label="Description du besoin"
+                    title="Description du besoin"
                     placeholder="Description de votre besoin"
                     maxLength={250}
                     spellCheck
