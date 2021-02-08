@@ -32,10 +32,12 @@ const SignUp = ({
         {/* PSEUDO */}
         <Form.Input
           type="text"
+          label="Nom d'utilisateur"
+          title="Nom d'utilisateur"
           placeholder="Nom d'utilisateur"
           autoComplete="off"
-          label="Pseudo"
           value={name}
+          required
           onChange={(event) => {
             setSignUp({ name: event.target.value });
           }}

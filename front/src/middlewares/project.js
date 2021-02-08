@@ -84,12 +84,12 @@ const projectMiddleware = (store) => (next) => (action) => {
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${project.image}`,
+            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
               email: project.author.email,
-              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${project.author.avatar}`,
+              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}${project.author.avatar}`,
             },
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
@@ -129,7 +129,7 @@ const projectMiddleware = (store) => (next) => (action) => {
           const { data: { data: { path } } } = response;
           const image = `${apiUrl}/${path}`;
           store.dispatch(appUpdateProject({ image }));
-          store.dispatch(appMsgUpdate('Upload de l\'avatar terminé.'));
+          store.dispatch(appMsgUpdate('Upload de l\'image projet terminé.'));
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error.message));
@@ -170,12 +170,12 @@ const projectMiddleware = (store) => (next) => (action) => {
             long: parseFloat(apiData.long),
             expiration_date: parseDate(apiData.expiration_date),
             creation_date: parseDate(apiData.created_at),
-            image: apiData.image === null || apiData.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${apiData.image}`,
+            image: apiData.image === null || apiData.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}${apiData.image}`,
             author: {
               id: apiData.author.id,
               name: apiData.author.name,
               email: apiData.author.email,
-              avatar: apiData.author.avatar === null || apiData.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${apiData.author.avatar}`,
+              avatar: apiData.author.avatar === null || apiData.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}${apiData.author.avatar}`,
             },
             needs: apiData.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
@@ -328,12 +328,12 @@ const projectMiddleware = (store) => (next) => (action) => {
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${project.image}`,
+            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
               email: project.author.email,
-              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${project.author.avatar}`,
+              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}${project.author.avatar}`,
             },
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1
@@ -378,12 +378,12 @@ const projectMiddleware = (store) => (next) => (action) => {
             description: project.description.length > 75 ? `"${project.description.substr(0, 75)}..."` : `"${project.description}"`,
             expiration_date: parseDate(project.expiration_date),
             creation_date: parseDate(project.created_at),
-            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}/${project.image}`,
+            image: project.image === null || project.image === '' ? `${apiUrl}/project-images/logo.PNG` : `${apiUrl}${project.image}`,
             author: {
               id: project.author.id,
               name: project.author.name,
               email: project.author.email,
-              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}/${project.author.avatar}`,
+              avatar: project.author.avatar === null || project.author.avatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}${project.author.avatar}`,
             },
             needs: project.needs.sort((need1, need2) => (
               parseInt(need1.id, 10) > parseInt(need2.id, 10) ? 1 : -1

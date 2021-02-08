@@ -96,7 +96,6 @@ export const queryUserEdit = {
         id
         name
         email
-        avatar
       }
       ... on Error{
         error{
@@ -116,7 +115,6 @@ export const queryUserEditPassword = {
         id
         name
         email
-        avatar
       }
       ... on Error{
         error{

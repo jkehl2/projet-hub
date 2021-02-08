@@ -74,7 +74,7 @@ const userMiddleware = (store) => (next) => (action) => {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('refreshToken', response.data.refreshToken);
             const apiAvatar = response.data.user.avatar;
-            const avatar = apiAvatar ? `${apiUrl}/${apiAvatar}` : null;
+            const avatar = apiAvatar === null || apiAvatar === '' ? 'https://react.semantic-ui.com/images/avatar/large/matt.jpg' : `${apiUrl}${apiAvatar}`;
             const userdata = {
               ...response.data.user,
               avatar,
@@ -111,7 +111,7 @@ const userMiddleware = (store) => (next) => (action) => {
       connector(config, 'data', store.dispatch)
         .then((response) => {
           const { data: { data: { path } } } = response;
-          const avatar = `${apiUrl}/${path}`;
+          const avatar = `${apiUrl}${path}`;
           store.dispatch(updateUserStore({ avatar }));
           store.dispatch(appUpdateProfil({ avatar }));
           store.dispatch(appMsgUpdate('Upload de l\'avatar terminé.'));
@@ -174,15 +174,19 @@ const userMiddleware = (store) => (next) => (action) => {
         data,
       };
       axios(config)
-        .then(() => {
-          store.dispatch(push('/utilisateur/connexion'));
-          store.dispatch(appMsgUpdate('Votre compte a été créé. Merci de vous connecter.'));
+        .then((response) => {
+          if (response.data.data.insertUser.error) {
+            store.dispatch(appErrorUpdate(response.data.data.insertUser.error.msg));
+          }
+          else {
+            store.dispatch(push('/utilisateur/connexion'));
+            store.dispatch(appMsgUpdate('Votre compte a été créé. Merci de vous connecter.'));
+          }
         })
         .catch((error) => {
           store.dispatch(appErrorUpdate(error));
         })
         .finally(() => {
-          store.dispatch(appErrorClean());
           store.dispatch(appSignUpClean());
           store.dispatch(appLoadingOff());
         });

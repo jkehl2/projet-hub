@@ -88,15 +88,15 @@ const ProfilEdit = ({
               className="profile-edit--modify-button"
               positive
               type="submit"
-              title="Valider"
-              content="Valider"
+              title="Modifier"
+              content="Modifier"
             />
             <Button.Or text="ou" />
 
             <Button
               type="button"
-              title="Annuler"
-              content="Annuler"
+              title="Retour"
+              content="Retour"
               onClick={handleCancel}
             />
           </Button.Group>
