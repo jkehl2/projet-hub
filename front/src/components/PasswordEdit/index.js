@@ -82,18 +82,20 @@ const PasswordEdit = ({
             <Button.Group>
               <Button
                 className="password-edit--modify-button"
-                positive
                 type="submit"
-              >Valider
-              </Button>
+                title="Modifier"
+                content="Modifier"
+                positive
+              />
 
               <Button.Or text="ou" />
 
               <Button
                 type="button"
+                title="Retour"
+                content="Retour"
                 onClick={abortConfirmPassword}
-              >Annuler
-              </Button>
+              />
             </Button.Group>
           </Segment>
 
