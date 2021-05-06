@@ -1,22 +1,36 @@
-# Project Hub
-En cette période de grand bouleversement climatique, le web est un outil formidable pour rassembler des personnes, des associations et des entreprises porteuses de projets.
-Mais voilà, le web est vaste et il est autant difficile de s'y repérer que de maîtriser qui peut nous observer.
-## Que voulez-vous faire (description du projet et opportunités) ?
-Partant de ce constat une idée est née :
-_Et si nous mettions en ligne une plateforme qui permettrait aux porteurs de projet et aux profils intéressés par des opportunités de travail ou de collaboration de se trouver dans leur localité ?_
-Cette plateforme ferait le focus sur une approche prioritairement géographique de recherche et de publication de profil de compétences et d'appel à projet.
-Un ensemble de fonctionnalités "à définir" devront faciliter le rapprochement des profils et des porteurs de projet.
-Afin de garantir aux utilisateurs un maximum de maîtrise sur leur communications,
-les publications seraient définis pour :
-    - Une visibilité sur un périmètre géographique. (maîtrise géographique)
-    - Une visibilité par type de profil : Personne, association, entreprise, simple visiteur (non enregistrés). (maîtrise de la cible)
-    - Une visibilité jusqu'à une date d'échéance. (maîtrise de la durée d'exposition)
-Un mécanisme de renommée à points croissants en autogestion, pour affiner le classement des profils et des publications.
-## Quelles seront les technologies utilisées ?
-React, mongoDB / Neo4J / Postgresql (à définir surement un peu des 3...), Express, SVG (pour le graphique), canvas 2D pour une représentation cartographique (à préciser).
-Des API exposées par France Connect (pour le référentiel des entreprises, des associations, des profils métier, le portail géographique)
-## Avez-vous une idée de la taille idéale de l'équipe, et des rôles pouvant la composer ?
-Idéalement 4 à 5 personnes se partageant le travail et ayant des affinités particulières pour :
-1-2 personne(s) intéressé(es) par le web design
-1-2 personne(s) intéressé(es) par le js front en React
-1-2 personne(s) intéressé(es) par l'architecture des bases de données, le branchement aux api ext et la configuration de production permettant la maintenance à chaud. (modifié) 
+#Pourquoi Local-HUB ?
+
+##Un désir de “l’agir-ensemble”
+
+L’équipe de Local-HUB croit en une approche positive pour un développement durable de notre société, qui consiste à : 
+Favoriser le lien social, 
+Mutualiser les moyens et les savoir-faire,
+Entreprendre des actions collectives à l’échelle d’une localité.
+
+Le web est un support de communication formidable pour rassembler des personnes désireuses d'agir, des associations et des entreprises porteuses de projets. 
+Mais pour ces acteurs, le web a besoin d’être outillé pour pouvoir être une ressource exploitable.
+
+De ce constat est née l’idée d’une plateforme web et mobile destinée à mettre en relation tous types d’acteurs d’une même localité comme les entreprises, les associations et les particuliers.
+
+##Un outil de “l'agir-ensemble"
+
+L’application web Local-HUB à pour objectif de proposer un espace public de publication et d’échanges d’idées de projet : création d’entreprise, événement associatif, action collective .... 
+Favorisant ainsi le soutien ou l’échange de services afin de concrétiser ces projets.
+
+#Un outil pour qui ?
+
+Local-HUB cible différents acteurs d’une même localité : des particuliers, des associations et des entreprises. Soucieux de travailler / mener des actions au sein de leur localité grâce à un réseau de partenaires locaux.
+
+##Les particuliers : 
+
+Ils souhaitent réaliser/s’investir dans un projet au sein de leur localité. 
+Ils cherchent des ressources (financières, matérielles) et des partenaires pour le faire. 
+Ils mettent à disposition des savoir-faire et du temps pour réaliser des projets.
+
+##Les associations : 
+
+Elles souhaitent agrandir leur réseau de partenaires, se faire connaître du grand public et être soutenues par leur localité. Elles cherchent des ressources, organisent des événements et des actions collectives.
+
+##Les entreprises / entrepreneurs : 
+
+Elles souhaitent démarrer des nouvelles activités, renforcer leur image de marque, trouver des partenaires et des profils de compétences. Elles investissent dans leur localité par du mécénat et proposent des services.
